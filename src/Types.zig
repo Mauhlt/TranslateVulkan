@@ -1,0 +1,15 @@
+pub const Types = enum {
+    inline_fn,
+    extern_fn,
+    pfn,
+    flag1_pes,
+    flag1_enum,
+    flag2_pes,
+    flag2_enum,
+    _opaque,
+    extern_struct,
+    extern_union,
+    extension_name,
+    spec_version,
+    _type,
+};
