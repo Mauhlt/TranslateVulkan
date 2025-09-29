@@ -31,7 +31,7 @@ const Pair = @import("Pair.zig");
 const Types = @import("Types.zig").Types;
 const EnumField = @import("EnumField.zig");
 const Position = @import("Position.zig");
-const BUFFER_SIZE: usize = 2048;
+const BUFFER_SIZE = @import("constants.zig").BUFFER_SIZE;
 const write_filenames = std.meta.fieldNames(Types);
 const TextData = @This();
 // Fields
@@ -418,49 +418,84 @@ fn processOpaque(self: *TextData) !void {
 }
 
 fn processExternStruct(self: *TextData, line: []const u8) !void {
-    print("Line: {s}", .{line});
     // Convert name to remove struct_Vk
     var buf1: [BUFFER_SIZE]u8 = undefined;
-    const prefix = "struct_Vk";
-    var n_replaces = replace(u8, line, prefix, "", &buf1);
-    var end = line.len - (n_replaces * prefix.len);
-    const line1 = buf1[0..end];
+    const line1 = removeBuf(&buf1, line, "struct_Vk");
     print("Line 1: {s}", .{line1});
-    // try self.writeToFile(.extern_struct, line);
+    // try self.writeToFile(.extern_struct, line1);
+    // get var name for s_type
+    const var_name = varName(line1, &.{ "pub ", "const " }, &.{});
+    print("Var Name: {s}\n", .{var_name});
+    var buf2: [BUFFER_SIZE]u8 = undefined;
+    const snake_name = toSnake(&buf2, var_name);
+    print("Snake Name: {s}\n", .{snake_name});
+
     while (true) {
         const size = self.nextLine(&self.buffer) catch unreachable;
         const line2 = self.buffer[0..size];
         if (startsWith(u8, line, "}")) break;
-        print("Line 2: {s}", .{line2});
-        // field line to buffer to modify
-        var buf2: [BUFFER_SIZE]u8 = undefined;
-        const idx1 = indexOfScalar(u8, line2, ':').?;
-        const idx2 = lastIndexOfScalar(u8, line2[0..idx1], ' ').? + 1;
-        // copy spaces
-        @memcpy(buf2[0..idx2], line2[0..idx2]);
-        // convert field name to snake
-        var i: usize = idx2;
-        for (idx2..idx1) |j| {
-            const ch1 = line2[j - 1];
-            const ch2 = line2[j];
-            if ((isDigit(ch1) or isLower(ch1)) and isUpper(ch2)) {
-                buf2[i] = '_';
-                i += 1;
-            }
-            buf2[i] = toLower(ch2);
-            i += 1;
-        }
-        end = i + line2.len - idx1;
-        @memcpy(buf2[i..end], line2[idx1..line2.len]);
-        const line3 = buf2[0..end];
-        print("Line 3: {s}", .{line3});
-        // remove vk
+        // print("Line 2: {s}", .{line2});
+        // field line to modify
+        // idxs
+        const colon_idx = indexOfScalar(u8, line2, ':').?;
+        const name_idx = lastIndexOfScalar(u8, line2[0..colon_idx], ' ').? + 1;
+        const eql_idx = indexOfScalar(u8, line2, '=').?;
+        // assertions
+        std.debug.assert(name_idx < colon_idx);
+        std.debug.assert(colon_idx < eql_idx);
+        // posiitons
+        // copy field line spacing
+        var bp: Position = .{ .start = 0, .end = 0 }; // buffer position
         var buf3: [BUFFER_SIZE]u8 = undefined;
-        n_replaces = replace(u8, line3, "Vk", "", &buf3);
-        const line4 = buf3[0 .. end - (n_replaces * 2)];
-        print("Line 4: {s}", .{line4});
+        const spacing = line2[0..name_idx];
+        copy(&buf3, &bp, spacing);
+        // convert field name to snake
+        const field_name = line2[name_idx..colon_idx];
+        // print("Field Name: {s}\n", .{field_name});
+        buf1 = undefined;
+        const snake_name1 = toSnake(&buf1, field_name);
+        // print("Snake Name: {s}\n", .{snake_name1});
+        copy(&buf3, &bp, snake_name1);
+        copy(&buf3, &bp, ": ");
+        // copy type
+        const var_type = line2[colon_idx + 2 .. eql_idx];
+        // print("Var Type: {s}\n", .{var_type});
+        buf1 = undefined;
+        const var_type1 = removeBuf(&buf1, var_type, "Vk");
+        // print("Var Type: {s}\n", .{var_type1});
+        bp.start = bp.end;
+        bp.end += var_type1.len;
+        @memcpy(buf3[bp.start..bp.end], var_type1);
+        const line3 = buf3[0..bp.end];
+        print("Line 3: {s}\n", .{line3});
+        // If Structure Type - write structure type
+        // Else - write what it was
+        if (startsWith(u8, var_type1, "StructureType")) {
+            // prefix
+            const prefix1 = "= .";
+            bp.start = bp.end;
+            bp.end += prefix1.len;
+            @memcpy(buf3[bp.start..bp.end], prefix1);
+            bp.start = bp.end;
+            bp.end += snake_name.len;
+            @memcpy(buf3[bp.start..bp.end], snake_name);
+            buf3[bp.end] = ',';
+            bp.end += 1;
+        } else {
+            bp.start = bp.end;
+            bp.end += line2.len - eql_idx;
+            const old_line = line2[eql_idx..line2.len];
+            var buf4: [BUFFER_SIZE]u8 = undefined;
+            const line4 = removeBuf(&buf4, old_line, "Vk");
+            bp.start = bp.end;
+            bp.end += line4.len;
+            @memcpy(buf3[bp.start..bp.end], line4);
+        }
+        const line4 = buf3[0..bp.end];
+        print("Line: {s}\n", .{line4});
+        // Replace Vks
+        // print("Line 4: {s}", .{line4});
         // convert s_types to specific value rather than random value
-        if (eql(u8, ))
         // try self.writeToFile(.inline_fn, line2);
     }
 }
@@ -806,6 +841,23 @@ fn hasType(type_name: []const u8) bool {
     } else return false;
 }
 
+fn toSnake(buf: *[BUFFER_SIZE]u8, name: []const u8) []const u8 {
+    std.debug.assert(name.len < BUFFER_SIZE);
+    buf[0] = toLower(name[0]);
+    var i: usize = 1;
+    for (1..name.len) |j| {
+        const ch1 = name[j - 1];
+        const ch2 = name[j];
+        if ((isDigit(ch1) or isLower(ch1)) and isUpper(ch2)) {
+            buf[i] = '_';
+            i += 1;
+        }
+        buf[i] = toLower(ch2);
+        i += 1;
+    }
+    return buf[0..i];
+}
+
 fn argNamesToSnake(buf: *[BUFFER_SIZE]u8, line: []const u8) []const u8 {
     // get paren idxs
     const open_paren_idx = indexOfScalar(u8, line, '(').?;
@@ -824,17 +876,14 @@ fn argNamesToSnake(buf: *[BUFFER_SIZE]u8, line: []const u8) []const u8 {
     // iterator
     var it = splitScalar(u8, line[open_paren_idx..close_paren_idx], ',');
     while (it.next()) |item| {
+        // get arg name
         const colon_idx = indexOfScalar(u8, item, ':').?;
         const arg_name = item[0..colon_idx];
-        buf[start] = toLower(arg_name[0]);
-        for (1..arg_name.len) |i| {
-            if ((isLower(arg_name[i - 1]) or isDigit(arg_name[i - 1])) and isUpper(arg_name[i])) {
-                buf[start] = '_';
-                start += 1;
-            }
-            buf[start] = toLower(arg_name[i]);
-            start += 1;
-        }
+        // convert to snake
+        var buf1: [BUFFER_SIZE]u8 = undefined;
+        const new_name = toSnake(&buf1, arg_name);
+        @memcpy(buf[start .. start + new_name.len], new_name);
+        // copy rest
         end = start + item.len - colon_idx;
         @memcpy(buf[start..end], item[colon_idx..item.len]);
         start = end;
@@ -918,4 +967,14 @@ fn removePrefix(buf: *[BUFFER_SIZE]u8, name: []const u8) void {
             buf[i] = buf[i + name.len];
         }
     }
+}
+
+fn removeBuf(
+    buf: *[BUFFER_SIZE]u8,
+    line: []const u8,
+    needle: []const u8,
+) []const u8 {
+    const n_replaces = replace(u8, line, needle, "", buf);
+    const end = line.len - (n_replaces * needle.len);
+    return buf[0..end];
 }

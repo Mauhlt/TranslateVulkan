@@ -5,3 +5,9 @@
 
 - Extern fns not found:
 - need to copy them as is?
+
+- Position:
+    - contains buffer + position - may want to rename to buffer
+    - added reset + init + copy methods
+    - need to fix the call inside extern struct - leads to undefined behavior outside
+    - need to finish extern struct + extern union -> store the files -> create the engine next
