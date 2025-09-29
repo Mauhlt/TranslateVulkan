@@ -428,19 +428,22 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
     // Convert name to remove struct_Vk
     var buf1: Buffer = .init(line);
     const line1 = buf1.remove("struct_Vk");
-    print("Line 1: {s}", .{line1});
-    // try self.writeToFile(.extern_struct, line1);
+    // print("Line 1: {s}", .{line1});
+    try self.writeToFile(.extern_fn, line1);
     // get var name for s_type
     const var_name = varName(line1, &.{"pub const "}, &.{});
     var buf2: Buffer = .{};
     const snake_name = buf2.toSnake(var_name);
-    print("Snake Name: {s}\n", .{snake_name});
+    // print("Snake Name: {s}\n", .{snake_name});
 
     while (true) {
         const size = self.nextLine(&self.buffer) catch unreachable;
         const line2 = self.buffer[0..size];
-        if (startsWith(u8, line, "}")) break;
-        print("Line 2: {s}", .{line2});
+        if (startsWith(u8, line, "}")) {
+            try self.writeToFile(.extern_fn, line2);
+            break;
+        }
+        // print("Line 2: {s}", .{line2});
         // idxs
         const colon_idx = indexOfScalar(u8, line2, ':').?;
         const name_idx = lastIndexOfScalar(u8, line2[0..colon_idx], ' ').? + 1;
@@ -455,18 +458,18 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
         buf3.copy(spacing);
         // convert field name to snake
         const field_name = line2[name_idx..colon_idx];
-        print("Field Name: {s}\n", .{field_name});
+        // print("Field Name: {s}\n", .{field_name});
         const snake_name1 = buf3.toSnake(field_name);
-        print("Snake Name: {s}\n", .{snake_name1});
+        // print("Snake Name: {s}\n", .{snake_name1});
         buf3.copy(": ");
         // copy type
         var buf4: Buffer = .init(line2[colon_idx + 2 .. eql_idx]);
-        print("Var Type: {s}\n", .{buf4.str()});
+        // print("Var Type: {s}\n", .{buf4.str()});
         const var_type1 = buf4.remove("Vk");
-        print("Var Type: {s}\n", .{var_type1});
+        // print("Var Type: {s}\n", .{var_type1});
         buf3.extend(var_type1);
         const line3 = buf3.str();
-        print("Line 3: {s}\n", .{line3});
+        // print("Line 3: {s}\n", .{line3});
         // If Structure Type - write structure type
         // Else - write what it was
         if (startsWith(u8, var_type1, "StructureType")) {
@@ -481,7 +484,7 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
             buf3.extend(line4);
         }
         const line4 = buf3.str();
-        print("Line: {s}\n", .{line4});
+        // print("Line: {s}\n", .{line4});
         // convert s_types to specific value rather than random value
         try self.writeToFile(.extern_fn, line2);
     }
