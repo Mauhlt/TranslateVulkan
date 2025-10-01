@@ -51,18 +51,15 @@ ioreader: *std.Io.Reader,
 // Buffer For Next Line
 buffer: [BUFFER_SIZE]u8 = undefined,
 // Data
-// types: std.ArrayList([]const u8),
-enum_fields: std.ArrayList(EnumField),
-structs: std.ArrayList([]const u8),
-// extern fns
-extern_fns_imports: std.StringHashMap(void),
-extern_fns: std.ArrayList([]const u8),
-// previous variable names + their files
-prev_var_names: std.ArrayList(Pair),
+extension_names: std.ArrayList([]const u8),
+spec_versions: std.ArrayList([]const u8),
 // Writer
 write_files: [write_filenames.len]std.fs.File,
-// Enum 2
+// Flags
 is_enum2: bool = false,
+enum2_title: Buffer = .{},
+enum2_field_names: std.StringHashMap(void),
+enum2_field_values: std.StringHashMap(void),
 // methods
 pub fn init(allo: Allocator) !TextData {
     var self: TextData = undefined;
@@ -74,11 +71,10 @@ pub fn init(allo: Allocator) !TextData {
     self.reader = self.read_file.reader(&self.read_buffer);
     self.ioreader = &self.reader.interface;
     // storage
-    self.enum_fields = try .initCapacity(allo, 8);
-    self.structs = try .initCapacity(allo, 8);
-    self.extern_fns_imports = .init(allo);
-    self.extern_fns = try .initCapacity(allo, 8);
-    self.prev_var_names = try .initCapacity(allo, 8);
+    self.extension_names = try .initCapacity(allo, 8);
+    self.spec_versions = try .initCapacity(allo, 8);
+    self.enum2_field_names = .init(allo);
+    self.enum2_field_values = .init(allo);
     // write files
     inline for (write_filenames, 0..) |write_filename, i| {
         const filename: []const u8 = "vulkan_" ++ write_filename ++ ".zig";
@@ -94,72 +90,100 @@ pub fn deinit(self: *TextData, allo: Allocator) void {
     // close reader
     self.read_file.close();
     // deinit storage
-    // Enum Fields
-    if (self.enum_fields.items.len > 0) //
-        for (self.enum_fields.items) |*item| item.deinit(allo);
-    self.enum_fields.deinit(allo);
-    // Structs
-    if (self.structs.items.len > 0) //
-        for (self.structs.items) |item| allo.free(item);
-    self.structs.deinit(allo);
-    // extern fns
-    if (self.extern_fns.items.len > 0) //
-        for (self.extern_fns.items) |item| allo.free(item);
-    self.extern_fns.deinit(allo);
-    var it = self.extern_fns_imports.iterator();
-    while (it.next()) |item| {
-        allo.free(item.key_ptr.*);
-    }
-    self.extern_fns_imports.deinit();
-    // Previous Var Names
-    if (self.prev_var_names.items.len > 0) //
-        for (self.prev_var_names.items) |item| allo.free(item.var_name);
-    self.prev_var_names.deinit(allo);
+    // extension names
+    for (self.extension_names.items) |extension_name| allo.free(extension_name);
+    self.extension_names.deinit(allo);
+    // spec versions
+    for (self.spec_versions.items) |spec_version| allo.free(spec_version);
+    self.spec_versions.deinit(allo);
+    // field names
+    var kit = self.enum2_field_names.keyIterator();
+    while (kit.next()) |item| allo.free(item.*);
+    self.enum2_field_names.deinit();
+    // field values
+    kit = self.enum2_field_values.keyIterator();
+    while (kit.next()) |item| allo.free(item.*);
+    self.enum2_field_values.deinit();
     // close writers
     for (0..write_filenames.len) |i| self.write_files[i].close();
 }
 
-fn nextLine(self: *TextData, buffer: *[BUFFER_SIZE]u8) !usize {
+fn nextline(self: *TextData, buffer: *[BUFFER_SIZE]u8) ![]const u8 {
     const line = try self.ioreader.peekDelimiterInclusive('\n');
     const size = line.len;
     @memcpy(buffer[0..line.len], line);
     self.ioreader.toss(line.len);
-    return size;
+    return self.buffer[0..size];
 }
 
 pub fn parse(self: *TextData, allo: Allocator) !void {
-    _ = allo;
     // parse for variables
     while (true) {
-        const size = self.nextLine(&self.buffer) catch |err| switch (err) {
+        const line: []const u8 = self.nextline(&self.buffer) catch |err| switch (err) {
             error.EndOfStream => break,
             else => return err,
         };
-        const line: []const u8 = self.buffer[0..size];
-        const line_type = determineLineType(line) orelse continue;
+        const line_type = self.determineLineType(line) orelse continue;
         switch (line_type) {
-            // .inline_fn => try self.processInlineFn(line),
-            // .extern_fn => try self.processExternFn(allo, line),
-            // .pfn => try self.processPFN(line),
+            .flag2_enum_field => {},
+            else => {
+                if (self.is_enum2) {
+                    // close enum
+                    var buf: Buffer = .{};
+                    const line1 = buf.extends(&.{ "};", end_str });
+                    try self.writeToFile(.flag2, line1);
+                    self.is_enum2 = false;
+                    // remove enum field names
+                    var kit = self.enum2_field_names.keyIterator();
+                    while (kit.next()) |item| allo.free(item.*);
+                    self.enum2_field_names.deinit();
+                    self.enum2_field_names = .init(allo);
+                    // remove enum field values
+                    kit = self.enum2_field_values.keyIterator();
+                    while (kit.next()) |item| allo.free(item.*);
+                    self.enum2_field_values.deinit();
+                    self.enum2_field_values = .init(allo);
+                    // write PES
+                    const title = self.enum2_title.str();
+                    print("Title: {s}\n", .{title});
+                    // var buf1: Buffer = .{};
+                    // const line2 = buf1.extends(&.{
+                    //     "pub const ",
+                    //     title,
+                    //     "PES = PackedEnumStruct(",
+                    //     title,
+                    //     ");",
+                    //     end_str,
+                    // });
+                    // try self.writeToFile(.flag2, line2);
+                }
+            },
+        }
+        switch (line_type) {
+            .inline_fn => try self.processInlineFn(line),
+            .extern_fn => try self.processExternFn(line),
+            .pfn => try self.processPFN(line),
             // .flag1_enum => {},
             // .flag1_pes => {},
-            // .flag2_enum => {},
-            // .flag2_pes => {},
-            // ._opaque => try self.processOpaque(),
+            .flag2_enum_field => try self.processFlag2EnumField(allo, line),
+            .flag2_enum_title => try self.processFlag2EnumTitle(line),
+            ._opaque => try self.processOpaque(),
             .extern_struct => try self.processExternStruct(line),
-            // .extern_union => try self.processExternUnion(line),
-            // .extension_name => try self.processExtensionName(line),
-            // .spec_version => try self.processSpecVersion(line),
-            // ._type => try self.processTypes(allo, line),
+            .extern_union => try self.processExternUnion(line),
+            .extension_name => try self.processExtensionName(allo, line),
+            .spec_version => try self.processSpecVersion(allo, line),
+            ._type => try self.processTypes(line),
             inline else => |tag| {
                 _ = tag;
                 // try self.writeToFile(tag, line);
             }
         }
     }
+    try self.writeExtensionNames();
+    try self.writeSpecVersions();
 }
 
-fn determineLineType(line: []const u8) ?Types {
+fn determineLineType(self: *const TextData, line: []const u8) ?Types {
     // base
     if (line.len == 0) return null;
     var newline = line;
@@ -172,10 +196,10 @@ fn determineLineType(line: []const u8) ?Types {
     if (!startsWith(u8, newline, "const ")) return null;
     newline = trimLeft(newline, &.{ "const ", "" });
     if (isPFN(newline)) return .pfn;
-    if (isFlag1PES(newline)) return .flag1_pes;
-    if (isFlag1Enum(newline)) return .flag1_enum;
-    if (isFlag2PES(newline)) return .flag2_pes;
-    if (isFlag2Enum(newline)) return .flag2_enum;
+    if (isFlag1EnumTitle(newline)) return .flag1_enum_title;
+    if (isFlag1EnumField(newline)) return .flag1_enum_field;
+    if (isFlag2EnumTitle(newline)) return .flag2_enum_title;
+    if (self.isFlag2EnumField(newline)) return .flag2_enum_field;
     if (isOpaque(newline)) return ._opaque;
     if (isExternStruct(newline)) return .extern_struct;
     if (isExternUnion(newline)) return .extern_union;
@@ -198,7 +222,7 @@ fn isPFN(line: []const u8) bool {
     return startsWith(u8, line, "PFN_vk");
 }
 
-fn isFlag1PES(line: []const u8) bool {
+fn isFlag1EnumTitle(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
     const var_value = varValue(line);
     const start = startsWith(u8, var_name, "Vk");
@@ -206,19 +230,22 @@ fn isFlag1PES(line: []const u8) bool {
     return start and end;
 }
 
-fn isFlag1Enum(line: []const u8) bool {
+fn isFlag1EnumField(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
     return startsWith(u8, var_name, "enum_Vk") and endsWith(u8, var_name, "FlagBits");
 }
 
-fn isFlag2PES(line: []const u8) bool {
+fn isFlag2EnumTitle(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
     return endsWith(u8, var_name, "Flags2");
 }
 
-fn isFlag2Enum(line: []const u8) bool {
+fn isFlag2EnumField(self: *const TextData, line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    return endsWith(u8, var_name, "FlagBits2");
+    const vk = startsWith(u8, var_name, "VK_");
+    const colon = endsWith(u8, var_name, ":");
+    const has_double = indexOf(u8, var_name, "_2_") != null;
+    return self.is_enum2 and vk and colon and has_double;
 }
 
 fn isOpaque(line: []const u8) bool {
@@ -263,119 +290,74 @@ fn isType(line: []const u8) bool {
     return startsWith(u8, var_name, "Vk");
 }
 
-// fn processInlineFn(self: *TextData, line: []const u8) !void {
-//     // Get Old Var Name - No Vk
-//     const vk_idx = indexOf(u8, line, "VK_").?;
-//     const open_paren_idx = indexOfScalar(u8, line, '(').?;
-//     const var_name = line[vk_idx + 3 .. open_paren_idx];
-//     var buf1: [BUFFER_SIZE]u8 = undefined;
-//     // Get Old Var Name - W/ Vk
-//     const var_name1 = line[vk_idx..open_paren_idx];
-//     @memcpy(buf1[0..var_name1.len], var_name1);
-//     const old_var_name = buf1[0..var_name1.len];
-//     // print("Var Name: {s}\n", .{old_var_name});
-//     // Create New Var Name
-//     var buf2: [BUFFER_SIZE]u8 = undefined;
-//     var i: usize = 0;
-//     buf2[i] = toLower(var_name[i]);
-//     i += 1;
-//     for (
-//         var_name[0 .. var_name.len - 1],
-//         var_name[1..var_name.len],
-//     ) |ch1, ch2| {
-//         if (ch2 == '_') continue;
-//         if (ch1 == '_') {
-//             buf2[i] = ch2;
-//         } else {
-//             buf2[i] = toLower(ch2);
-//         }
-//         i += 1;
-//     }
-//     const new_var_name = buf2[0..i];
-//     // print("New Var Name: {s}\n", .{new_var_name});
-//     // Copy fn
-//     {
-//         const prefix = "pub ";
-//         const line1 = line[prefix.len..line.len];
-//         try self.writeToFile(.inline_fn, line1);
-//     }
-//     while (true) {
-//         const size = self.nextLine(&self.buffer) catch unreachable;
-//         const line1 = self.buffer[0..size];
-//         try self.writeToFile(.inline_fn, line1);
-//         if (startsWith(u8, line1, "}")) break;
-//     }
-//     // Create new fn = easier interface
-//     var buf3: [BUFFER_SIZE]u8 = undefined;
-//     const line1 = try bufPrint(
-//         &buf3,
-//         "pub const {s} = {s};{s}",
-//         .{ new_var_name, old_var_name, end_str },
-//     );
-//     // print("Line 1: {s}\n", .{line1});
-//     try self.writeToFile(.inline_fn, line1);
-// }
-//
-// fn processExternFn(self: *TextData, allo: Allocator, line: []const u8) !void {
-//     // _ = self;
-//     // _ = allo;
-//     var buf1: Buffer = undefined;
-//     var buf2: Buffer = undefined;
-//     // convert args - 1
-//     const line1 = argNamesToSnake(&buf1, line);
-//     //   print("Line 1: {s}", .{line1});
-//     // remove vk from args - 2
-//     const line2 = removeVkFromArgs(&buf2, line1);
-//     //   print("Line 2: {s}\n", .{line2});
-//     // remove vk from result - 1
-//     const line3 = removeVkFromResult(&buf1, line2);
-//     //   print("Line 3: {s}\n", .{line3});
-//     // remove pub - 1
-//     const prefix = "pub ";
-//     removePrefix(&buf1, prefix);
-//     const line4 = buf1[0 .. line3.len - prefix.len];
-//     //   print("Line 4: {s}\n", .{line4});
-//     // extract var name - 2
-//     const var_name = varName(line4, &.{ "extern ", "fn ", "vk" }, &.{});
-//     const prefix1 = "pub const ";
-//     const line5 = try bufPrint(
-//         &buf2,
-//         "{s}{s} = vk{s};{s}",
-//         .{ prefix1, var_name, var_name, end_str },
-//     );
-//     buf2[prefix1.len] = toLower(buf2[prefix1.len]);
-//     //   print("Line 5: {s}\n", .{line5});
-//     // Store both lines
-//     const dup_line = try allo.dupe(u8, line4);
-//     try self.extern_fns.append(allo, dup_line);
-//     const dup_line1 = try allo.dupe(u8, line5);
-//     try self.extern_fns.append(allo, dup_line1);
-// }
-//
-// fn processPFN(self: *TextData, line: []const u8) !void {
-//     // _ = self;
-//     // print("Line: {s}", .{line});
-//     // Replace Vks
-//     var buf1: [BUFFER_SIZE]u8 = undefined;
-//     const n_reps = replace(u8, line, "Vk", "", &buf1);
-//     const end = line.len - (n_reps * 2);
-//     var line1 = buf1[0..end];
-//     const prefix = "pub ";
-//     line1 = if (startsWith(u8, line1, prefix)) line1[prefix.len..line1.len] else line1;
-//     // print("Line 1: {s}", .{line1});
-//     try self.writeToFile(.pfn, line1);
-//     // Create custom PFN w/o vk prefix
-//     const var_name = varName(line1, &.{ "pub ", "const ", "PFN_vk" }, &.{});
-//     var buf2: [BUFFER_SIZE]u8 = undefined;
-//     const line2 = try bufPrint(
-//         &buf2,
-//         "pub const PFN_{s} = PFN_vk{s};{s}",
-//         .{ var_name, var_name, end_str },
-//     );
-//     // print("Line 2: {s}\n", .{line2});
-//     try self.writeToFile(.pfn, line2);
-// }
-//
+fn processInlineFn(self: *TextData, line: []const u8) !void {
+    // Get Old Var Name - No Vk
+    const vk_idx = indexOf(u8, line, "VK_").?;
+    const open_paren_idx = indexOfScalar(u8, line, '(').?;
+    const var_name = line[vk_idx..open_paren_idx];
+    var buf1: Buffer = .init(var_name);
+    // Create New Var Name
+    var buf2: Buffer = .{};
+    const var_name1 = buf2.pascalFromSnake(var_name[3..var_name.len]);
+    // Copy fn
+    {
+        const prefix = "pub ";
+        const line1 = line[prefix.len..line.len];
+        try self.writeToFile(.inline_fn, line1);
+    }
+    while (true) {
+        const line1: []const u8 = self.nextline(&self.buffer) catch unreachable;
+        try self.writeToFile(.inline_fn, line1);
+        if (startsWith(u8, line1, "}")) break;
+    }
+    // Create new fn = easier interface
+    var buf3: Buffer = .{};
+    const line1 = buf3.extends(&.{
+        "pub const ",
+        var_name1,
+        " = ",
+        buf1.str(),
+        ";",
+        end_str,
+    });
+    try self.writeToFile(.inline_fn, line1);
+}
+
+fn processExternFn(self: *TextData, line: []const u8) !void {
+    // Remove vk from args + result
+    var buf1: Buffer = .init(line);
+    const line1 = buf1.remove("Vk");
+    // convert arg names to snake
+    var buf2: Buffer = .{};
+    _ = buf2.argNamesToSnake(line1);
+    // remove pub - 1
+    const line3 = buf2.removePrefixes(&.{"pub "});
+    // extract var name - 2
+    var buf3: Buffer = .{};
+    const var_name = varName(line3, &.{ "extern ", "fn ", "vk" }, &.{});
+    const prefix = "pub const ";
+    const line4 = buf3.extends(&.{ prefix, var_name, " = vk", var_name, ";", end_str });
+    buf3.buf[prefix.len] = toLower(buf3.buf[prefix.len]);
+    // Store both lines
+    try self.writeToFile(.extern_fn, line3);
+    try self.writeToFile(.extern_fn, line4);
+}
+
+fn processPFN(self: *TextData, line: []const u8) !void {
+    // Replace Vks
+    var buf1: Buffer = .{};
+    const line1 = buf1.replaceAndExtend(line, "Vk");
+    const line2 = buf1.remove("pub ");
+    try self.writeToFile(.pfn, line2);
+    // Create custom PFN w/o vk prefix
+    var buf2: Buffer = .{};
+    const prefix = "pub const PFN_";
+    const var_name = varName(line1, &.{ "pub ", "const ", "PFN_", "vk" }, &.{});
+    const line3 = buf2.extends(&.{ prefix, var_name, " = PFN_vk", var_name, ";", end_str });
+    buf2.buf[prefix.len] = toLower(buf2.buf[prefix.len]);
+    try self.writeToFile(.pfn, line3);
+}
+
 // fn processFlag1PES(self: *TextData, allo: Allocator, line: []const u8) !void {
 //     _ = self;
 //     _ = allo;
@@ -406,44 +388,95 @@ fn isType(line: []const u8) bool {
 //     _ = line1;
 //     // try self.writeToFile(.flag1_enum, line1);
 // }
-//
-// fn processFlag2PES() void {}
-//
-// fn processFlag2Enum() void {}
-//
-// fn processOpaque(self: *TextData) !void {
-//     const size = try self.nextLine(&self.buffer);
-//     const line1: []const u8 = self.buffer[0..size];
-//     const var_name = varName(line1, &.{ "pub const Vk", "" }, &.{});
-//     var buffer: [1024]u8 = undefined;
-//     const line2 = try bufPrint(
-//         &buffer,
-//         "pub const {s} = enum(isize) {s}{s}    null = 0,{s}    _,{s}{s}{s}",
-//         .{ var_name, "{", end_str, end_str, end_str, "};", end_str },
-//     );
-//     try self.writeToFile(._opaque, line2);
-// }
+
+fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
+    // Parse Flag Name
+    const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{"Flags2"});
+    // Write Title
+    var buf1: Buffer = .{};
+    const line1 = buf1.extends(&.{
+        "pub const ",
+        var_name,
+        "2 = enum(u64) {",
+        end_str,
+    });
+    try self.writeToFile(.flag2, line1);
+    // Update Flag
+    self.is_enum2 = true;
+    self.enum2_title.reset();
+    _ = self.enum2_title.pascalFromSnake(var_name);
+    // Skip Next Line
+    _ = try self.nextline(&self.buffer);
+}
+
+fn processFlag2EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
+    // get var name
+    const var_name = varName(line, &.{ "pub ", "const ", "VK_" }, &.{":"});
+    var buf1: Buffer = .init(var_name);
+    const lower_var_name = buf1.lower();
+    const enum_title = self.enum2_title.str();
+    const var_name1 = varName(lower_var_name, &.{ enum_title, "_2_" }, &.{});
+    // check if dup
+    if (self.enum2_field_names.get(var_name1) != null) {
+        return;
+    }
+    const var_value = varValue(line);
+    // check if dup
+    if (self.enum2_field_values.get(var_value) != null) {
+        return;
+    }
+    // add to maps
+    const dup_var_name = try allo.dupe(u8, var_name1);
+    const dup_var_value = try allo.dupe(u8, var_value);
+    try self.enum2_field_names.put(dup_var_name, {});
+    try self.enum2_field_values.put(dup_var_value, {});
+    // write field
+    var buf2: Buffer = .{};
+    const line1 = buf2.extends(&.{
+        "    ",
+        var_name1,
+        " = ",
+        var_value,
+        ",",
+        end_str,
+    });
+    try self.writeToFile(.flag2, line1);
+}
+
+fn processOpaque(self: *TextData) !void {
+    const line1 = self.nextline(&self.buffer) catch unreachable;
+    const var_name = varName(line1, &.{ "pub const Vk", "" }, &.{});
+    var buf: Buffer = .{};
+    const line2 = buf.extends(&.{
+        "pub const ",
+        var_name,
+        " = enum(isize) {",
+        end_str,
+        "    null = 0,",
+        end_str,
+        "    _,",
+        end_str,
+        "};",
+        end_str,
+    });
+    try self.writeToFile(._opaque, line2);
+}
 
 fn processExternStruct(self: *TextData, line: []const u8) !void {
     // Convert name to remove struct_Vk
     var buf1: Buffer = .init(line);
     const line1 = buf1.remove("struct_Vk");
-    // print("Line 1: {s}", .{line1});
-    try self.writeToFile(.extern_fn, line1);
+    try self.writeToFile(.extern_struct, line1);
     // get var name for s_type
     const var_name = varName(line1, &.{"pub const "}, &.{});
     var buf2: Buffer = .{};
-    const snake_name = buf2.toSnake(var_name);
-    // print("Snake Name: {s}\n", .{snake_name});
-
+    const snake_name = buf2.snakeFromCamel(var_name);
     while (true) {
-        const size = self.nextLine(&self.buffer) catch unreachable;
-        const line2 = self.buffer[0..size];
+        const line2: []const u8 = self.nextline(&self.buffer) catch unreachable;
         if (startsWith(u8, line, "}")) {
-            try self.writeToFile(.extern_fn, line2);
+            try self.writeToFile(.extern_struct, line2);
             break;
         }
-        // print("Line 2: {s}", .{line2});
         // idxs
         const colon_idx = indexOfScalar(u8, line2, ':').?;
         const name_idx = lastIndexOfScalar(u8, line2[0..colon_idx], ' ').? + 1;
@@ -454,129 +487,156 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
         // posiitons
         // copy field line spacing
         var buf3: Buffer = .{};
-        const spacing = line2[0..name_idx];
-        buf3.copy(spacing);
-        // convert field name to snake
-        const field_name = line2[name_idx..colon_idx];
-        // print("Field Name: {s}\n", .{field_name});
-        const snake_name1 = buf3.toSnake(field_name);
-        // print("Snake Name: {s}\n", .{snake_name1});
-        buf3.copy(": ");
-        // copy type
-        var buf4: Buffer = .init(line2[colon_idx + 2 .. eql_idx]);
-        // print("Var Type: {s}\n", .{buf4.str()});
-        const var_type1 = buf4.remove("Vk");
-        // print("Var Type: {s}\n", .{var_type1});
-        buf3.extend(var_type1);
-        const line3 = buf3.str();
-        // print("Line 3: {s}\n", .{line3});
+        _ = buf3.fieldNameToSnake(line2);
+        _ = buf3.remove("struct_Vk");
+        _ = buf3.remove("union_Vk");
+        _ = buf3.remove("Vk");
+        const snake_field_name = buf3.fieldName();
         // If Structure Type - write structure type
         // Else - write what it was
-        if (startsWith(u8, var_type1, "StructureType")) {
-            buf3.extend("= .");
-            buf3.extend(snake_name);
-            buf3.extend(",");
-        } else {
-            const old_line = line2[eql_idx..line2.len];
-            // buf3.extend(old_line);
-            var buf5: Buffer = .init(old_line);
-            const line4 = buf5.remove("Vk");
-            buf3.extend(line4);
-        }
-        const line4 = buf3.str();
-        // print("Line: {s}\n", .{line4});
-        // convert s_types to specific value rather than random value
-        try self.writeToFile(.extern_fn, line2);
+        const line5 = if (eql(u8, snake_field_name, "s_type")) //
+            buf3.replaceFieldValue(&.{ " = .", snake_name, ",", end_str })
+        else if (eql(u8, snake_field_name, "p_next")) //
+            buf3.replaceFieldValue(&.{ " = null,", end_str })
+        else //
+            buf3.str();
+        try self.writeToFile(.extern_struct, line5);
     }
 }
 
-// fn processExternUnion(self: *TextData, line: []const u8) !void {
-//     _ = self;
-//     print("Line: {s}", .{line});
-//     // try self.writeToFile(.extern_union, line);
-// }
-//
-// fn processExtensionName(self: *TextData, line: []const u8) !void {
-//     // print("Line: {s}", .{line});
-//     // Grab name + value
-//     const var_name = varName(
-//         line,
-//         &.{ "pub ", "const ", "VK_", "KHR_" },
-//         &.{"_EXTENSION_NAME"},
-//     );
-//     const var_value = varValue(line);
-//     // Skip if value is not a string
-//     if (!startsWith(u8, var_value, "\"")) return;
-//     // convert to lower
-//     var buf1: [BUFFER_SIZE]u8 = undefined;
-//     const new_var_name = lowerString(&buf1, var_name);
-//     // Convert to line
-//     var buf: [1024]u8 = undefined;
-//     const line1 = if (!isDigit(new_var_name[0])) try bufPrint(
-//         &buf,
-//         "pub const {s}: [*:0]const u8 = {s};{s}",
-//         .{ new_var_name, var_value, end_str },
-//     ) //
-//         else try bufPrint(
-//             &buf,
-//             "pub const @\"{s}\": [*:0]const u8 = {s};{s}",
-//             .{ new_var_name, var_value, end_str },
-//         );
-//     // print("Line 1: {s}", .{line1});
-//     try self.writeToFile(.extension_name, line1);
-// }
-//
-// fn processSpecVersion(self: *TextData, line: []const u8) !void {
-//     // print("Line: {s}", .{line});
-//     // Grab name + value + type
-//     const var_name = varName(line, &.{ "pub ", "const ", "VK_", "KHR_" }, &.{"_SPEC_VERSION"});
-//     const var_value = varValue(line);
-//     if (lastIndexOf(u8, line, "@as") == null) return;
-//     const var_type = varTypePostEql(line);
-//     // print("Name: {s}\n", .{var_name});
-//     // print("Value: {s}\n", .{var_value});
-//     // print("Type: {s}\n", .{var_type});
-//     // convert to lower
-//     var buf1: [BUFFER_SIZE]u8 = undefined;
-//     const new_var_name = lowerString(&buf1, var_name);
-//     // convert to line
-//     var buf: [1024]u8 = undefined;
-//     const line1 = try bufPrint(
-//         &buf,
-//         "pub const {s}: {s} = {s};{s}",
-//         .{ new_var_name, var_type, var_value, end_str },
-//     );
-//     // print("Line 1: {s}\n", .{line1});
-//     try self.writeToFile(.spec_version, line1);
-// }
-//
-// fn processTypes(self: *TextData, allo: Allocator, line: []const u8) !void {
-//     // print("Line: {s}", .{line});
-//     // get name + value
-//     const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{});
-//     const var_value = varValue(line);
-//     // create line
-//     var buf: [1024]u8 = undefined;
-//     const line1 = if (!eql(u8, var_name, "Bool32")) try bufPrint(
-//         &buf,
-//         "pub const {s} = {s};{s}",
-//         .{ var_name, var_value, end_str },
-//     ) //
-//         else //
-//         try bufPrint(
-//             &buf,
-//             "pub const {s} = enum(u32) {s}{s}    false = 0,{s}    true = 1,{s}{s}{s}",
-//             .{ var_name, "{", end_str, end_str, end_str, "};", end_str },
-//         );
-//     // print("Line 1: {s}", .{line1});
-//     try self.writeToFile(._type, line1);
-//     // Add name to list of var names
-//     const new_var_name = try allo.dupe(u8, var_name);
-//     try self.prev_var_names.append(
-//         allo,
-//         .{ .var_name = new_var_name, .var_type = ._type },
-//     );
-// }
+fn processExternUnion(self: *TextData, line: []const u8) !void {
+    var buf1: Buffer = .{};
+    const var_name = varName(line, &.{ "pub ", "const ", "union_Vk" }, &.{});
+    const line1 = buf1.extends(&.{ "pub const ", var_name, " = extern union {", end_str });
+    try self.writeToFile(.extern_union, line1);
+    while (true) {
+        const line2 = self.nextline(&self.buffer) catch unreachable;
+        if (startsWith(u8, line, "}")) {
+            try self.writeToFile(.extern_union, line2);
+            break;
+        }
+
+        var buf2: Buffer = .{};
+        _ = buf2.fieldNameToSnake(line2);
+        const line4 = buf2.remove("Vk");
+        try self.writeToFile(.extern_union, line4);
+    }
+}
+
+fn processExtensionName(
+    self: *TextData,
+    allo: Allocator,
+    line: []const u8,
+) !void {
+    // Grab name + value
+    const var_name = varName(
+        line,
+        &.{ "pub ", "const ", "VK_", "KHR_" },
+        &.{"_EXTENSION_NAME"},
+    );
+    const var_value = varValue(line);
+    // Skip if value is not a string
+    if (!startsWith(u8, var_value, "\"")) return;
+    // convert to lower
+    var buf1: [BUFFER_SIZE]u8 = undefined;
+    const new_var_name = lowerString(&buf1, var_name);
+    // Convert to line
+    var buf: Buffer = .{};
+    const line1 = if (!isDigit(new_var_name[0])) //
+        buf.extends(&.{
+            "pub const ",
+            new_var_name,
+            ": [*:0]const u8 = ",
+            var_value,
+            ";",
+            end_str,
+        })
+    else //
+        buf.extends(&.{
+            "pub const @\"",
+            new_var_name,
+            "\": [*:0]const u8 = ",
+            var_value,
+            ";",
+            end_str,
+        });
+    const line2 = try allo.dupe(u8, line1);
+    try self.extension_names.append(allo, line2);
+}
+
+fn processSpecVersion(
+    self: *TextData,
+    allo: Allocator,
+    line: []const u8,
+) !void {
+    // Grab name + value + type
+    const var_name = varName(line, &.{ "pub ", "const ", "VK_", "KHR_" }, &.{"_SPEC_VERSION"});
+    const var_value = varValue(line);
+    if (lastIndexOf(u8, line, "@as") == null) return;
+    const last_open_paren_idx = lastIndexOfScalar(u8, line, '(').?;
+    const comma_idx = lastIndexOfScalar(u8, line, ',').?;
+    const var_type = line[last_open_paren_idx + 1 .. comma_idx];
+    // convert to lower
+    var buf1: [BUFFER_SIZE]u8 = undefined;
+    const new_var_name = lowerString(&buf1, var_name);
+    // convert to line
+    var buf: Buffer = .{};
+    const line1 = if (!isDigit(new_var_name[0])) //
+        buf.extends(&.{
+            "pub const ",
+            new_var_name,
+            ": ",
+            var_type,
+            " = ",
+            var_value,
+            ";",
+            end_str,
+        })
+    else //
+        buf.extends(&.{
+            "pub const @\"",
+            new_var_name,
+            "\": ",
+            var_type,
+            " = ",
+            var_value,
+            ";",
+            end_str,
+        });
+    const line2 = try allo.dupe(u8, line1);
+    try self.spec_versions.append(allo, line2);
+}
+
+fn processTypes(self: *TextData, line: []const u8) !void {
+    // get name + value
+    const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{});
+    const var_value = varValue(line);
+    // create line
+    var buf: Buffer = .{};
+    const line1 = if (!eql(u8, var_name, "Bool32")) //
+        buf.extends(&.{
+            "pub const ",
+            var_name,
+            " = ",
+            var_value,
+            ";",
+            end_str,
+        })
+    else
+        buf.extends(&.{
+            "pub const ",
+            var_name,
+            " = enum(u32) {",
+            end_str,
+            "    false = 0,",
+            end_str,
+            "    true = 1,",
+            end_str,
+            "};",
+            end_str,
+        });
+    try self.writeToFile(._type, line1);
+}
 
 fn bsEF(self: *TextData) void {
     // bubble sort enum fields
@@ -705,4 +765,24 @@ fn reconstructEnumFieldName(
     }
 
     return new_word;
+}
+
+fn writeExtensionNames(self: *TextData) !void {
+    try self.writeToFile(.extension_name, "pub const ExtensionName = struct {");
+    try self.writeToFile(.extension_name, end_str);
+    for (self.extension_names.items) |extension_name| {
+        try self.writeToFile(.extension_name, extension_name);
+    }
+    try self.writeToFile(.extension_name, "};");
+    try self.writeToFile(.extension_name, end_str);
+}
+
+fn writeSpecVersions(self: *TextData) !void {
+    try self.writeToFile(.spec_version, "pub const SpecVersion = struct {");
+    try self.writeToFile(.spec_version, end_str);
+    for (self.spec_versions.items) |spec_version| {
+        try self.writeToFile(.spec_version, spec_version);
+    }
+    try self.writeToFile(.spec_version, "};");
+    try self.writeToFile(.spec_version, end_str);
 }
