@@ -1,8404 +1,1422 @@
-pub const Extent2D = extern struct {
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-};
-pub const Extent3D = extern struct {
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    depth: u32 = @import("std").mem.zeroes(u32),
-};
-pub const Offset2D = extern struct {
-    x: i32 = @import("std").mem.zeroes(i32),
-    y: i32 = @import("std").mem.zeroes(i32),
-};
-pub const Offset3D = extern struct {
-    x: i32 = @import("std").mem.zeroes(i32),
-    y: i32 = @import("std").mem.zeroes(i32),
-    z: i32 = @import("std").mem.zeroes(i32),
-};
-pub const Rect2D = extern struct {
-    offset: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    extent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const BaseInStructure = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: [*c]const struct_VkBaseInStructure = @import("std").mem.zeroes([*c]const struct_VkBaseInStructure),
-};
-pub const BaseOutStructure = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: [*c]struct_VkBaseOutStructure = @import("std").mem.zeroes([*c]struct_VkBaseOutStructure),
-};
-pub const BufferMemoryBarrier = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dstAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    srcQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    dstQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DispatchIndirectCommand = extern struct {
-    x: u32 = @import("std").mem.zeroes(u32),
-    y: u32 = @import("std").mem.zeroes(u32),
-    z: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DrawIndexedIndirectCommand = extern struct {
-    indexCount: u32 = @import("std").mem.zeroes(u32),
-    instanceCount: u32 = @import("std").mem.zeroes(u32),
-    firstIndex: u32 = @import("std").mem.zeroes(u32),
-    vertexOffset: i32 = @import("std").mem.zeroes(i32),
-    firstInstance: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DrawIndirectCommand = extern struct {
-    vertexCount: u32 = @import("std").mem.zeroes(u32),
-    instanceCount: u32 = @import("std").mem.zeroes(u32),
-    firstVertex: u32 = @import("std").mem.zeroes(u32),
-    firstInstance: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ImageSubresourceRange = extern struct {
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-    baseMipLevel: u32 = @import("std").mem.zeroes(u32),
-    levelCount: u32 = @import("std").mem.zeroes(u32),
-    baseArrayLayer: u32 = @import("std").mem.zeroes(u32),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ImageMemoryBarrier = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dstAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    oldLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    newLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    srcQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    dstQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    subresourceRange: VkImageSubresourceRange = @import("std").mem.zeroes(VkImageSubresourceRange),
-};
-pub const MemoryBarrier = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dstAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-};
-pub const PipelineCacheHeaderVersionOne = extern struct {
-    headerSize: u32 = @import("std").mem.zeroes(u32),
-    headerVersion: VkPipelineCacheHeaderVersion = @import("std").mem.zeroes(VkPipelineCacheHeaderVersion),
-    vendorID: u32 = @import("std").mem.zeroes(u32),
-    deviceID: u32 = @import("std").mem.zeroes(u32),
-    pipelineCacheUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-};
-pub const AllocationCallbacks = extern struct {
-    pUserData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pfnAllocation: PFN_vkAllocationFunction = @import("std").mem.zeroes(PFN_vkAllocationFunction),
-    pfnReallocation: PFN_vkReallocationFunction = @import("std").mem.zeroes(PFN_vkReallocationFunction),
-    pfnFree: PFN_vkFreeFunction = @import("std").mem.zeroes(PFN_vkFreeFunction),
-    pfnInternalAllocation: PFN_vkInternalAllocationNotification = @import("std").mem.zeroes(PFN_vkInternalAllocationNotification),
-    pfnInternalFree: PFN_vkInternalFreeNotification = @import("std").mem.zeroes(PFN_vkInternalFreeNotification),
-};
-pub const ApplicationInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pApplicationName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    applicationVersion: u32 = @import("std").mem.zeroes(u32),
-    pEngineName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    engineVersion: u32 = @import("std").mem.zeroes(u32),
-    apiVersion: u32 = @import("std").mem.zeroes(u32),
-};
-pub const FormatProperties = extern struct {
-    linearTilingFeatures: VkFormatFeatureFlags = @import("std").mem.zeroes(VkFormatFeatureFlags),
-    optimalTilingFeatures: VkFormatFeatureFlags = @import("std").mem.zeroes(VkFormatFeatureFlags),
-    bufferFeatures: VkFormatFeatureFlags = @import("std").mem.zeroes(VkFormatFeatureFlags),
-};
-pub const ImageFormatProperties = extern struct {
-    maxExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-    maxMipLevels: u32 = @import("std").mem.zeroes(u32),
-    maxArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    sampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    maxResourceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const InstanceCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkInstanceCreateFlags = @import("std").mem.zeroes(VkInstanceCreateFlags),
-    pApplicationInfo: [*c]const VkApplicationInfo = @import("std").mem.zeroes([*c]const VkApplicationInfo),
-    enabledLayerCount: u32 = @import("std").mem.zeroes(u32),
-    ppEnabledLayerNames: [*c]const [*c]const u8 = @import("std").mem.zeroes([*c]const [*c]const u8),
-    enabledExtensionCount: u32 = @import("std").mem.zeroes(u32),
-    ppEnabledExtensionNames: [*c]const [*c]const u8 = @import("std").mem.zeroes([*c]const [*c]const u8),
-};
-pub const MemoryHeap = extern struct {
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    flags: VkMemoryHeapFlags = @import("std").mem.zeroes(VkMemoryHeapFlags),
-};
-pub const MemoryType = extern struct {
-    propertyFlags: VkMemoryPropertyFlags = @import("std").mem.zeroes(VkMemoryPropertyFlags),
-    heapIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceFeatures = extern struct {
-    robustBufferAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fullDrawIndexUint32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    imageCubeArray: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    independentBlend: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    geometryShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tessellationShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sampleRateShading: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dualSrcBlend: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    logicOp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiDrawIndirect: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    drawIndirectFirstInstance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthClamp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthBiasClamp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fillModeNonSolid: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthBounds: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    wideLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    largePoints: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    alphaToOne: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiViewport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    samplerAnisotropy: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureCompressionETC2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureCompressionASTC_LDR: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureCompressionBC: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    occlusionQueryPrecise: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineStatisticsQuery: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vertexPipelineStoresAndAtomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentStoresAndAtomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTessellationAndGeometryPointSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderImageGatherExtended: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageExtendedFormats: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageMultisample: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageReadWithoutFormat: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageWriteWithoutFormat: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSampledImageArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderClipDistance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderCullDistance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInt64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInt16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderResourceResidency: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderResourceMinLod: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseBinding: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidencyBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidencyImage2D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidencyImage3D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidency2Samples: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidency4Samples: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidency8Samples: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidency16Samples: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseResidencyAliased: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    variableMultisampleRate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    inheritedQueries: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceLimits = extern struct {
-    maxImageDimension1D: u32 = @import("std").mem.zeroes(u32),
-    maxImageDimension2D: u32 = @import("std").mem.zeroes(u32),
-    maxImageDimension3D: u32 = @import("std").mem.zeroes(u32),
-    maxImageDimensionCube: u32 = @import("std").mem.zeroes(u32),
-    maxImageArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    maxTexelBufferElements: u32 = @import("std").mem.zeroes(u32),
-    maxUniformBufferRange: u32 = @import("std").mem.zeroes(u32),
-    maxStorageBufferRange: u32 = @import("std").mem.zeroes(u32),
-    maxPushConstantsSize: u32 = @import("std").mem.zeroes(u32),
-    maxMemoryAllocationCount: u32 = @import("std").mem.zeroes(u32),
-    maxSamplerAllocationCount: u32 = @import("std").mem.zeroes(u32),
-    bufferImageGranularity: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    sparseAddressSpaceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxBoundDescriptorSets: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorInputAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageResources: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUniformBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetStorageBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetInputAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxVertexInputAttributes: u32 = @import("std").mem.zeroes(u32),
-    maxVertexInputBindings: u32 = @import("std").mem.zeroes(u32),
-    maxVertexInputAttributeOffset: u32 = @import("std").mem.zeroes(u32),
-    maxVertexInputBindingStride: u32 = @import("std").mem.zeroes(u32),
-    maxVertexOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationGenerationLevel: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationPatchSize: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationControlPerVertexInputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationControlPerVertexOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationControlPerPatchOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationControlTotalOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationEvaluationInputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxTessellationEvaluationOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryShaderInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryInputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryOutputVertices: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryTotalOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentInputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentOutputAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentDualSrcAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentCombinedOutputResources: u32 = @import("std").mem.zeroes(u32),
-    maxComputeSharedMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxComputeWorkGroupCount: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxComputeWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxComputeWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    subPixelPrecisionBits: u32 = @import("std").mem.zeroes(u32),
-    subTexelPrecisionBits: u32 = @import("std").mem.zeroes(u32),
-    mipmapPrecisionBits: u32 = @import("std").mem.zeroes(u32),
-    maxDrawIndexedIndexValue: u32 = @import("std").mem.zeroes(u32),
-    maxDrawIndirectCount: u32 = @import("std").mem.zeroes(u32),
-    maxSamplerLodBias: f32 = @import("std").mem.zeroes(f32),
-    maxSamplerAnisotropy: f32 = @import("std").mem.zeroes(f32),
-    maxViewports: u32 = @import("std").mem.zeroes(u32),
-    maxViewportDimensions: [2]u32 = @import("std").mem.zeroes([2]u32),
-    viewportBoundsRange: [2]f32 = @import("std").mem.zeroes([2]f32),
-    viewportSubPixelBits: u32 = @import("std").mem.zeroes(u32),
-    minMemoryMapAlignment: usize = @import("std").mem.zeroes(usize),
-    minTexelBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    minUniformBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    minStorageBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    minTexelOffset: i32 = @import("std").mem.zeroes(i32),
-    maxTexelOffset: u32 = @import("std").mem.zeroes(u32),
-    minTexelGatherOffset: i32 = @import("std").mem.zeroes(i32),
-    maxTexelGatherOffset: u32 = @import("std").mem.zeroes(u32),
-    minInterpolationOffset: f32 = @import("std").mem.zeroes(f32),
-    maxInterpolationOffset: f32 = @import("std").mem.zeroes(f32),
-    subPixelInterpolationOffsetBits: u32 = @import("std").mem.zeroes(u32),
-    maxFramebufferWidth: u32 = @import("std").mem.zeroes(u32),
-    maxFramebufferHeight: u32 = @import("std").mem.zeroes(u32),
-    maxFramebufferLayers: u32 = @import("std").mem.zeroes(u32),
-    framebufferColorSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    framebufferDepthSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    framebufferStencilSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    framebufferNoAttachmentsSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    maxColorAttachments: u32 = @import("std").mem.zeroes(u32),
-    sampledImageColorSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    sampledImageIntegerSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    sampledImageDepthSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    sampledImageStencilSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    storageImageSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    maxSampleMaskWords: u32 = @import("std").mem.zeroes(u32),
-    timestampComputeAndGraphics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    timestampPeriod: f32 = @import("std").mem.zeroes(f32),
-    maxClipDistances: u32 = @import("std").mem.zeroes(u32),
-    maxCullDistances: u32 = @import("std").mem.zeroes(u32),
-    maxCombinedClipAndCullDistances: u32 = @import("std").mem.zeroes(u32),
-    discreteQueuePriorities: u32 = @import("std").mem.zeroes(u32),
-    pointSizeRange: [2]f32 = @import("std").mem.zeroes([2]f32),
-    lineWidthRange: [2]f32 = @import("std").mem.zeroes([2]f32),
-    pointSizeGranularity: f32 = @import("std").mem.zeroes(f32),
-    lineWidthGranularity: f32 = @import("std").mem.zeroes(f32),
-    strictLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    standardSampleLocations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    optimalBufferCopyOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    optimalBufferCopyRowPitchAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    nonCoherentAtomSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDeviceMemoryProperties = extern struct {
-    memoryTypeCount: u32 = @import("std").mem.zeroes(u32),
-    memoryTypes: [32]VkMemoryType = @import("std").mem.zeroes([32]VkMemoryType),
-    memoryHeapCount: u32 = @import("std").mem.zeroes(u32),
-    memoryHeaps: [16]VkMemoryHeap = @import("std").mem.zeroes([16]VkMemoryHeap),
-};
-pub const PhysicalDeviceSparseProperties = extern struct {
-    residencyStandard2DBlockShape: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    residencyStandard2DMultisampleBlockShape: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    residencyStandard3DBlockShape: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    residencyAlignedMipSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    residencyNonResidentStrict: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceProperties = extern struct {
-    apiVersion: u32 = @import("std").mem.zeroes(u32),
-    driverVersion: u32 = @import("std").mem.zeroes(u32),
-    vendorID: u32 = @import("std").mem.zeroes(u32),
-    deviceID: u32 = @import("std").mem.zeroes(u32),
-    deviceType: VkPhysicalDeviceType = @import("std").mem.zeroes(VkPhysicalDeviceType),
-    deviceName: [256]u8 = @import("std").mem.zeroes([256]u8),
-    pipelineCacheUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    limits: VkPhysicalDeviceLimits = @import("std").mem.zeroes(VkPhysicalDeviceLimits),
-    sparseProperties: VkPhysicalDeviceSparseProperties = @import("std").mem.zeroes(VkPhysicalDeviceSparseProperties),
-};
-pub const QueueFamilyProperties = extern struct {
-    queueFlags: VkQueueFlags = @import("std").mem.zeroes(VkQueueFlags),
-    queueCount: u32 = @import("std").mem.zeroes(u32),
-    timestampValidBits: u32 = @import("std").mem.zeroes(u32),
-    minImageTransferGranularity: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const DeviceQueueCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDeviceQueueCreateFlags = @import("std").mem.zeroes(VkDeviceQueueCreateFlags),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    queueCount: u32 = @import("std").mem.zeroes(u32),
-    pQueuePriorities: [*c]const f32 = @import("std").mem.zeroes([*c]const f32),
-};
-pub const DeviceCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDeviceCreateFlags = @import("std").mem.zeroes(VkDeviceCreateFlags),
-    queueCreateInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueCreateInfos: [*c]const VkDeviceQueueCreateInfo = @import("std").mem.zeroes([*c]const VkDeviceQueueCreateInfo),
-    enabledLayerCount: u32 = @import("std").mem.zeroes(u32),
-    ppEnabledLayerNames: [*c]const [*c]const u8 = @import("std").mem.zeroes([*c]const [*c]const u8),
-    enabledExtensionCount: u32 = @import("std").mem.zeroes(u32),
-    ppEnabledExtensionNames: [*c]const [*c]const u8 = @import("std").mem.zeroes([*c]const [*c]const u8),
-    pEnabledFeatures: [*c]const VkPhysicalDeviceFeatures = @import("std").mem.zeroes([*c]const VkPhysicalDeviceFeatures),
-};
-pub const ExtensionProperties = extern struct {
-    extensionName: [256]u8 = @import("std").mem.zeroes([256]u8),
-    specVersion: u32 = @import("std").mem.zeroes(u32),
-};
-pub const LayerProperties = extern struct {
-    layerName: [256]u8 = @import("std").mem.zeroes([256]u8),
-    specVersion: u32 = @import("std").mem.zeroes(u32),
-    implementationVersion: u32 = @import("std").mem.zeroes(u32),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-};
-pub const SubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-    pWaitDstStageMask: [*c]const VkPipelineStageFlags = @import("std").mem.zeroes([*c]const VkPipelineStageFlags),
-    commandBufferCount: u32 = @import("std").mem.zeroes(u32),
-    pCommandBuffers: [*c]const VkCommandBuffer = @import("std").mem.zeroes([*c]const VkCommandBuffer),
-    signalSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-};
-pub const MappedMemoryRange = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const MemoryAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    allocationSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    memoryTypeIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MemoryRequirements = extern struct {
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    alignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    memoryTypeBits: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SparseMemoryBind = extern struct {
-    resourceOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    flags: VkSparseMemoryBindFlags = @import("std").mem.zeroes(VkSparseMemoryBindFlags),
-};
-pub const SparseBufferMemoryBindInfo = extern struct {
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    bindCount: u32 = @import("std").mem.zeroes(u32),
-    pBinds: [*c]const VkSparseMemoryBind = @import("std").mem.zeroes([*c]const VkSparseMemoryBind),
-};
-pub const SparseImageOpaqueMemoryBindInfo = extern struct {
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    bindCount: u32 = @import("std").mem.zeroes(u32),
-    pBinds: [*c]const VkSparseMemoryBind = @import("std").mem.zeroes([*c]const VkSparseMemoryBind),
-};
-pub const ImageSubresource = extern struct {
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-    mipLevel: u32 = @import("std").mem.zeroes(u32),
-    arrayLayer: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SparseImageMemoryBind = extern struct {
-    subresource: VkImageSubresource = @import("std").mem.zeroes(VkImageSubresource),
-    offset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    flags: VkSparseMemoryBindFlags = @import("std").mem.zeroes(VkSparseMemoryBindFlags),
-};
-pub const SparseImageMemoryBindInfo = extern struct {
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    bindCount: u32 = @import("std").mem.zeroes(u32),
-    pBinds: [*c]const VkSparseImageMemoryBind = @import("std").mem.zeroes([*c]const VkSparseImageMemoryBind),
-};
-pub const BindSparseInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-    bufferBindCount: u32 = @import("std").mem.zeroes(u32),
-    pBufferBinds: [*c]const VkSparseBufferMemoryBindInfo = @import("std").mem.zeroes([*c]const VkSparseBufferMemoryBindInfo),
-    imageOpaqueBindCount: u32 = @import("std").mem.zeroes(u32),
-    pImageOpaqueBinds: [*c]const VkSparseImageOpaqueMemoryBindInfo = @import("std").mem.zeroes([*c]const VkSparseImageOpaqueMemoryBindInfo),
-    imageBindCount: u32 = @import("std").mem.zeroes(u32),
-    pImageBinds: [*c]const VkSparseImageMemoryBindInfo = @import("std").mem.zeroes([*c]const VkSparseImageMemoryBindInfo),
-    signalSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-};
-pub const SparseImageFormatProperties = extern struct {
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-    imageGranularity: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-    flags: VkSparseImageFormatFlags = @import("std").mem.zeroes(VkSparseImageFormatFlags),
-};
-pub const SparseImageMemoryRequirements = extern struct {
-    formatProperties: VkSparseImageFormatProperties = @import("std").mem.zeroes(VkSparseImageFormatProperties),
-    imageMipTailFirstLod: u32 = @import("std").mem.zeroes(u32),
-    imageMipTailSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    imageMipTailOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    imageMipTailStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const FenceCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkFenceCreateFlags = @import("std").mem.zeroes(VkFenceCreateFlags),
-};
-pub const SemaphoreCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSemaphoreCreateFlags = @import("std").mem.zeroes(VkSemaphoreCreateFlags),
-};
-pub const EventCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkEventCreateFlags = @import("std").mem.zeroes(VkEventCreateFlags),
-};
-pub const QueryPoolCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkQueryPoolCreateFlags = @import("std").mem.zeroes(VkQueryPoolCreateFlags),
-    queryType: VkQueryType = @import("std").mem.zeroes(VkQueryType),
-    queryCount: u32 = @import("std").mem.zeroes(u32),
-    pipelineStatistics: VkQueryPipelineStatisticFlags = @import("std").mem.zeroes(VkQueryPipelineStatisticFlags),
-};
-pub const BufferCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkBufferCreateFlags = @import("std").mem.zeroes(VkBufferCreateFlags),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    usage: VkBufferUsageFlags = @import("std").mem.zeroes(VkBufferUsageFlags),
-    sharingMode: VkSharingMode = @import("std").mem.zeroes(VkSharingMode),
-    queueFamilyIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueFamilyIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const BufferViewCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkBufferViewCreateFlags = @import("std").mem.zeroes(VkBufferViewCreateFlags),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    range: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ImageCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkImageCreateFlags = @import("std").mem.zeroes(VkImageCreateFlags),
-    imageType: VkImageType = @import("std").mem.zeroes(VkImageType),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-    mipLevels: u32 = @import("std").mem.zeroes(u32),
-    arrayLayers: u32 = @import("std").mem.zeroes(u32),
-    samples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    tiling: VkImageTiling = @import("std").mem.zeroes(VkImageTiling),
-    usage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    sharingMode: VkSharingMode = @import("std").mem.zeroes(VkSharingMode),
-    queueFamilyIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueFamilyIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    initialLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const SubresourceLayout = extern struct {
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    rowPitch: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    arrayPitch: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    depthPitch: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ComponentMapping = extern struct {
-    r: VkComponentSwizzle = @import("std").mem.zeroes(VkComponentSwizzle),
-    g: VkComponentSwizzle = @import("std").mem.zeroes(VkComponentSwizzle),
-    b: VkComponentSwizzle = @import("std").mem.zeroes(VkComponentSwizzle),
-    a: VkComponentSwizzle = @import("std").mem.zeroes(VkComponentSwizzle),
-};
-pub const ImageViewCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkImageViewCreateFlags = @import("std").mem.zeroes(VkImageViewCreateFlags),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    viewType: VkImageViewType = @import("std").mem.zeroes(VkImageViewType),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    components: VkComponentMapping = @import("std").mem.zeroes(VkComponentMapping),
-    subresourceRange: VkImageSubresourceRange = @import("std").mem.zeroes(VkImageSubresourceRange),
-};
-pub const ShaderModuleCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkShaderModuleCreateFlags = @import("std").mem.zeroes(VkShaderModuleCreateFlags),
-    codeSize: usize = @import("std").mem.zeroes(usize),
-    pCode: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const PipelineCacheCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCacheCreateFlags = @import("std").mem.zeroes(VkPipelineCacheCreateFlags),
-    initialDataSize: usize = @import("std").mem.zeroes(usize),
-    pInitialData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const SpecializationMapEntry = extern struct {
-    constantID: u32 = @import("std").mem.zeroes(u32),
-    offset: u32 = @import("std").mem.zeroes(u32),
-    size: usize = @import("std").mem.zeroes(usize),
-};
-pub const SpecializationInfo = extern struct {
-    mapEntryCount: u32 = @import("std").mem.zeroes(u32),
-    pMapEntries: [*c]const VkSpecializationMapEntry = @import("std").mem.zeroes([*c]const VkSpecializationMapEntry),
-    dataSize: usize = @import("std").mem.zeroes(usize),
-    pData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PipelineShaderStageCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineShaderStageCreateFlags = @import("std").mem.zeroes(VkPipelineShaderStageCreateFlags),
-    stage: VkShaderStageFlagBits = @import("std").mem.zeroes(VkShaderStageFlagBits),
-    module: VkShaderModule = @import("std").mem.zeroes(VkShaderModule),
-    pName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    pSpecializationInfo: [*c]const VkSpecializationInfo = @import("std").mem.zeroes([*c]const VkSpecializationInfo),
-};
-pub const ComputePipelineCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags = @import("std").mem.zeroes(VkPipelineCreateFlags),
-    stage: VkPipelineShaderStageCreateInfo = @import("std").mem.zeroes(VkPipelineShaderStageCreateInfo),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    basePipelineHandle: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    basePipelineIndex: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VertexInputBindingDescription = extern struct {
-    binding: u32 = @import("std").mem.zeroes(u32),
-    stride: u32 = @import("std").mem.zeroes(u32),
-    inputRate: VkVertexInputRate = @import("std").mem.zeroes(VkVertexInputRate),
-};
-pub const VertexInputAttributeDescription = extern struct {
-    location: u32 = @import("std").mem.zeroes(u32),
-    binding: u32 = @import("std").mem.zeroes(u32),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    offset: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineVertexInputStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineVertexInputStateCreateFlags = @import("std").mem.zeroes(VkPipelineVertexInputStateCreateFlags),
-    vertexBindingDescriptionCount: u32 = @import("std").mem.zeroes(u32),
-    pVertexBindingDescriptions: [*c]const VkVertexInputBindingDescription = @import("std").mem.zeroes([*c]const VkVertexInputBindingDescription),
-    vertexAttributeDescriptionCount: u32 = @import("std").mem.zeroes(u32),
-    pVertexAttributeDescriptions: [*c]const VkVertexInputAttributeDescription = @import("std").mem.zeroes([*c]const VkVertexInputAttributeDescription),
-};
-pub const PipelineInputAssemblyStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineInputAssemblyStateCreateFlags = @import("std").mem.zeroes(VkPipelineInputAssemblyStateCreateFlags),
-    topology: VkPrimitiveTopology = @import("std").mem.zeroes(VkPrimitiveTopology),
-    primitiveRestartEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineTessellationStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineTessellationStateCreateFlags = @import("std").mem.zeroes(VkPipelineTessellationStateCreateFlags),
-    patchControlPoints: u32 = @import("std").mem.zeroes(u32),
-};
-pub const Viewport = extern struct {
-    x: f32 = @import("std").mem.zeroes(f32),
-    y: f32 = @import("std").mem.zeroes(f32),
-    width: f32 = @import("std").mem.zeroes(f32),
-    height: f32 = @import("std").mem.zeroes(f32),
-    minDepth: f32 = @import("std").mem.zeroes(f32),
-    maxDepth: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PipelineViewportStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineViewportStateCreateFlags = @import("std").mem.zeroes(VkPipelineViewportStateCreateFlags),
-    viewportCount: u32 = @import("std").mem.zeroes(u32),
-    pViewports: [*c]const VkViewport = @import("std").mem.zeroes([*c]const VkViewport),
-    scissorCount: u32 = @import("std").mem.zeroes(u32),
-    pScissors: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PipelineRasterizationStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineRasterizationStateCreateFlags = @import("std").mem.zeroes(VkPipelineRasterizationStateCreateFlags),
-    depthClampEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rasterizerDiscardEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    polygonMode: VkPolygonMode = @import("std").mem.zeroes(VkPolygonMode),
-    cullMode: VkCullModeFlags = @import("std").mem.zeroes(VkCullModeFlags),
-    frontFace: VkFrontFace = @import("std").mem.zeroes(VkFrontFace),
-    depthBiasEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthBiasConstantFactor: f32 = @import("std").mem.zeroes(f32),
-    depthBiasClamp: f32 = @import("std").mem.zeroes(f32),
-    depthBiasSlopeFactor: f32 = @import("std").mem.zeroes(f32),
-    lineWidth: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PipelineMultisampleStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineMultisampleStateCreateFlags = @import("std").mem.zeroes(VkPipelineMultisampleStateCreateFlags),
-    rasterizationSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    sampleShadingEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minSampleShading: f32 = @import("std").mem.zeroes(f32),
-    pSampleMask: [*c]const VkSampleMask = @import("std").mem.zeroes([*c]const VkSampleMask),
-    alphaToCoverageEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    alphaToOneEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const StencilOpState = extern struct {
-    failOp: VkStencilOp = @import("std").mem.zeroes(VkStencilOp),
-    passOp: VkStencilOp = @import("std").mem.zeroes(VkStencilOp),
-    depthFailOp: VkStencilOp = @import("std").mem.zeroes(VkStencilOp),
-    compareOp: VkCompareOp = @import("std").mem.zeroes(VkCompareOp),
-    compareMask: u32 = @import("std").mem.zeroes(u32),
-    writeMask: u32 = @import("std").mem.zeroes(u32),
-    reference: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineDepthStencilStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineDepthStencilStateCreateFlags = @import("std").mem.zeroes(VkPipelineDepthStencilStateCreateFlags),
-    depthTestEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthWriteEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthCompareOp: VkCompareOp = @import("std").mem.zeroes(VkCompareOp),
-    depthBoundsTestEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stencilTestEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    front: VkStencilOpState = @import("std").mem.zeroes(VkStencilOpState),
-    back: VkStencilOpState = @import("std").mem.zeroes(VkStencilOpState),
-    minDepthBounds: f32 = @import("std").mem.zeroes(f32),
-    maxDepthBounds: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PipelineColorBlendAttachmentState = extern struct {
-    blendEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    srcColorBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    dstColorBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    colorBlendOp: VkBlendOp = @import("std").mem.zeroes(VkBlendOp),
-    srcAlphaBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    dstAlphaBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    alphaBlendOp: VkBlendOp = @import("std").mem.zeroes(VkBlendOp),
-    colorWriteMask: VkColorComponentFlags = @import("std").mem.zeroes(VkColorComponentFlags),
-};
-pub const PipelineColorBlendStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineColorBlendStateCreateFlags = @import("std").mem.zeroes(VkPipelineColorBlendStateCreateFlags),
-    logicOpEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    logicOp: VkLogicOp = @import("std").mem.zeroes(VkLogicOp),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachments: [*c]const VkPipelineColorBlendAttachmentState = @import("std").mem.zeroes([*c]const VkPipelineColorBlendAttachmentState),
-    blendConstants: [4]f32 = @import("std").mem.zeroes([4]f32),
-};
-pub const PipelineDynamicStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineDynamicStateCreateFlags = @import("std").mem.zeroes(VkPipelineDynamicStateCreateFlags),
-    dynamicStateCount: u32 = @import("std").mem.zeroes(u32),
-    pDynamicStates: [*c]const VkDynamicState = @import("std").mem.zeroes([*c]const VkDynamicState),
-};
-pub const GraphicsPipelineCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags = @import("std").mem.zeroes(VkPipelineCreateFlags),
-    stageCount: u32 = @import("std").mem.zeroes(u32),
-    pStages: [*c]const VkPipelineShaderStageCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineShaderStageCreateInfo),
-    pVertexInputState: [*c]const VkPipelineVertexInputStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineVertexInputStateCreateInfo),
-    pInputAssemblyState: [*c]const VkPipelineInputAssemblyStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineInputAssemblyStateCreateInfo),
-    pTessellationState: [*c]const VkPipelineTessellationStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineTessellationStateCreateInfo),
-    pViewportState: [*c]const VkPipelineViewportStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineViewportStateCreateInfo),
-    pRasterizationState: [*c]const VkPipelineRasterizationStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineRasterizationStateCreateInfo),
-    pMultisampleState: [*c]const VkPipelineMultisampleStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineMultisampleStateCreateInfo),
-    pDepthStencilState: [*c]const VkPipelineDepthStencilStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineDepthStencilStateCreateInfo),
-    pColorBlendState: [*c]const VkPipelineColorBlendStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineColorBlendStateCreateInfo),
-    pDynamicState: [*c]const VkPipelineDynamicStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineDynamicStateCreateInfo),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    renderPass: VkRenderPass = @import("std").mem.zeroes(VkRenderPass),
-    subpass: u32 = @import("std").mem.zeroes(u32),
-    basePipelineHandle: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    basePipelineIndex: i32 = @import("std").mem.zeroes(i32),
-};
-pub const PushConstantRange = extern struct {
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    offset: u32 = @import("std").mem.zeroes(u32),
-    size: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineLayoutCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineLayoutCreateFlags = @import("std").mem.zeroes(VkPipelineLayoutCreateFlags),
-    setLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pSetLayouts: [*c]const VkDescriptorSetLayout = @import("std").mem.zeroes([*c]const VkDescriptorSetLayout),
-    pushConstantRangeCount: u32 = @import("std").mem.zeroes(u32),
-    pPushConstantRanges: [*c]const VkPushConstantRange = @import("std").mem.zeroes([*c]const VkPushConstantRange),
-};
-pub const SamplerCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSamplerCreateFlags = @import("std").mem.zeroes(VkSamplerCreateFlags),
-    magFilter: VkFilter = @import("std").mem.zeroes(VkFilter),
-    minFilter: VkFilter = @import("std").mem.zeroes(VkFilter),
-    mipmapMode: VkSamplerMipmapMode = @import("std").mem.zeroes(VkSamplerMipmapMode),
-    addressModeU: VkSamplerAddressMode = @import("std").mem.zeroes(VkSamplerAddressMode),
-    addressModeV: VkSamplerAddressMode = @import("std").mem.zeroes(VkSamplerAddressMode),
-    addressModeW: VkSamplerAddressMode = @import("std").mem.zeroes(VkSamplerAddressMode),
-    mipLodBias: f32 = @import("std").mem.zeroes(f32),
-    anisotropyEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxAnisotropy: f32 = @import("std").mem.zeroes(f32),
-    compareEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    compareOp: VkCompareOp = @import("std").mem.zeroes(VkCompareOp),
-    minLod: f32 = @import("std").mem.zeroes(f32),
-    maxLod: f32 = @import("std").mem.zeroes(f32),
-    borderColor: VkBorderColor = @import("std").mem.zeroes(VkBorderColor),
-    unnormalizedCoordinates: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CopyDescriptorSet = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSet: VkDescriptorSet = @import("std").mem.zeroes(VkDescriptorSet),
-    srcBinding: u32 = @import("std").mem.zeroes(u32),
-    srcArrayElement: u32 = @import("std").mem.zeroes(u32),
-    dstSet: VkDescriptorSet = @import("std").mem.zeroes(VkDescriptorSet),
-    dstBinding: u32 = @import("std").mem.zeroes(u32),
-    dstArrayElement: u32 = @import("std").mem.zeroes(u32),
-    descriptorCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DescriptorBufferInfo = extern struct {
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    range: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DescriptorImageInfo = extern struct {
-    sampler: VkSampler = @import("std").mem.zeroes(VkSampler),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    imageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const DescriptorPoolSize = extern struct {
-    type: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    descriptorCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DescriptorPoolCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDescriptorPoolCreateFlags = @import("std").mem.zeroes(VkDescriptorPoolCreateFlags),
-    maxSets: u32 = @import("std").mem.zeroes(u32),
-    poolSizeCount: u32 = @import("std").mem.zeroes(u32),
-    pPoolSizes: [*c]const VkDescriptorPoolSize = @import("std").mem.zeroes([*c]const VkDescriptorPoolSize),
-};
-pub const DescriptorSetAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    descriptorPool: VkDescriptorPool = @import("std").mem.zeroes(VkDescriptorPool),
-    descriptorSetCount: u32 = @import("std").mem.zeroes(u32),
-    pSetLayouts: [*c]const VkDescriptorSetLayout = @import("std").mem.zeroes([*c]const VkDescriptorSetLayout),
-};
-pub const DescriptorSetLayoutBinding = extern struct {
-    binding: u32 = @import("std").mem.zeroes(u32),
-    descriptorType: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    descriptorCount: u32 = @import("std").mem.zeroes(u32),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    pImmutableSamplers: [*c]const VkSampler = @import("std").mem.zeroes([*c]const VkSampler),
-};
-pub const DescriptorSetLayoutCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDescriptorSetLayoutCreateFlags = @import("std").mem.zeroes(VkDescriptorSetLayoutCreateFlags),
-    bindingCount: u32 = @import("std").mem.zeroes(u32),
-    pBindings: [*c]const VkDescriptorSetLayoutBinding = @import("std").mem.zeroes([*c]const VkDescriptorSetLayoutBinding),
-};
-pub const WriteDescriptorSet = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dstSet: VkDescriptorSet = @import("std").mem.zeroes(VkDescriptorSet),
-    dstBinding: u32 = @import("std").mem.zeroes(u32),
-    dstArrayElement: u32 = @import("std").mem.zeroes(u32),
-    descriptorCount: u32 = @import("std").mem.zeroes(u32),
-    descriptorType: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    pImageInfo: [*c]const VkDescriptorImageInfo = @import("std").mem.zeroes([*c]const VkDescriptorImageInfo),
-    pBufferInfo: [*c]const VkDescriptorBufferInfo = @import("std").mem.zeroes([*c]const VkDescriptorBufferInfo),
-    pTexelBufferView: [*c]const VkBufferView = @import("std").mem.zeroes([*c]const VkBufferView),
-};
-pub const AttachmentDescription = extern struct {
-    flags: VkAttachmentDescriptionFlags = @import("std").mem.zeroes(VkAttachmentDescriptionFlags),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    samples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    loadOp: VkAttachmentLoadOp = @import("std").mem.zeroes(VkAttachmentLoadOp),
-    storeOp: VkAttachmentStoreOp = @import("std").mem.zeroes(VkAttachmentStoreOp),
-    stencilLoadOp: VkAttachmentLoadOp = @import("std").mem.zeroes(VkAttachmentLoadOp),
-    stencilStoreOp: VkAttachmentStoreOp = @import("std").mem.zeroes(VkAttachmentStoreOp),
-    initialLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    finalLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const AttachmentReference = extern struct {
-    attachment: u32 = @import("std").mem.zeroes(u32),
-    layout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const FramebufferCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkFramebufferCreateFlags = @import("std").mem.zeroes(VkFramebufferCreateFlags),
-    renderPass: VkRenderPass = @import("std").mem.zeroes(VkRenderPass),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachments: [*c]const VkImageView = @import("std").mem.zeroes([*c]const VkImageView),
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    layers: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SubpassDescription = extern struct {
-    flags: VkSubpassDescriptionFlags = @import("std").mem.zeroes(VkSubpassDescriptionFlags),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    inputAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pInputAttachments: [*c]const VkAttachmentReference = @import("std").mem.zeroes([*c]const VkAttachmentReference),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachments: [*c]const VkAttachmentReference = @import("std").mem.zeroes([*c]const VkAttachmentReference),
-    pResolveAttachments: [*c]const VkAttachmentReference = @import("std").mem.zeroes([*c]const VkAttachmentReference),
-    pDepthStencilAttachment: [*c]const VkAttachmentReference = @import("std").mem.zeroes([*c]const VkAttachmentReference),
-    preserveAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pPreserveAttachments: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const SubpassDependency = extern struct {
-    srcSubpass: u32 = @import("std").mem.zeroes(u32),
-    dstSubpass: u32 = @import("std").mem.zeroes(u32),
-    srcStageMask: VkPipelineStageFlags = @import("std").mem.zeroes(VkPipelineStageFlags),
-    dstStageMask: VkPipelineStageFlags = @import("std").mem.zeroes(VkPipelineStageFlags),
-    srcAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dstAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dependencyFlags: VkDependencyFlags = @import("std").mem.zeroes(VkDependencyFlags),
-};
-pub const RenderPassCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkRenderPassCreateFlags = @import("std").mem.zeroes(VkRenderPassCreateFlags),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachments: [*c]const VkAttachmentDescription = @import("std").mem.zeroes([*c]const VkAttachmentDescription),
-    subpassCount: u32 = @import("std").mem.zeroes(u32),
-    pSubpasses: [*c]const VkSubpassDescription = @import("std").mem.zeroes([*c]const VkSubpassDescription),
-    dependencyCount: u32 = @import("std").mem.zeroes(u32),
-    pDependencies: [*c]const VkSubpassDependency = @import("std").mem.zeroes([*c]const VkSubpassDependency),
-};
-pub const CommandPoolCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkCommandPoolCreateFlags = @import("std").mem.zeroes(VkCommandPoolCreateFlags),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CommandBufferAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    commandPool: VkCommandPool = @import("std").mem.zeroes(VkCommandPool),
-    level: VkCommandBufferLevel = @import("std").mem.zeroes(VkCommandBufferLevel),
-    commandBufferCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CommandBufferInheritanceInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    renderPass: VkRenderPass = @import("std").mem.zeroes(VkRenderPass),
-    subpass: u32 = @import("std").mem.zeroes(u32),
-    framebuffer: VkFramebuffer = @import("std").mem.zeroes(VkFramebuffer),
-    occlusionQueryEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    queryFlags: VkQueryControlFlags = @import("std").mem.zeroes(VkQueryControlFlags),
-    pipelineStatistics: VkQueryPipelineStatisticFlags = @import("std").mem.zeroes(VkQueryPipelineStatisticFlags),
-};
-pub const CommandBufferBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkCommandBufferUsageFlags = @import("std").mem.zeroes(VkCommandBufferUsageFlags),
-    pInheritanceInfo: [*c]const VkCommandBufferInheritanceInfo = @import("std").mem.zeroes([*c]const VkCommandBufferInheritanceInfo),
-};
-pub const BufferCopy = extern struct {
-    srcOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    dstOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ImageSubresourceLayers = extern struct {
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-    mipLevel: u32 = @import("std").mem.zeroes(u32),
-    baseArrayLayer: u32 = @import("std").mem.zeroes(u32),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BufferImageCopy = extern struct {
-    bufferOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    bufferRowLength: u32 = @import("std").mem.zeroes(u32),
-    bufferImageHeight: u32 = @import("std").mem.zeroes(u32),
-    imageSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    imageOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    imageExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const ClearDepthStencilValue = extern struct {
-    depth: f32 = @import("std").mem.zeroes(f32),
-    stencil: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ClearAttachment = extern struct {
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-    colorAttachment: u32 = @import("std").mem.zeroes(u32),
-    clearValue: VkClearValue = @import("std").mem.zeroes(VkClearValue),
-};
-pub const ClearRect = extern struct {
-    rect: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-    baseArrayLayer: u32 = @import("std").mem.zeroes(u32),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ImageBlit = extern struct {
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffsets: [2]VkOffset3D = @import("std").mem.zeroes([2]VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffsets: [2]VkOffset3D = @import("std").mem.zeroes([2]VkOffset3D),
-};
-pub const ImageCopy = extern struct {
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const ImageResolve = extern struct {
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const RenderPassBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    renderPass: VkRenderPass = @import("std").mem.zeroes(VkRenderPass),
-    framebuffer: VkFramebuffer = @import("std").mem.zeroes(VkFramebuffer),
-    renderArea: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-    clearValueCount: u32 = @import("std").mem.zeroes(u32),
-    pClearValues: [*c]const VkClearValue = @import("std").mem.zeroes([*c]const VkClearValue),
-};
-pub const PhysicalDeviceSubgroupProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subgroupSize: u32 = @import("std").mem.zeroes(u32),
-    supportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    supportedOperations: VkSubgroupFeatureFlags = @import("std").mem.zeroes(VkSubgroupFeatureFlags),
-    quadOperationsInAllStages: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BindBufferMemoryInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const BindImageMemoryInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDevice16BitStorageFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    storageBuffer16BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformAndStorageBuffer16BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storagePushConstant16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storageInputOutput16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryDedicatedRequirements = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    prefersDedicatedAllocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    requiresDedicatedAllocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryDedicatedAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const MemoryAllocateFlagsInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkMemoryAllocateFlags = @import("std").mem.zeroes(VkMemoryAllocateFlags),
-    deviceMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceGroupRenderPassBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceMask: u32 = @import("std").mem.zeroes(u32),
-    deviceRenderAreaCount: u32 = @import("std").mem.zeroes(u32),
-    pDeviceRenderAreas: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const DeviceGroupCommandBufferBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceGroupSubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphoreDeviceIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    commandBufferCount: u32 = @import("std").mem.zeroes(u32),
-    pCommandBufferDeviceMasks: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    signalSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphoreDeviceIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const DeviceGroupBindSparseInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    resourceDeviceIndex: u32 = @import("std").mem.zeroes(u32),
-    memoryDeviceIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BindBufferMemoryDeviceGroupInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pDeviceIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const BindImageMemoryDeviceGroupInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pDeviceIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    splitInstanceBindRegionCount: u32 = @import("std").mem.zeroes(u32),
-    pSplitInstanceBindRegions: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PhysicalDeviceGroupProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    physicalDeviceCount: u32 = @import("std").mem.zeroes(u32),
-    physicalDevices: [32]VkPhysicalDevice = @import("std").mem.zeroes([32]VkPhysicalDevice),
-    subsetAllocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceGroupDeviceCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    physicalDeviceCount: u32 = @import("std").mem.zeroes(u32),
-    pPhysicalDevices: [*c]const VkPhysicalDevice = @import("std").mem.zeroes([*c]const VkPhysicalDevice),
-};
-pub const BufferMemoryRequirementsInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const ImageMemoryRequirementsInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-};
-pub const ImageSparseMemoryRequirementsInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-};
-pub const MemoryRequirements2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryRequirements: VkMemoryRequirements = @import("std").mem.zeroes(VkMemoryRequirements),
-};
-pub const SparseImageMemoryRequirements2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryRequirements: VkSparseImageMemoryRequirements = @import("std").mem.zeroes(VkSparseImageMemoryRequirements),
-};
-pub const PhysicalDeviceFeatures2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    features: VkPhysicalDeviceFeatures = @import("std").mem.zeroes(VkPhysicalDeviceFeatures),
-};
-pub const PhysicalDeviceProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    properties: VkPhysicalDeviceProperties = @import("std").mem.zeroes(VkPhysicalDeviceProperties),
-};
-pub const FormatProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    formatProperties: VkFormatProperties = @import("std").mem.zeroes(VkFormatProperties),
-};
-pub const ImageFormatProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageFormatProperties: VkImageFormatProperties = @import("std").mem.zeroes(VkImageFormatProperties),
-};
-pub const PhysicalDeviceImageFormatInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    type: VkImageType = @import("std").mem.zeroes(VkImageType),
-    tiling: VkImageTiling = @import("std").mem.zeroes(VkImageTiling),
-    usage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    flags: VkImageCreateFlags = @import("std").mem.zeroes(VkImageCreateFlags),
-};
-pub const QueueFamilyProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    queueFamilyProperties: VkQueueFamilyProperties = @import("std").mem.zeroes(VkQueueFamilyProperties),
-};
-pub const PhysicalDeviceMemoryProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryProperties: VkPhysicalDeviceMemoryProperties = @import("std").mem.zeroes(VkPhysicalDeviceMemoryProperties),
-};
-pub const SparseImageFormatProperties2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    properties: VkSparseImageFormatProperties = @import("std").mem.zeroes(VkSparseImageFormatProperties),
-};
-pub const PhysicalDeviceSparseImageFormatInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    type: VkImageType = @import("std").mem.zeroes(VkImageType),
-    samples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    usage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    tiling: VkImageTiling = @import("std").mem.zeroes(VkImageTiling),
-};
-pub const PhysicalDevicePointClippingProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pointClippingBehavior: VkPointClippingBehavior = @import("std").mem.zeroes(VkPointClippingBehavior),
-};
-pub const InputAttachmentAspectReference = extern struct {
-    subpass: u32 = @import("std").mem.zeroes(u32),
-    inputAttachmentIndex: u32 = @import("std").mem.zeroes(u32),
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-};
-pub const RenderPassInputAttachmentAspectCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    aspectReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    pAspectReferences: [*c]const VkInputAttachmentAspectReference = @import("std").mem.zeroes([*c]const VkInputAttachmentAspectReference),
-};
-pub const ImageViewUsageCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    usage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const PipelineTessellationDomainOriginStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    domainOrigin: VkTessellationDomainOrigin = @import("std").mem.zeroes(VkTessellationDomainOrigin),
-};
-pub const RenderPassMultiviewCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    subpassCount: u32 = @import("std").mem.zeroes(u32),
-    pViewMasks: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    dependencyCount: u32 = @import("std").mem.zeroes(u32),
-    pViewOffsets: [*c]const i32 = @import("std").mem.zeroes([*c]const i32),
-    correlationMaskCount: u32 = @import("std").mem.zeroes(u32),
-    pCorrelationMasks: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const PhysicalDeviceMultiviewFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    multiview: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewGeometryShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewTessellationShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMultiviewProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxMultiviewViewCount: u32 = @import("std").mem.zeroes(u32),
-    maxMultiviewInstanceIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceVariablePointersFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    variablePointersStorageBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    variablePointers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceProtectedMemoryFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    protectedMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceProtectedMemoryProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    protectedNoFault: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceQueueInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDeviceQueueCreateFlags = @import("std").mem.zeroes(VkDeviceQueueCreateFlags),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    queueIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ProtectedSubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    protectedSubmit: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerYcbcrConversionCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    ycbcrModel: VkSamplerYcbcrModelConversion = @import("std").mem.zeroes(VkSamplerYcbcrModelConversion),
-    ycbcrRange: VkSamplerYcbcrRange = @import("std").mem.zeroes(VkSamplerYcbcrRange),
-    components: VkComponentMapping = @import("std").mem.zeroes(VkComponentMapping),
-    xChromaOffset: VkChromaLocation = @import("std").mem.zeroes(VkChromaLocation),
-    yChromaOffset: VkChromaLocation = @import("std").mem.zeroes(VkChromaLocation),
-    chromaFilter: VkFilter = @import("std").mem.zeroes(VkFilter),
-    forceExplicitReconstruction: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerYcbcrConversionInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    conversion: VkSamplerYcbcrConversion = @import("std").mem.zeroes(VkSamplerYcbcrConversion),
-};
-pub const BindImagePlaneMemoryInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    planeAspect: VkImageAspectFlagBits = @import("std").mem.zeroes(VkImageAspectFlagBits),
-};
-pub const ImagePlaneMemoryRequirementsInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    planeAspect: VkImageAspectFlagBits = @import("std").mem.zeroes(VkImageAspectFlagBits),
-};
-pub const PhysicalDeviceSamplerYcbcrConversionFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    samplerYcbcrConversion: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerYcbcrConversionImageFormatProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    combinedImageSamplerDescriptorCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DescriptorUpdateTemplateEntry = extern struct {
-    dstBinding: u32 = @import("std").mem.zeroes(u32),
-    dstArrayElement: u32 = @import("std").mem.zeroes(u32),
-    descriptorCount: u32 = @import("std").mem.zeroes(u32),
-    descriptorType: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    offset: usize = @import("std").mem.zeroes(usize),
-    stride: usize = @import("std").mem.zeroes(usize),
-};
-pub const DescriptorUpdateTemplateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDescriptorUpdateTemplateCreateFlags = @import("std").mem.zeroes(VkDescriptorUpdateTemplateCreateFlags),
-    descriptorUpdateEntryCount: u32 = @import("std").mem.zeroes(u32),
-    pDescriptorUpdateEntries: [*c]const VkDescriptorUpdateTemplateEntry = @import("std").mem.zeroes([*c]const VkDescriptorUpdateTemplateEntry),
-    templateType: VkDescriptorUpdateTemplateType = @import("std").mem.zeroes(VkDescriptorUpdateTemplateType),
-    descriptorSetLayout: VkDescriptorSetLayout = @import("std").mem.zeroes(VkDescriptorSetLayout),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    pipelineLayout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    set: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ExternalMemoryProperties = extern struct {
-    externalMemoryFeatures: VkExternalMemoryFeatureFlags = @import("std").mem.zeroes(VkExternalMemoryFeatureFlags),
-    exportFromImportedHandleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-    compatibleHandleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const PhysicalDeviceExternalImageFormatInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const ExternalImageFormatProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    externalMemoryProperties: VkExternalMemoryProperties = @import("std").mem.zeroes(VkExternalMemoryProperties),
-};
-pub const PhysicalDeviceExternalBufferInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkBufferCreateFlags = @import("std").mem.zeroes(VkBufferCreateFlags),
-    usage: VkBufferUsageFlags = @import("std").mem.zeroes(VkBufferUsageFlags),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const ExternalBufferProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    externalMemoryProperties: VkExternalMemoryProperties = @import("std").mem.zeroes(VkExternalMemoryProperties),
-};
-pub const PhysicalDeviceIDProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    driverUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    deviceLUID: [8]u8 = @import("std").mem.zeroes([8]u8),
-    deviceNodeMask: u32 = @import("std").mem.zeroes(u32),
-    deviceLUIDValid: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ExternalMemoryImageCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const ExternalMemoryBufferCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const ExportMemoryAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const PhysicalDeviceExternalFenceInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalFenceHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlagBits),
-};
-pub const ExternalFenceProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    exportFromImportedHandleTypes: VkExternalFenceHandleTypeFlags = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlags),
-    compatibleHandleTypes: VkExternalFenceHandleTypeFlags = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlags),
-    externalFenceFeatures: VkExternalFenceFeatureFlags = @import("std").mem.zeroes(VkExternalFenceFeatureFlags),
-};
-pub const ExportFenceCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalFenceHandleTypeFlags = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlags),
-};
-pub const ExportSemaphoreCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalSemaphoreHandleTypeFlags = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlags),
-};
-pub const PhysicalDeviceExternalSemaphoreInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalSemaphoreHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlagBits),
-};
-pub const ExternalSemaphoreProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    exportFromImportedHandleTypes: VkExternalSemaphoreHandleTypeFlags = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlags),
-    compatibleHandleTypes: VkExternalSemaphoreHandleTypeFlags = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlags),
-    externalSemaphoreFeatures: VkExternalSemaphoreFeatureFlags = @import("std").mem.zeroes(VkExternalSemaphoreFeatureFlags),
-};
-pub const PhysicalDeviceMaintenance3Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxPerSetDescriptors: u32 = @import("std").mem.zeroes(u32),
-    maxMemoryAllocationSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DescriptorSetLayoutSupport = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderDrawParametersFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderDrawParameters: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVulkan11Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    storageBuffer16BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformAndStorageBuffer16BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storagePushConstant16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storageInputOutput16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiview: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewGeometryShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewTessellationShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    variablePointersStorageBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    variablePointers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    protectedMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    samplerYcbcrConversion: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDrawParameters: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVulkan11Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    driverUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    deviceLUID: [8]u8 = @import("std").mem.zeroes([8]u8),
-    deviceNodeMask: u32 = @import("std").mem.zeroes(u32),
-    deviceLUIDValid: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    subgroupSize: u32 = @import("std").mem.zeroes(u32),
-    subgroupSupportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    subgroupSupportedOperations: VkSubgroupFeatureFlags = @import("std").mem.zeroes(VkSubgroupFeatureFlags),
-    subgroupQuadOperationsInAllStages: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pointClippingBehavior: VkPointClippingBehavior = @import("std").mem.zeroes(VkPointClippingBehavior),
-    maxMultiviewViewCount: u32 = @import("std").mem.zeroes(u32),
-    maxMultiviewInstanceIndex: u32 = @import("std").mem.zeroes(u32),
-    protectedNoFault: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxPerSetDescriptors: u32 = @import("std").mem.zeroes(u32),
-    maxMemoryAllocationSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDeviceVulkan12Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    samplerMirrorClampToEdge: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    drawIndirectCount: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storageBuffer8BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformAndStorageBuffer8BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storagePushConstant8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInt8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInputAttachmentArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformTexelBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTexelBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSampledImageArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInputAttachmentArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformTexelBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTexelBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUniformBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingSampledImageUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageImageUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUniformTexelBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageTexelBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUpdateUnusedWhilePending: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingPartiallyBound: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingVariableDescriptorCount: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    runtimeDescriptorArray: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    samplerFilterMinmax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    scalarBlockLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    imagelessFramebuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformBufferStandardLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSubgroupExtendedTypes: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    separateDepthStencilLayouts: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hostQueryReset: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    timelineSemaphore: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddress: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressMultiDevice: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vulkanMemoryModel: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vulkanMemoryModelDeviceScope: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vulkanMemoryModelAvailabilityVisibilityChains: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderOutputViewportIndex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderOutputLayer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    subgroupBroadcastDynamicId: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ConformanceVersion = extern struct {
-    major: u8 = @import("std").mem.zeroes(u8),
-    minor: u8 = @import("std").mem.zeroes(u8),
-    subminor: u8 = @import("std").mem.zeroes(u8),
-    patch: u8 = @import("std").mem.zeroes(u8),
-};
-pub const PhysicalDeviceVulkan12Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    driverID: VkDriverId = @import("std").mem.zeroes(VkDriverId),
-    driverName: [256]u8 = @import("std").mem.zeroes([256]u8),
-    driverInfo: [256]u8 = @import("std").mem.zeroes([256]u8),
-    conformanceVersion: VkConformanceVersion = @import("std").mem.zeroes(VkConformanceVersion),
-    denormBehaviorIndependence: VkShaderFloatControlsIndependence = @import("std").mem.zeroes(VkShaderFloatControlsIndependence),
-    roundingModeIndependence: VkShaderFloatControlsIndependence = @import("std").mem.zeroes(VkShaderFloatControlsIndependence),
-    shaderSignedZeroInfNanPreserveFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSignedZeroInfNanPreserveFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSignedZeroInfNanPreserveFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxUpdateAfterBindDescriptorsInAllPools: u32 = @import("std").mem.zeroes(u32),
-    shaderUniformBufferArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSampledImageArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageBufferArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInputAttachmentArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    robustBufferAccessUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    quadDivergentImplicitLod: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxPerStageDescriptorUpdateAfterBindSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindInputAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageUpdateAfterBindResources: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindUniformBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindInputAttachments: u32 = @import("std").mem.zeroes(u32),
-    supportedDepthResolveModes: VkResolveModeFlags = @import("std").mem.zeroes(VkResolveModeFlags),
-    supportedStencilResolveModes: VkResolveModeFlags = @import("std").mem.zeroes(VkResolveModeFlags),
-    independentResolveNone: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    independentResolve: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    filterMinmaxSingleComponentFormats: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    filterMinmaxImageComponentMapping: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxTimelineSemaphoreValueDifference: u64 = @import("std").mem.zeroes(u64),
-    framebufferIntegerColorSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-};
-pub const ImageFormatListCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    viewFormatCount: u32 = @import("std").mem.zeroes(u32),
-    pViewFormats: [*c]const VkFormat = @import("std").mem.zeroes([*c]const VkFormat),
-};
-pub const AttachmentDescription2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkAttachmentDescriptionFlags = @import("std").mem.zeroes(VkAttachmentDescriptionFlags),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    samples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    loadOp: VkAttachmentLoadOp = @import("std").mem.zeroes(VkAttachmentLoadOp),
-    storeOp: VkAttachmentStoreOp = @import("std").mem.zeroes(VkAttachmentStoreOp),
-    stencilLoadOp: VkAttachmentLoadOp = @import("std").mem.zeroes(VkAttachmentLoadOp),
-    stencilStoreOp: VkAttachmentStoreOp = @import("std").mem.zeroes(VkAttachmentStoreOp),
-    initialLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    finalLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const AttachmentReference2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    attachment: u32 = @import("std").mem.zeroes(u32),
-    layout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    aspectMask: VkImageAspectFlags = @import("std").mem.zeroes(VkImageAspectFlags),
-};
-pub const SubpassDescription2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSubpassDescriptionFlags = @import("std").mem.zeroes(VkSubpassDescriptionFlags),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    viewMask: u32 = @import("std").mem.zeroes(u32),
-    inputAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pInputAttachments: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachments: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-    pResolveAttachments: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-    pDepthStencilAttachment: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-    preserveAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pPreserveAttachments: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const SubpassDependency2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSubpass: u32 = @import("std").mem.zeroes(u32),
-    dstSubpass: u32 = @import("std").mem.zeroes(u32),
-    srcStageMask: VkPipelineStageFlags = @import("std").mem.zeroes(VkPipelineStageFlags),
-    dstStageMask: VkPipelineStageFlags = @import("std").mem.zeroes(VkPipelineStageFlags),
-    srcAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dstAccessMask: VkAccessFlags = @import("std").mem.zeroes(VkAccessFlags),
-    dependencyFlags: VkDependencyFlags = @import("std").mem.zeroes(VkDependencyFlags),
-    viewOffset: i32 = @import("std").mem.zeroes(i32),
-};
-pub const RenderPassCreateInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkRenderPassCreateFlags = @import("std").mem.zeroes(VkRenderPassCreateFlags),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachments: [*c]const VkAttachmentDescription2 = @import("std").mem.zeroes([*c]const VkAttachmentDescription2),
-    subpassCount: u32 = @import("std").mem.zeroes(u32),
-    pSubpasses: [*c]const VkSubpassDescription2 = @import("std").mem.zeroes([*c]const VkSubpassDescription2),
-    dependencyCount: u32 = @import("std").mem.zeroes(u32),
-    pDependencies: [*c]const VkSubpassDependency2 = @import("std").mem.zeroes([*c]const VkSubpassDependency2),
-    correlatedViewMaskCount: u32 = @import("std").mem.zeroes(u32),
-    pCorrelatedViewMasks: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const SubpassBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    contents: VkSubpassContents = @import("std").mem.zeroes(VkSubpassContents),
-};
-pub const SubpassEndInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PhysicalDevice8BitStorageFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    storageBuffer8BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformAndStorageBuffer8BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storagePushConstant8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDriverProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    driverID: VkDriverId = @import("std").mem.zeroes(VkDriverId),
-    driverName: [256]u8 = @import("std").mem.zeroes([256]u8),
-    driverInfo: [256]u8 = @import("std").mem.zeroes([256]u8),
-    conformanceVersion: VkConformanceVersion = @import("std").mem.zeroes(VkConformanceVersion),
-};
-pub const PhysicalDeviceShaderAtomicInt64Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderBufferInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderFloat16Int8Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInt8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFloatControlsProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    denormBehaviorIndependence: VkShaderFloatControlsIndependence = @import("std").mem.zeroes(VkShaderFloatControlsIndependence),
-    roundingModeIndependence: VkShaderFloatControlsIndependence = @import("std").mem.zeroes(VkShaderFloatControlsIndependence),
-    shaderSignedZeroInfNanPreserveFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSignedZeroInfNanPreserveFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSignedZeroInfNanPreserveFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormPreserveFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDenormFlushToZeroFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTEFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat16: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat32: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderRoundingModeRTZFloat64: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DescriptorSetLayoutBindingFlagsCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    bindingCount: u32 = @import("std").mem.zeroes(u32),
-    pBindingFlags: [*c]const VkDescriptorBindingFlags = @import("std").mem.zeroes([*c]const VkDescriptorBindingFlags),
-};
-pub const PhysicalDeviceDescriptorIndexingFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderInputAttachmentArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformTexelBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTexelBufferArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSampledImageArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInputAttachmentArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderUniformTexelBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTexelBufferArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUniformBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingSampledImageUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageImageUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUniformTexelBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageTexelBufferUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingUpdateUnusedWhilePending: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingPartiallyBound: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingVariableDescriptorCount: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    runtimeDescriptorArray: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDescriptorIndexingProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxUpdateAfterBindDescriptorsInAllPools: u32 = @import("std").mem.zeroes(u32),
-    shaderUniformBufferArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSampledImageArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageBufferArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageImageArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderInputAttachmentArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    robustBufferAccessUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    quadDivergentImplicitLod: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxPerStageDescriptorUpdateAfterBindSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindInputAttachments: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageUpdateAfterBindResources: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindSamplers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindUniformBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindUniformBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindSampledImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageImages: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindInputAttachments: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DescriptorSetVariableDescriptorCountAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    descriptorSetCount: u32 = @import("std").mem.zeroes(u32),
-    pDescriptorCounts: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const DescriptorSetVariableDescriptorCountLayoutSupport = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxVariableDescriptorCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SubpassDescriptionDepthStencilResolve = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    depthResolveMode: VkResolveModeFlagBits = @import("std").mem.zeroes(VkResolveModeFlagBits),
-    stencilResolveMode: VkResolveModeFlagBits = @import("std").mem.zeroes(VkResolveModeFlagBits),
-    pDepthStencilResolveAttachment: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-};
-pub const PhysicalDeviceDepthStencilResolveProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportedDepthResolveModes: VkResolveModeFlags = @import("std").mem.zeroes(VkResolveModeFlags),
-    supportedStencilResolveModes: VkResolveModeFlags = @import("std").mem.zeroes(VkResolveModeFlags),
-    independentResolveNone: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    independentResolve: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceScalarBlockLayoutFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    scalarBlockLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImageStencilUsageCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stencilUsage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const SamplerReductionModeCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    reductionMode: VkSamplerReductionMode = @import("std").mem.zeroes(VkSamplerReductionMode),
-};
-pub const PhysicalDeviceSamplerFilterMinmaxProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    filterMinmaxSingleComponentFormats: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    filterMinmaxImageComponentMapping: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVulkanMemoryModelFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vulkanMemoryModel: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vulkanMemoryModelDeviceScope: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vulkanMemoryModelAvailabilityVisibilityChains: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImagelessFramebufferFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imagelessFramebuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const FramebufferAttachmentImageInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkImageCreateFlags = @import("std").mem.zeroes(VkImageCreateFlags),
-    usage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-    viewFormatCount: u32 = @import("std").mem.zeroes(u32),
-    pViewFormats: [*c]const VkFormat = @import("std").mem.zeroes([*c]const VkFormat),
-};
-pub const FramebufferAttachmentsCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    attachmentImageInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachmentImageInfos: [*c]const VkFramebufferAttachmentImageInfo = @import("std").mem.zeroes([*c]const VkFramebufferAttachmentImageInfo),
-};
-pub const RenderPassAttachmentBeginInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachments: [*c]const VkImageView = @import("std").mem.zeroes([*c]const VkImageView),
-};
-pub const PhysicalDeviceUniformBufferStandardLayoutFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    uniformBufferStandardLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderSubgroupExtendedTypesFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSubgroupExtendedTypes: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceSeparateDepthStencilLayoutsFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    separateDepthStencilLayouts: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AttachmentReferenceStencilLayout = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stencilLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const AttachmentDescriptionStencilLayout = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stencilInitialLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    stencilFinalLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const PhysicalDeviceHostQueryResetFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hostQueryReset: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTimelineSemaphoreFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    timelineSemaphore: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTimelineSemaphoreProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxTimelineSemaphoreValueDifference: u64 = @import("std").mem.zeroes(u64),
-};
-pub const SemaphoreTypeCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphoreType: VkSemaphoreType = @import("std").mem.zeroes(VkSemaphoreType),
-    initialValue: u64 = @import("std").mem.zeroes(u64),
-};
-pub const TimelineSemaphoreSubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreValueCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphoreValues: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    signalSemaphoreValueCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphoreValues: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const SemaphoreWaitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSemaphoreWaitFlags = @import("std").mem.zeroes(VkSemaphoreWaitFlags),
-    semaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-    pValues: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const SemaphoreSignalInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    value: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PhysicalDeviceBufferDeviceAddressFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    bufferDeviceAddress: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressMultiDevice: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BufferDeviceAddressInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const BufferOpaqueCaptureAddressCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    opaqueCaptureAddress: u64 = @import("std").mem.zeroes(u64),
-};
-pub const MemoryOpaqueCaptureAddressAllocateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    opaqueCaptureAddress: u64 = @import("std").mem.zeroes(u64),
-};
-pub const DeviceMemoryOpaqueCaptureAddressInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-};
-pub const PhysicalDeviceVulkan13Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    robustImageAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    inlineUniformBlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingInlineUniformBlockUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineCreationCacheControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    privateData: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDemoteToHelperInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTerminateInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    subgroupSizeControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    computeFullSubgroups: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    synchronization2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureCompressionASTC_HDR: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderZeroInitializeWorkgroupMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dynamicRendering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderIntegerDotProduct: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maintenance4: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVulkan13Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minSubgroupSize: u32 = @import("std").mem.zeroes(u32),
-    maxSubgroupSize: u32 = @import("std").mem.zeroes(u32),
-    maxComputeWorkgroupSubgroups: u32 = @import("std").mem.zeroes(u32),
-    requiredSubgroupSizeStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    maxInlineUniformBlockSize: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxInlineUniformTotalSize: u32 = @import("std").mem.zeroes(u32),
-    integerDotProduct8BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct8BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct8BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    storageTexelBufferOffsetAlignmentBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    storageTexelBufferOffsetSingleTexelAlignment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformTexelBufferOffsetAlignmentBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    uniformTexelBufferOffsetSingleTexelAlignment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxBufferSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PipelineCreationFeedback = extern struct {
-    flags: VkPipelineCreationFeedbackFlags = @import("std").mem.zeroes(VkPipelineCreationFeedbackFlags),
-    duration: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PipelineCreationFeedbackCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pPipelineCreationFeedback: [*c]VkPipelineCreationFeedback = @import("std").mem.zeroes([*c]VkPipelineCreationFeedback),
-    pipelineStageCreationFeedbackCount: u32 = @import("std").mem.zeroes(u32),
-    pPipelineStageCreationFeedbacks: [*c]VkPipelineCreationFeedback = @import("std").mem.zeroes([*c]VkPipelineCreationFeedback),
-};
-pub const PhysicalDeviceShaderTerminateInvocationFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderTerminateInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceToolProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    name: [256]u8 = @import("std").mem.zeroes([256]u8),
-    version: [256]u8 = @import("std").mem.zeroes([256]u8),
-    purposes: VkToolPurposeFlags = @import("std").mem.zeroes(VkToolPurposeFlags),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    layer: [256]u8 = @import("std").mem.zeroes([256]u8),
-};
-pub const PhysicalDeviceShaderDemoteToHelperInvocationFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderDemoteToHelperInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePrivateDataFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    privateData: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DevicePrivateDataCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    privateDataSlotRequestCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PrivateDataSlotCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPrivateDataSlotCreateFlags = @import("std").mem.zeroes(VkPrivateDataSlotCreateFlags),
-};
-pub const PhysicalDevicePipelineCreationCacheControlFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineCreationCacheControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryBarrier2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    srcAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    dstStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    dstAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-};
-pub const BufferMemoryBarrier2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    srcAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    dstStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    dstAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    srcQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    dstQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ImageMemoryBarrier2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    srcAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    dstStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    dstAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    oldLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    newLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    srcQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    dstQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    subresourceRange: VkImageSubresourceRange = @import("std").mem.zeroes(VkImageSubresourceRange),
-};
-pub const DependencyInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dependencyFlags: VkDependencyFlags = @import("std").mem.zeroes(VkDependencyFlags),
-    memoryBarrierCount: u32 = @import("std").mem.zeroes(u32),
-    pMemoryBarriers: [*c]const VkMemoryBarrier2 = @import("std").mem.zeroes([*c]const VkMemoryBarrier2),
-    bufferMemoryBarrierCount: u32 = @import("std").mem.zeroes(u32),
-    pBufferMemoryBarriers: [*c]const VkBufferMemoryBarrier2 = @import("std").mem.zeroes([*c]const VkBufferMemoryBarrier2),
-    imageMemoryBarrierCount: u32 = @import("std").mem.zeroes(u32),
-    pImageMemoryBarriers: [*c]const VkImageMemoryBarrier2 = @import("std").mem.zeroes([*c]const VkImageMemoryBarrier2),
-};
-pub const SemaphoreSubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    value: u64 = @import("std").mem.zeroes(u64),
-    stageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    deviceIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CommandBufferSubmitInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    commandBuffer: VkCommandBuffer = @import("std").mem.zeroes(VkCommandBuffer),
-    deviceMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SubmitInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSubmitFlags = @import("std").mem.zeroes(VkSubmitFlags),
-    waitSemaphoreInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphoreInfos: [*c]const VkSemaphoreSubmitInfo = @import("std").mem.zeroes([*c]const VkSemaphoreSubmitInfo),
-    commandBufferInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pCommandBufferInfos: [*c]const VkCommandBufferSubmitInfo = @import("std").mem.zeroes([*c]const VkCommandBufferSubmitInfo),
-    signalSemaphoreInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphoreInfos: [*c]const VkSemaphoreSubmitInfo = @import("std").mem.zeroes([*c]const VkSemaphoreSubmitInfo),
-};
-pub const PhysicalDeviceSynchronization2Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    synchronization2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderZeroInitializeWorkgroupMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageRobustnessFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    robustImageAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BufferCopy2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    dstOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const CopyBufferInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    dstBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkBufferCopy2 = @import("std").mem.zeroes([*c]const VkBufferCopy2),
-};
-pub const ImageCopy2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const CopyImageInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkImageCopy2 = @import("std").mem.zeroes([*c]const VkImageCopy2),
-};
-pub const BufferImageCopy2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    bufferOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    bufferRowLength: u32 = @import("std").mem.zeroes(u32),
-    bufferImageHeight: u32 = @import("std").mem.zeroes(u32),
-    imageSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    imageOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    imageExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const CopyBufferToImageInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkBufferImageCopy2 = @import("std").mem.zeroes([*c]const VkBufferImageCopy2),
-};
-pub const CopyImageToBufferInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    dstBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkBufferImageCopy2 = @import("std").mem.zeroes([*c]const VkBufferImageCopy2),
-};
-pub const ImageBlit2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffsets: [2]VkOffset3D = @import("std").mem.zeroes([2]VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffsets: [2]VkOffset3D = @import("std").mem.zeroes([2]VkOffset3D),
-};
-pub const BlitImageInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkImageBlit2 = @import("std").mem.zeroes([*c]const VkImageBlit2),
-    filter: VkFilter = @import("std").mem.zeroes(VkFilter),
-};
-pub const ImageResolve2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    srcOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    dstSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    dstOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    extent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const ResolveImageInfo2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkImageResolve2 = @import("std").mem.zeroes([*c]const VkImageResolve2),
-};
-pub const PhysicalDeviceSubgroupSizeControlFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subgroupSizeControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    computeFullSubgroups: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceSubgroupSizeControlProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minSubgroupSize: u32 = @import("std").mem.zeroes(u32),
-    maxSubgroupSize: u32 = @import("std").mem.zeroes(u32),
-    maxComputeWorkgroupSubgroups: u32 = @import("std").mem.zeroes(u32),
-    requiredSubgroupSizeStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-};
-pub const PipelineShaderStageRequiredSubgroupSizeCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    requiredSubgroupSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceInlineUniformBlockFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    inlineUniformBlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingInlineUniformBlockUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceInlineUniformBlockProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxInlineUniformBlockSize: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindInlineUniformBlocks: u32 = @import("std").mem.zeroes(u32),
-};
-pub const WriteDescriptorSetInlineUniformBlock = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dataSize: u32 = @import("std").mem.zeroes(u32),
-    pData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const DescriptorPoolInlineUniformBlockCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxInlineUniformBlockBindings: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceTextureCompressionASTCHDRFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    textureCompressionASTC_HDR: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderingAttachmentInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    imageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    resolveMode: VkResolveModeFlagBits = @import("std").mem.zeroes(VkResolveModeFlagBits),
-    resolveImageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    resolveImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    loadOp: VkAttachmentLoadOp = @import("std").mem.zeroes(VkAttachmentLoadOp),
-    storeOp: VkAttachmentStoreOp = @import("std").mem.zeroes(VkAttachmentStoreOp),
-    clearValue: VkClearValue = @import("std").mem.zeroes(VkClearValue),
-};
-pub const RenderingInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkRenderingFlags = @import("std").mem.zeroes(VkRenderingFlags),
-    renderArea: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-    viewMask: u32 = @import("std").mem.zeroes(u32),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachments: [*c]const VkRenderingAttachmentInfo = @import("std").mem.zeroes([*c]const VkRenderingAttachmentInfo),
-    pDepthAttachment: [*c]const VkRenderingAttachmentInfo = @import("std").mem.zeroes([*c]const VkRenderingAttachmentInfo),
-    pStencilAttachment: [*c]const VkRenderingAttachmentInfo = @import("std").mem.zeroes([*c]const VkRenderingAttachmentInfo),
-};
-pub const PipelineRenderingCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    viewMask: u32 = @import("std").mem.zeroes(u32),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentFormats: [*c]const VkFormat = @import("std").mem.zeroes([*c]const VkFormat),
-    depthAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    stencilAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const PhysicalDeviceDynamicRenderingFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dynamicRendering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CommandBufferInheritanceRenderingInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkRenderingFlags = @import("std").mem.zeroes(VkRenderingFlags),
-    viewMask: u32 = @import("std").mem.zeroes(u32),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentFormats: [*c]const VkFormat = @import("std").mem.zeroes([*c]const VkFormat),
-    depthAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    stencilAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    rasterizationSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-};
-pub const PhysicalDeviceShaderIntegerDotProductFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderIntegerDotProduct: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderIntegerDotProductProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    integerDotProduct8BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct8BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct8BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct4x8BitPackedMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct16BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct32BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProduct64BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitUnsignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitSignedAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTexelBufferAlignmentProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    storageTexelBufferOffsetAlignmentBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    storageTexelBufferOffsetSingleTexelAlignment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    uniformTexelBufferOffsetAlignmentBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    uniformTexelBufferOffsetSingleTexelAlignment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const FormatProperties3 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    linearTilingFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-    optimalTilingFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-    bufferFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-};
-pub const PhysicalDeviceMaintenance4Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance4: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance4Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxBufferSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DeviceBufferMemoryRequirements = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pCreateInfo: [*c]const VkBufferCreateInfo = @import("std").mem.zeroes([*c]const VkBufferCreateInfo),
-};
-pub const DeviceImageMemoryRequirements = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pCreateInfo: [*c]const VkImageCreateInfo = @import("std").mem.zeroes([*c]const VkImageCreateInfo),
-    planeAspect: VkImageAspectFlagBits = @import("std").mem.zeroes(VkImageAspectFlagBits),
-};
-pub const PhysicalDeviceVulkan14Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    globalPriorityQuery: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSubgroupRotate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSubgroupRotateClustered: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderFloatControls2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderExpectAssume: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rectangularLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bresenhamLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    smoothLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledRectangularLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledBresenhamLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledSmoothLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vertexAttributeInstanceRateDivisor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vertexAttributeInstanceRateZeroDivisor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    indexTypeUint8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dynamicRenderingLocalRead: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maintenance5: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maintenance6: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineProtectedAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineRobustness: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hostImageCopy: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pushDescriptor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVulkan14Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    lineSubPixelPrecisionBits: u32 = @import("std").mem.zeroes(u32),
-    maxVertexAttribDivisor: u32 = @import("std").mem.zeroes(u32),
-    supportsNonZeroFirstInstance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxPushDescriptors: u32 = @import("std").mem.zeroes(u32),
-    dynamicRenderingLocalReadDepthStencilAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dynamicRenderingLocalReadMultisampledAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    earlyFragmentMultisampleCoverageAfterSampleCounting: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    earlyFragmentSampleMaskTestBeforeSampleCounting: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthStencilSwizzleOneSupport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    polygonModePointSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nonStrictSinglePixelWideLinesUseParallelogram: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nonStrictWideLinesUseParallelogram: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    blockTexelViewCompatibleMultipleLayers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxCombinedImageSamplerDescriptorCount: u32 = @import("std").mem.zeroes(u32),
-    fragmentShadingRateClampCombinerInputs: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    defaultRobustnessStorageBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessUniformBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessVertexInputs: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessImages: VkPipelineRobustnessImageBehavior = @import("std").mem.zeroes(VkPipelineRobustnessImageBehavior),
-    copySrcLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pCopySrcLayouts: [*c]VkImageLayout = @import("std").mem.zeroes([*c]VkImageLayout),
-    copyDstLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pCopyDstLayouts: [*c]VkImageLayout = @import("std").mem.zeroes([*c]VkImageLayout),
-    optimalTilingLayoutUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    identicalMemoryTypeRequirements: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceQueueGlobalPriorityCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    globalPriority: VkQueueGlobalPriority = @import("std").mem.zeroes(VkQueueGlobalPriority),
-};
-pub const PhysicalDeviceGlobalPriorityQueryFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    globalPriorityQuery: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const QueueFamilyGlobalPriorityProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    priorityCount: u32 = @import("std").mem.zeroes(u32),
-    priorities: [16]VkQueueGlobalPriority = @import("std").mem.zeroes([16]VkQueueGlobalPriority),
-};
-pub const PhysicalDeviceShaderSubgroupRotateFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSubgroupRotate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSubgroupRotateClustered: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderFloatControls2Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderFloatControls2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderExpectAssumeFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderExpectAssume: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceLineRasterizationFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rectangularLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bresenhamLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    smoothLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledRectangularLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledBresenhamLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stippledSmoothLines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceLineRasterizationProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    lineSubPixelPrecisionBits: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineRasterizationLineStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    lineRasterizationMode: VkLineRasterizationMode = @import("std").mem.zeroes(VkLineRasterizationMode),
-    stippledLineEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    lineStippleFactor: u32 = @import("std").mem.zeroes(u32),
-    lineStipplePattern: u16 = @import("std").mem.zeroes(u16),
-};
-pub const PhysicalDeviceVertexAttributeDivisorProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxVertexAttribDivisor: u32 = @import("std").mem.zeroes(u32),
-    supportsNonZeroFirstInstance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VertexInputBindingDivisorDescription = extern struct {
-    binding: u32 = @import("std").mem.zeroes(u32),
-    divisor: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineVertexInputDivisorStateCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexBindingDivisorCount: u32 = @import("std").mem.zeroes(u32),
-    pVertexBindingDivisors: [*c]const VkVertexInputBindingDivisorDescription = @import("std").mem.zeroes([*c]const VkVertexInputBindingDivisorDescription),
-};
-pub const PhysicalDeviceVertexAttributeDivisorFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vertexAttributeInstanceRateDivisor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    vertexAttributeInstanceRateZeroDivisor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceIndexTypeUint8Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    indexTypeUint8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryMapInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkMemoryMapFlags = @import("std").mem.zeroes(VkMemoryMapFlags),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const MemoryUnmapInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkMemoryUnmapFlags = @import("std").mem.zeroes(VkMemoryUnmapFlags),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-};
-pub const PhysicalDeviceMaintenance5Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance5: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance5Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    earlyFragmentMultisampleCoverageAfterSampleCounting: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    earlyFragmentSampleMaskTestBeforeSampleCounting: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthStencilSwizzleOneSupport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    polygonModePointSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nonStrictSinglePixelWideLinesUseParallelogram: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nonStrictWideLinesUseParallelogram: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderingAreaInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    viewMask: u32 = @import("std").mem.zeroes(u32),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentFormats: [*c]const VkFormat = @import("std").mem.zeroes([*c]const VkFormat),
-    depthAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    stencilAttachmentFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const ImageSubresource2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageSubresource: VkImageSubresource = @import("std").mem.zeroes(VkImageSubresource),
-};
-pub const DeviceImageSubresourceInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pCreateInfo: [*c]const VkImageCreateInfo = @import("std").mem.zeroes([*c]const VkImageCreateInfo),
-    pSubresource: [*c]const VkImageSubresource2 = @import("std").mem.zeroes([*c]const VkImageSubresource2),
-};
-pub const SubresourceLayout2 = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subresourceLayout: VkSubresourceLayout = @import("std").mem.zeroes(VkSubresourceLayout),
-};
-pub const PipelineCreateFlags2CreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags2 = @import("std").mem.zeroes(VkPipelineCreateFlags2),
-};
-pub const BufferUsageFlags2CreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    usage: VkBufferUsageFlags2 = @import("std").mem.zeroes(VkBufferUsageFlags2),
-};
-pub const PhysicalDevicePushDescriptorProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxPushDescriptors: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceDynamicRenderingLocalReadFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dynamicRenderingLocalRead: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderingAttachmentLocationInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentLocations: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const RenderingInputAttachmentIndexInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentInputIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    pDepthInputAttachmentIndex: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    pStencilInputAttachmentIndex: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const PhysicalDeviceMaintenance6Features = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance6: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance6Properties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    blockTexelViewCompatibleMultipleLayers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxCombinedImageSamplerDescriptorCount: u32 = @import("std").mem.zeroes(u32),
-    fragmentShadingRateClampCombinerInputs: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BindMemoryStatus = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pResult: [*c]VkResult = @import("std").mem.zeroes([*c]VkResult),
-};
-pub const BindDescriptorSetsInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    firstSet: u32 = @import("std").mem.zeroes(u32),
-    descriptorSetCount: u32 = @import("std").mem.zeroes(u32),
-    pDescriptorSets: [*c]const VkDescriptorSet = @import("std").mem.zeroes([*c]const VkDescriptorSet),
-    dynamicOffsetCount: u32 = @import("std").mem.zeroes(u32),
-    pDynamicOffsets: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const PushConstantsInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    offset: u32 = @import("std").mem.zeroes(u32),
-    size: u32 = @import("std").mem.zeroes(u32),
-    pValues: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PushDescriptorSetInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    set: u32 = @import("std").mem.zeroes(u32),
-    descriptorWriteCount: u32 = @import("std").mem.zeroes(u32),
-    pDescriptorWrites: [*c]const VkWriteDescriptorSet = @import("std").mem.zeroes([*c]const VkWriteDescriptorSet),
-};
-pub const PushDescriptorSetWithTemplateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    descriptorUpdateTemplate: VkDescriptorUpdateTemplate = @import("std").mem.zeroes(VkDescriptorUpdateTemplate),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    set: u32 = @import("std").mem.zeroes(u32),
-    pData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PhysicalDevicePipelineProtectedAccessFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineProtectedAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineRobustnessFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineRobustness: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineRobustnessProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    defaultRobustnessStorageBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessUniformBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessVertexInputs: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    defaultRobustnessImages: VkPipelineRobustnessImageBehavior = @import("std").mem.zeroes(VkPipelineRobustnessImageBehavior),
-};
-pub const PipelineRobustnessCreateInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    storageBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    uniformBuffers: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    vertexInputs: VkPipelineRobustnessBufferBehavior = @import("std").mem.zeroes(VkPipelineRobustnessBufferBehavior),
-    images: VkPipelineRobustnessImageBehavior = @import("std").mem.zeroes(VkPipelineRobustnessImageBehavior),
-};
-pub const PhysicalDeviceHostImageCopyFeatures = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hostImageCopy: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceHostImageCopyProperties = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    copySrcLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pCopySrcLayouts: [*c]VkImageLayout = @import("std").mem.zeroes([*c]VkImageLayout),
-    copyDstLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pCopyDstLayouts: [*c]VkImageLayout = @import("std").mem.zeroes([*c]VkImageLayout),
-    optimalTilingLayoutUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    identicalMemoryTypeRequirements: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryToImageCopy = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pHostPointer: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memoryRowLength: u32 = @import("std").mem.zeroes(u32),
-    memoryImageHeight: u32 = @import("std").mem.zeroes(u32),
-    imageSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    imageOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    imageExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const ImageToMemoryCopy = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pHostPointer: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryRowLength: u32 = @import("std").mem.zeroes(u32),
-    memoryImageHeight: u32 = @import("std").mem.zeroes(u32),
-    imageSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    imageOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    imageExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const CopyMemoryToImageInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkHostImageCopyFlags = @import("std").mem.zeroes(VkHostImageCopyFlags),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkMemoryToImageCopy = @import("std").mem.zeroes([*c]const VkMemoryToImageCopy),
-};
-pub const CopyImageToMemoryInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkHostImageCopyFlags = @import("std").mem.zeroes(VkHostImageCopyFlags),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkImageToMemoryCopy = @import("std").mem.zeroes([*c]const VkImageToMemoryCopy),
-};
-pub const CopyImageToImageInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkHostImageCopyFlags = @import("std").mem.zeroes(VkHostImageCopyFlags),
-    srcImage: VkImage = @import("std").mem.zeroes(VkImage),
-    srcImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    dstImage: VkImage = @import("std").mem.zeroes(VkImage),
-    dstImageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkImageCopy2 = @import("std").mem.zeroes([*c]const VkImageCopy2),
-};
-pub const HostImageLayoutTransitionInfo = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    oldLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    newLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    subresourceRange: VkImageSubresourceRange = @import("std").mem.zeroes(VkImageSubresourceRange),
-};
-pub const SubresourceHostMemcpySize = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const HostImageCopyDevicePerformanceQuery = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    optimalDeviceAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    identicalMemoryLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceCapabilitiesKHR = extern struct {
-    minImageCount: u32 = @import("std").mem.zeroes(u32),
-    maxImageCount: u32 = @import("std").mem.zeroes(u32),
-    currentExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    minImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxImageArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    supportedTransforms: VkSurfaceTransformFlagsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagsKHR),
-    currentTransform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-    supportedCompositeAlpha: VkCompositeAlphaFlagsKHR = @import("std").mem.zeroes(VkCompositeAlphaFlagsKHR),
-    supportedUsageFlags: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const SurfaceFormatKHR = extern struct {
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    colorSpace: VkColorSpaceKHR = @import("std").mem.zeroes(VkColorSpaceKHR),
-};
-pub const SwapchainCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkSwapchainCreateFlagsKHR = @import("std").mem.zeroes(VkSwapchainCreateFlagsKHR),
-    surface: VkSurfaceKHR = @import("std").mem.zeroes(VkSurfaceKHR),
-    minImageCount: u32 = @import("std").mem.zeroes(u32),
-    imageFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    imageColorSpace: VkColorSpaceKHR = @import("std").mem.zeroes(VkColorSpaceKHR),
-    imageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    imageArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    imageUsage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    imageSharingMode: VkSharingMode = @import("std").mem.zeroes(VkSharingMode),
-    queueFamilyIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueFamilyIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    preTransform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-    compositeAlpha: VkCompositeAlphaFlagBitsKHR = @import("std").mem.zeroes(VkCompositeAlphaFlagBitsKHR),
-    presentMode: VkPresentModeKHR = @import("std").mem.zeroes(VkPresentModeKHR),
-    clipped: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    oldSwapchain: VkSwapchainKHR = @import("std").mem.zeroes(VkSwapchainKHR),
-};
-pub const PresentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphores: [*c]const VkSemaphore = @import("std").mem.zeroes([*c]const VkSemaphore),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pSwapchains: [*c]const VkSwapchainKHR = @import("std").mem.zeroes([*c]const VkSwapchainKHR),
-    pImageIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    pResults: [*c]VkResult = @import("std").mem.zeroes([*c]VkResult),
-};
-pub const ImageSwapchainCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchain: VkSwapchainKHR = @import("std").mem.zeroes(VkSwapchainKHR),
-};
-pub const BindImageMemorySwapchainInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchain: VkSwapchainKHR = @import("std").mem.zeroes(VkSwapchainKHR),
-    imageIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const AcquireNextImageInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchain: VkSwapchainKHR = @import("std").mem.zeroes(VkSwapchainKHR),
-    timeout: u64 = @import("std").mem.zeroes(u64),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    fence: VkFence = @import("std").mem.zeroes(VkFence),
-    deviceMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceGroupPresentCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentMask: [32]u32 = @import("std").mem.zeroes([32]u32),
-    modes: VkDeviceGroupPresentModeFlagsKHR = @import("std").mem.zeroes(VkDeviceGroupPresentModeFlagsKHR),
-};
-pub const DeviceGroupPresentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pDeviceMasks: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    mode: VkDeviceGroupPresentModeFlagBitsKHR = @import("std").mem.zeroes(VkDeviceGroupPresentModeFlagBitsKHR),
-};
-pub const DeviceGroupSwapchainCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    modes: VkDeviceGroupPresentModeFlagsKHR = @import("std").mem.zeroes(VkDeviceGroupPresentModeFlagsKHR),
-};
-pub const DisplayModeParametersKHR = extern struct {
-    visibleRegion: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    refreshRate: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DisplayModeCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDisplayModeCreateFlagsKHR = @import("std").mem.zeroes(VkDisplayModeCreateFlagsKHR),
-    parameters: VkDisplayModeParametersKHR = @import("std").mem.zeroes(VkDisplayModeParametersKHR),
-};
-pub const DisplayModePropertiesKHR = extern struct {
-    displayMode: VkDisplayModeKHR = @import("std").mem.zeroes(VkDisplayModeKHR),
-    parameters: VkDisplayModeParametersKHR = @import("std").mem.zeroes(VkDisplayModeParametersKHR),
-};
-pub const DisplayPlaneCapabilitiesKHR = extern struct {
-    supportedAlpha: VkDisplayPlaneAlphaFlagsKHR = @import("std").mem.zeroes(VkDisplayPlaneAlphaFlagsKHR),
-    minSrcPosition: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    maxSrcPosition: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    minSrcExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxSrcExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    minDstPosition: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    maxDstPosition: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    minDstExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxDstExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const DisplayPlanePropertiesKHR = extern struct {
-    currentDisplay: VkDisplayKHR = @import("std").mem.zeroes(VkDisplayKHR),
-    currentStackIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DisplayPropertiesKHR = extern struct {
-    display: VkDisplayKHR = @import("std").mem.zeroes(VkDisplayKHR),
-    displayName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    physicalDimensions: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    physicalResolution: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    supportedTransforms: VkSurfaceTransformFlagsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagsKHR),
-    planeReorderPossible: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    persistentContent: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DisplaySurfaceCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDisplaySurfaceCreateFlagsKHR = @import("std").mem.zeroes(VkDisplaySurfaceCreateFlagsKHR),
-    displayMode: VkDisplayModeKHR = @import("std").mem.zeroes(VkDisplayModeKHR),
-    planeIndex: u32 = @import("std").mem.zeroes(u32),
-    planeStackIndex: u32 = @import("std").mem.zeroes(u32),
-    transform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-    globalAlpha: f32 = @import("std").mem.zeroes(f32),
-    alphaMode: VkDisplayPlaneAlphaFlagBitsKHR = @import("std").mem.zeroes(VkDisplayPlaneAlphaFlagBitsKHR),
-    imageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const DisplayPresentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcRect: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-    dstRect: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-    persistent: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const QueueFamilyQueryResultStatusPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    queryResultStatusSupport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const QueueFamilyVideoPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoCodecOperations: VkVideoCodecOperationFlagsKHR = @import("std").mem.zeroes(VkVideoCodecOperationFlagsKHR),
-};
-pub const VideoProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    videoCodecOperation: VkVideoCodecOperationFlagBitsKHR = @import("std").mem.zeroes(VkVideoCodecOperationFlagBitsKHR),
-    chromaSubsampling: VkVideoChromaSubsamplingFlagsKHR = @import("std").mem.zeroes(VkVideoChromaSubsamplingFlagsKHR),
-    lumaBitDepth: VkVideoComponentBitDepthFlagsKHR = @import("std").mem.zeroes(VkVideoComponentBitDepthFlagsKHR),
-    chromaBitDepth: VkVideoComponentBitDepthFlagsKHR = @import("std").mem.zeroes(VkVideoComponentBitDepthFlagsKHR),
-};
-pub const VideoProfileListInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    profileCount: u32 = @import("std").mem.zeroes(u32),
-    pProfiles: [*c]const VkVideoProfileInfoKHR = @import("std").mem.zeroes([*c]const VkVideoProfileInfoKHR),
-};
-pub const VideoCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoCapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoCapabilityFlagsKHR),
-    minBitstreamBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    minBitstreamBufferSizeAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    pictureAccessGranularity: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    minCodedExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxCodedExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxDpbSlots: u32 = @import("std").mem.zeroes(u32),
-    maxActiveReferencePictures: u32 = @import("std").mem.zeroes(u32),
-    stdHeaderVersion: VkExtensionProperties = @import("std").mem.zeroes(VkExtensionProperties),
-};
-pub const PhysicalDeviceVideoFormatInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageUsage: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const VideoFormatPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    componentMapping: VkComponentMapping = @import("std").mem.zeroes(VkComponentMapping),
-    imageCreateFlags: VkImageCreateFlags = @import("std").mem.zeroes(VkImageCreateFlags),
-    imageType: VkImageType = @import("std").mem.zeroes(VkImageType),
-    imageTiling: VkImageTiling = @import("std").mem.zeroes(VkImageTiling),
-    imageUsageFlags: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const VideoPictureResourceInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    codedOffset: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    codedExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    baseArrayLayer: u32 = @import("std").mem.zeroes(u32),
-    imageViewBinding: VkImageView = @import("std").mem.zeroes(VkImageView),
-};
-pub const VideoReferenceSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    slotIndex: i32 = @import("std").mem.zeroes(i32),
-    pPictureResource: [*c]const VkVideoPictureResourceInfoKHR = @import("std").mem.zeroes([*c]const VkVideoPictureResourceInfoKHR),
-};
-pub const VideoSessionMemoryRequirementsKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryBindIndex: u32 = @import("std").mem.zeroes(u32),
-    memoryRequirements: VkMemoryRequirements = @import("std").mem.zeroes(VkMemoryRequirements),
-};
-pub const BindVideoSessionMemoryInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memoryBindIndex: u32 = @import("std").mem.zeroes(u32),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    memorySize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const VideoSessionCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    flags: VkVideoSessionCreateFlagsKHR = @import("std").mem.zeroes(VkVideoSessionCreateFlagsKHR),
-    pVideoProfile: [*c]const VkVideoProfileInfoKHR = @import("std").mem.zeroes([*c]const VkVideoProfileInfoKHR),
-    pictureFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    maxCodedExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    referencePictureFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    maxDpbSlots: u32 = @import("std").mem.zeroes(u32),
-    maxActiveReferencePictures: u32 = @import("std").mem.zeroes(u32),
-    pStdHeaderVersion: [*c]const VkExtensionProperties = @import("std").mem.zeroes([*c]const VkExtensionProperties),
-};
-pub const VideoSessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoSessionParametersCreateFlagsKHR = @import("std").mem.zeroes(VkVideoSessionParametersCreateFlagsKHR),
-    videoSessionParametersTemplate: VkVideoSessionParametersKHR = @import("std").mem.zeroes(VkVideoSessionParametersKHR),
-    videoSession: VkVideoSessionKHR = @import("std").mem.zeroes(VkVideoSessionKHR),
-};
-pub const VideoSessionParametersUpdateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    updateSequenceCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoBeginCodingInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoBeginCodingFlagsKHR = @import("std").mem.zeroes(VkVideoBeginCodingFlagsKHR),
-    videoSession: VkVideoSessionKHR = @import("std").mem.zeroes(VkVideoSessionKHR),
-    videoSessionParameters: VkVideoSessionParametersKHR = @import("std").mem.zeroes(VkVideoSessionParametersKHR),
-    referenceSlotCount: u32 = @import("std").mem.zeroes(u32),
-    pReferenceSlots: [*c]const VkVideoReferenceSlotInfoKHR = @import("std").mem.zeroes([*c]const VkVideoReferenceSlotInfoKHR),
-};
-pub const VideoEndCodingInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEndCodingFlagsKHR = @import("std").mem.zeroes(VkVideoEndCodingFlagsKHR),
-};
-pub const VideoCodingControlInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoCodingControlFlagsKHR = @import("std").mem.zeroes(VkVideoCodingControlFlagsKHR),
-};
-pub const VideoDecodeCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoDecodeCapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoDecodeCapabilityFlagsKHR),
-};
-pub const VideoDecodeUsageInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    videoUsageHints: VkVideoDecodeUsageFlagsKHR = @import("std").mem.zeroes(VkVideoDecodeUsageFlagsKHR),
-};
-pub const VideoDecodeInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoDecodeFlagsKHR = @import("std").mem.zeroes(VkVideoDecodeFlagsKHR),
-    srcBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    srcBufferOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    srcBufferRange: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    dstPictureResource: VkVideoPictureResourceInfoKHR = @import("std").mem.zeroes(VkVideoPictureResourceInfoKHR),
-    pSetupReferenceSlot: [*c]const VkVideoReferenceSlotInfoKHR = @import("std").mem.zeroes([*c]const VkVideoReferenceSlotInfoKHR),
-    referenceSlotCount: u32 = @import("std").mem.zeroes(u32),
-    pReferenceSlots: [*c]const VkVideoReferenceSlotInfoKHR = @import("std").mem.zeroes([*c]const VkVideoReferenceSlotInfoKHR),
-};
-pub const VideoEncodeH264CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoEncodeH264CapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH264CapabilityFlagsKHR),
-    maxLevelIdc: StdVideoH264LevelIdc = @import("std").mem.zeroes(StdVideoH264LevelIdc),
-    maxSliceCount: u32 = @import("std").mem.zeroes(u32),
-    maxPPictureL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxBPictureL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxL1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxTemporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-    expectDyadicTemporalLayerPattern: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minQp: i32 = @import("std").mem.zeroes(i32),
-    maxQp: i32 = @import("std").mem.zeroes(i32),
-    prefersGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    requiresGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stdSyntaxFlags: VkVideoEncodeH264StdFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH264StdFlagsKHR),
-};
-pub const VideoEncodeH264QpKHR = extern struct {
-    qpI: i32 = @import("std").mem.zeroes(i32),
-    qpP: i32 = @import("std").mem.zeroes(i32),
-    qpB: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VideoEncodeH264QualityLevelPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    preferredRateControlFlags: VkVideoEncodeH264RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH264RateControlFlagsKHR),
-    preferredGopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredIdrPeriod: u32 = @import("std").mem.zeroes(u32),
-    preferredConsecutiveBFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredTemporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-    preferredConstantQp: VkVideoEncodeH264QpKHR = @import("std").mem.zeroes(VkVideoEncodeH264QpKHR),
-    preferredMaxL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxL1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredStdEntropyCodingModeFlag: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeH264SessionCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMaxLevelIdc: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxLevelIdc: StdVideoH264LevelIdc = @import("std").mem.zeroes(StdVideoH264LevelIdc),
-};
-pub const VideoEncodeH264SessionParametersAddInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdSPSs: ?*const StdVideoH264SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH264SequenceParameterSet),
-    stdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdPPSs: ?*const StdVideoH264PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH264PictureParameterSet),
-};
-pub const VideoEncodeH264SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxStdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pParametersAddInfo: [*c]const VkVideoEncodeH264SessionParametersAddInfoKHR = @import("std").mem.zeroes([*c]const VkVideoEncodeH264SessionParametersAddInfoKHR),
-};
-pub const VideoEncodeH264SessionParametersGetInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    writeStdSPS: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    writeStdPPS: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stdSPSId: u32 = @import("std").mem.zeroes(u32),
-    stdPPSId: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH264SessionParametersFeedbackInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hasStdSPSOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hasStdPPSOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeH264NaluSliceInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    constantQp: i32 = @import("std").mem.zeroes(i32),
-    pStdSliceHeader: ?*const StdVideoEncodeH264SliceHeader = @import("std").mem.zeroes(?*const StdVideoEncodeH264SliceHeader),
-};
-pub const VideoEncodeH264PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    naluSliceEntryCount: u32 = @import("std").mem.zeroes(u32),
-    pNaluSliceEntries: [*c]const VkVideoEncodeH264NaluSliceInfoKHR = @import("std").mem.zeroes([*c]const VkVideoEncodeH264NaluSliceInfoKHR),
-    pStdPictureInfo: ?*const StdVideoEncodeH264PictureInfo = @import("std").mem.zeroes(?*const StdVideoEncodeH264PictureInfo),
-    generatePrefixNalu: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeH264DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoEncodeH264ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoEncodeH264ReferenceInfo),
-};
-pub const VideoEncodeH264ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfileIdc: StdVideoH264ProfileIdc = @import("std").mem.zeroes(StdVideoH264ProfileIdc),
-};
-pub const VideoEncodeH264RateControlInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEncodeH264RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH264RateControlFlagsKHR),
-    gopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    idrPeriod: u32 = @import("std").mem.zeroes(u32),
-    consecutiveBFrameCount: u32 = @import("std").mem.zeroes(u32),
-    temporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH264FrameSizeKHR = extern struct {
-    frameISize: u32 = @import("std").mem.zeroes(u32),
-    framePSize: u32 = @import("std").mem.zeroes(u32),
-    frameBSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH264RateControlLayerInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMinQp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minQp: VkVideoEncodeH264QpKHR = @import("std").mem.zeroes(VkVideoEncodeH264QpKHR),
-    useMaxQp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxQp: VkVideoEncodeH264QpKHR = @import("std").mem.zeroes(VkVideoEncodeH264QpKHR),
-    useMaxFrameSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxFrameSize: VkVideoEncodeH264FrameSizeKHR = @import("std").mem.zeroes(VkVideoEncodeH264FrameSizeKHR),
-};
-pub const VideoEncodeH264GopRemainingFrameInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    gopRemainingI: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingP: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingB: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH265CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoEncodeH265CapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265CapabilityFlagsKHR),
-    maxLevelIdc: StdVideoH265LevelIdc = @import("std").mem.zeroes(StdVideoH265LevelIdc),
-    maxSliceSegmentCount: u32 = @import("std").mem.zeroes(u32),
-    maxTiles: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    ctbSizes: VkVideoEncodeH265CtbSizeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265CtbSizeFlagsKHR),
-    transformBlockSizes: VkVideoEncodeH265TransformBlockSizeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265TransformBlockSizeFlagsKHR),
-    maxPPictureL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxBPictureL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxL1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxSubLayerCount: u32 = @import("std").mem.zeroes(u32),
-    expectDyadicTemporalSubLayerPattern: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minQp: i32 = @import("std").mem.zeroes(i32),
-    maxQp: i32 = @import("std").mem.zeroes(i32),
-    prefersGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    requiresGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stdSyntaxFlags: VkVideoEncodeH265StdFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265StdFlagsKHR),
-};
-pub const VideoEncodeH265SessionCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMaxLevelIdc: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxLevelIdc: StdVideoH265LevelIdc = @import("std").mem.zeroes(StdVideoH265LevelIdc),
-};
-pub const VideoEncodeH265QpKHR = extern struct {
-    qpI: i32 = @import("std").mem.zeroes(i32),
-    qpP: i32 = @import("std").mem.zeroes(i32),
-    qpB: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VideoEncodeH265QualityLevelPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    preferredRateControlFlags: VkVideoEncodeH265RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265RateControlFlagsKHR),
-    preferredGopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredIdrPeriod: u32 = @import("std").mem.zeroes(u32),
-    preferredConsecutiveBFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredSubLayerCount: u32 = @import("std").mem.zeroes(u32),
-    preferredConstantQp: VkVideoEncodeH265QpKHR = @import("std").mem.zeroes(VkVideoEncodeH265QpKHR),
-    preferredMaxL0ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxL1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH265SessionParametersAddInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdVPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdVPSs: ?*const StdVideoH265VideoParameterSet = @import("std").mem.zeroes(?*const StdVideoH265VideoParameterSet),
-    stdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdSPSs: ?*const StdVideoH265SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH265SequenceParameterSet),
-    stdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdPPSs: ?*const StdVideoH265PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH265PictureParameterSet),
-};
-pub const VideoEncodeH265SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxStdVPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pParametersAddInfo: [*c]const VkVideoEncodeH265SessionParametersAddInfoKHR = @import("std").mem.zeroes([*c]const VkVideoEncodeH265SessionParametersAddInfoKHR),
-};
-pub const VideoEncodeH265SessionParametersGetInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    writeStdVPS: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    writeStdSPS: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    writeStdPPS: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stdVPSId: u32 = @import("std").mem.zeroes(u32),
-    stdSPSId: u32 = @import("std").mem.zeroes(u32),
-    stdPPSId: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH265SessionParametersFeedbackInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hasStdVPSOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hasStdSPSOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hasStdPPSOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeH265NaluSliceSegmentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    constantQp: i32 = @import("std").mem.zeroes(i32),
-    pStdSliceSegmentHeader: ?*const StdVideoEncodeH265SliceSegmentHeader = @import("std").mem.zeroes(?*const StdVideoEncodeH265SliceSegmentHeader),
-};
-pub const VideoEncodeH265PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    naluSliceSegmentEntryCount: u32 = @import("std").mem.zeroes(u32),
-    pNaluSliceSegmentEntries: [*c]const VkVideoEncodeH265NaluSliceSegmentInfoKHR = @import("std").mem.zeroes([*c]const VkVideoEncodeH265NaluSliceSegmentInfoKHR),
-    pStdPictureInfo: ?*const StdVideoEncodeH265PictureInfo = @import("std").mem.zeroes(?*const StdVideoEncodeH265PictureInfo),
-};
-pub const VideoEncodeH265DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoEncodeH265ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoEncodeH265ReferenceInfo),
-};
-pub const VideoEncodeH265ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfileIdc: StdVideoH265ProfileIdc = @import("std").mem.zeroes(StdVideoH265ProfileIdc),
-};
-pub const VideoEncodeH265RateControlInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEncodeH265RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265RateControlFlagsKHR),
-    gopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    idrPeriod: u32 = @import("std").mem.zeroes(u32),
-    consecutiveBFrameCount: u32 = @import("std").mem.zeroes(u32),
-    subLayerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH265FrameSizeKHR = extern struct {
-    frameISize: u32 = @import("std").mem.zeroes(u32),
-    framePSize: u32 = @import("std").mem.zeroes(u32),
-    frameBSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeH265RateControlLayerInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMinQp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minQp: VkVideoEncodeH265QpKHR = @import("std").mem.zeroes(VkVideoEncodeH265QpKHR),
-    useMaxQp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxQp: VkVideoEncodeH265QpKHR = @import("std").mem.zeroes(VkVideoEncodeH265QpKHR),
-    useMaxFrameSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxFrameSize: VkVideoEncodeH265FrameSizeKHR = @import("std").mem.zeroes(VkVideoEncodeH265FrameSizeKHR),
-};
-pub const VideoEncodeH265GopRemainingFrameInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    gopRemainingI: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingP: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingB: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoDecodeH264ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfileIdc: StdVideoH264ProfileIdc = @import("std").mem.zeroes(StdVideoH264ProfileIdc),
-    pictureLayout: VkVideoDecodeH264PictureLayoutFlagBitsKHR = @import("std").mem.zeroes(VkVideoDecodeH264PictureLayoutFlagBitsKHR),
-};
-pub const VideoDecodeH264CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxLevelIdc: StdVideoH264LevelIdc = @import("std").mem.zeroes(StdVideoH264LevelIdc),
-    fieldOffsetGranularity: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-};
-pub const VideoDecodeH264SessionParametersAddInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdSPSs: ?*const StdVideoH264SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH264SequenceParameterSet),
-    stdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdPPSs: ?*const StdVideoH264PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH264PictureParameterSet),
-};
-pub const VideoDecodeH264SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxStdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pParametersAddInfo: [*c]const VkVideoDecodeH264SessionParametersAddInfoKHR = @import("std").mem.zeroes([*c]const VkVideoDecodeH264SessionParametersAddInfoKHR),
-};
-pub const VideoDecodeH264PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdPictureInfo: ?*const StdVideoDecodeH264PictureInfo = @import("std").mem.zeroes(?*const StdVideoDecodeH264PictureInfo),
-    sliceCount: u32 = @import("std").mem.zeroes(u32),
-    pSliceOffsets: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const VideoDecodeH264DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoDecodeH264ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoDecodeH264ReferenceInfo),
-};
-pub const ImportMemoryFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-    fd: c_int = @import("std").mem.zeroes(c_int),
-};
-pub const MemoryFdPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryTypeBits: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MemoryGetFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const ImportSemaphoreFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    flags: VkSemaphoreImportFlags = @import("std").mem.zeroes(VkSemaphoreImportFlags),
-    handleType: VkExternalSemaphoreHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlagBits),
-    fd: c_int = @import("std").mem.zeroes(c_int),
-};
-pub const SemaphoreGetFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    handleType: VkExternalSemaphoreHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlagBits),
-};
-pub const RectLayerKHR = extern struct {
-    offset: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    extent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    layer: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PresentRegionKHR = extern struct {
-    rectangleCount: u32 = @import("std").mem.zeroes(u32),
-    pRectangles: [*c]const VkRectLayerKHR = @import("std").mem.zeroes([*c]const VkRectLayerKHR),
-};
-pub const PresentRegionsKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkPresentRegionKHR = @import("std").mem.zeroes([*c]const VkPresentRegionKHR),
-};
-pub const SharedPresentSurfaceCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    sharedPresentSupportedUsageFlags: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-};
-pub const ImportFenceFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fence: VkFence = @import("std").mem.zeroes(VkFence),
-    flags: VkFenceImportFlags = @import("std").mem.zeroes(VkFenceImportFlags),
-    handleType: VkExternalFenceHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlagBits),
-    fd: c_int = @import("std").mem.zeroes(c_int),
-};
-pub const FenceGetFdInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fence: VkFence = @import("std").mem.zeroes(VkFence),
-    handleType: VkExternalFenceHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlagBits),
-};
-pub const PhysicalDevicePerformanceQueryFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    performanceCounterQueryPools: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    performanceCounterMultipleQueryPools: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePerformanceQueryPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    allowCommandBufferQueryCopies: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PerformanceCounterKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    unit: VkPerformanceCounterUnitKHR = @import("std").mem.zeroes(VkPerformanceCounterUnitKHR),
-    scope: VkPerformanceCounterScopeKHR = @import("std").mem.zeroes(VkPerformanceCounterScopeKHR),
-    storage: VkPerformanceCounterStorageKHR = @import("std").mem.zeroes(VkPerformanceCounterStorageKHR),
-    uuid: [16]u8 = @import("std").mem.zeroes([16]u8),
-};
-pub const PerformanceCounterDescriptionKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkPerformanceCounterDescriptionFlagsKHR = @import("std").mem.zeroes(VkPerformanceCounterDescriptionFlagsKHR),
-    name: [256]u8 = @import("std").mem.zeroes([256]u8),
-    category: [256]u8 = @import("std").mem.zeroes([256]u8),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-};
-pub const QueryPoolPerformanceCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    counterIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pCounterIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const AcquireProfilingLockInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkAcquireProfilingLockFlagsKHR = @import("std").mem.zeroes(VkAcquireProfilingLockFlagsKHR),
-    timeout: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PerformanceQuerySubmitInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    counterPassIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceSurfaceInfo2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    surface: VkSurfaceKHR = @import("std").mem.zeroes(VkSurfaceKHR),
-};
-pub const SurfaceCapabilities2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    surfaceCapabilities: VkSurfaceCapabilitiesKHR = @import("std").mem.zeroes(VkSurfaceCapabilitiesKHR),
-};
-pub const SurfaceFormat2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    surfaceFormat: VkSurfaceFormatKHR = @import("std").mem.zeroes(VkSurfaceFormatKHR),
-};
-pub const DisplayProperties2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    displayProperties: VkDisplayPropertiesKHR = @import("std").mem.zeroes(VkDisplayPropertiesKHR),
-};
-pub const DisplayPlaneProperties2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    displayPlaneProperties: VkDisplayPlanePropertiesKHR = @import("std").mem.zeroes(VkDisplayPlanePropertiesKHR),
-};
-pub const DisplayModeProperties2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    displayModeProperties: VkDisplayModePropertiesKHR = @import("std").mem.zeroes(VkDisplayModePropertiesKHR),
-};
-pub const DisplayPlaneInfo2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    mode: VkDisplayModeKHR = @import("std").mem.zeroes(VkDisplayModeKHR),
-    planeIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DisplayPlaneCapabilities2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    capabilities: VkDisplayPlaneCapabilitiesKHR = @import("std").mem.zeroes(VkDisplayPlaneCapabilitiesKHR),
-};
-pub const PhysicalDeviceShaderBfloat16FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderBFloat16Type: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBFloat16DotProduct: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBFloat16CooperativeMatrix: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderClockFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSubgroupClock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderDeviceClock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoDecodeH265ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfileIdc: StdVideoH265ProfileIdc = @import("std").mem.zeroes(StdVideoH265ProfileIdc),
-};
-pub const VideoDecodeH265CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxLevelIdc: StdVideoH265LevelIdc = @import("std").mem.zeroes(StdVideoH265LevelIdc),
-};
-pub const VideoDecodeH265SessionParametersAddInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdVPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdVPSs: ?*const StdVideoH265VideoParameterSet = @import("std").mem.zeroes(?*const StdVideoH265VideoParameterSet),
-    stdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdSPSs: ?*const StdVideoH265SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH265SequenceParameterSet),
-    stdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pStdPPSs: ?*const StdVideoH265PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH265PictureParameterSet),
-};
-pub const VideoDecodeH265SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxStdVPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdSPSCount: u32 = @import("std").mem.zeroes(u32),
-    maxStdPPSCount: u32 = @import("std").mem.zeroes(u32),
-    pParametersAddInfo: [*c]const VkVideoDecodeH265SessionParametersAddInfoKHR = @import("std").mem.zeroes([*c]const VkVideoDecodeH265SessionParametersAddInfoKHR),
-};
-pub const VideoDecodeH265PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdPictureInfo: ?*const StdVideoDecodeH265PictureInfo = @import("std").mem.zeroes(?*const StdVideoDecodeH265PictureInfo),
-    sliceSegmentCount: u32 = @import("std").mem.zeroes(u32),
-    pSliceSegmentOffsets: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const VideoDecodeH265DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoDecodeH265ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoDecodeH265ReferenceInfo),
-};
-pub const FragmentShadingRateAttachmentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pFragmentShadingRateAttachment: [*c]const VkAttachmentReference2 = @import("std").mem.zeroes([*c]const VkAttachmentReference2),
-    shadingRateAttachmentTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PipelineFragmentShadingRateStateCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fragmentSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    combinerOps: [2]VkFragmentShadingRateCombinerOpKHR = @import("std").mem.zeroes([2]VkFragmentShadingRateCombinerOpKHR),
-};
-pub const PhysicalDeviceFragmentShadingRateFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineFragmentShadingRate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primitiveFragmentShadingRate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    attachmentFragmentShadingRate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShadingRatePropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minFragmentShadingRateAttachmentTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxFragmentShadingRateAttachmentTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxFragmentShadingRateAttachmentTexelSizeAspectRatio: u32 = @import("std").mem.zeroes(u32),
-    primitiveFragmentShadingRateWithMultipleViewports: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    layeredShadingRateAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateNonTrivialCombinerOps: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxFragmentSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxFragmentSizeAspectRatio: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentShadingRateCoverageSamples: u32 = @import("std").mem.zeroes(u32),
-    maxFragmentShadingRateRasterizationSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    fragmentShadingRateWithShaderDepthStencilWrites: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateWithSampleMask: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateWithShaderSampleMask: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateWithConservativeRasterization: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateWithFragmentShaderInterlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateWithCustomSampleLocations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShadingRateStrictMultiplyCombiner: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShadingRateKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    sampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    fragmentSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const RenderingFragmentShadingRateAttachmentInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    imageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-    shadingRateAttachmentTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PhysicalDeviceShaderQuadControlFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderQuadControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceProtectedCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    supportsProtected: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePresentWaitFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentWait: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineExecutablePropertiesFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineExecutableInfo: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const PipelineExecutablePropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    name: [256]u8 = @import("std").mem.zeroes([256]u8),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    subgroupSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineExecutableInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    executableIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineExecutableStatisticKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    name: [256]u8 = @import("std").mem.zeroes([256]u8),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    format: VkPipelineExecutableStatisticFormatKHR = @import("std").mem.zeroes(VkPipelineExecutableStatisticFormatKHR),
-    value: VkPipelineExecutableStatisticValueKHR = @import("std").mem.zeroes(VkPipelineExecutableStatisticValueKHR),
-};
-pub const PipelineExecutableInternalRepresentationKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    name: [256]u8 = @import("std").mem.zeroes([256]u8),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    isText: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataSize: usize = @import("std").mem.zeroes(usize),
-    pData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PipelineLibraryCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    libraryCount: u32 = @import("std").mem.zeroes(u32),
-    pLibraries: [*c]const VkPipeline = @import("std").mem.zeroes([*c]const VkPipeline),
-};
-pub const PresentIdKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentIds: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const PhysicalDevicePresentIdFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentId: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEncodeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeFlagsKHR),
-    dstBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    dstBufferOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    dstBufferRange: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    srcPictureResource: VkVideoPictureResourceInfoKHR = @import("std").mem.zeroes(VkVideoPictureResourceInfoKHR),
-    pSetupReferenceSlot: [*c]const VkVideoReferenceSlotInfoKHR = @import("std").mem.zeroes([*c]const VkVideoReferenceSlotInfoKHR),
-    referenceSlotCount: u32 = @import("std").mem.zeroes(u32),
-    pReferenceSlots: [*c]const VkVideoReferenceSlotInfoKHR = @import("std").mem.zeroes([*c]const VkVideoReferenceSlotInfoKHR),
-    precedingExternallyEncodedBytes: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoEncodeCapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeCapabilityFlagsKHR),
-    rateControlModes: VkVideoEncodeRateControlModeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeRateControlModeFlagsKHR),
-    maxRateControlLayers: u32 = @import("std").mem.zeroes(u32),
-    maxBitrate: u64 = @import("std").mem.zeroes(u64),
-    maxQualityLevels: u32 = @import("std").mem.zeroes(u32),
-    encodeInputPictureGranularity: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    supportedEncodeFeedbackFlags: VkVideoEncodeFeedbackFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeFeedbackFlagsKHR),
-};
-pub const QueryPoolVideoEncodeFeedbackCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    encodeFeedbackFlags: VkVideoEncodeFeedbackFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeFeedbackFlagsKHR),
-};
-pub const VideoEncodeUsageInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    videoUsageHints: VkVideoEncodeUsageFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeUsageFlagsKHR),
-    videoContentHints: VkVideoEncodeContentFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeContentFlagsKHR),
-    tuningMode: VkVideoEncodeTuningModeKHR = @import("std").mem.zeroes(VkVideoEncodeTuningModeKHR),
-};
-pub const VideoEncodeRateControlLayerInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    averageBitrate: u64 = @import("std").mem.zeroes(u64),
-    maxBitrate: u64 = @import("std").mem.zeroes(u64),
-    frameRateNumerator: u32 = @import("std").mem.zeroes(u32),
-    frameRateDenominator: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeRateControlInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEncodeRateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeRateControlFlagsKHR),
-    rateControlMode: VkVideoEncodeRateControlModeFlagBitsKHR = @import("std").mem.zeroes(VkVideoEncodeRateControlModeFlagBitsKHR),
-    layerCount: u32 = @import("std").mem.zeroes(u32),
-    pLayers: [*c]const VkVideoEncodeRateControlLayerInfoKHR = @import("std").mem.zeroes([*c]const VkVideoEncodeRateControlLayerInfoKHR),
-    virtualBufferSizeInMs: u32 = @import("std").mem.zeroes(u32),
-    initialVirtualBufferSizeInMs: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceVideoEncodeQualityLevelInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pVideoProfile: [*c]const VkVideoProfileInfoKHR = @import("std").mem.zeroes([*c]const VkVideoProfileInfoKHR),
-    qualityLevel: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeQualityLevelPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    preferredRateControlMode: VkVideoEncodeRateControlModeFlagBitsKHR = @import("std").mem.zeroes(VkVideoEncodeRateControlModeFlagBitsKHR),
-    preferredRateControlLayerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeQualityLevelInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    qualityLevel: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeSessionParametersGetInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    videoSessionParameters: VkVideoSessionParametersKHR = @import("std").mem.zeroes(VkVideoSessionParametersKHR),
-};
-pub const VideoEncodeSessionParametersFeedbackInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hasOverrides: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShaderBarycentricFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentShaderBarycentric: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShaderBarycentricPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    triStripVertexOrderIndependentOfProvokingVertex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSubgroupUniformControlFlow: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    workgroupMemoryExplicitLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    workgroupMemoryExplicitLayoutScalarBlockLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    workgroupMemoryExplicitLayout8BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    workgroupMemoryExplicitLayout16BitAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRayTracingMaintenance1FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingMaintenance1: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTracingPipelineTraceRaysIndirect2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const TraceRaysIndirectCommand2KHR = extern struct {
-    raygenShaderRecordAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    raygenShaderRecordSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    missShaderBindingTableAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    missShaderBindingTableSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    missShaderBindingTableStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    hitShaderBindingTableAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    hitShaderBindingTableSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    hitShaderBindingTableStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    callableShaderBindingTableAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    callableShaderBindingTableSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    callableShaderBindingTableStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    depth: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderMaximalReconvergence: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceCapabilitiesPresentId2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentId2Supported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PresentId2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentIds: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const PhysicalDevicePresentId2FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentId2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceCapabilitiesPresentWait2KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentWait2Supported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePresentWait2FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentWait2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PresentWait2InfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentId: u64 = @import("std").mem.zeroes(u64),
-    timeout: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PhysicalDeviceRayTracingPositionFetchFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingPositionFetch: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineBinaryFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineBinaries: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineBinaryPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineBinaryInternalCache: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineBinaryInternalCacheControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineBinaryPrefersInternalCache: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineBinaryPrecompiledInternalCache: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pipelineBinaryCompressedData: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DevicePipelineBinaryInternalCacheControlKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    disableInternalCache: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineBinaryKeyKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    keySize: u32 = @import("std").mem.zeroes(u32),
-    key: [32]u8 = @import("std").mem.zeroes([32]u8),
-};
-pub const PipelineBinaryDataKHR = extern struct {
-    dataSize: usize = @import("std").mem.zeroes(usize),
-    pData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PipelineBinaryKeysAndDataKHR = extern struct {
-    binaryCount: u32 = @import("std").mem.zeroes(u32),
-    pPipelineBinaryKeys: [*c]const VkPipelineBinaryKeyKHR = @import("std").mem.zeroes([*c]const VkPipelineBinaryKeyKHR),
-    pPipelineBinaryData: [*c]const VkPipelineBinaryDataKHR = @import("std").mem.zeroes([*c]const VkPipelineBinaryDataKHR),
-};
-pub const PipelineCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PipelineBinaryCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pKeysAndDataInfo: [*c]const VkPipelineBinaryKeysAndDataKHR = @import("std").mem.zeroes([*c]const VkPipelineBinaryKeysAndDataKHR),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    pPipelineCreateInfo: [*c]const VkPipelineCreateInfoKHR = @import("std").mem.zeroes([*c]const VkPipelineCreateInfoKHR),
-};
-pub const PipelineBinaryInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    binaryCount: u32 = @import("std").mem.zeroes(u32),
-    pPipelineBinaries: [*c]const VkPipelineBinaryKHR = @import("std").mem.zeroes([*c]const VkPipelineBinaryKHR),
-};
-pub const ReleaseCapturedPipelineDataInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const PipelineBinaryDataInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineBinary: VkPipelineBinaryKHR = @import("std").mem.zeroes(VkPipelineBinaryKHR),
-};
-pub const PipelineBinaryHandlesInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipelineBinaryCount: u32 = @import("std").mem.zeroes(u32),
-    pPipelineBinaries: [*c]VkPipelineBinaryKHR = @import("std").mem.zeroes([*c]VkPipelineBinaryKHR),
-};
-pub const SurfacePresentModeKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentMode: VkPresentModeKHR = @import("std").mem.zeroes(VkPresentModeKHR),
-};
-pub const SurfacePresentScalingCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportedPresentScaling: VkPresentScalingFlagsKHR = @import("std").mem.zeroes(VkPresentScalingFlagsKHR),
-    supportedPresentGravityX: VkPresentGravityFlagsKHR = @import("std").mem.zeroes(VkPresentGravityFlagsKHR),
-    supportedPresentGravityY: VkPresentGravityFlagsKHR = @import("std").mem.zeroes(VkPresentGravityFlagsKHR),
-    minScaledImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxScaledImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const SurfacePresentModeCompatibilityKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentModeCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentModes: [*c]VkPresentModeKHR = @import("std").mem.zeroes([*c]VkPresentModeKHR),
-};
-pub const PhysicalDeviceSwapchainMaintenance1FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    swapchainMaintenance1: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SwapchainPresentFenceInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pFences: [*c]const VkFence = @import("std").mem.zeroes([*c]const VkFence),
-};
-pub const SwapchainPresentModesCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentModeCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentModes: [*c]const VkPresentModeKHR = @import("std").mem.zeroes([*c]const VkPresentModeKHR),
-};
-pub const SwapchainPresentModeInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentModes: [*c]const VkPresentModeKHR = @import("std").mem.zeroes([*c]const VkPresentModeKHR),
-};
-pub const SwapchainPresentScalingCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    scalingBehavior: VkPresentScalingFlagsKHR = @import("std").mem.zeroes(VkPresentScalingFlagsKHR),
-    presentGravityX: VkPresentGravityFlagsKHR = @import("std").mem.zeroes(VkPresentGravityFlagsKHR),
-    presentGravityY: VkPresentGravityFlagsKHR = @import("std").mem.zeroes(VkPresentGravityFlagsKHR),
-};
-pub const ReleaseSwapchainImagesInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchain: VkSwapchainKHR = @import("std").mem.zeroes(VkSwapchainKHR),
-    imageIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pImageIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const CooperativeMatrixPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    MSize: u32 = @import("std").mem.zeroes(u32),
-    NSize: u32 = @import("std").mem.zeroes(u32),
-    KSize: u32 = @import("std").mem.zeroes(u32),
-    AType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    BType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    CType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    ResultType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    saturatingAccumulation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    scope: VkScopeKHR = @import("std").mem.zeroes(VkScopeKHR),
-};
-pub const PhysicalDeviceCooperativeMatrixFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrix: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixRobustBufferAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCooperativeMatrixPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrixSupportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-};
-pub const PhysicalDeviceComputeShaderDerivativesFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    computeDerivativeGroupQuads: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    computeDerivativeGroupLinear: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceComputeShaderDerivativesPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    meshAndTaskShaderDerivatives: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoDecodeAV1ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfile: StdVideoAV1Profile = @import("std").mem.zeroes(StdVideoAV1Profile),
-    filmGrainSupport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoDecodeAV1CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxLevel: StdVideoAV1Level = @import("std").mem.zeroes(StdVideoAV1Level),
-};
-pub const VideoDecodeAV1SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdSequenceHeader: ?*const StdVideoAV1SequenceHeader = @import("std").mem.zeroes(?*const StdVideoAV1SequenceHeader),
-};
-pub const VideoDecodeAV1PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdPictureInfo: ?*const StdVideoDecodeAV1PictureInfo = @import("std").mem.zeroes(?*const StdVideoDecodeAV1PictureInfo),
-    referenceNameSlotIndices: [7]i32 = @import("std").mem.zeroes([7]i32),
-    frameHeaderOffset: u32 = @import("std").mem.zeroes(u32),
-    tileCount: u32 = @import("std").mem.zeroes(u32),
-    pTileOffsets: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    pTileSizes: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const VideoDecodeAV1DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoDecodeAV1ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoDecodeAV1ReferenceInfo),
-};
-pub const PhysicalDeviceVideoEncodeAV1FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoEncodeAV1: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeAV1CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkVideoEncodeAV1CapabilityFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1CapabilityFlagsKHR),
-    maxLevel: StdVideoAV1Level = @import("std").mem.zeroes(StdVideoAV1Level),
-    codedPictureAlignment: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxTiles: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    minTileSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxTileSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    superblockSizes: VkVideoEncodeAV1SuperblockSizeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1SuperblockSizeFlagsKHR),
-    maxSingleReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    singleReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-    maxUnidirectionalCompoundReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxUnidirectionalCompoundGroup1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    unidirectionalCompoundReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-    maxBidirectionalCompoundReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxBidirectionalCompoundGroup1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxBidirectionalCompoundGroup2ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    bidirectionalCompoundReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-    maxTemporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-    maxSpatialLayerCount: u32 = @import("std").mem.zeroes(u32),
-    maxOperatingPoints: u32 = @import("std").mem.zeroes(u32),
-    minQIndex: u32 = @import("std").mem.zeroes(u32),
-    maxQIndex: u32 = @import("std").mem.zeroes(u32),
-    prefersGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    requiresGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    stdSyntaxFlags: VkVideoEncodeAV1StdFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1StdFlagsKHR),
-};
-pub const VideoEncodeAV1QIndexKHR = extern struct {
-    intraQIndex: u32 = @import("std").mem.zeroes(u32),
-    predictiveQIndex: u32 = @import("std").mem.zeroes(u32),
-    bipredictiveQIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeAV1QualityLevelPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    preferredRateControlFlags: VkVideoEncodeAV1RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1RateControlFlagsKHR),
-    preferredGopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredKeyFramePeriod: u32 = @import("std").mem.zeroes(u32),
-    preferredConsecutiveBipredictiveFrameCount: u32 = @import("std").mem.zeroes(u32),
-    preferredTemporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-    preferredConstantQIndex: VkVideoEncodeAV1QIndexKHR = @import("std").mem.zeroes(VkVideoEncodeAV1QIndexKHR),
-    preferredMaxSingleReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredSingleReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxUnidirectionalCompoundReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxUnidirectionalCompoundGroup1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredUnidirectionalCompoundReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxBidirectionalCompoundReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxBidirectionalCompoundGroup1ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredMaxBidirectionalCompoundGroup2ReferenceCount: u32 = @import("std").mem.zeroes(u32),
-    preferredBidirectionalCompoundReferenceNameMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeAV1SessionCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMaxLevel: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxLevel: StdVideoAV1Level = @import("std").mem.zeroes(StdVideoAV1Level),
-};
-pub const VideoEncodeAV1SessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdSequenceHeader: ?*const StdVideoAV1SequenceHeader = @import("std").mem.zeroes(?*const StdVideoAV1SequenceHeader),
-    pStdDecoderModelInfo: [*c]const StdVideoEncodeAV1DecoderModelInfo = @import("std").mem.zeroes([*c]const StdVideoEncodeAV1DecoderModelInfo),
-    stdOperatingPointCount: u32 = @import("std").mem.zeroes(u32),
-    pStdOperatingPoints: ?*const StdVideoEncodeAV1OperatingPointInfo = @import("std").mem.zeroes(?*const StdVideoEncodeAV1OperatingPointInfo),
-};
-pub const VideoEncodeAV1PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    predictionMode: VkVideoEncodeAV1PredictionModeKHR = @import("std").mem.zeroes(VkVideoEncodeAV1PredictionModeKHR),
-    rateControlGroup: VkVideoEncodeAV1RateControlGroupKHR = @import("std").mem.zeroes(VkVideoEncodeAV1RateControlGroupKHR),
-    constantQIndex: u32 = @import("std").mem.zeroes(u32),
-    pStdPictureInfo: ?*const StdVideoEncodeAV1PictureInfo = @import("std").mem.zeroes(?*const StdVideoEncodeAV1PictureInfo),
-    referenceNameSlotIndices: [7]i32 = @import("std").mem.zeroes([7]i32),
-    primaryReferenceCdfOnly: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    generateObuExtensionHeader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeAV1DpbSlotInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdReferenceInfo: ?*const StdVideoEncodeAV1ReferenceInfo = @import("std").mem.zeroes(?*const StdVideoEncodeAV1ReferenceInfo),
-};
-pub const VideoEncodeAV1ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfile: StdVideoAV1Profile = @import("std").mem.zeroes(StdVideoAV1Profile),
-};
-pub const VideoEncodeAV1FrameSizeKHR = extern struct {
-    intraFrameSize: u32 = @import("std").mem.zeroes(u32),
-    predictiveFrameSize: u32 = @import("std").mem.zeroes(u32),
-    bipredictiveFrameSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeAV1GopRemainingFrameInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useGopRemainingFrames: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    gopRemainingIntra: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingPredictive: u32 = @import("std").mem.zeroes(u32),
-    gopRemainingBipredictive: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeAV1RateControlInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkVideoEncodeAV1RateControlFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1RateControlFlagsKHR),
-    gopFrameCount: u32 = @import("std").mem.zeroes(u32),
-    keyFramePeriod: u32 = @import("std").mem.zeroes(u32),
-    consecutiveBipredictiveFrameCount: u32 = @import("std").mem.zeroes(u32),
-    temporalLayerCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeAV1RateControlLayerInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    useMinQIndex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minQIndex: VkVideoEncodeAV1QIndexKHR = @import("std").mem.zeroes(VkVideoEncodeAV1QIndexKHR),
-    useMaxQIndex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxQIndex: VkVideoEncodeAV1QIndexKHR = @import("std").mem.zeroes(VkVideoEncodeAV1QIndexKHR),
-    useMaxFrameSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxFrameSize: VkVideoEncodeAV1FrameSizeKHR = @import("std").mem.zeroes(VkVideoEncodeAV1FrameSizeKHR),
-};
-pub const PhysicalDeviceVideoDecodeVP9FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoDecodeVP9: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoDecodeVP9ProfileInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stdProfile: StdVideoVP9Profile = @import("std").mem.zeroes(StdVideoVP9Profile),
-};
-pub const VideoDecodeVP9CapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxLevel: StdVideoVP9Level = @import("std").mem.zeroes(StdVideoVP9Level),
-};
-pub const VideoDecodeVP9PictureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdPictureInfo: ?*const StdVideoDecodeVP9PictureInfo = @import("std").mem.zeroes(?*const StdVideoDecodeVP9PictureInfo),
-    referenceNameSlotIndices: [3]i32 = @import("std").mem.zeroes([3]i32),
-    uncompressedHeaderOffset: u32 = @import("std").mem.zeroes(u32),
-    compressedHeaderOffset: u32 = @import("std").mem.zeroes(u32),
-    tilesOffset: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceVideoMaintenance1FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoMaintenance1: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoInlineQueryInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    queryPool: VkQueryPool = @import("std").mem.zeroes(VkQueryPool),
-    firstQuery: u32 = @import("std").mem.zeroes(u32),
-    queryCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceUnifiedImageLayoutsFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    unifiedImageLayouts: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    unifiedImageLayoutsVideo: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AttachmentFeedbackLoopInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    feedbackLoopEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CalibratedTimestampInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    timeDomain: VkTimeDomainKHR = @import("std").mem.zeroes(VkTimeDomainKHR),
-};
-pub const SetDescriptorBufferOffsetsInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    firstSet: u32 = @import("std").mem.zeroes(u32),
-    setCount: u32 = @import("std").mem.zeroes(u32),
-    pBufferIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    pOffsets: [*c]const VkDeviceSize = @import("std").mem.zeroes([*c]const VkDeviceSize),
-};
-pub const BindDescriptorBufferEmbeddedSamplersInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    set: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoEncodeIntraRefreshCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    intraRefreshModes: VkVideoEncodeIntraRefreshModeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeIntraRefreshModeFlagsKHR),
-    maxIntraRefreshCycleDuration: u32 = @import("std").mem.zeroes(u32),
-    maxIntraRefreshActiveReferencePictures: u32 = @import("std").mem.zeroes(u32),
-    partitionIndependentIntraRefreshRegions: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nonRectangularIntraRefreshRegions: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeSessionIntraRefreshCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    intraRefreshMode: VkVideoEncodeIntraRefreshModeFlagBitsKHR = @import("std").mem.zeroes(VkVideoEncodeIntraRefreshModeFlagBitsKHR),
-};
-pub const VideoEncodeIntraRefreshInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    intraRefreshCycleDuration: u32 = @import("std").mem.zeroes(u32),
-    intraRefreshIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VideoReferenceIntraRefreshInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dirtyIntraRefreshRegions: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoEncodeIntraRefresh: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeQuantizationMapCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxQuantizationMapExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const VideoFormatQuantizationMapPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    quantizationMapTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const VideoEncodeQuantizationMapInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    quantizationMap: VkImageView = @import("std").mem.zeroes(VkImageView),
-    quantizationMapExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const VideoEncodeQuantizationMapSessionParametersCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    quantizationMapTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoEncodeQuantizationMap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoEncodeH264QuantizationMapCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minQpDelta: i32 = @import("std").mem.zeroes(i32),
-    maxQpDelta: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VideoEncodeH265QuantizationMapCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minQpDelta: i32 = @import("std").mem.zeroes(i32),
-    maxQpDelta: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VideoFormatH265QuantizationMapPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    compatibleCtbSizes: VkVideoEncodeH265CtbSizeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeH265CtbSizeFlagsKHR),
-};
-pub const VideoEncodeAV1QuantizationMapCapabilitiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minQIndexDelta: i32 = @import("std").mem.zeroes(i32),
-    maxQIndexDelta: i32 = @import("std").mem.zeroes(i32),
-};
-pub const VideoFormatAV1QuantizationMapPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    compatibleSuperblockSizes: VkVideoEncodeAV1SuperblockSizeFlagsKHR = @import("std").mem.zeroes(VkVideoEncodeAV1SuperblockSizeFlagsKHR),
-};
-pub const PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderRelaxedExtendedInstruction: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance7FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance7: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance7PropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    robustFragmentShadingRateAttachmentAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    separateDepthStencilAttachmentAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxDescriptorSetTotalUniformBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetTotalStorageBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetTotalBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindTotalUniformBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindTotalStorageBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindTotalBuffersDynamic: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceLayeredApiPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vendorID: u32 = @import("std").mem.zeroes(u32),
-    deviceID: u32 = @import("std").mem.zeroes(u32),
-    layeredAPI: VkPhysicalDeviceLayeredApiKHR = @import("std").mem.zeroes(VkPhysicalDeviceLayeredApiKHR),
-    deviceName: [256]u8 = @import("std").mem.zeroes([256]u8),
-};
-pub const PhysicalDeviceLayeredApiPropertiesListKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    layeredApiCount: u32 = @import("std").mem.zeroes(u32),
-    pLayeredApis: [*c]VkPhysicalDeviceLayeredApiPropertiesKHR = @import("std").mem.zeroes([*c]VkPhysicalDeviceLayeredApiPropertiesKHR),
-};
-pub const PhysicalDeviceLayeredApiVulkanPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    properties: VkPhysicalDeviceProperties2 = @import("std").mem.zeroes(VkPhysicalDeviceProperties2),
-};
-pub const PhysicalDeviceMaintenance8FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryBarrierAccessFlags3KHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcAccessMask3: VkAccessFlags3KHR = @import("std").mem.zeroes(VkAccessFlags3KHR),
-    dstAccessMask3: VkAccessFlags3KHR = @import("std").mem.zeroes(VkAccessFlags3KHR),
-};
-pub const PhysicalDeviceMaintenance9FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maintenance9: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMaintenance9PropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    image2DViewOf3DSparse: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    defaultVertexAttributeValue: VkDefaultVertexAttributeValueKHR = @import("std").mem.zeroes(VkDefaultVertexAttributeValueKHR),
-};
-pub const QueueFamilyOwnershipTransferPropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    optimalImageTransferToQueueFamilies: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceVideoMaintenance2FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    videoMaintenance2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VideoDecodeH264InlineSessionParametersInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdSPS: ?*const StdVideoH264SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH264SequenceParameterSet),
-    pStdPPS: ?*const StdVideoH264PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH264PictureParameterSet),
-};
-pub const VideoDecodeH265InlineSessionParametersInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdVPS: ?*const StdVideoH265VideoParameterSet = @import("std").mem.zeroes(?*const StdVideoH265VideoParameterSet),
-    pStdSPS: ?*const StdVideoH265SequenceParameterSet = @import("std").mem.zeroes(?*const StdVideoH265SequenceParameterSet),
-    pStdPPS: ?*const StdVideoH265PictureParameterSet = @import("std").mem.zeroes(?*const StdVideoH265PictureParameterSet),
-};
-pub const VideoDecodeAV1InlineSessionParametersInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pStdSequenceHeader: ?*const StdVideoAV1SequenceHeader = @import("std").mem.zeroes(?*const StdVideoAV1SequenceHeader),
-};
-pub const PhysicalDeviceDepthClampZeroOneFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    depthClampZeroOne: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRobustness2FeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    robustBufferAccess2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    robustImageAccess2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nullDescriptor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRobustness2PropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    robustStorageBufferAccessSizeAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    robustUniformBufferAccessSizeAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentModeFifoLatestReady: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DebugReportCallbackCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDebugReportFlagsEXT = @import("std").mem.zeroes(VkDebugReportFlagsEXT),
-    pfnCallback: PFN_vkDebugReportCallbackEXT = @import("std").mem.zeroes(PFN_vkDebugReportCallbackEXT),
-    pUserData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PipelineRasterizationStateRasterizationOrderAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    rasterizationOrder: VkRasterizationOrderAMD = @import("std").mem.zeroes(VkRasterizationOrderAMD),
-};
-pub const DebugMarkerObjectNameInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    objectType: VkDebugReportObjectTypeEXT = @import("std").mem.zeroes(VkDebugReportObjectTypeEXT),
-    object: u64 = @import("std").mem.zeroes(u64),
-    pObjectName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const DebugMarkerObjectTagInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    objectType: VkDebugReportObjectTypeEXT = @import("std").mem.zeroes(VkDebugReportObjectTypeEXT),
-    object: u64 = @import("std").mem.zeroes(u64),
-    tagName: u64 = @import("std").mem.zeroes(u64),
-    tagSize: usize = @import("std").mem.zeroes(usize),
-    pTag: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const DebugMarkerMarkerInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pMarkerName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    color: [4]f32 = @import("std").mem.zeroes([4]f32),
-};
-pub const DedicatedAllocationImageCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dedicatedAllocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DedicatedAllocationBufferCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dedicatedAllocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DedicatedAllocationMemoryAllocateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const PhysicalDeviceTransformFeedbackFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    transformFeedback: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    geometryStreams: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTransformFeedbackPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxTransformFeedbackStreams: u32 = @import("std").mem.zeroes(u32),
-    maxTransformFeedbackBuffers: u32 = @import("std").mem.zeroes(u32),
-    maxTransformFeedbackBufferSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxTransformFeedbackStreamDataSize: u32 = @import("std").mem.zeroes(u32),
-    maxTransformFeedbackBufferDataSize: u32 = @import("std").mem.zeroes(u32),
-    maxTransformFeedbackBufferDataStride: u32 = @import("std").mem.zeroes(u32),
-    transformFeedbackQueries: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    transformFeedbackStreamsLinesTriangles: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    transformFeedbackRasterizationStreamSelect: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    transformFeedbackDraw: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineRasterizationStateStreamCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineRasterizationStateStreamCreateFlagsEXT = @import("std").mem.zeroes(VkPipelineRasterizationStateStreamCreateFlagsEXT),
-    rasterizationStream: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CuModuleCreateInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dataSize: usize = @import("std").mem.zeroes(usize),
-    pData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const CuModuleTexturingModeCreateInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    use64bitTexturing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CuFunctionCreateInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    module: VkCuModuleNVX = @import("std").mem.zeroes(VkCuModuleNVX),
-    pName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const CuLaunchInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    function: VkCuFunctionNVX = @import("std").mem.zeroes(VkCuFunctionNVX),
-    gridDimX: u32 = @import("std").mem.zeroes(u32),
-    gridDimY: u32 = @import("std").mem.zeroes(u32),
-    gridDimZ: u32 = @import("std").mem.zeroes(u32),
-    blockDimX: u32 = @import("std").mem.zeroes(u32),
-    blockDimY: u32 = @import("std").mem.zeroes(u32),
-    blockDimZ: u32 = @import("std").mem.zeroes(u32),
-    sharedMemBytes: u32 = @import("std").mem.zeroes(u32),
-    paramCount: usize = @import("std").mem.zeroes(usize),
-    pParams: [*c]const ?*const anyopaque = @import("std").mem.zeroes([*c]const ?*const anyopaque),
-    extraCount: usize = @import("std").mem.zeroes(usize),
-    pExtras: [*c]const ?*const anyopaque = @import("std").mem.zeroes([*c]const ?*const anyopaque),
-};
-pub const ImageViewHandleInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    descriptorType: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    sampler: VkSampler = @import("std").mem.zeroes(VkSampler),
-};
-pub const ImageViewAddressPropertiesNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const TextureLODGatherFormatPropertiesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportsTextureGatherLODBiasAMD: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ShaderResourceUsageAMD = extern struct {
-    numUsedVgprs: u32 = @import("std").mem.zeroes(u32),
-    numUsedSgprs: u32 = @import("std").mem.zeroes(u32),
-    ldsSizePerLocalWorkGroup: u32 = @import("std").mem.zeroes(u32),
-    ldsUsageSizeInBytes: usize = @import("std").mem.zeroes(usize),
-    scratchMemUsageInBytes: usize = @import("std").mem.zeroes(usize),
-};
-pub const ShaderStatisticsInfoAMD = extern struct {
-    shaderStageMask: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    resourceUsage: VkShaderResourceUsageAMD = @import("std").mem.zeroes(VkShaderResourceUsageAMD),
-    numPhysicalVgprs: u32 = @import("std").mem.zeroes(u32),
-    numPhysicalSgprs: u32 = @import("std").mem.zeroes(u32),
-    numAvailableVgprs: u32 = @import("std").mem.zeroes(u32),
-    numAvailableSgprs: u32 = @import("std").mem.zeroes(u32),
-    computeWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-};
-pub const PhysicalDeviceCornerSampledImageFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cornerSampledImage: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ExternalImageFormatPropertiesNV = extern struct {
-    imageFormatProperties: VkImageFormatProperties = @import("std").mem.zeroes(VkImageFormatProperties),
-    externalMemoryFeatures: VkExternalMemoryFeatureFlagsNV = @import("std").mem.zeroes(VkExternalMemoryFeatureFlagsNV),
-    exportFromImportedHandleTypes: VkExternalMemoryHandleTypeFlagsNV = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagsNV),
-    compatibleHandleTypes: VkExternalMemoryHandleTypeFlagsNV = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagsNV),
-};
-pub const ExternalMemoryImageCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlagsNV = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagsNV),
-};
-pub const ExportMemoryAllocateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlagsNV = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagsNV),
-};
-pub const ValidationFlagsEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    disabledValidationCheckCount: u32 = @import("std").mem.zeroes(u32),
-    pDisabledValidationChecks: [*c]const VkValidationCheckEXT = @import("std").mem.zeroes([*c]const VkValidationCheckEXT),
-};
-pub const ImageViewASTCDecodeModeEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    decodeMode: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const PhysicalDeviceASTCDecodeFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    decodeModeSharedExponent: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ConditionalRenderingBeginInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    flags: VkConditionalRenderingFlagsEXT = @import("std").mem.zeroes(VkConditionalRenderingFlagsEXT),
-};
-pub const PhysicalDeviceConditionalRenderingFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    conditionalRendering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    inheritedConditionalRendering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CommandBufferInheritanceConditionalRenderingInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    conditionalRenderingEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ViewportWScalingNV = extern struct {
-    xcoeff: f32 = @import("std").mem.zeroes(f32),
-    ycoeff: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PipelineViewportWScalingStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    viewportWScalingEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    viewportCount: u32 = @import("std").mem.zeroes(u32),
-    pViewportWScalings: [*c]const VkViewportWScalingNV = @import("std").mem.zeroes([*c]const VkViewportWScalingNV),
-};
-pub const SurfaceCapabilities2EXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minImageCount: u32 = @import("std").mem.zeroes(u32),
-    maxImageCount: u32 = @import("std").mem.zeroes(u32),
-    currentExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    minImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxImageExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxImageArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    supportedTransforms: VkSurfaceTransformFlagsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagsKHR),
-    currentTransform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-    supportedCompositeAlpha: VkCompositeAlphaFlagsKHR = @import("std").mem.zeroes(VkCompositeAlphaFlagsKHR),
-    supportedUsageFlags: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    supportedSurfaceCounters: VkSurfaceCounterFlagsEXT = @import("std").mem.zeroes(VkSurfaceCounterFlagsEXT),
-};
-pub const DisplayPowerInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    powerState: VkDisplayPowerStateEXT = @import("std").mem.zeroes(VkDisplayPowerStateEXT),
-};
-pub const DeviceEventInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceEvent: VkDeviceEventTypeEXT = @import("std").mem.zeroes(VkDeviceEventTypeEXT),
-};
-pub const DisplayEventInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    displayEvent: VkDisplayEventTypeEXT = @import("std").mem.zeroes(VkDisplayEventTypeEXT),
-};
-pub const SwapchainCounterCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    surfaceCounters: VkSurfaceCounterFlagsEXT = @import("std").mem.zeroes(VkSurfaceCounterFlagsEXT),
-};
-pub const RefreshCycleDurationGOOGLE = extern struct {
-    refreshDuration: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PastPresentationTimingGOOGLE = extern struct {
-    presentID: u32 = @import("std").mem.zeroes(u32),
-    desiredPresentTime: u64 = @import("std").mem.zeroes(u64),
-    actualPresentTime: u64 = @import("std").mem.zeroes(u64),
-    earliestPresentTime: u64 = @import("std").mem.zeroes(u64),
-    presentMargin: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PresentTimeGOOGLE = extern struct {
-    presentID: u32 = @import("std").mem.zeroes(u32),
-    desiredPresentTime: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PresentTimesInfoGOOGLE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    swapchainCount: u32 = @import("std").mem.zeroes(u32),
-    pTimes: [*c]const VkPresentTimeGOOGLE = @import("std").mem.zeroes([*c]const VkPresentTimeGOOGLE),
-};
-pub const PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    perViewPositionAllComponents: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MultiviewPerViewAttributesInfoNVX = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    perViewAttributes: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    perViewAttributesPositionXOnly: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ViewportSwizzleNV = extern struct {
-    x: VkViewportCoordinateSwizzleNV = @import("std").mem.zeroes(VkViewportCoordinateSwizzleNV),
-    y: VkViewportCoordinateSwizzleNV = @import("std").mem.zeroes(VkViewportCoordinateSwizzleNV),
-    z: VkViewportCoordinateSwizzleNV = @import("std").mem.zeroes(VkViewportCoordinateSwizzleNV),
-    w: VkViewportCoordinateSwizzleNV = @import("std").mem.zeroes(VkViewportCoordinateSwizzleNV),
-};
-pub const PipelineViewportSwizzleStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineViewportSwizzleStateCreateFlagsNV = @import("std").mem.zeroes(VkPipelineViewportSwizzleStateCreateFlagsNV),
-    viewportCount: u32 = @import("std").mem.zeroes(u32),
-    pViewportSwizzles: [*c]const VkViewportSwizzleNV = @import("std").mem.zeroes([*c]const VkViewportSwizzleNV),
-};
-pub const PhysicalDeviceDiscardRectanglePropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxDiscardRectangles: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineDiscardRectangleStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineDiscardRectangleStateCreateFlagsEXT = @import("std").mem.zeroes(VkPipelineDiscardRectangleStateCreateFlagsEXT),
-    discardRectangleMode: VkDiscardRectangleModeEXT = @import("std").mem.zeroes(VkDiscardRectangleModeEXT),
-    discardRectangleCount: u32 = @import("std").mem.zeroes(u32),
-    pDiscardRectangles: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PhysicalDeviceConservativeRasterizationPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    primitiveOverestimationSize: f32 = @import("std").mem.zeroes(f32),
-    maxExtraPrimitiveOverestimationSize: f32 = @import("std").mem.zeroes(f32),
-    extraPrimitiveOverestimationSizeGranularity: f32 = @import("std").mem.zeroes(f32),
-    primitiveUnderestimation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    conservativePointAndLineRasterization: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    degenerateTrianglesRasterized: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    degenerateLinesRasterized: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fullyCoveredFragmentShaderInputVariable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    conservativeRasterizationPostDepthCoverage: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineRasterizationConservativeStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineRasterizationConservativeStateCreateFlagsEXT = @import("std").mem.zeroes(VkPipelineRasterizationConservativeStateCreateFlagsEXT),
-    conservativeRasterizationMode: VkConservativeRasterizationModeEXT = @import("std").mem.zeroes(VkConservativeRasterizationModeEXT),
-    extraPrimitiveOverestimationSize: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceDepthClipEnableFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    depthClipEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineRasterizationDepthClipStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineRasterizationDepthClipStateCreateFlagsEXT = @import("std").mem.zeroes(VkPipelineRasterizationDepthClipStateCreateFlagsEXT),
-    depthClipEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const XYColorEXT = extern struct {
-    x: f32 = @import("std").mem.zeroes(f32),
-    y: f32 = @import("std").mem.zeroes(f32),
-};
-pub const HdrMetadataEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    displayPrimaryRed: VkXYColorEXT = @import("std").mem.zeroes(VkXYColorEXT),
-    displayPrimaryGreen: VkXYColorEXT = @import("std").mem.zeroes(VkXYColorEXT),
-    displayPrimaryBlue: VkXYColorEXT = @import("std").mem.zeroes(VkXYColorEXT),
-    whitePoint: VkXYColorEXT = @import("std").mem.zeroes(VkXYColorEXT),
-    maxLuminance: f32 = @import("std").mem.zeroes(f32),
-    minLuminance: f32 = @import("std").mem.zeroes(f32),
-    maxContentLightLevel: f32 = @import("std").mem.zeroes(f32),
-    maxFrameAverageLightLevel: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceRelaxedLineRasterizationFeaturesIMG = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    relaxedLineRasterization: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DebugUtilsLabelEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pLabelName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    color: [4]f32 = @import("std").mem.zeroes([4]f32),
-};
-pub const DebugUtilsObjectNameInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    objectType: VkObjectType = @import("std").mem.zeroes(VkObjectType),
-    objectHandle: u64 = @import("std").mem.zeroes(u64),
-    pObjectName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const DebugUtilsMessengerCallbackDataEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDebugUtilsMessengerCallbackDataFlagsEXT = @import("std").mem.zeroes(VkDebugUtilsMessengerCallbackDataFlagsEXT),
-    pMessageIdName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    messageIdNumber: i32 = @import("std").mem.zeroes(i32),
-    pMessage: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    queueLabelCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueLabels: [*c]const VkDebugUtilsLabelEXT = @import("std").mem.zeroes([*c]const VkDebugUtilsLabelEXT),
-    cmdBufLabelCount: u32 = @import("std").mem.zeroes(u32),
-    pCmdBufLabels: [*c]const VkDebugUtilsLabelEXT = @import("std").mem.zeroes([*c]const VkDebugUtilsLabelEXT),
-    objectCount: u32 = @import("std").mem.zeroes(u32),
-    pObjects: [*c]const VkDebugUtilsObjectNameInfoEXT = @import("std").mem.zeroes([*c]const VkDebugUtilsObjectNameInfoEXT),
-};
-pub const DebugUtilsMessengerCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDebugUtilsMessengerCreateFlagsEXT = @import("std").mem.zeroes(VkDebugUtilsMessengerCreateFlagsEXT),
-    messageSeverity: VkDebugUtilsMessageSeverityFlagsEXT = @import("std").mem.zeroes(VkDebugUtilsMessageSeverityFlagsEXT),
-    messageType: VkDebugUtilsMessageTypeFlagsEXT = @import("std").mem.zeroes(VkDebugUtilsMessageTypeFlagsEXT),
-    pfnUserCallback: PFN_vkDebugUtilsMessengerCallbackEXT = @import("std").mem.zeroes(PFN_vkDebugUtilsMessengerCallbackEXT),
-    pUserData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const DebugUtilsObjectTagInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    objectType: VkObjectType = @import("std").mem.zeroes(VkObjectType),
-    objectHandle: u64 = @import("std").mem.zeroes(u64),
-    tagName: u64 = @import("std").mem.zeroes(u64),
-    tagSize: usize = @import("std").mem.zeroes(usize),
-    pTag: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const AttachmentSampleCountInfoAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    colorAttachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorAttachmentSamples: [*c]const VkSampleCountFlagBits = @import("std").mem.zeroes([*c]const VkSampleCountFlagBits),
-    depthStencilAttachmentSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-};
-pub const SampleLocationEXT = extern struct {
-    x: f32 = @import("std").mem.zeroes(f32),
-    y: f32 = @import("std").mem.zeroes(f32),
-};
-pub const SampleLocationsInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    sampleLocationsPerPixel: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    sampleLocationGridSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    sampleLocationsCount: u32 = @import("std").mem.zeroes(u32),
-    pSampleLocations: [*c]const VkSampleLocationEXT = @import("std").mem.zeroes([*c]const VkSampleLocationEXT),
-};
-pub const AttachmentSampleLocationsEXT = extern struct {
-    attachmentIndex: u32 = @import("std").mem.zeroes(u32),
-    sampleLocationsInfo: VkSampleLocationsInfoEXT = @import("std").mem.zeroes(VkSampleLocationsInfoEXT),
-};
-pub const SubpassSampleLocationsEXT = extern struct {
-    subpassIndex: u32 = @import("std").mem.zeroes(u32),
-    sampleLocationsInfo: VkSampleLocationsInfoEXT = @import("std").mem.zeroes(VkSampleLocationsInfoEXT),
-};
-pub const RenderPassSampleLocationsBeginInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    attachmentInitialSampleLocationsCount: u32 = @import("std").mem.zeroes(u32),
-    pAttachmentInitialSampleLocations: [*c]const VkAttachmentSampleLocationsEXT = @import("std").mem.zeroes([*c]const VkAttachmentSampleLocationsEXT),
-    postSubpassSampleLocationsCount: u32 = @import("std").mem.zeroes(u32),
-    pPostSubpassSampleLocations: [*c]const VkSubpassSampleLocationsEXT = @import("std").mem.zeroes([*c]const VkSubpassSampleLocationsEXT),
-};
-pub const PipelineSampleLocationsStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    sampleLocationsEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sampleLocationsInfo: VkSampleLocationsInfoEXT = @import("std").mem.zeroes(VkSampleLocationsInfoEXT),
-};
-pub const PhysicalDeviceSampleLocationsPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    sampleLocationSampleCounts: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    maxSampleLocationGridSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    sampleLocationCoordinateRange: [2]f32 = @import("std").mem.zeroes([2]f32),
-    sampleLocationSubPixelBits: u32 = @import("std").mem.zeroes(u32),
-    variableSampleLocations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MultisamplePropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxSampleLocationGridSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PhysicalDeviceBlendOperationAdvancedFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    advancedBlendCoherentOperations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceBlendOperationAdvancedPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    advancedBlendMaxColorAttachments: u32 = @import("std").mem.zeroes(u32),
-    advancedBlendIndependentBlend: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    advancedBlendNonPremultipliedSrcColor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    advancedBlendNonPremultipliedDstColor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    advancedBlendCorrelatedOverlap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    advancedBlendAllOperations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineColorBlendAdvancedStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcPremultiplied: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dstPremultiplied: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    blendOverlap: VkBlendOverlapEXT = @import("std").mem.zeroes(VkBlendOverlapEXT),
-};
-pub const PipelineCoverageToColorStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCoverageToColorStateCreateFlagsNV = @import("std").mem.zeroes(VkPipelineCoverageToColorStateCreateFlagsNV),
-    coverageToColorEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    coverageToColorLocation: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineCoverageModulationStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCoverageModulationStateCreateFlagsNV = @import("std").mem.zeroes(VkPipelineCoverageModulationStateCreateFlagsNV),
-    coverageModulationMode: VkCoverageModulationModeNV = @import("std").mem.zeroes(VkCoverageModulationModeNV),
-    coverageModulationTableEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    coverageModulationTableCount: u32 = @import("std").mem.zeroes(u32),
-    pCoverageModulationTable: [*c]const f32 = @import("std").mem.zeroes([*c]const f32),
-};
-pub const PhysicalDeviceShaderSMBuiltinsPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSMCount: u32 = @import("std").mem.zeroes(u32),
-    shaderWarpsPerSM: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceShaderSMBuiltinsFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderSMBuiltins: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DrmFormatModifierPropertiesEXT = extern struct {
-    drmFormatModifier: u64 = @import("std").mem.zeroes(u64),
-    drmFormatModifierPlaneCount: u32 = @import("std").mem.zeroes(u32),
-    drmFormatModifierTilingFeatures: VkFormatFeatureFlags = @import("std").mem.zeroes(VkFormatFeatureFlags),
-};
-pub const DrmFormatModifierPropertiesListEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    drmFormatModifierCount: u32 = @import("std").mem.zeroes(u32),
-    pDrmFormatModifierProperties: [*c]VkDrmFormatModifierPropertiesEXT = @import("std").mem.zeroes([*c]VkDrmFormatModifierPropertiesEXT),
-};
-pub const PhysicalDeviceImageDrmFormatModifierInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    drmFormatModifier: u64 = @import("std").mem.zeroes(u64),
-    sharingMode: VkSharingMode = @import("std").mem.zeroes(VkSharingMode),
-    queueFamilyIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueFamilyIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const ImageDrmFormatModifierListCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    drmFormatModifierCount: u32 = @import("std").mem.zeroes(u32),
-    pDrmFormatModifiers: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const ImageDrmFormatModifierExplicitCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    drmFormatModifier: u64 = @import("std").mem.zeroes(u64),
-    drmFormatModifierPlaneCount: u32 = @import("std").mem.zeroes(u32),
-    pPlaneLayouts: [*c]const VkSubresourceLayout = @import("std").mem.zeroes([*c]const VkSubresourceLayout),
-};
-pub const ImageDrmFormatModifierPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    drmFormatModifier: u64 = @import("std").mem.zeroes(u64),
-};
-pub const DrmFormatModifierProperties2EXT = extern struct {
-    drmFormatModifier: u64 = @import("std").mem.zeroes(u64),
-    drmFormatModifierPlaneCount: u32 = @import("std").mem.zeroes(u32),
-    drmFormatModifierTilingFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-};
-pub const DrmFormatModifierPropertiesList2EXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    drmFormatModifierCount: u32 = @import("std").mem.zeroes(u32),
-    pDrmFormatModifierProperties: [*c]VkDrmFormatModifierProperties2EXT = @import("std").mem.zeroes([*c]VkDrmFormatModifierProperties2EXT),
-};
-pub const ValidationCacheCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkValidationCacheCreateFlagsEXT = @import("std").mem.zeroes(VkValidationCacheCreateFlagsEXT),
-    initialDataSize: usize = @import("std").mem.zeroes(usize),
-    pInitialData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const ShaderModuleValidationCacheCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    validationCache: VkValidationCacheEXT = @import("std").mem.zeroes(VkValidationCacheEXT),
-};
-pub const ShadingRatePaletteNV = extern struct {
-    shadingRatePaletteEntryCount: u32 = @import("std").mem.zeroes(u32),
-    pShadingRatePaletteEntries: [*c]const VkShadingRatePaletteEntryNV = @import("std").mem.zeroes([*c]const VkShadingRatePaletteEntryNV),
-};
-pub const PipelineViewportShadingRateImageStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    shadingRateImageEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    viewportCount: u32 = @import("std").mem.zeroes(u32),
-    pShadingRatePalettes: [*c]const VkShadingRatePaletteNV = @import("std").mem.zeroes([*c]const VkShadingRatePaletteNV),
-};
-pub const PhysicalDeviceShadingRateImageFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shadingRateImage: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shadingRateCoarseSampleOrder: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShadingRateImagePropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shadingRateTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    shadingRatePaletteSize: u32 = @import("std").mem.zeroes(u32),
-    shadingRateMaxCoarseSamples: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CoarseSampleLocationNV = extern struct {
-    pixelX: u32 = @import("std").mem.zeroes(u32),
-    pixelY: u32 = @import("std").mem.zeroes(u32),
-    sample: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CoarseSampleOrderCustomNV = extern struct {
-    shadingRate: VkShadingRatePaletteEntryNV = @import("std").mem.zeroes(VkShadingRatePaletteEntryNV),
-    sampleCount: u32 = @import("std").mem.zeroes(u32),
-    sampleLocationCount: u32 = @import("std").mem.zeroes(u32),
-    pSampleLocations: [*c]const VkCoarseSampleLocationNV = @import("std").mem.zeroes([*c]const VkCoarseSampleLocationNV),
-};
-pub const PipelineViewportCoarseSampleOrderStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    sampleOrderType: VkCoarseSampleOrderTypeNV = @import("std").mem.zeroes(VkCoarseSampleOrderTypeNV),
-    customSampleOrderCount: u32 = @import("std").mem.zeroes(u32),
-    pCustomSampleOrders: [*c]const VkCoarseSampleOrderCustomNV = @import("std").mem.zeroes([*c]const VkCoarseSampleOrderCustomNV),
-};
-pub const RayTracingShaderGroupCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkRayTracingShaderGroupTypeKHR = @import("std").mem.zeroes(VkRayTracingShaderGroupTypeKHR),
-    generalShader: u32 = @import("std").mem.zeroes(u32),
-    closestHitShader: u32 = @import("std").mem.zeroes(u32),
-    anyHitShader: u32 = @import("std").mem.zeroes(u32),
-    intersectionShader: u32 = @import("std").mem.zeroes(u32),
-};
-pub const RayTracingPipelineCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags = @import("std").mem.zeroes(VkPipelineCreateFlags),
-    stageCount: u32 = @import("std").mem.zeroes(u32),
-    pStages: [*c]const VkPipelineShaderStageCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineShaderStageCreateInfo),
-    groupCount: u32 = @import("std").mem.zeroes(u32),
-    pGroups: [*c]const VkRayTracingShaderGroupCreateInfoNV = @import("std").mem.zeroes([*c]const VkRayTracingShaderGroupCreateInfoNV),
-    maxRecursionDepth: u32 = @import("std").mem.zeroes(u32),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    basePipelineHandle: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    basePipelineIndex: i32 = @import("std").mem.zeroes(i32),
-};
-pub const GeometryTrianglesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexData: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    vertexOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    vertexCount: u32 = @import("std").mem.zeroes(u32),
-    vertexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    vertexFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    indexData: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    indexOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    indexCount: u32 = @import("std").mem.zeroes(u32),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-    transformData: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    transformOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const GeometryAABBNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    aabbData: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    numAABBs: u32 = @import("std").mem.zeroes(u32),
-    stride: u32 = @import("std").mem.zeroes(u32),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const GeometryDataNV = extern struct {
-    triangles: VkGeometryTrianglesNV = @import("std").mem.zeroes(VkGeometryTrianglesNV),
-    aabbs: VkGeometryAABBNV = @import("std").mem.zeroes(VkGeometryAABBNV),
-};
-pub const GeometryNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    geometryType: VkGeometryTypeKHR = @import("std").mem.zeroes(VkGeometryTypeKHR),
-    geometry: VkGeometryDataNV = @import("std").mem.zeroes(VkGeometryDataNV),
-    flags: VkGeometryFlagsKHR = @import("std").mem.zeroes(VkGeometryFlagsKHR),
-};
-pub const AccelerationStructureInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkAccelerationStructureTypeNV = @import("std").mem.zeroes(VkAccelerationStructureTypeNV),
-    flags: VkBuildAccelerationStructureFlagsNV = @import("std").mem.zeroes(VkBuildAccelerationStructureFlagsNV),
-    instanceCount: u32 = @import("std").mem.zeroes(u32),
-    geometryCount: u32 = @import("std").mem.zeroes(u32),
-    pGeometries: [*c]const VkGeometryNV = @import("std").mem.zeroes([*c]const VkGeometryNV),
-};
-pub const AccelerationStructureCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    compactedSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    info: VkAccelerationStructureInfoNV = @import("std").mem.zeroes(VkAccelerationStructureInfoNV),
-};
-pub const BindAccelerationStructureMemoryInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructure: VkAccelerationStructureNV = @import("std").mem.zeroes(VkAccelerationStructureNV),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    deviceIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pDeviceIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const WriteDescriptorSetAccelerationStructureNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructureCount: u32 = @import("std").mem.zeroes(u32),
-    pAccelerationStructures: [*c]const VkAccelerationStructureNV = @import("std").mem.zeroes([*c]const VkAccelerationStructureNV),
-};
-pub const AccelerationStructureMemoryRequirementsInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkAccelerationStructureMemoryRequirementsTypeNV = @import("std").mem.zeroes(VkAccelerationStructureMemoryRequirementsTypeNV),
-    accelerationStructure: VkAccelerationStructureNV = @import("std").mem.zeroes(VkAccelerationStructureNV),
-};
-pub const PhysicalDeviceRayTracingPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderGroupHandleSize: u32 = @import("std").mem.zeroes(u32),
-    maxRecursionDepth: u32 = @import("std").mem.zeroes(u32),
-    maxShaderGroupStride: u32 = @import("std").mem.zeroes(u32),
-    shaderGroupBaseAlignment: u32 = @import("std").mem.zeroes(u32),
-    maxGeometryCount: u64 = @import("std").mem.zeroes(u64),
-    maxInstanceCount: u64 = @import("std").mem.zeroes(u64),
-    maxTriangleCount: u64 = @import("std").mem.zeroes(u64),
-    maxDescriptorSetAccelerationStructures: u32 = @import("std").mem.zeroes(u32),
-};
-pub const TransformMatrixKHR = extern struct {
-    matrix: [3][4]f32 = @import("std").mem.zeroes([3][4]f32),
-};
-pub const AabbPositionsKHR = extern struct {
-    minX: f32 = @import("std").mem.zeroes(f32),
-    minY: f32 = @import("std").mem.zeroes(f32),
-    minZ: f32 = @import("std").mem.zeroes(f32),
-    maxX: f32 = @import("std").mem.zeroes(f32),
-    maxY: f32 = @import("std").mem.zeroes(f32),
-    maxZ: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceRepresentativeFragmentTestFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    representativeFragmentTest: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineRepresentativeFragmentTestStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    representativeFragmentTestEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageViewImageFormatInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageViewType: VkImageViewType = @import("std").mem.zeroes(VkImageViewType),
-};
-pub const FilterCubicImageViewImageFormatPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    filterCubic: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    filterCubicMinmax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImportMemoryHostPointerInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-    pHostPointer: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const MemoryHostPointerPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryTypeBits: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceExternalMemoryHostPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minImportedHostPointerAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PipelineCompilerControlCreateInfoAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    compilerControlFlags: VkPipelineCompilerControlFlagsAMD = @import("std").mem.zeroes(VkPipelineCompilerControlFlagsAMD),
-};
-pub const PhysicalDeviceShaderCorePropertiesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderEngineCount: u32 = @import("std").mem.zeroes(u32),
-    shaderArraysPerEngineCount: u32 = @import("std").mem.zeroes(u32),
-    computeUnitsPerShaderArray: u32 = @import("std").mem.zeroes(u32),
-    simdPerComputeUnit: u32 = @import("std").mem.zeroes(u32),
-    wavefrontsPerSimd: u32 = @import("std").mem.zeroes(u32),
-    wavefrontSize: u32 = @import("std").mem.zeroes(u32),
-    sgprsPerSimd: u32 = @import("std").mem.zeroes(u32),
-    minSgprAllocation: u32 = @import("std").mem.zeroes(u32),
-    maxSgprAllocation: u32 = @import("std").mem.zeroes(u32),
-    sgprAllocationGranularity: u32 = @import("std").mem.zeroes(u32),
-    vgprsPerSimd: u32 = @import("std").mem.zeroes(u32),
-    minVgprAllocation: u32 = @import("std").mem.zeroes(u32),
-    maxVgprAllocation: u32 = @import("std").mem.zeroes(u32),
-    vgprAllocationGranularity: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceMemoryOverallocationCreateInfoAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    overallocationBehavior: VkMemoryOverallocationBehaviorAMD = @import("std").mem.zeroes(VkMemoryOverallocationBehaviorAMD),
-};
-pub const PhysicalDeviceVertexAttributeDivisorPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxVertexAttribDivisor: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceMeshShaderFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    taskShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    meshShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMeshShaderPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxDrawMeshTasksCount: u32 = @import("std").mem.zeroes(u32),
-    maxTaskWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxTaskWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxTaskTotalMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxTaskOutputCount: u32 = @import("std").mem.zeroes(u32),
-    maxMeshWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxMeshWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxMeshTotalMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputVertices: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputPrimitives: u32 = @import("std").mem.zeroes(u32),
-    maxMeshMultiviewViewCount: u32 = @import("std").mem.zeroes(u32),
-    meshOutputPerVertexGranularity: u32 = @import("std").mem.zeroes(u32),
-    meshOutputPerPrimitiveGranularity: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DrawMeshTasksIndirectCommandNV = extern struct {
-    taskCount: u32 = @import("std").mem.zeroes(u32),
-    firstTask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceShaderImageFootprintFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageFootprint: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineViewportExclusiveScissorStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    exclusiveScissorCount: u32 = @import("std").mem.zeroes(u32),
-    pExclusiveScissors: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PhysicalDeviceExclusiveScissorFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    exclusiveScissor: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const QueueFamilyCheckpointPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    checkpointExecutionStageMask: VkPipelineStageFlags = @import("std").mem.zeroes(VkPipelineStageFlags),
-};
-pub const CheckpointDataNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stage: VkPipelineStageFlagBits = @import("std").mem.zeroes(VkPipelineStageFlagBits),
-    pCheckpointMarker: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const QueueFamilyCheckpointProperties2NV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    checkpointExecutionStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-};
-pub const CheckpointData2NV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stage: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    pCheckpointMarker: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderIntegerFunctions2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PerformanceValueINTEL = extern struct {
-    type: VkPerformanceValueTypeINTEL = @import("std").mem.zeroes(VkPerformanceValueTypeINTEL),
-    data: VkPerformanceValueDataINTEL = @import("std").mem.zeroes(VkPerformanceValueDataINTEL),
-};
-pub const InitializePerformanceApiInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pUserData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const QueryPoolPerformanceQueryCreateInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    performanceCountersSampling: VkQueryPoolSamplingModeINTEL = @import("std").mem.zeroes(VkQueryPoolSamplingModeINTEL),
-};
-pub const PerformanceMarkerInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    marker: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PerformanceStreamMarkerInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    marker: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PerformanceOverrideInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkPerformanceOverrideTypeINTEL = @import("std").mem.zeroes(VkPerformanceOverrideTypeINTEL),
-    enable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    parameter: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PerformanceConfigurationAcquireInfoINTEL = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkPerformanceConfigurationTypeINTEL = @import("std").mem.zeroes(VkPerformanceConfigurationTypeINTEL),
-};
-pub const PhysicalDevicePCIBusInfoPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pciDomain: u32 = @import("std").mem.zeroes(u32),
-    pciBus: u32 = @import("std").mem.zeroes(u32),
-    pciDevice: u32 = @import("std").mem.zeroes(u32),
-    pciFunction: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DisplayNativeHdrSurfaceCapabilitiesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    localDimmingSupport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SwapchainDisplayNativeHdrCreateInfoAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    localDimmingEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMapFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentDensityMap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentDensityMapDynamic: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentDensityMapNonSubsampledImages: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMapPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minFragmentDensityTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxFragmentDensityTexelSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    fragmentDensityInvocations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderPassFragmentDensityMapCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fragmentDensityMapAttachment: VkAttachmentReference = @import("std").mem.zeroes(VkAttachmentReference),
-};
-pub const RenderingFragmentDensityMapAttachmentInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-    imageLayout: VkImageLayout = @import("std").mem.zeroes(VkImageLayout),
-};
-pub const PhysicalDeviceShaderCoreProperties2AMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderCoreFeatures: VkShaderCorePropertiesFlagsAMD = @import("std").mem.zeroes(VkShaderCorePropertiesFlagsAMD),
-    activeComputeUnitCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceCoherentMemoryFeaturesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceCoherentMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderImageAtomicInt64FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderImageInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseImageInt64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMemoryBudgetPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    heapBudget: [16]VkDeviceSize = @import("std").mem.zeroes([16]VkDeviceSize),
-    heapUsage: [16]VkDeviceSize = @import("std").mem.zeroes([16]VkDeviceSize),
-};
-pub const PhysicalDeviceMemoryPriorityFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryPriority: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryPriorityAllocateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    priority: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dedicatedAllocationImageAliasing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceBufferDeviceAddressFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    bufferDeviceAddress: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferDeviceAddressMultiDevice: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BufferDeviceAddressCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const ValidationFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    enabledValidationFeatureCount: u32 = @import("std").mem.zeroes(u32),
-    pEnabledValidationFeatures: [*c]const VkValidationFeatureEnableEXT = @import("std").mem.zeroes([*c]const VkValidationFeatureEnableEXT),
-    disabledValidationFeatureCount: u32 = @import("std").mem.zeroes(u32),
-    pDisabledValidationFeatures: [*c]const VkValidationFeatureDisableEXT = @import("std").mem.zeroes([*c]const VkValidationFeatureDisableEXT),
-};
-pub const CooperativeMatrixPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    MSize: u32 = @import("std").mem.zeroes(u32),
-    NSize: u32 = @import("std").mem.zeroes(u32),
-    KSize: u32 = @import("std").mem.zeroes(u32),
-    AType: VkComponentTypeNV = @import("std").mem.zeroes(VkComponentTypeNV),
-    BType: VkComponentTypeNV = @import("std").mem.zeroes(VkComponentTypeNV),
-    CType: VkComponentTypeNV = @import("std").mem.zeroes(VkComponentTypeNV),
-    DType: VkComponentTypeNV = @import("std").mem.zeroes(VkComponentTypeNV),
-    scope: VkScopeNV = @import("std").mem.zeroes(VkScopeNV),
-};
-pub const PhysicalDeviceCooperativeMatrixFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrix: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixRobustBufferAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCooperativeMatrixPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrixSupportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-};
-pub const PhysicalDeviceCoverageReductionModeFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    coverageReductionMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineCoverageReductionStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCoverageReductionStateCreateFlagsNV = @import("std").mem.zeroes(VkPipelineCoverageReductionStateCreateFlagsNV),
-    coverageReductionMode: VkCoverageReductionModeNV = @import("std").mem.zeroes(VkCoverageReductionModeNV),
-};
-pub const FramebufferMixedSamplesCombinationNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    coverageReductionMode: VkCoverageReductionModeNV = @import("std").mem.zeroes(VkCoverageReductionModeNV),
-    rasterizationSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-    depthStencilSamples: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-    colorSamples: VkSampleCountFlags = @import("std").mem.zeroes(VkSampleCountFlags),
-};
-pub const PhysicalDeviceFragmentShaderInterlockFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentShaderSampleInterlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShaderPixelInterlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    fragmentShaderShadingRateInterlock: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceYcbcrImageArraysFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    ycbcrImageArrays: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceProvokingVertexFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    provokingVertexLast: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    transformFeedbackPreservesProvokingVertex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceProvokingVertexPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    provokingVertexModePerPipeline: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    transformFeedbackPreservesTriangleFanProvokingVertex: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineRasterizationProvokingVertexStateCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    provokingVertexMode: VkProvokingVertexModeEXT = @import("std").mem.zeroes(VkProvokingVertexModeEXT),
-};
-pub const HeadlessSurfaceCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkHeadlessSurfaceCreateFlagsEXT = @import("std").mem.zeroes(VkHeadlessSurfaceCreateFlagsEXT),
-};
-pub const PhysicalDeviceShaderAtomicFloatFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderBufferFloat32Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat32AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat64AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat32Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat32AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat64Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat64AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderImageFloat32Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderImageFloat32AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseImageFloat32Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseImageFloat32AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceExtendedDynamicStateFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    extendedDynamicState: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMapMemoryPlacedFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryMapPlaced: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    memoryMapRangePlaced: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    memoryUnmapReserve: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMapMemoryPlacedPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minPlacedMemoryMapAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const MemoryMapPlacedInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pPlacedAddress: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PhysicalDeviceShaderAtomicFloat2FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderBufferFloat16Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat16AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat16AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat32AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderBufferFloat64AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat16Atomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat16AtomicAdd: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat16AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat32AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderSharedFloat64AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderImageFloat32AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sparseImageFloat32AtomicMinMax: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDeviceGeneratedCommandsPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxGraphicsShaderGroupCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectSequenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsTokenCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsStreamCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsTokenOffset: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsStreamStride: u32 = @import("std").mem.zeroes(u32),
-    minSequencesCountBufferOffsetAlignment: u32 = @import("std").mem.zeroes(u32),
-    minSequencesIndexBufferOffsetAlignment: u32 = @import("std").mem.zeroes(u32),
-    minIndirectCommandsBufferOffsetAlignment: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceDeviceGeneratedCommandsFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceGeneratedCommands: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const GraphicsShaderGroupCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stageCount: u32 = @import("std").mem.zeroes(u32),
-    pStages: [*c]const VkPipelineShaderStageCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineShaderStageCreateInfo),
-    pVertexInputState: [*c]const VkPipelineVertexInputStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineVertexInputStateCreateInfo),
-    pTessellationState: [*c]const VkPipelineTessellationStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineTessellationStateCreateInfo),
-};
-pub const GraphicsPipelineShaderGroupsCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    groupCount: u32 = @import("std").mem.zeroes(u32),
-    pGroups: [*c]const VkGraphicsShaderGroupCreateInfoNV = @import("std").mem.zeroes([*c]const VkGraphicsShaderGroupCreateInfoNV),
-    pipelineCount: u32 = @import("std").mem.zeroes(u32),
-    pPipelines: [*c]const VkPipeline = @import("std").mem.zeroes([*c]const VkPipeline),
-};
-pub const BindShaderGroupIndirectCommandNV = extern struct {
-    groupIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BindIndexBufferIndirectCommandNV = extern struct {
-    bufferAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: u32 = @import("std").mem.zeroes(u32),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-};
-pub const BindVertexBufferIndirectCommandNV = extern struct {
-    bufferAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: u32 = @import("std").mem.zeroes(u32),
-    stride: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SetStateFlagsIndirectCommandNV = extern struct {
-    data: u32 = @import("std").mem.zeroes(u32),
-};
-pub const IndirectCommandsStreamNV = extern struct {
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const IndirectCommandsLayoutTokenNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tokenType: VkIndirectCommandsTokenTypeNV = @import("std").mem.zeroes(VkIndirectCommandsTokenTypeNV),
-    stream: u32 = @import("std").mem.zeroes(u32),
-    offset: u32 = @import("std").mem.zeroes(u32),
-    vertexBindingUnit: u32 = @import("std").mem.zeroes(u32),
-    vertexDynamicStride: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    pushconstantPipelineLayout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    pushconstantShaderStageFlags: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    pushconstantOffset: u32 = @import("std").mem.zeroes(u32),
-    pushconstantSize: u32 = @import("std").mem.zeroes(u32),
-    indirectStateFlags: VkIndirectStateFlagsNV = @import("std").mem.zeroes(VkIndirectStateFlagsNV),
-    indexTypeCount: u32 = @import("std").mem.zeroes(u32),
-    pIndexTypes: [*c]const VkIndexType = @import("std").mem.zeroes([*c]const VkIndexType),
-    pIndexTypeValues: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const IndirectCommandsLayoutCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkIndirectCommandsLayoutUsageFlagsNV = @import("std").mem.zeroes(VkIndirectCommandsLayoutUsageFlagsNV),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    tokenCount: u32 = @import("std").mem.zeroes(u32),
-    pTokens: [*c]const VkIndirectCommandsLayoutTokenNV = @import("std").mem.zeroes([*c]const VkIndirectCommandsLayoutTokenNV),
-    streamCount: u32 = @import("std").mem.zeroes(u32),
-    pStreamStrides: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const GeneratedCommandsInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    indirectCommandsLayout: VkIndirectCommandsLayoutNV = @import("std").mem.zeroes(VkIndirectCommandsLayoutNV),
-    streamCount: u32 = @import("std").mem.zeroes(u32),
-    pStreams: [*c]const VkIndirectCommandsStreamNV = @import("std").mem.zeroes([*c]const VkIndirectCommandsStreamNV),
-    sequencesCount: u32 = @import("std").mem.zeroes(u32),
-    preprocessBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    preprocessOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    preprocessSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    sequencesCountBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    sequencesCountOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    sequencesIndexBuffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    sequencesIndexOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const GeneratedCommandsMemoryRequirementsInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    indirectCommandsLayout: VkIndirectCommandsLayoutNV = @import("std").mem.zeroes(VkIndirectCommandsLayoutNV),
-    maxSequencesCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceInheritedViewportScissorFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    inheritedViewportScissor2D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CommandBufferInheritanceViewportScissorInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    viewportScissor2D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    viewportDepthCount: u32 = @import("std").mem.zeroes(u32),
-    pViewportDepths: [*c]const VkViewport = @import("std").mem.zeroes([*c]const VkViewport),
-};
-pub const PhysicalDeviceTexelBufferAlignmentFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    texelBufferAlignment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderPassTransformBeginInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    transform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-};
-pub const CommandBufferInheritanceRenderPassTransformInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    transform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-    renderArea: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-};
-pub const PhysicalDeviceDepthBiasControlFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    depthBiasControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    leastRepresentableValueForceUnormRepresentation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    floatRepresentation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    depthBiasExact: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DepthBiasInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    depthBiasConstantFactor: f32 = @import("std").mem.zeroes(f32),
-    depthBiasClamp: f32 = @import("std").mem.zeroes(f32),
-    depthBiasSlopeFactor: f32 = @import("std").mem.zeroes(f32),
-};
-pub const DepthBiasRepresentationInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    depthBiasRepresentation: VkDepthBiasRepresentationEXT = @import("std").mem.zeroes(VkDepthBiasRepresentationEXT),
-    depthBiasExact: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDeviceMemoryReportFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceMemoryReport: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceMemoryReportCallbackDataEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkDeviceMemoryReportFlagsEXT = @import("std").mem.zeroes(VkDeviceMemoryReportFlagsEXT),
-    type: VkDeviceMemoryReportEventTypeEXT = @import("std").mem.zeroes(VkDeviceMemoryReportEventTypeEXT),
-    memoryObjectId: u64 = @import("std").mem.zeroes(u64),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    objectType: VkObjectType = @import("std").mem.zeroes(VkObjectType),
-    objectHandle: u64 = @import("std").mem.zeroes(u64),
-    heapIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceDeviceMemoryReportCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDeviceMemoryReportFlagsEXT = @import("std").mem.zeroes(VkDeviceMemoryReportFlagsEXT),
-    pfnUserCallback: PFN_vkDeviceMemoryReportCallbackEXT = @import("std").mem.zeroes(PFN_vkDeviceMemoryReportCallbackEXT),
-    pUserData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const SamplerCustomBorderColorCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    customBorderColor: VkClearColorValue = @import("std").mem.zeroes(VkClearColorValue),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const PhysicalDeviceCustomBorderColorPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxCustomBorderColorSamplers: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceCustomBorderColorFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    customBorderColors: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    customBorderColorWithoutFormat: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePresentBarrierFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentBarrier: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceCapabilitiesPresentBarrierNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentBarrierSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SwapchainPresentBarrierCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentBarrierEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDiagnosticsConfigFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    diagnosticsConfig: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceDiagnosticsConfigCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDeviceDiagnosticsConfigFlagsNV = @import("std").mem.zeroes(VkDeviceDiagnosticsConfigFlagsNV),
-};
-pub const PhysicalDeviceTileShadingFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tileShading: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingFragmentStage: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingColorAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingDepthAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingStencilAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingInputAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingSampledAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingPerTileDraw: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingPerTileDispatch: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingDispatchTile: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingApron: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingAnisotropicApron: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingAtomicOps: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileShadingImageProcessing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTileShadingPropertiesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxApronSize: u32 = @import("std").mem.zeroes(u32),
-    preferNonCoherent: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileGranularity: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxTileShadingRate: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const RenderPassTileShadingCreateInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkTileShadingRenderPassFlagsQCOM = @import("std").mem.zeroes(VkTileShadingRenderPassFlagsQCOM),
-    tileApronSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PerTileBeginInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PerTileEndInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const DispatchTileInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const QueryLowLatencySupportNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pQueriedLowLatencyData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const PhysicalDeviceDescriptorBufferPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    combinedImageSamplerDescriptorSingleArray: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bufferlessPushDescriptors: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    allowSamplerImageViewPostSubmitCreation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxDescriptorBufferBindings: u32 = @import("std").mem.zeroes(u32),
-    maxResourceDescriptorBufferBindings: u32 = @import("std").mem.zeroes(u32),
-    maxSamplerDescriptorBufferBindings: u32 = @import("std").mem.zeroes(u32),
-    maxEmbeddedImmutableSamplerBindings: u32 = @import("std").mem.zeroes(u32),
-    maxEmbeddedImmutableSamplers: u32 = @import("std").mem.zeroes(u32),
-    bufferCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    imageCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    imageViewCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    samplerCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    accelerationStructureCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    samplerDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    combinedImageSamplerDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    sampledImageDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    storageImageDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    uniformTexelBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    robustUniformTexelBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    storageTexelBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    robustStorageTexelBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    uniformBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    robustUniformBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    storageBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    robustStorageBufferDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    inputAttachmentDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    accelerationStructureDescriptorSize: usize = @import("std").mem.zeroes(usize),
-    maxSamplerDescriptorBufferRange: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxResourceDescriptorBufferRange: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    samplerDescriptorBufferAddressSpaceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    resourceDescriptorBufferAddressSpaceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    descriptorBufferAddressSpaceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    combinedImageSamplerDensityMapDescriptorSize: usize = @import("std").mem.zeroes(usize),
-};
-pub const PhysicalDeviceDescriptorBufferFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    descriptorBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBufferCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBufferImageLayoutIgnored: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBufferPushDescriptors: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DescriptorAddressInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    address: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    range: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const DescriptorBufferBindingInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    address: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    usage: VkBufferUsageFlags = @import("std").mem.zeroes(VkBufferUsageFlags),
-};
-pub const DescriptorBufferBindingPushDescriptorBufferHandleEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const DescriptorGetInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkDescriptorType = @import("std").mem.zeroes(VkDescriptorType),
-    data: VkDescriptorDataEXT = @import("std").mem.zeroes(VkDescriptorDataEXT),
-};
-pub const BufferCaptureDescriptorDataInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-};
-pub const ImageCaptureDescriptorDataInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    image: VkImage = @import("std").mem.zeroes(VkImage),
-};
-pub const ImageViewCaptureDescriptorDataInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    imageView: VkImageView = @import("std").mem.zeroes(VkImageView),
-};
-pub const SamplerCaptureDescriptorDataInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    sampler: VkSampler = @import("std").mem.zeroes(VkSampler),
-};
-pub const OpaqueCaptureDescriptorDataCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    opaqueCaptureDescriptorData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const AccelerationStructureCaptureDescriptorDataInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructure: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    accelerationStructureNV: VkAccelerationStructureNV = @import("std").mem.zeroes(VkAccelerationStructureNV),
-};
-pub const PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    graphicsPipelineLibrary: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    graphicsPipelineLibraryFastLinking: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    graphicsPipelineLibraryIndependentInterpolationDecoration: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const GraphicsPipelineLibraryCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkGraphicsPipelineLibraryFlagsEXT = @import("std").mem.zeroes(VkGraphicsPipelineLibraryFlagsEXT),
-};
-pub const PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderEarlyAndLateFragmentTests: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShadingRateEnumsFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentShadingRateEnums: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    supersampleFragmentShadingRates: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    noInvocationFragmentShadingRates: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentShadingRateEnumsPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxFragmentShadingRateInvocationCount: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-};
-pub const PipelineFragmentShadingRateEnumStateCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    shadingRateType: VkFragmentShadingRateTypeNV = @import("std").mem.zeroes(VkFragmentShadingRateTypeNV),
-    shadingRate: VkFragmentShadingRateNV = @import("std").mem.zeroes(VkFragmentShadingRateNV),
-    combinerOps: [2]VkFragmentShadingRateCombinerOpKHR = @import("std").mem.zeroes([2]VkFragmentShadingRateCombinerOpKHR),
-};
-pub const AccelerationStructureGeometryMotionTrianglesDataNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-};
-pub const AccelerationStructureMotionInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxInstances: u32 = @import("std").mem.zeroes(u32),
-    flags: VkAccelerationStructureMotionInfoFlagsNV = @import("std").mem.zeroes(VkAccelerationStructureMotionInfoFlagsNV),
-};
-pub const SRTDataNV = extern struct {
-    sx: f32 = @import("std").mem.zeroes(f32),
-    a: f32 = @import("std").mem.zeroes(f32),
-    b: f32 = @import("std").mem.zeroes(f32),
-    pvx: f32 = @import("std").mem.zeroes(f32),
-    sy: f32 = @import("std").mem.zeroes(f32),
-    c: f32 = @import("std").mem.zeroes(f32),
-    pvy: f32 = @import("std").mem.zeroes(f32),
-    sz: f32 = @import("std").mem.zeroes(f32),
-    pvz: f32 = @import("std").mem.zeroes(f32),
-    qx: f32 = @import("std").mem.zeroes(f32),
-    qy: f32 = @import("std").mem.zeroes(f32),
-    qz: f32 = @import("std").mem.zeroes(f32),
-    qw: f32 = @import("std").mem.zeroes(f32),
-    tx: f32 = @import("std").mem.zeroes(f32),
-    ty: f32 = @import("std").mem.zeroes(f32),
-    tz: f32 = @import("std").mem.zeroes(f32),
-};
-pub const AccelerationStructureMotionInstanceNV = extern struct {
-    type: VkAccelerationStructureMotionInstanceTypeNV = @import("std").mem.zeroes(VkAccelerationStructureMotionInstanceTypeNV),
-    flags: VkAccelerationStructureMotionInstanceFlagsNV = @import("std").mem.zeroes(VkAccelerationStructureMotionInstanceFlagsNV),
-    data: VkAccelerationStructureMotionInstanceDataNV = @import("std").mem.zeroes(VkAccelerationStructureMotionInstanceDataNV),
-};
-pub const PhysicalDeviceRayTracingMotionBlurFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingMotionBlur: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTracingMotionBlurPipelineTraceRaysIndirect: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    ycbcr2plane444Formats: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMap2FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentDensityMapDeferred: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMap2PropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subsampledLoads: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    subsampledCoarseReconstructionEarlyAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxSubsampledArrayLayers: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetSubsampledSamplers: u32 = @import("std").mem.zeroes(u32),
-};
-pub const CopyCommandTransformInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    transform: VkSurfaceTransformFlagBitsKHR = @import("std").mem.zeroes(VkSurfaceTransformFlagBitsKHR),
-};
-pub const PhysicalDeviceImageCompressionControlFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageCompressionControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImageCompressionControlEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkImageCompressionFlagsEXT = @import("std").mem.zeroes(VkImageCompressionFlagsEXT),
-    compressionControlPlaneCount: u32 = @import("std").mem.zeroes(u32),
-    pFixedRateFlags: [*c]VkImageCompressionFixedRateFlagsEXT = @import("std").mem.zeroes([*c]VkImageCompressionFixedRateFlagsEXT),
-};
-pub const ImageCompressionPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageCompressionFlags: VkImageCompressionFlagsEXT = @import("std").mem.zeroes(VkImageCompressionFlagsEXT),
-    imageCompressionFixedRateFlags: VkImageCompressionFixedRateFlagsEXT = @import("std").mem.zeroes(VkImageCompressionFixedRateFlagsEXT),
-};
-pub const PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    attachmentFeedbackLoopLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevice4444FormatsFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    formatA4R4G4B4: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    formatA4B4G4R4: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFaultFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceFault: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    deviceFaultVendorBinary: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceFaultCountsEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    addressInfoCount: u32 = @import("std").mem.zeroes(u32),
-    vendorInfoCount: u32 = @import("std").mem.zeroes(u32),
-    vendorBinarySize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DeviceFaultAddressInfoEXT = extern struct {
-    addressType: VkDeviceFaultAddressTypeEXT = @import("std").mem.zeroes(VkDeviceFaultAddressTypeEXT),
-    reportedAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    addressPrecision: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DeviceFaultVendorInfoEXT = extern struct {
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    vendorFaultCode: u64 = @import("std").mem.zeroes(u64),
-    vendorFaultData: u64 = @import("std").mem.zeroes(u64),
-};
-pub const DeviceFaultInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    pAddressInfos: [*c]VkDeviceFaultAddressInfoEXT = @import("std").mem.zeroes([*c]VkDeviceFaultAddressInfoEXT),
-    pVendorInfos: [*c]VkDeviceFaultVendorInfoEXT = @import("std").mem.zeroes([*c]VkDeviceFaultVendorInfoEXT),
-    pVendorBinaryData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const DeviceFaultVendorBinaryHeaderVersionOneEXT = extern struct {
-    headerSize: u32 = @import("std").mem.zeroes(u32),
-    headerVersion: VkDeviceFaultVendorBinaryHeaderVersionEXT = @import("std").mem.zeroes(VkDeviceFaultVendorBinaryHeaderVersionEXT),
-    vendorID: u32 = @import("std").mem.zeroes(u32),
-    deviceID: u32 = @import("std").mem.zeroes(u32),
-    driverVersion: u32 = @import("std").mem.zeroes(u32),
-    pipelineCacheUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    applicationNameOffset: u32 = @import("std").mem.zeroes(u32),
-    applicationVersion: u32 = @import("std").mem.zeroes(u32),
-    engineNameOffset: u32 = @import("std").mem.zeroes(u32),
-    engineVersion: u32 = @import("std").mem.zeroes(u32),
-    apiVersion: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rasterizationOrderColorAttachmentAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rasterizationOrderDepthAttachmentAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rasterizationOrderStencilAttachmentAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRGBA10X6FormatsFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    formatRgba10x6WithoutYCbCrSampler: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMutableDescriptorTypeFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    mutableDescriptorType: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MutableDescriptorTypeListEXT = extern struct {
-    descriptorTypeCount: u32 = @import("std").mem.zeroes(u32),
-    pDescriptorTypes: [*c]const VkDescriptorType = @import("std").mem.zeroes([*c]const VkDescriptorType),
-};
-pub const MutableDescriptorTypeCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    mutableDescriptorTypeListCount: u32 = @import("std").mem.zeroes(u32),
-    pMutableDescriptorTypeLists: [*c]const VkMutableDescriptorTypeListEXT = @import("std").mem.zeroes([*c]const VkMutableDescriptorTypeListEXT),
-};
-pub const PhysicalDeviceVertexInputDynamicStateFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vertexInputDynamicState: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const VertexInputBindingDescription2EXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    binding: u32 = @import("std").mem.zeroes(u32),
-    stride: u32 = @import("std").mem.zeroes(u32),
-    inputRate: VkVertexInputRate = @import("std").mem.zeroes(VkVertexInputRate),
-    divisor: u32 = @import("std").mem.zeroes(u32),
-};
-pub const VertexInputAttributeDescription2EXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    location: u32 = @import("std").mem.zeroes(u32),
-    binding: u32 = @import("std").mem.zeroes(u32),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    offset: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceDrmPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hasPrimary: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    hasRender: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primaryMajor: i64 = @import("std").mem.zeroes(i64),
-    primaryMinor: i64 = @import("std").mem.zeroes(i64),
-    renderMajor: i64 = @import("std").mem.zeroes(i64),
-    renderMinor: i64 = @import("std").mem.zeroes(i64),
-};
-pub const PhysicalDeviceAddressBindingReportFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    reportAddressBinding: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceAddressBindingCallbackDataEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkDeviceAddressBindingFlagsEXT = @import("std").mem.zeroes(VkDeviceAddressBindingFlagsEXT),
-    baseAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    bindingType: VkDeviceAddressBindingTypeEXT = @import("std").mem.zeroes(VkDeviceAddressBindingTypeEXT),
-};
-pub const PhysicalDeviceDepthClipControlFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    depthClipControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineViewportDepthClipControlCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    negativeOneToOne: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    primitiveTopologyListRestart: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primitiveTopologyPatchListRestart: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SubpassShadingPipelineCreateInfoHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    renderPass: VkRenderPass = @import("std").mem.zeroes(VkRenderPass),
-    subpass: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceSubpassShadingFeaturesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subpassShading: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceSubpassShadingPropertiesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxSubpassShadingWorkgroupSizeAspectRatio: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceInvocationMaskFeaturesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    invocationMask: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MemoryGetRemoteAddressInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const PhysicalDeviceExternalMemoryRDMAFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    externalMemoryRDMA: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelinePropertiesIdentifierEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineIdentifier: [16]u8 = @import("std").mem.zeroes([16]u8),
-};
-pub const PhysicalDevicePipelinePropertiesFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelinePropertiesIdentifier: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFrameBoundaryFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    frameBoundary: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const FrameBoundaryEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkFrameBoundaryFlagsEXT = @import("std").mem.zeroes(VkFrameBoundaryFlagsEXT),
-    frameID: u64 = @import("std").mem.zeroes(u64),
-    imageCount: u32 = @import("std").mem.zeroes(u32),
-    pImages: [*c]const VkImage = @import("std").mem.zeroes([*c]const VkImage),
-    bufferCount: u32 = @import("std").mem.zeroes(u32),
-    pBuffers: [*c]const VkBuffer = @import("std").mem.zeroes([*c]const VkBuffer),
-    tagName: u64 = @import("std").mem.zeroes(u64),
-    tagSize: usize = @import("std").mem.zeroes(usize),
-    pTag: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    multisampledRenderToSingleSampled: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SubpassResolvePerformanceQueryEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    optimal: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MultisampledRenderToSingleSampledInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    multisampledRenderToSingleSampledEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rasterizationSamples: VkSampleCountFlagBits = @import("std").mem.zeroes(VkSampleCountFlagBits),
-};
-pub const PhysicalDeviceExtendedDynamicState2FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    extendedDynamicState2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState2LogicOp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState2PatchControlPoints: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceColorWriteEnableFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    colorWriteEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineColorWriteCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    attachmentCount: u32 = @import("std").mem.zeroes(u32),
-    pColorWriteEnables: [*c]const VkBool32 = @import("std").mem.zeroes([*c]const VkBool32),
-};
-pub const PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    primitivesGeneratedQuery: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primitivesGeneratedQueryWithRasterizerDiscard: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primitivesGeneratedQueryWithNonZeroStreams: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageViewMinLodFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    minLod: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImageViewMinLodCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    minLod: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceMultiDrawFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    multiDraw: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMultiDrawPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxMultiDrawCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MultiDrawInfoEXT = extern struct {
-    firstVertex: u32 = @import("std").mem.zeroes(u32),
-    vertexCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MultiDrawIndexedInfoEXT = extern struct {
-    firstIndex: u32 = @import("std").mem.zeroes(u32),
-    indexCount: u32 = @import("std").mem.zeroes(u32),
-    vertexOffset: i32 = @import("std").mem.zeroes(i32),
-};
-pub const PhysicalDeviceImage2DViewOf3DFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    image2DViewOf3D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    sampler2DViewOf3D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderTileImageFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderTileImageColorReadAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTileImageDepthReadAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTileImageStencilReadAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderTileImagePropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderTileImageCoherentReadAccelerated: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTileImageReadSampleFromPixelRateInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTileImageReadFromHelperInvocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MicromapUsageEXT = extern struct {
-    count: u32 = @import("std").mem.zeroes(u32),
-    subdivisionLevel: u32 = @import("std").mem.zeroes(u32),
-    format: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MicromapBuildInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkMicromapTypeEXT = @import("std").mem.zeroes(VkMicromapTypeEXT),
-    flags: VkBuildMicromapFlagsEXT = @import("std").mem.zeroes(VkBuildMicromapFlagsEXT),
-    mode: VkBuildMicromapModeEXT = @import("std").mem.zeroes(VkBuildMicromapModeEXT),
-    dstMicromap: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-    usageCountsCount: u32 = @import("std").mem.zeroes(u32),
-    pUsageCounts: [*c]const VkMicromapUsageEXT = @import("std").mem.zeroes([*c]const VkMicromapUsageEXT),
-    ppUsageCounts: [*c]const [*c]const VkMicromapUsageEXT = @import("std").mem.zeroes([*c]const [*c]const VkMicromapUsageEXT),
-    data: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    scratchData: VkDeviceOrHostAddressKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressKHR),
-    triangleArray: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    triangleArrayStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const MicromapCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    createFlags: VkMicromapCreateFlagsEXT = @import("std").mem.zeroes(VkMicromapCreateFlagsEXT),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    type: VkMicromapTypeEXT = @import("std").mem.zeroes(VkMicromapTypeEXT),
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PhysicalDeviceOpacityMicromapFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    micromap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    micromapCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    micromapHostCommands: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceOpacityMicromapPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxOpacity2StateSubdivisionLevel: u32 = @import("std").mem.zeroes(u32),
-    maxOpacity4StateSubdivisionLevel: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MicromapVersionInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pVersionData: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const CopyMicromapToMemoryInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-    dst: VkDeviceOrHostAddressKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressKHR),
-    mode: VkCopyMicromapModeEXT = @import("std").mem.zeroes(VkCopyMicromapModeEXT),
-};
-pub const CopyMemoryToMicromapInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    dst: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-    mode: VkCopyMicromapModeEXT = @import("std").mem.zeroes(VkCopyMicromapModeEXT),
-};
-pub const CopyMicromapInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-    dst: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-    mode: VkCopyMicromapModeEXT = @import("std").mem.zeroes(VkCopyMicromapModeEXT),
-};
-pub const MicromapBuildSizesInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    micromapSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    buildScratchSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    discardable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AccelerationStructureTrianglesOpacityMicromapEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-    indexBuffer: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    indexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    baseTriangle: u32 = @import("std").mem.zeroes(u32),
-    usageCountsCount: u32 = @import("std").mem.zeroes(u32),
-    pUsageCounts: [*c]const VkMicromapUsageEXT = @import("std").mem.zeroes([*c]const VkMicromapUsageEXT),
-    ppUsageCounts: [*c]const [*c]const VkMicromapUsageEXT = @import("std").mem.zeroes([*c]const [*c]const VkMicromapUsageEXT),
-    micromap: VkMicromapEXT = @import("std").mem.zeroes(VkMicromapEXT),
-};
-pub const MicromapTriangleEXT = extern struct {
-    dataOffset: u32 = @import("std").mem.zeroes(u32),
-    subdivisionLevel: u16 = @import("std").mem.zeroes(u16),
-    format: u16 = @import("std").mem.zeroes(u16),
-};
-pub const PhysicalDeviceClusterCullingShaderFeaturesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    clustercullingShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewClusterCullingShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceClusterCullingShaderPropertiesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxWorkGroupCount: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxOutputClusterCount: u32 = @import("std").mem.zeroes(u32),
-    indirectBufferOffsetAlignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    clusterShadingRate: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceBorderColorSwizzleFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    borderColorSwizzle: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    borderColorSwizzleFromImage: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerBorderColorComponentMappingCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    components: VkComponentMapping = @import("std").mem.zeroes(VkComponentMapping),
-    srgb: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pageableDeviceLocalMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderCorePropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pixelRate: u32 = @import("std").mem.zeroes(u32),
-    texelRate: u32 = @import("std").mem.zeroes(u32),
-    fmaRate: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DeviceQueueShaderCoreControlCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderCoreCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceSchedulingControlsFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    schedulingControls: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceSchedulingControlsPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    schedulingControlsFlags: VkPhysicalDeviceSchedulingControlsFlagsARM = @import("std").mem.zeroes(VkPhysicalDeviceSchedulingControlsFlagsARM),
-};
-pub const PhysicalDeviceImageSlicedViewOf3DFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageSlicedViewOf3D: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImageViewSlicedCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    sliceOffset: u32 = @import("std").mem.zeroes(u32),
-    sliceCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    descriptorSetHostMapping: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DescriptorSetBindingReferenceVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    descriptorSetLayout: VkDescriptorSetLayout = @import("std").mem.zeroes(VkDescriptorSetLayout),
-    binding: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DescriptorSetLayoutHostMappingInfoVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    descriptorOffset: usize = @import("std").mem.zeroes(usize),
-    descriptorSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceNonSeamlessCubeMapFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    nonSeamlessCubeMap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRenderPassStripedFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    renderPassStriped: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRenderPassStripedPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    renderPassStripeGranularity: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxRenderPassStripes: u32 = @import("std").mem.zeroes(u32),
-};
-pub const RenderPassStripeInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stripeArea: VkRect2D = @import("std").mem.zeroes(VkRect2D),
-};
-pub const RenderPassStripeBeginInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stripeInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pStripeInfos: [*c]const VkRenderPassStripeInfoARM = @import("std").mem.zeroes([*c]const VkRenderPassStripeInfoARM),
-};
-pub const RenderPassStripeSubmitInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stripeSemaphoreInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pStripeSemaphoreInfos: [*c]const VkSemaphoreSubmitInfo = @import("std").mem.zeroes([*c]const VkSemaphoreSubmitInfo),
-};
-pub const PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentDensityMapOffset: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentDensityOffsetGranularity: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const RenderPassFragmentDensityMapOffsetEndInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fragmentDensityOffsetCount: u32 = @import("std").mem.zeroes(u32),
-    pFragmentDensityOffsets: [*c]const VkOffset2D = @import("std").mem.zeroes([*c]const VkOffset2D),
-};
-pub const CopyMemoryIndirectCommandNV = extern struct {
-    srcAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    dstAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const CopyMemoryToImageIndirectCommandNV = extern struct {
-    srcAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    bufferRowLength: u32 = @import("std").mem.zeroes(u32),
-    bufferImageHeight: u32 = @import("std").mem.zeroes(u32),
-    imageSubresource: VkImageSubresourceLayers = @import("std").mem.zeroes(VkImageSubresourceLayers),
-    imageOffset: VkOffset3D = @import("std").mem.zeroes(VkOffset3D),
-    imageExtent: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-};
-pub const PhysicalDeviceCopyMemoryIndirectFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    indirectCopy: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCopyMemoryIndirectPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportedQueues: VkQueueFlags = @import("std").mem.zeroes(VkQueueFlags),
-};
-pub const DecompressMemoryRegionNV = extern struct {
-    srcAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    dstAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    compressedSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    decompressedSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    decompressionMethod: VkMemoryDecompressionMethodFlagsNV = @import("std").mem.zeroes(VkMemoryDecompressionMethodFlagsNV),
-};
-pub const PhysicalDeviceMemoryDecompressionFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryDecompression: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMemoryDecompressionPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    decompressionMethods: VkMemoryDecompressionMethodFlagsNV = @import("std").mem.zeroes(VkMemoryDecompressionMethodFlagsNV),
-    maxDecompressionIndirectCount: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceGeneratedCompute: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    deviceGeneratedComputePipelines: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    deviceGeneratedComputeCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ComputePipelineIndirectBufferInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    pipelineDeviceAddressCaptureReplay: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PipelineIndirectDeviceAddressInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pipelineBindPoint: VkPipelineBindPoint = @import("std").mem.zeroes(VkPipelineBindPoint),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const BindPipelineIndirectCommandNV = extern struct {
-    pipelineAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    spheres: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    linearSweptSpheres: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AccelerationStructureGeometryLinearSweptSpheresDataNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    vertexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    vertexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    radiusFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    radiusData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    radiusStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-    indexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    indexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    indexingMode: VkRayTracingLssIndexingModeNV = @import("std").mem.zeroes(VkRayTracingLssIndexingModeNV),
-    endCapsMode: VkRayTracingLssPrimitiveEndCapsModeNV = @import("std").mem.zeroes(VkRayTracingLssPrimitiveEndCapsModeNV),
-};
-pub const AccelerationStructureGeometrySpheresDataNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    vertexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    vertexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    radiusFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    radiusData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    radiusStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-    indexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    indexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const PhysicalDeviceLinearColorAttachmentFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    linearColorAttachment: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageCompressionControlSwapchain: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ImageViewSampleWeightCreateInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    filterCenter: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-    filterSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    numPhases: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceImageProcessingFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    textureSampleWeighted: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureBoxFilter: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    textureBlockMatch: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageProcessingPropertiesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxWeightFilterPhases: u32 = @import("std").mem.zeroes(u32),
-    maxWeightFilterDimension: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxBlockMatchRegion: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    maxBoxFilterBlockSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const PhysicalDeviceNestedCommandBufferFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    nestedCommandBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nestedCommandBufferRendering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    nestedCommandBufferSimultaneousUse: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceNestedCommandBufferPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxCommandBufferNestingLevel: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ExternalMemoryAcquireUnmodifiedEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    acquireUnmodifiedMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceExtendedDynamicState3FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    extendedDynamicState3TessellationDomainOrigin: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3DepthClampEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3PolygonMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3RasterizationSamples: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3SampleMask: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3AlphaToCoverageEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3AlphaToOneEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3LogicOpEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ColorBlendEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ColorBlendEquation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ColorWriteMask: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3RasterizationStream: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ConservativeRasterizationMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ExtraPrimitiveOverestimationSize: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3DepthClipEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3SampleLocationsEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ColorBlendAdvanced: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ProvokingVertexMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3LineRasterizationMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3LineStippleEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3DepthClipNegativeOneToOne: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ViewportWScalingEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ViewportSwizzle: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageToColorEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageToColorLocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageModulationMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageModulationTableEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageModulationTable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3CoverageReductionMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3RepresentativeFragmentTestEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    extendedDynamicState3ShadingRateImageEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceExtendedDynamicState3PropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dynamicPrimitiveTopologyUnrestricted: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ColorBlendEquationEXT = extern struct {
-    srcColorBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    dstColorBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    colorBlendOp: VkBlendOp = @import("std").mem.zeroes(VkBlendOp),
-    srcAlphaBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    dstAlphaBlendFactor: VkBlendFactor = @import("std").mem.zeroes(VkBlendFactor),
-    alphaBlendOp: VkBlendOp = @import("std").mem.zeroes(VkBlendOp),
-};
-pub const ColorBlendAdvancedEXT = extern struct {
-    advancedBlendOp: VkBlendOp = @import("std").mem.zeroes(VkBlendOp),
-    srcPremultiplied: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dstPremultiplied: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    blendOverlap: VkBlendOverlapEXT = @import("std").mem.zeroes(VkBlendOverlapEXT),
-    clampResults: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceSubpassMergeFeedbackFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    subpassMergeFeedback: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderPassCreationControlEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    disallowMerging: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderPassCreationFeedbackInfoEXT = extern struct {
-    postMergeSubpassCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const RenderPassCreationFeedbackCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pRenderPassFeedback: [*c]VkRenderPassCreationFeedbackInfoEXT = @import("std").mem.zeroes([*c]VkRenderPassCreationFeedbackInfoEXT),
-};
-pub const RenderPassSubpassFeedbackInfoEXT = extern struct {
-    subpassMergeStatus: VkSubpassMergeStatusEXT = @import("std").mem.zeroes(VkSubpassMergeStatusEXT),
-    description: [256]u8 = @import("std").mem.zeroes([256]u8),
-    postMergeIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const RenderPassSubpassFeedbackCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pSubpassFeedback: [*c]VkRenderPassSubpassFeedbackInfoEXT = @import("std").mem.zeroes([*c]VkRenderPassSubpassFeedbackInfoEXT),
-};
-pub const DirectDriverLoadingInfoLUNARG = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkDirectDriverLoadingFlagsLUNARG = @import("std").mem.zeroes(VkDirectDriverLoadingFlagsLUNARG),
-    pfnGetInstanceProcAddr: PFN_vkGetInstanceProcAddrLUNARG = @import("std").mem.zeroes(PFN_vkGetInstanceProcAddrLUNARG),
-};
-pub const DirectDriverLoadingListLUNARG = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    mode: VkDirectDriverLoadingModeLUNARG = @import("std").mem.zeroes(VkDirectDriverLoadingModeLUNARG),
-    driverCount: u32 = @import("std").mem.zeroes(u32),
-    pDrivers: [*c]const VkDirectDriverLoadingInfoLUNARG = @import("std").mem.zeroes([*c]const VkDirectDriverLoadingInfoLUNARG),
-};
-pub const TensorDescriptionARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tiling: VkTensorTilingARM = @import("std").mem.zeroes(VkTensorTilingARM),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-    dimensionCount: u32 = @import("std").mem.zeroes(u32),
-    pDimensions: [*c]const i64 = @import("std").mem.zeroes([*c]const i64),
-    pStrides: [*c]const i64 = @import("std").mem.zeroes([*c]const i64),
-    usage: VkTensorUsageFlagsARM = @import("std").mem.zeroes(VkTensorUsageFlagsARM),
-};
-pub const TensorCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkTensorCreateFlagsARM = @import("std").mem.zeroes(VkTensorCreateFlagsARM),
-    pDescription: [*c]const VkTensorDescriptionARM = @import("std").mem.zeroes([*c]const VkTensorDescriptionARM),
-    sharingMode: VkSharingMode = @import("std").mem.zeroes(VkSharingMode),
-    queueFamilyIndexCount: u32 = @import("std").mem.zeroes(u32),
-    pQueueFamilyIndices: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-};
-pub const TensorViewCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkTensorViewCreateFlagsARM = @import("std").mem.zeroes(VkTensorViewCreateFlagsARM),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const TensorMemoryRequirementsInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-};
-pub const BindTensorMemoryInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const WriteDescriptorSetTensorARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensorViewCount: u32 = @import("std").mem.zeroes(u32),
-    pTensorViews: [*c]const VkTensorViewARM = @import("std").mem.zeroes([*c]const VkTensorViewARM),
-};
-pub const TensorFormatPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    optimalTilingTensorFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-    linearTilingTensorFeatures: VkFormatFeatureFlags2 = @import("std").mem.zeroes(VkFormatFeatureFlags2),
-};
-pub const PhysicalDeviceTensorPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxTensorDimensionCount: u32 = @import("std").mem.zeroes(u32),
-    maxTensorElements: u64 = @import("std").mem.zeroes(u64),
-    maxPerDimensionTensorElements: u64 = @import("std").mem.zeroes(u64),
-    maxTensorStride: i64 = @import("std").mem.zeroes(i64),
-    maxTensorSize: u64 = @import("std").mem.zeroes(u64),
-    maxTensorShaderAccessArrayLength: u32 = @import("std").mem.zeroes(u32),
-    maxTensorShaderAccessSize: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetStorageTensors: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorSetStorageTensors: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindStorageTensors: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindStorageTensors: u32 = @import("std").mem.zeroes(u32),
-    shaderStorageTensorArrayNonUniformIndexingNative: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTensorSupportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-};
-pub const TensorMemoryBarrierARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    srcAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    dstStageMask: VkPipelineStageFlags2 = @import("std").mem.zeroes(VkPipelineStageFlags2),
-    dstAccessMask: VkAccessFlags2 = @import("std").mem.zeroes(VkAccessFlags2),
-    srcQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    dstQueueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-};
-pub const TensorDependencyInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensorMemoryBarrierCount: u32 = @import("std").mem.zeroes(u32),
-    pTensorMemoryBarriers: [*c]const VkTensorMemoryBarrierARM = @import("std").mem.zeroes([*c]const VkTensorMemoryBarrierARM),
-};
-pub const PhysicalDeviceTensorFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tensorNonPacked: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderTensorAccess: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTensorArrayDynamicIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderStorageTensorArrayNonUniformIndexing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingStorageTensorUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tensors: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DeviceTensorMemoryRequirementsARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pCreateInfo: [*c]const VkTensorCreateInfoARM = @import("std").mem.zeroes([*c]const VkTensorCreateInfoARM),
-};
-pub const TensorCopyARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dimensionCount: u32 = @import("std").mem.zeroes(u32),
-    pSrcOffset: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    pDstOffset: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    pExtent: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const CopyTensorInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcTensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-    dstTensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkTensorCopyARM = @import("std").mem.zeroes([*c]const VkTensorCopyARM),
-};
-pub const MemoryDedicatedAllocateInfoTensorARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-};
-pub const PhysicalDeviceExternalTensorInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkTensorCreateFlagsARM = @import("std").mem.zeroes(VkTensorCreateFlagsARM),
-    pDescription: [*c]const VkTensorDescriptionARM = @import("std").mem.zeroes([*c]const VkTensorDescriptionARM),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const ExternalTensorPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    externalMemoryProperties: VkExternalMemoryProperties = @import("std").mem.zeroes(VkExternalMemoryProperties),
-};
-pub const ExternalMemoryTensorCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const PhysicalDeviceDescriptorBufferTensorFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    descriptorBufferTensorDescriptors: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDescriptorBufferTensorPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tensorCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    tensorViewCaptureReplayDescriptorDataSize: usize = @import("std").mem.zeroes(usize),
-    tensorDescriptorSize: usize = @import("std").mem.zeroes(usize),
-};
-pub const DescriptorGetTensorInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensorView: VkTensorViewARM = @import("std").mem.zeroes(VkTensorViewARM),
-};
-pub const TensorCaptureDescriptorDataInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensor: VkTensorARM = @import("std").mem.zeroes(VkTensorARM),
-};
-pub const TensorViewCaptureDescriptorDataInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensorView: VkTensorViewARM = @import("std").mem.zeroes(VkTensorViewARM),
-};
-pub const FrameBoundaryTensorsARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    tensorCount: u32 = @import("std").mem.zeroes(u32),
-    pTensors: [*c]const VkTensorARM = @import("std").mem.zeroes([*c]const VkTensorARM),
-};
-pub const PhysicalDeviceShaderModuleIdentifierFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderModuleIdentifier: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderModuleIdentifierPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderModuleIdentifierAlgorithmUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-};
-pub const PipelineShaderStageModuleIdentifierCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    identifierSize: u32 = @import("std").mem.zeroes(u32),
-    pIdentifier: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const ShaderModuleIdentifierEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    identifierSize: u32 = @import("std").mem.zeroes(u32),
-    identifier: [32]u8 = @import("std").mem.zeroes([32]u8),
-};
-pub const PhysicalDeviceOpticalFlowFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    opticalFlow: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceOpticalFlowPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportedOutputGridSizes: VkOpticalFlowGridSizeFlagsNV = @import("std").mem.zeroes(VkOpticalFlowGridSizeFlagsNV),
-    supportedHintGridSizes: VkOpticalFlowGridSizeFlagsNV = @import("std").mem.zeroes(VkOpticalFlowGridSizeFlagsNV),
-    hintSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    costSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    bidirectionalFlowSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    globalFlowSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minWidth: u32 = @import("std").mem.zeroes(u32),
-    minHeight: u32 = @import("std").mem.zeroes(u32),
-    maxWidth: u32 = @import("std").mem.zeroes(u32),
-    maxHeight: u32 = @import("std").mem.zeroes(u32),
-    maxNumRegionsOfInterest: u32 = @import("std").mem.zeroes(u32),
-};
-pub const OpticalFlowImageFormatInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    usage: VkOpticalFlowUsageFlagsNV = @import("std").mem.zeroes(VkOpticalFlowUsageFlagsNV),
-};
-pub const OpticalFlowImageFormatPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    format: VkFormat = @import("std").mem.zeroes(VkFormat),
-};
-pub const OpticalFlowSessionCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    imageFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    flowVectorFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    costFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    outputGridSize: VkOpticalFlowGridSizeFlagsNV = @import("std").mem.zeroes(VkOpticalFlowGridSizeFlagsNV),
-    hintGridSize: VkOpticalFlowGridSizeFlagsNV = @import("std").mem.zeroes(VkOpticalFlowGridSizeFlagsNV),
-    performanceLevel: VkOpticalFlowPerformanceLevelNV = @import("std").mem.zeroes(VkOpticalFlowPerformanceLevelNV),
-    flags: VkOpticalFlowSessionCreateFlagsNV = @import("std").mem.zeroes(VkOpticalFlowSessionCreateFlagsNV),
-};
-pub const OpticalFlowSessionCreatePrivateDataInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    id: u32 = @import("std").mem.zeroes(u32),
-    size: u32 = @import("std").mem.zeroes(u32),
-    pPrivateData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const OpticalFlowExecuteInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkOpticalFlowExecuteFlagsNV = @import("std").mem.zeroes(VkOpticalFlowExecuteFlagsNV),
-    regionCount: u32 = @import("std").mem.zeroes(u32),
-    pRegions: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PhysicalDeviceLegacyDitheringFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    legacyDithering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceAntiLagFeaturesAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    antiLag: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AntiLagPresentationInfoAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    stage: VkAntiLagStageAMD = @import("std").mem.zeroes(VkAntiLagStageAMD),
-    frameIndex: u64 = @import("std").mem.zeroes(u64),
-};
-pub const AntiLagDataAMD = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    mode: VkAntiLagModeAMD = @import("std").mem.zeroes(VkAntiLagModeAMD),
-    maxFPS: u32 = @import("std").mem.zeroes(u32),
-    pPresentationInfo: [*c]const VkAntiLagPresentationInfoAMD = @import("std").mem.zeroes([*c]const VkAntiLagPresentationInfoAMD),
-};
-pub const PhysicalDeviceShaderObjectFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderObject: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderObjectPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderBinaryUUID: [16]u8 = @import("std").mem.zeroes([16]u8),
-    shaderBinaryVersion: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ShaderCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkShaderCreateFlagsEXT = @import("std").mem.zeroes(VkShaderCreateFlagsEXT),
-    stage: VkShaderStageFlagBits = @import("std").mem.zeroes(VkShaderStageFlagBits),
-    nextStage: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    codeType: VkShaderCodeTypeEXT = @import("std").mem.zeroes(VkShaderCodeTypeEXT),
-    codeSize: usize = @import("std").mem.zeroes(usize),
-    pCode: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    setLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pSetLayouts: [*c]const VkDescriptorSetLayout = @import("std").mem.zeroes([*c]const VkDescriptorSetLayout),
-    pushConstantRangeCount: u32 = @import("std").mem.zeroes(u32),
-    pPushConstantRanges: [*c]const VkPushConstantRange = @import("std").mem.zeroes([*c]const VkPushConstantRange),
-    pSpecializationInfo: [*c]const VkSpecializationInfo = @import("std").mem.zeroes([*c]const VkSpecializationInfo),
-};
-pub const DepthClampRangeEXT = extern struct {
-    minDepthClamp: f32 = @import("std").mem.zeroes(f32),
-    maxDepthClamp: f32 = @import("std").mem.zeroes(f32),
-};
-pub const PhysicalDeviceTilePropertiesFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tileProperties: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const TilePropertiesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tileSize: VkExtent3D = @import("std").mem.zeroes(VkExtent3D),
-    apronSize: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    origin: VkOffset2D = @import("std").mem.zeroes(VkOffset2D),
-};
-pub const PhysicalDeviceAmigoProfilingFeaturesSEC = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    amigoProfiling: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AmigoProfilingSubmitInfoSEC = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    firstDrawTimestamp: u64 = @import("std").mem.zeroes(u64),
-    swapBufferTimestamp: u64 = @import("std").mem.zeroes(u64),
-};
-pub const PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    multiviewPerViewViewports: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRayTracingInvocationReorderPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingInvocationReorderReorderingHint: VkRayTracingInvocationReorderModeNV = @import("std").mem.zeroes(VkRayTracingInvocationReorderModeNV),
-};
-pub const PhysicalDeviceRayTracingInvocationReorderFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingInvocationReorder: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCooperativeVectorPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeVectorSupportedStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    cooperativeVectorTrainingFloat16Accumulation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeVectorTrainingFloat32Accumulation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxCooperativeVectorComponents: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceCooperativeVectorFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeVector: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeVectorTraining: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const CooperativeVectorPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    inputType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    inputInterpretation: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    matrixInterpretation: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    biasInterpretation: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    resultType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    transpose: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ConvertCooperativeVectorMatrixInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    srcSize: usize = @import("std").mem.zeroes(usize),
-    srcData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    pDstSize: [*c]usize = @import("std").mem.zeroes([*c]usize),
-    dstData: VkDeviceOrHostAddressKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressKHR),
-    srcComponentType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    dstComponentType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    numRows: u32 = @import("std").mem.zeroes(u32),
-    numColumns: u32 = @import("std").mem.zeroes(u32),
-    srcLayout: VkCooperativeVectorMatrixLayoutNV = @import("std").mem.zeroes(VkCooperativeVectorMatrixLayoutNV),
-    srcStride: usize = @import("std").mem.zeroes(usize),
-    dstLayout: VkCooperativeVectorMatrixLayoutNV = @import("std").mem.zeroes(VkCooperativeVectorMatrixLayoutNV),
-    dstStride: usize = @import("std").mem.zeroes(usize),
-};
-pub const PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    extendedSparseAddressSpace: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceExtendedSparseAddressSpacePropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    extendedSparseAddressSpaceSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    extendedSparseImageUsageFlags: VkImageUsageFlags = @import("std").mem.zeroes(VkImageUsageFlags),
-    extendedSparseBufferUsageFlags: VkBufferUsageFlags = @import("std").mem.zeroes(VkBufferUsageFlags),
-};
-pub const PhysicalDeviceLegacyVertexAttributesFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    legacyVertexAttributes: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceLegacyVertexAttributesPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    nativeUnalignedPerformance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const LayerSettingEXT = extern struct {
-    pLayerName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    pSettingName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    type: VkLayerSettingTypeEXT = @import("std").mem.zeroes(VkLayerSettingTypeEXT),
-    valueCount: u32 = @import("std").mem.zeroes(u32),
-    pValues: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const LayerSettingsCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    settingCount: u32 = @import("std").mem.zeroes(u32),
-    pSettings: [*c]const VkLayerSettingEXT = @import("std").mem.zeroes([*c]const VkLayerSettingEXT),
-};
-pub const PhysicalDeviceShaderCoreBuiltinsFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderCoreBuiltins: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderCoreBuiltinsPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderCoreMask: u64 = @import("std").mem.zeroes(u64),
-    shaderCoreCount: u32 = @import("std").mem.zeroes(u32),
-    shaderWarpsPerCore: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineLibraryGroupHandles: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dynamicRenderingUnusedAttachments: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const LatencySleepModeInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    lowLatencyMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    lowLatencyBoost: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    minimumIntervalUs: u32 = @import("std").mem.zeroes(u32),
-};
-pub const LatencySleepInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    signalSemaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    value: u64 = @import("std").mem.zeroes(u64),
-};
-pub const SetLatencyMarkerInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentID: u64 = @import("std").mem.zeroes(u64),
-    marker: VkLatencyMarkerNV = @import("std").mem.zeroes(VkLatencyMarkerNV),
-};
-pub const LatencyTimingsFrameReportNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentID: u64 = @import("std").mem.zeroes(u64),
-    inputSampleTimeUs: u64 = @import("std").mem.zeroes(u64),
-    simStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    simEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-    renderSubmitStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    renderSubmitEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-    presentStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    presentEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-    driverStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    driverEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-    osRenderQueueStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    osRenderQueueEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-    gpuRenderStartTimeUs: u64 = @import("std").mem.zeroes(u64),
-    gpuRenderEndTimeUs: u64 = @import("std").mem.zeroes(u64),
-};
-pub const GetLatencyMarkerInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    timingCount: u32 = @import("std").mem.zeroes(u32),
-    pTimings: [*c]VkLatencyTimingsFrameReportNV = @import("std").mem.zeroes([*c]VkLatencyTimingsFrameReportNV),
-};
-pub const LatencySubmissionPresentIdNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentID: u64 = @import("std").mem.zeroes(u64),
-};
-pub const SwapchainLatencyCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    latencyModeEnable: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const OutOfBandQueueTypeInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    queueType: VkOutOfBandQueueTypeNV = @import("std").mem.zeroes(VkOutOfBandQueueTypeNV),
-};
-pub const LatencySurfaceCapabilitiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    presentModeCount: u32 = @import("std").mem.zeroes(u32),
-    pPresentModes: [*c]VkPresentModeKHR = @import("std").mem.zeroes([*c]VkPresentModeKHR),
-};
-pub const PhysicalDeviceDataGraphFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    dataGraph: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataGraphUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataGraphSpecializationConstants: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataGraphDescriptorBuffer: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataGraphShaderModule: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DataGraphPipelineConstantARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    id: u32 = @import("std").mem.zeroes(u32),
-    pConstantData: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const DataGraphPipelineResourceInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    descriptorSet: u32 = @import("std").mem.zeroes(u32),
-    binding: u32 = @import("std").mem.zeroes(u32),
-    arrayElement: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DataGraphPipelineCompilerControlCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pVendorOptions: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const DataGraphPipelineCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags2KHR = @import("std").mem.zeroes(VkPipelineCreateFlags2KHR),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    resourceInfoCount: u32 = @import("std").mem.zeroes(u32),
-    pResourceInfos: [*c]const VkDataGraphPipelineResourceInfoARM = @import("std").mem.zeroes([*c]const VkDataGraphPipelineResourceInfoARM),
-};
-pub const DataGraphPipelineShaderModuleCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    module: VkShaderModule = @import("std").mem.zeroes(VkShaderModule),
-    pName: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-    pSpecializationInfo: [*c]const VkSpecializationInfo = @import("std").mem.zeroes([*c]const VkSpecializationInfo),
-    constantCount: u32 = @import("std").mem.zeroes(u32),
-    pConstants: [*c]const VkDataGraphPipelineConstantARM = @import("std").mem.zeroes([*c]const VkDataGraphPipelineConstantARM),
-};
-pub const DataGraphPipelineSessionCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkDataGraphPipelineSessionCreateFlagsARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionCreateFlagsARM),
-    dataGraphPipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const DataGraphPipelineSessionBindPointRequirementsInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    session: VkDataGraphPipelineSessionARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionARM),
-};
-pub const DataGraphPipelineSessionBindPointRequirementARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    bindPoint: VkDataGraphPipelineSessionBindPointARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionBindPointARM),
-    bindPointType: VkDataGraphPipelineSessionBindPointTypeARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionBindPointTypeARM),
-    numObjects: u32 = @import("std").mem.zeroes(u32),
-};
-pub const DataGraphPipelineSessionMemoryRequirementsInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    session: VkDataGraphPipelineSessionARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionARM),
-    bindPoint: VkDataGraphPipelineSessionBindPointARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionBindPointARM),
-    objectIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BindDataGraphPipelineSessionMemoryInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    session: VkDataGraphPipelineSessionARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionARM),
-    bindPoint: VkDataGraphPipelineSessionBindPointARM = @import("std").mem.zeroes(VkDataGraphPipelineSessionBindPointARM),
-    objectIndex: u32 = @import("std").mem.zeroes(u32),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    memoryOffset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DataGraphPipelineInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dataGraphPipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const DataGraphPipelinePropertyQueryResultARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    property: VkDataGraphPipelinePropertyARM = @import("std").mem.zeroes(VkDataGraphPipelinePropertyARM),
-    isText: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dataSize: usize = @import("std").mem.zeroes(usize),
-    pData: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-};
-pub const DataGraphPipelineIdentifierCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    identifierSize: u32 = @import("std").mem.zeroes(u32),
-    pIdentifier: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const DataGraphPipelineDispatchInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkDataGraphPipelineDispatchFlagsARM = @import("std").mem.zeroes(VkDataGraphPipelineDispatchFlagsARM),
-};
-pub const PhysicalDeviceDataGraphProcessingEngineARM = extern struct {
-    type: VkPhysicalDeviceDataGraphProcessingEngineTypeARM = @import("std").mem.zeroes(VkPhysicalDeviceDataGraphProcessingEngineTypeARM),
-    isForeign: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDataGraphOperationSupportARM = extern struct {
-    operationType: VkPhysicalDeviceDataGraphOperationTypeARM = @import("std").mem.zeroes(VkPhysicalDeviceDataGraphOperationTypeARM),
-    name: [128]u8 = @import("std").mem.zeroes([128]u8),
-    version: u32 = @import("std").mem.zeroes(u32),
-};
-pub const QueueFamilyDataGraphPropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    engine: VkPhysicalDeviceDataGraphProcessingEngineARM = @import("std").mem.zeroes(VkPhysicalDeviceDataGraphProcessingEngineARM),
-    operation: VkPhysicalDeviceDataGraphOperationSupportARM = @import("std").mem.zeroes(VkPhysicalDeviceDataGraphOperationSupportARM),
-};
-pub const DataGraphProcessingEngineCreateInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    processingEngineCount: u32 = @import("std").mem.zeroes(u32),
-    pProcessingEngines: [*c]VkPhysicalDeviceDataGraphProcessingEngineARM = @import("std").mem.zeroes([*c]VkPhysicalDeviceDataGraphProcessingEngineARM),
-};
-pub const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    queueFamilyIndex: u32 = @import("std").mem.zeroes(u32),
-    engineType: VkPhysicalDeviceDataGraphProcessingEngineTypeARM = @import("std").mem.zeroes(VkPhysicalDeviceDataGraphProcessingEngineTypeARM),
-};
-pub const QueueFamilyDataGraphProcessingEnginePropertiesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    foreignSemaphoreHandleTypes: VkExternalSemaphoreHandleTypeFlags = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlags),
-    foreignMemoryHandleTypes: VkExternalMemoryHandleTypeFlags = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlags),
-};
-pub const DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dimension: u32 = @import("std").mem.zeroes(u32),
-    zeroCount: u32 = @import("std").mem.zeroes(u32),
-    groupSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    multiviewPerViewRenderAreas: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    perViewRenderAreaCount: u32 = @import("std").mem.zeroes(u32),
-    pPerViewRenderAreas: [*c]const VkRect2D = @import("std").mem.zeroes([*c]const VkRect2D),
-};
-pub const PhysicalDevicePerStageDescriptorSetFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    perStageDescriptorSet: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dynamicPipelineLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageProcessing2FeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    textureBlockMatch2: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageProcessing2PropertiesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxBlockMatchWindow: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-};
-pub const SamplerBlockMatchWindowCreateInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    windowExtent: VkExtent2D = @import("std").mem.zeroes(VkExtent2D),
-    windowCompareMode: VkBlockMatchWindowCompareModeQCOM = @import("std").mem.zeroes(VkBlockMatchWindowCompareModeQCOM),
-};
-pub const PhysicalDeviceCubicWeightsFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    selectableCubicWeights: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerCubicWeightsCreateInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    cubicWeights: VkCubicFilterWeightsQCOM = @import("std").mem.zeroes(VkCubicFilterWeightsQCOM),
-};
-pub const BlitImageCubicWeightsInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    cubicWeights: VkCubicFilterWeightsQCOM = @import("std").mem.zeroes(VkCubicFilterWeightsQCOM),
-};
-pub const PhysicalDeviceYcbcrDegammaFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    ycbcrDegamma: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    enableYDegamma: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    enableCbCrDegamma: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCubicClampFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cubicRangeClamp: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    attachmentFeedbackLoopDynamicState: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceLayeredDriverPropertiesMSFT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    underlyingAPI: VkLayeredDriverUnderlyingApiMSFT = @import("std").mem.zeroes(VkLayeredDriverUnderlyingApiMSFT),
-};
-pub const PhysicalDeviceDescriptorPoolOverallocationFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    descriptorPoolOverallocation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTileMemoryHeapFeaturesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    tileMemoryHeap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceTileMemoryHeapPropertiesQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    queueSubmitBoundary: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    tileBufferTransfers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const TileMemoryRequirementsQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    alignment: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const TileMemoryBindInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-};
-pub const TileMemorySizeInfoQCOM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const DisplaySurfaceStereoCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    stereoType: VkDisplaySurfaceStereoTypeNV = @import("std").mem.zeroes(VkDisplaySurfaceStereoTypeNV),
-};
-pub const DisplayModeStereoPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    hdmi3DSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRawAccessChainsFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderRawAccessChains: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const ExternalComputeQueueDeviceCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    reservedExternalQueues: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ExternalComputeQueueCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    preferredQueue: VkQueue = @import("std").mem.zeroes(VkQueue),
-};
-pub const ExternalComputeQueueDataParamsNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    deviceIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceExternalComputeQueuePropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    externalDataSize: u32 = @import("std").mem.zeroes(u32),
-    maxExternalQueues: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceCommandBufferInheritanceFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    commandBufferInheritance: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderFloat16VectorAtomics: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderReplicatedCompositesFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderReplicatedComposites: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceShaderFloat8FeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderFloat8: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    shaderFloat8CooperativeMatrix: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRayTracingValidationFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingValidation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceClusterAccelerationStructureFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    clusterAccelerationStructure: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceClusterAccelerationStructurePropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxVerticesPerCluster: u32 = @import("std").mem.zeroes(u32),
-    maxTrianglesPerCluster: u32 = @import("std").mem.zeroes(u32),
-    clusterScratchByteAlignment: u32 = @import("std").mem.zeroes(u32),
-    clusterByteAlignment: u32 = @import("std").mem.zeroes(u32),
-    clusterTemplateByteAlignment: u32 = @import("std").mem.zeroes(u32),
-    clusterBottomLevelByteAlignment: u32 = @import("std").mem.zeroes(u32),
-    clusterTemplateBoundsByteAlignment: u32 = @import("std").mem.zeroes(u32),
-    maxClusterGeometryIndex: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ClusterAccelerationStructureClustersBottomLevelInputNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxTotalClusterCount: u32 = @import("std").mem.zeroes(u32),
-    maxClusterCountPerAccelerationStructure: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ClusterAccelerationStructureTriangleClusterInputNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vertexFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    maxGeometryIndexValue: u32 = @import("std").mem.zeroes(u32),
-    maxClusterUniqueGeometryCount: u32 = @import("std").mem.zeroes(u32),
-    maxClusterTriangleCount: u32 = @import("std").mem.zeroes(u32),
-    maxClusterVertexCount: u32 = @import("std").mem.zeroes(u32),
-    maxTotalTriangleCount: u32 = @import("std").mem.zeroes(u32),
-    maxTotalVertexCount: u32 = @import("std").mem.zeroes(u32),
-    minPositionTruncateBitCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ClusterAccelerationStructureMoveObjectsInputNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    type: VkClusterAccelerationStructureTypeNV = @import("std").mem.zeroes(VkClusterAccelerationStructureTypeNV),
-    noMoveOverlap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    maxMovedBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ClusterAccelerationStructureInputInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxAccelerationStructureCount: u32 = @import("std").mem.zeroes(u32),
-    flags: VkBuildAccelerationStructureFlagsKHR = @import("std").mem.zeroes(VkBuildAccelerationStructureFlagsKHR),
-    opType: VkClusterAccelerationStructureOpTypeNV = @import("std").mem.zeroes(VkClusterAccelerationStructureOpTypeNV),
-    opMode: VkClusterAccelerationStructureOpModeNV = @import("std").mem.zeroes(VkClusterAccelerationStructureOpModeNV),
-    opInput: VkClusterAccelerationStructureOpInputNV = @import("std").mem.zeroes(VkClusterAccelerationStructureOpInputNV),
-};
-pub const StridedDeviceAddressRegionKHR = extern struct {
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    stride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ClusterAccelerationStructureCommandsInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    input: VkClusterAccelerationStructureInputInfoNV = @import("std").mem.zeroes(VkClusterAccelerationStructureInputInfoNV),
-    dstImplicitData: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    scratchData: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    dstAddressesArray: VkStridedDeviceAddressRegionKHR = @import("std").mem.zeroes(VkStridedDeviceAddressRegionKHR),
-    dstSizesArray: VkStridedDeviceAddressRegionKHR = @import("std").mem.zeroes(VkStridedDeviceAddressRegionKHR),
-    srcInfosArray: VkStridedDeviceAddressRegionKHR = @import("std").mem.zeroes(VkStridedDeviceAddressRegionKHR),
-    srcInfosCount: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    addressResolutionFlags: VkClusterAccelerationStructureAddressResolutionFlagsNV = @import("std").mem.zeroes(VkClusterAccelerationStructureAddressResolutionFlagsNV),
-};
-pub const StridedDeviceAddressNV = extern struct {
-    startAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    strideInBytes: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const ClusterAccelerationStructureMoveObjectsInfoNV = extern struct {
-    srcAccelerationStructure: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const ClusterAccelerationStructureBuildClustersBottomLevelInfoNV = extern struct {
-    clusterReferencesCount: u32 = @import("std").mem.zeroes(u32),
-    clusterReferencesStride: u32 = @import("std").mem.zeroes(u32),
-    clusterReferences: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const ClusterAccelerationStructureGetTemplateIndicesInfoNV = extern struct {
-    clusterTemplateAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const AccelerationStructureBuildSizesInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructureSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    updateScratchSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    buildScratchSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const RayTracingPipelineClusterAccelerationStructureCreateInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    allowClusterAccelerationStructure: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePartitionedAccelerationStructureFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    partitionedAccelerationStructure: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePartitionedAccelerationStructurePropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxPartitionCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PartitionedAccelerationStructureFlagsNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    enablePartitionTranslation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const BuildPartitionedAccelerationStructureIndirectCommandNV = extern struct {
-    opType: VkPartitionedAccelerationStructureOpTypeNV = @import("std").mem.zeroes(VkPartitionedAccelerationStructureOpTypeNV),
-    argCount: u32 = @import("std").mem.zeroes(u32),
-    argData: VkStridedDeviceAddressNV = @import("std").mem.zeroes(VkStridedDeviceAddressNV),
-};
-pub const PartitionedAccelerationStructureWriteInstanceDataNV = extern struct {
-    transform: VkTransformMatrixKHR = @import("std").mem.zeroes(VkTransformMatrixKHR),
-    explicitAABB: [6]f32 = @import("std").mem.zeroes([6]f32),
-    instanceID: u32 = @import("std").mem.zeroes(u32),
-    instanceMask: u32 = @import("std").mem.zeroes(u32),
-    instanceContributionToHitGroupIndex: u32 = @import("std").mem.zeroes(u32),
-    instanceFlags: VkPartitionedAccelerationStructureInstanceFlagsNV = @import("std").mem.zeroes(VkPartitionedAccelerationStructureInstanceFlagsNV),
-    instanceIndex: u32 = @import("std").mem.zeroes(u32),
-    partitionIndex: u32 = @import("std").mem.zeroes(u32),
-    accelerationStructure: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PartitionedAccelerationStructureUpdateInstanceDataNV = extern struct {
-    instanceIndex: u32 = @import("std").mem.zeroes(u32),
-    instanceContributionToHitGroupIndex: u32 = @import("std").mem.zeroes(u32),
-    accelerationStructure: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PartitionedAccelerationStructureWritePartitionTranslationDataNV = extern struct {
-    partitionIndex: u32 = @import("std").mem.zeroes(u32),
-    partitionTranslation: [3]f32 = @import("std").mem.zeroes([3]f32),
-};
-pub const WriteDescriptorSetPartitionedAccelerationStructureNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    accelerationStructureCount: u32 = @import("std").mem.zeroes(u32),
-    pAccelerationStructures: [*c]const VkDeviceAddress = @import("std").mem.zeroes([*c]const VkDeviceAddress),
-};
-pub const PartitionedAccelerationStructureInstancesInputNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    flags: VkBuildAccelerationStructureFlagsKHR = @import("std").mem.zeroes(VkBuildAccelerationStructureFlagsKHR),
-    instanceCount: u32 = @import("std").mem.zeroes(u32),
-    maxInstancePerPartitionCount: u32 = @import("std").mem.zeroes(u32),
-    partitionCount: u32 = @import("std").mem.zeroes(u32),
-    maxInstanceInGlobalPartitionCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BuildPartitionedAccelerationStructureInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    input: VkPartitionedAccelerationStructureInstancesInputNV = @import("std").mem.zeroes(VkPartitionedAccelerationStructureInstancesInputNV),
-    srcAccelerationStructureData: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    dstAccelerationStructureData: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    scratchData: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    srcInfos: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    srcInfosCount: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    deviceGeneratedCommands: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    dynamicGeneratedPipelineLayout: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxIndirectPipelineCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectShaderObjectCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectSequenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsTokenCount: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsTokenOffset: u32 = @import("std").mem.zeroes(u32),
-    maxIndirectCommandsIndirectStride: u32 = @import("std").mem.zeroes(u32),
-    supportedIndirectCommandsInputModes: VkIndirectCommandsInputModeFlagsEXT = @import("std").mem.zeroes(VkIndirectCommandsInputModeFlagsEXT),
-    supportedIndirectCommandsShaderStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    supportedIndirectCommandsShaderStagesPipelineBinding: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    supportedIndirectCommandsShaderStagesShaderBinding: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    deviceGeneratedCommandsTransformFeedback: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    deviceGeneratedCommandsMultiDrawIndirectCount: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const GeneratedCommandsMemoryRequirementsInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    indirectExecutionSet: VkIndirectExecutionSetEXT = @import("std").mem.zeroes(VkIndirectExecutionSetEXT),
-    indirectCommandsLayout: VkIndirectCommandsLayoutEXT = @import("std").mem.zeroes(VkIndirectCommandsLayoutEXT),
-    maxSequenceCount: u32 = @import("std").mem.zeroes(u32),
-    maxDrawCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const IndirectExecutionSetPipelineInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    initialPipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    maxPipelineCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const IndirectExecutionSetShaderLayoutInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    setLayoutCount: u32 = @import("std").mem.zeroes(u32),
-    pSetLayouts: [*c]const VkDescriptorSetLayout = @import("std").mem.zeroes([*c]const VkDescriptorSetLayout),
-};
-pub const IndirectExecutionSetShaderInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    shaderCount: u32 = @import("std").mem.zeroes(u32),
-    pInitialShaders: [*c]const VkShaderEXT = @import("std").mem.zeroes([*c]const VkShaderEXT),
-    pSetLayoutInfos: [*c]const VkIndirectExecutionSetShaderLayoutInfoEXT = @import("std").mem.zeroes([*c]const VkIndirectExecutionSetShaderLayoutInfoEXT),
-    maxShaderCount: u32 = @import("std").mem.zeroes(u32),
-    pushConstantRangeCount: u32 = @import("std").mem.zeroes(u32),
-    pPushConstantRanges: [*c]const VkPushConstantRange = @import("std").mem.zeroes([*c]const VkPushConstantRange),
-};
-pub const IndirectExecutionSetCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkIndirectExecutionSetInfoTypeEXT = @import("std").mem.zeroes(VkIndirectExecutionSetInfoTypeEXT),
-    info: VkIndirectExecutionSetInfoEXT = @import("std").mem.zeroes(VkIndirectExecutionSetInfoEXT),
-};
-pub const GeneratedCommandsInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    shaderStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    indirectExecutionSet: VkIndirectExecutionSetEXT = @import("std").mem.zeroes(VkIndirectExecutionSetEXT),
-    indirectCommandsLayout: VkIndirectCommandsLayoutEXT = @import("std").mem.zeroes(VkIndirectCommandsLayoutEXT),
-    indirectAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    indirectAddressSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    preprocessAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    preprocessSize: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxSequenceCount: u32 = @import("std").mem.zeroes(u32),
-    sequenceCountAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    maxDrawCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const WriteIndirectExecutionSetPipelineEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    index: u32 = @import("std").mem.zeroes(u32),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const IndirectCommandsPushConstantTokenEXT = extern struct {
-    updateRange: VkPushConstantRange = @import("std").mem.zeroes(VkPushConstantRange),
-};
-pub const IndirectCommandsVertexBufferTokenEXT = extern struct {
-    vertexBindingUnit: u32 = @import("std").mem.zeroes(u32),
-};
-pub const IndirectCommandsIndexBufferTokenEXT = extern struct {
-    mode: VkIndirectCommandsInputModeFlagBitsEXT = @import("std").mem.zeroes(VkIndirectCommandsInputModeFlagBitsEXT),
-};
-pub const IndirectCommandsExecutionSetTokenEXT = extern struct {
-    type: VkIndirectExecutionSetInfoTypeEXT = @import("std").mem.zeroes(VkIndirectExecutionSetInfoTypeEXT),
-    shaderStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-};
-pub const IndirectCommandsLayoutTokenEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkIndirectCommandsTokenTypeEXT = @import("std").mem.zeroes(VkIndirectCommandsTokenTypeEXT),
-    data: VkIndirectCommandsTokenDataEXT = @import("std").mem.zeroes(VkIndirectCommandsTokenDataEXT),
-    offset: u32 = @import("std").mem.zeroes(u32),
-};
-pub const IndirectCommandsLayoutCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkIndirectCommandsLayoutUsageFlagsEXT = @import("std").mem.zeroes(VkIndirectCommandsLayoutUsageFlagsEXT),
-    shaderStages: VkShaderStageFlags = @import("std").mem.zeroes(VkShaderStageFlags),
-    indirectStride: u32 = @import("std").mem.zeroes(u32),
-    pipelineLayout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    tokenCount: u32 = @import("std").mem.zeroes(u32),
-    pTokens: [*c]const VkIndirectCommandsLayoutTokenEXT = @import("std").mem.zeroes([*c]const VkIndirectCommandsLayoutTokenEXT),
-};
-pub const DrawIndirectCountIndirectCommandEXT = extern struct {
-    bufferAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    stride: u32 = @import("std").mem.zeroes(u32),
-    commandCount: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BindVertexBufferIndirectCommandEXT = extern struct {
-    bufferAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: u32 = @import("std").mem.zeroes(u32),
-    stride: u32 = @import("std").mem.zeroes(u32),
-};
-pub const BindIndexBufferIndirectCommandEXT = extern struct {
-    bufferAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-    size: u32 = @import("std").mem.zeroes(u32),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-};
-pub const GeneratedCommandsPipelineInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipeline: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-};
-pub const GeneratedCommandsShaderInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderCount: u32 = @import("std").mem.zeroes(u32),
-    pShaders: [*c]const VkShaderEXT = @import("std").mem.zeroes([*c]const VkShaderEXT),
-};
-pub const WriteIndirectExecutionSetShaderEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    index: u32 = @import("std").mem.zeroes(u32),
-    shader: VkShaderEXT = @import("std").mem.zeroes(VkShaderEXT),
-};
-pub const PhysicalDeviceImageAlignmentControlFeaturesMESA = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    imageAlignmentControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceImageAlignmentControlPropertiesMESA = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    supportedImageAlignmentMask: u32 = @import("std").mem.zeroes(u32),
-};
-pub const ImageAlignmentControlCreateInfoMESA = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maximumRequestedAlignment: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceDepthClampControlFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    depthClampControl: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PipelineViewportDepthClampControlCreateInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    depthClampMode: VkDepthClampModeEXT = @import("std").mem.zeroes(VkDepthClampModeEXT),
-    pDepthClampRange: [*c]const VkDepthClampRangeEXT = @import("std").mem.zeroes([*c]const VkDepthClampRangeEXT),
-};
-pub const PhysicalDeviceHdrVividFeaturesHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    hdrVivid: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const HdrVividDynamicMetadataHUAWEI = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    dynamicMetadataSize: usize = @import("std").mem.zeroes(usize),
-    pDynamicMetadata: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const CooperativeMatrixFlexibleDimensionsPropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    MGranularity: u32 = @import("std").mem.zeroes(u32),
-    NGranularity: u32 = @import("std").mem.zeroes(u32),
-    KGranularity: u32 = @import("std").mem.zeroes(u32),
-    AType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    BType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    CType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    ResultType: VkComponentTypeKHR = @import("std").mem.zeroes(VkComponentTypeKHR),
-    saturatingAccumulation: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    scope: VkScopeKHR = @import("std").mem.zeroes(VkScopeKHR),
-    workgroupInvocations: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceCooperativeMatrix2FeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrixWorkgroupScope: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixFlexibleDimensions: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixReductions: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixConversions: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixPerElementOperations: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixTensorAddressing: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    cooperativeMatrixBlockLoads: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceCooperativeMatrix2PropertiesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    cooperativeMatrixWorkgroupScopeMaxWorkgroupSize: u32 = @import("std").mem.zeroes(u32),
-    cooperativeMatrixFlexibleDimensionsMaxDimension: u32 = @import("std").mem.zeroes(u32),
-    cooperativeMatrixWorkgroupScopeReservedSharedMemory: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDevicePipelineOpacityMicromapFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineOpacityMicromap: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceVertexAttributeRobustnessFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    vertexAttributeRobustness: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFormatPackFeaturesARM = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    formatPack: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fragmentDensityMapLayered: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxFragmentDensityMapLayers: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PipelineFragmentDensityMapLayeredCreateInfoVALVE = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxFragmentDensityMapLayers: u32 = @import("std").mem.zeroes(u32),
-};
-pub const SetPresentConfigNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    numFramesPerBatch: u32 = @import("std").mem.zeroes(u32),
-    presentConfigFeedback: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDevicePresentMeteringFeaturesNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    presentMetering: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const RenderingEndInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    zeroInitializeDeviceMemory: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    pipelineCacheIncrementalMode: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const AccelerationStructureBuildRangeInfoKHR = extern struct {
-    primitiveCount: u32 = @import("std").mem.zeroes(u32),
-    primitiveOffset: u32 = @import("std").mem.zeroes(u32),
-    firstVertex: u32 = @import("std").mem.zeroes(u32),
-    transformOffset: u32 = @import("std").mem.zeroes(u32),
-};
-pub const AccelerationStructureGeometryTrianglesDataKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    vertexFormat: VkFormat = @import("std").mem.zeroes(VkFormat),
-    vertexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    vertexStride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    maxVertex: u32 = @import("std").mem.zeroes(u32),
-    indexType: VkIndexType = @import("std").mem.zeroes(VkIndexType),
-    indexData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    transformData: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-};
-pub const AccelerationStructureGeometryAabbsDataKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    data: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    stride: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-};
-pub const AccelerationStructureGeometryInstancesDataKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    arrayOfPointers: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    data: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-};
-pub const AccelerationStructureGeometryKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    geometryType: VkGeometryTypeKHR = @import("std").mem.zeroes(VkGeometryTypeKHR),
-    geometry: VkAccelerationStructureGeometryDataKHR = @import("std").mem.zeroes(VkAccelerationStructureGeometryDataKHR),
-    flags: VkGeometryFlagsKHR = @import("std").mem.zeroes(VkGeometryFlagsKHR),
-};
-pub const AccelerationStructureBuildGeometryInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkAccelerationStructureTypeKHR = @import("std").mem.zeroes(VkAccelerationStructureTypeKHR),
-    flags: VkBuildAccelerationStructureFlagsKHR = @import("std").mem.zeroes(VkBuildAccelerationStructureFlagsKHR),
-    mode: VkBuildAccelerationStructureModeKHR = @import("std").mem.zeroes(VkBuildAccelerationStructureModeKHR),
-    srcAccelerationStructure: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    dstAccelerationStructure: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    geometryCount: u32 = @import("std").mem.zeroes(u32),
-    pGeometries: [*c]const VkAccelerationStructureGeometryKHR = @import("std").mem.zeroes([*c]const VkAccelerationStructureGeometryKHR),
-    ppGeometries: [*c]const [*c]const VkAccelerationStructureGeometryKHR = @import("std").mem.zeroes([*c]const [*c]const VkAccelerationStructureGeometryKHR),
-    scratchData: VkDeviceOrHostAddressKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressKHR),
-};
-pub const AccelerationStructureCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    createFlags: VkAccelerationStructureCreateFlagsKHR = @import("std").mem.zeroes(VkAccelerationStructureCreateFlagsKHR),
-    buffer: VkBuffer = @import("std").mem.zeroes(VkBuffer),
-    offset: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    size: VkDeviceSize = @import("std").mem.zeroes(VkDeviceSize),
-    type: VkAccelerationStructureTypeKHR = @import("std").mem.zeroes(VkAccelerationStructureTypeKHR),
-    deviceAddress: VkDeviceAddress = @import("std").mem.zeroes(VkDeviceAddress),
-};
-pub const WriteDescriptorSetAccelerationStructureKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructureCount: u32 = @import("std").mem.zeroes(u32),
-    pAccelerationStructures: [*c]const VkAccelerationStructureKHR = @import("std").mem.zeroes([*c]const VkAccelerationStructureKHR),
-};
-pub const PhysicalDeviceAccelerationStructureFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    accelerationStructure: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    accelerationStructureCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    accelerationStructureIndirectBuild: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    accelerationStructureHostCommands: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    descriptorBindingAccelerationStructureUpdateAfterBind: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceAccelerationStructurePropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxGeometryCount: u64 = @import("std").mem.zeroes(u64),
-    maxInstanceCount: u64 = @import("std").mem.zeroes(u64),
-    maxPrimitiveCount: u64 = @import("std").mem.zeroes(u64),
-    maxPerStageDescriptorAccelerationStructures: u32 = @import("std").mem.zeroes(u32),
-    maxPerStageDescriptorUpdateAfterBindAccelerationStructures: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetAccelerationStructures: u32 = @import("std").mem.zeroes(u32),
-    maxDescriptorSetUpdateAfterBindAccelerationStructures: u32 = @import("std").mem.zeroes(u32),
-    minAccelerationStructureScratchOffsetAlignment: u32 = @import("std").mem.zeroes(u32),
-};
-pub const AccelerationStructureDeviceAddressInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    accelerationStructure: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-};
-pub const AccelerationStructureVersionInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pVersionData: [*c]const u8 = @import("std").mem.zeroes([*c]const u8),
-};
-pub const CopyAccelerationStructureToMemoryInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    dst: VkDeviceOrHostAddressKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressKHR),
-    mode: VkCopyAccelerationStructureModeKHR = @import("std").mem.zeroes(VkCopyAccelerationStructureModeKHR),
-};
-pub const CopyMemoryToAccelerationStructureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkDeviceOrHostAddressConstKHR = @import("std").mem.zeroes(VkDeviceOrHostAddressConstKHR),
-    dst: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    mode: VkCopyAccelerationStructureModeKHR = @import("std").mem.zeroes(VkCopyAccelerationStructureModeKHR),
-};
-pub const CopyAccelerationStructureInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    src: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    dst: VkAccelerationStructureKHR = @import("std").mem.zeroes(VkAccelerationStructureKHR),
-    mode: VkCopyAccelerationStructureModeKHR = @import("std").mem.zeroes(VkCopyAccelerationStructureModeKHR),
-};
-pub const RayTracingShaderGroupCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    type: VkRayTracingShaderGroupTypeKHR = @import("std").mem.zeroes(VkRayTracingShaderGroupTypeKHR),
-    generalShader: u32 = @import("std").mem.zeroes(u32),
-    closestHitShader: u32 = @import("std").mem.zeroes(u32),
-    anyHitShader: u32 = @import("std").mem.zeroes(u32),
-    intersectionShader: u32 = @import("std").mem.zeroes(u32),
-    pShaderGroupCaptureReplayHandle: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-};
-pub const RayTracingPipelineInterfaceCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    maxPipelineRayPayloadSize: u32 = @import("std").mem.zeroes(u32),
-    maxPipelineRayHitAttributeSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const RayTracingPipelineCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkPipelineCreateFlags = @import("std").mem.zeroes(VkPipelineCreateFlags),
-    stageCount: u32 = @import("std").mem.zeroes(u32),
-    pStages: [*c]const VkPipelineShaderStageCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineShaderStageCreateInfo),
-    groupCount: u32 = @import("std").mem.zeroes(u32),
-    pGroups: [*c]const VkRayTracingShaderGroupCreateInfoKHR = @import("std").mem.zeroes([*c]const VkRayTracingShaderGroupCreateInfoKHR),
-    maxPipelineRayRecursionDepth: u32 = @import("std").mem.zeroes(u32),
-    pLibraryInfo: [*c]const VkPipelineLibraryCreateInfoKHR = @import("std").mem.zeroes([*c]const VkPipelineLibraryCreateInfoKHR),
-    pLibraryInterface: [*c]const VkRayTracingPipelineInterfaceCreateInfoKHR = @import("std").mem.zeroes([*c]const VkRayTracingPipelineInterfaceCreateInfoKHR),
-    pDynamicState: [*c]const VkPipelineDynamicStateCreateInfo = @import("std").mem.zeroes([*c]const VkPipelineDynamicStateCreateInfo),
-    layout: VkPipelineLayout = @import("std").mem.zeroes(VkPipelineLayout),
-    basePipelineHandle: VkPipeline = @import("std").mem.zeroes(VkPipeline),
-    basePipelineIndex: i32 = @import("std").mem.zeroes(i32),
-};
-pub const PhysicalDeviceRayTracingPipelineFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayTracingPipeline: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTracingPipelineShaderGroupHandleCaptureReplay: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTracingPipelineShaderGroupHandleCaptureReplayMixed: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTracingPipelineTraceRaysIndirect: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    rayTraversalPrimitiveCulling: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceRayTracingPipelinePropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    shaderGroupHandleSize: u32 = @import("std").mem.zeroes(u32),
-    maxRayRecursionDepth: u32 = @import("std").mem.zeroes(u32),
-    maxShaderGroupStride: u32 = @import("std").mem.zeroes(u32),
-    shaderGroupBaseAlignment: u32 = @import("std").mem.zeroes(u32),
-    shaderGroupHandleCaptureReplaySize: u32 = @import("std").mem.zeroes(u32),
-    maxRayDispatchInvocationCount: u32 = @import("std").mem.zeroes(u32),
-    shaderGroupHandleAlignment: u32 = @import("std").mem.zeroes(u32),
-    maxRayHitAttributeSize: u32 = @import("std").mem.zeroes(u32),
-};
-pub const TraceRaysIndirectCommandKHR = extern struct {
-    width: u32 = @import("std").mem.zeroes(u32),
-    height: u32 = @import("std").mem.zeroes(u32),
-    depth: u32 = @import("std").mem.zeroes(u32),
-};
-pub const PhysicalDeviceRayQueryFeaturesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    rayQuery: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMeshShaderFeaturesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    taskShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    meshShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    multiviewMeshShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    primitiveFragmentShadingRateMeshShader: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    meshShaderQueries: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const PhysicalDeviceMeshShaderPropertiesEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    maxTaskWorkGroupTotalCount: u32 = @import("std").mem.zeroes(u32),
-    maxTaskWorkGroupCount: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxTaskWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxTaskWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxTaskPayloadSize: u32 = @import("std").mem.zeroes(u32),
-    maxTaskSharedMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxTaskPayloadAndSharedMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshWorkGroupTotalCount: u32 = @import("std").mem.zeroes(u32),
-    maxMeshWorkGroupCount: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxMeshWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxMeshWorkGroupSize: [3]u32 = @import("std").mem.zeroes([3]u32),
-    maxMeshSharedMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshPayloadAndSharedMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshPayloadAndOutputMemorySize: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputComponents: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputVertices: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputPrimitives: u32 = @import("std").mem.zeroes(u32),
-    maxMeshOutputLayers: u32 = @import("std").mem.zeroes(u32),
-    maxMeshMultiviewViewCount: u32 = @import("std").mem.zeroes(u32),
-    meshOutputPerVertexGranularity: u32 = @import("std").mem.zeroes(u32),
-    meshOutputPerPrimitiveGranularity: u32 = @import("std").mem.zeroes(u32),
-    maxPreferredTaskWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    maxPreferredMeshWorkGroupInvocations: u32 = @import("std").mem.zeroes(u32),
-    prefersLocalInvocationVertexOutput: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    prefersLocalInvocationPrimitiveOutput: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    prefersCompactVertexOutput: VkBool32 = @import("std").mem.zeroes(VkBool32),
-    prefersCompactPrimitiveOutput: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const DrawMeshTasksIndirectCommandEXT = extern struct {
-    groupCountX: u32 = @import("std").mem.zeroes(u32),
-    groupCountY: u32 = @import("std").mem.zeroes(u32),
-    groupCountZ: u32 = @import("std").mem.zeroes(u32),
-};
-pub const Win32SurfaceCreateInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    flags: VkWin32SurfaceCreateFlagsKHR = @import("std").mem.zeroes(VkWin32SurfaceCreateFlagsKHR),
-    hinstance: HINSTANCE = @import("std").mem.zeroes(HINSTANCE),
-    hwnd: HWND = @import("std").mem.zeroes(HWND),
-};
-pub const ImportMemoryWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-    handle: HANDLE = @import("std").mem.zeroes(HANDLE),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const ExportMemoryWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pAttributes: [*c]const SECURITY_ATTRIBUTES = @import("std").mem.zeroes([*c]const SECURITY_ATTRIBUTES),
-    dwAccess: DWORD = @import("std").mem.zeroes(DWORD),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const MemoryWin32HandlePropertiesKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    memoryTypeBits: u32 = @import("std").mem.zeroes(u32),
-};
-pub const MemoryGetWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    memory: VkDeviceMemory = @import("std").mem.zeroes(VkDeviceMemory),
-    handleType: VkExternalMemoryHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagBits),
-};
-pub const Win32KeyedMutexAcquireReleaseInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    acquireCount: u32 = @import("std").mem.zeroes(u32),
-    pAcquireSyncs: [*c]const VkDeviceMemory = @import("std").mem.zeroes([*c]const VkDeviceMemory),
-    pAcquireKeys: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    pAcquireTimeouts: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    releaseCount: u32 = @import("std").mem.zeroes(u32),
-    pReleaseSyncs: [*c]const VkDeviceMemory = @import("std").mem.zeroes([*c]const VkDeviceMemory),
-    pReleaseKeys: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const ImportSemaphoreWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    flags: VkSemaphoreImportFlags = @import("std").mem.zeroes(VkSemaphoreImportFlags),
-    handleType: VkExternalSemaphoreHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlagBits),
-    handle: HANDLE = @import("std").mem.zeroes(HANDLE),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const ExportSemaphoreWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pAttributes: [*c]const SECURITY_ATTRIBUTES = @import("std").mem.zeroes([*c]const SECURITY_ATTRIBUTES),
-    dwAccess: DWORD = @import("std").mem.zeroes(DWORD),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const D3D12FenceSubmitInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    waitSemaphoreValuesCount: u32 = @import("std").mem.zeroes(u32),
-    pWaitSemaphoreValues: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    signalSemaphoreValuesCount: u32 = @import("std").mem.zeroes(u32),
-    pSignalSemaphoreValues: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const SemaphoreGetWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    semaphore: VkSemaphore = @import("std").mem.zeroes(VkSemaphore),
-    handleType: VkExternalSemaphoreHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalSemaphoreHandleTypeFlagBits),
-};
-pub const ImportFenceWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fence: VkFence = @import("std").mem.zeroes(VkFence),
-    flags: VkFenceImportFlags = @import("std").mem.zeroes(VkFenceImportFlags),
-    handleType: VkExternalFenceHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlagBits),
-    handle: HANDLE = @import("std").mem.zeroes(HANDLE),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const ExportFenceWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pAttributes: [*c]const SECURITY_ATTRIBUTES = @import("std").mem.zeroes([*c]const SECURITY_ATTRIBUTES),
-    dwAccess: DWORD = @import("std").mem.zeroes(DWORD),
-    name: LPCWSTR = @import("std").mem.zeroes(LPCWSTR),
-};
-pub const FenceGetWin32HandleInfoKHR = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    fence: VkFence = @import("std").mem.zeroes(VkFence),
-    handleType: VkExternalFenceHandleTypeFlagBits = @import("std").mem.zeroes(VkExternalFenceHandleTypeFlagBits),
-};
-pub const ImportMemoryWin32HandleInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    handleType: VkExternalMemoryHandleTypeFlagsNV = @import("std").mem.zeroes(VkExternalMemoryHandleTypeFlagsNV),
-    handle: HANDLE = @import("std").mem.zeroes(HANDLE),
-};
-pub const ExportMemoryWin32HandleInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    pAttributes: [*c]const SECURITY_ATTRIBUTES = @import("std").mem.zeroes([*c]const SECURITY_ATTRIBUTES),
-    dwAccess: DWORD = @import("std").mem.zeroes(DWORD),
-};
-pub const Win32KeyedMutexAcquireReleaseInfoNV = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    acquireCount: u32 = @import("std").mem.zeroes(u32),
-    pAcquireSyncs: [*c]const VkDeviceMemory = @import("std").mem.zeroes([*c]const VkDeviceMemory),
-    pAcquireKeys: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-    pAcquireTimeoutMilliseconds: [*c]const u32 = @import("std").mem.zeroes([*c]const u32),
-    releaseCount: u32 = @import("std").mem.zeroes(u32),
-    pReleaseSyncs: [*c]const VkDeviceMemory = @import("std").mem.zeroes([*c]const VkDeviceMemory),
-    pReleaseKeys: [*c]const u64 = @import("std").mem.zeroes([*c]const u64),
-};
-pub const SurfaceFullScreenExclusiveInfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fullScreenExclusive: VkFullScreenExclusiveEXT = @import("std").mem.zeroes(VkFullScreenExclusiveEXT),
-};
-pub const SurfaceCapabilitiesFullScreenExclusiveEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    fullScreenExclusiveSupported: VkBool32 = @import("std").mem.zeroes(VkBool32),
-};
-pub const SurfaceFullScreenExclusiveWin32InfoEXT = extern struct {
-    sType: VkStructureType = @import("std").mem.zeroes(VkStructureType),
-    pNext: ?*const anyopaque = @import("std").mem.zeroes(?*const anyopaque),
-    hmonitor: HMONITOR = @import("std").mem.zeroes(HMONITOR),
-};
+extern fn vkCreateInstance(p_create_info: [*c]const InstanceCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_instance: [*c]Instance) Result;
+pub const createInstance = vkCreateInstance;
+extern fn vkDestroyInstance(instance: Instance,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyInstance = vkDestroyInstance;
+extern fn vkEnumeratePhysicalDevices(instance: Instance,  p_physical_device_count: [*c]u32,  p_physical_devices: [*c]PhysicalDevice) Result;
+pub const enumeratePhysicalDevices = vkEnumeratePhysicalDevices;
+extern fn vkGetPhysicalDeviceFeatures(physical_device: PhysicalDevice,  p_features: [*c]PhysicalDeviceFeatures) void;
+pub const getPhysicalDeviceFeatures = vkGetPhysicalDeviceFeatures;
+extern fn vkGetPhysicalDeviceFormatProperties(physical_device: PhysicalDevice,  format: Format,  p_format_properties: [*c]FormatProperties) void;
+pub const getPhysicalDeviceFormatProperties = vkGetPhysicalDeviceFormatProperties;
+extern fn vkGetPhysicalDeviceImageFormatProperties(physical_device: PhysicalDevice,  format: Format,  @"type": ImageType,  tiling: ImageTiling,  usage: ImageUsageFlags,  flags: ImageCreateFlags,  p_image_format_properties: [*c]ImageFormatProperties) Result;
+pub const getPhysicalDeviceImageFormatProperties = vkGetPhysicalDeviceImageFormatProperties;
+extern fn vkGetPhysicalDeviceProperties(physical_device: PhysicalDevice,  p_properties: [*c]PhysicalDeviceProperties) void;
+pub const getPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
+extern fn vkGetPhysicalDeviceQueueFamilyProperties(physical_device: PhysicalDevice,  p_queue_family_property_count: [*c]u32,  p_queue_family_properties: [*c]QueueFamilyProperties) void;
+pub const getPhysicalDeviceQueueFamilyProperties = vkGetPhysicalDeviceQueueFamilyProperties;
+extern fn vkGetPhysicalDeviceMemoryProperties(physical_device: PhysicalDevice,  p_memory_properties: [*c]PhysicalDeviceMemoryProperties) void;
+pub const getPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
+extern fn vkGetInstanceProcAddr(instance: Instance,  p_name: [*c]const u8) PFN_vkVoidFunction;
+pub const getInstanceProcAddr = vkGetInstanceProcAddr;
+extern fn vkGetDeviceProcAddr(device: Device,  p_name: [*c]const u8) PFN_vkVoidFunction;
+pub const getDeviceProcAddr = vkGetDeviceProcAddr;
+extern fn vkCreateDevice(physical_device: PhysicalDevice,  p_create_info: [*c]const DeviceCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_device: [*c]Device) Result;
+pub const createDevice = vkCreateDevice;
+extern fn vkDestroyDevice(device: Device,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDevice = vkDestroyDevice;
+extern fn vkEnumerateInstanceExtensionProperties(p_layer_name: [*c]const u8,  p_property_count: [*c]u32,  p_properties: [*c]ExtensionProperties) Result;
+pub const enumerateInstanceExtensionProperties = vkEnumerateInstanceExtensionProperties;
+extern fn vkEnumerateDeviceExtensionProperties(physical_device: PhysicalDevice,  p_layer_name: [*c]const u8,  p_property_count: [*c]u32,  p_properties: [*c]ExtensionProperties) Result;
+pub const enumerateDeviceExtensionProperties = vkEnumerateDeviceExtensionProperties;
+extern fn vkEnumerateInstanceLayerProperties(p_property_count: [*c]u32,  p_properties: [*c]LayerProperties) Result;
+pub const enumerateInstanceLayerProperties = vkEnumerateInstanceLayerProperties;
+extern fn vkEnumerateDeviceLayerProperties(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]LayerProperties) Result;
+pub const enumerateDeviceLayerProperties = vkEnumerateDeviceLayerProperties;
+extern fn vkGetDeviceQueue(device: Device,  queue_family_index: u32,  queue_index: u32,  p_queue: [*c]Queue) void;
+pub const getDeviceQueue = vkGetDeviceQueue;
+extern fn vkQueueSubmit(queue: Queue,  submit_count: u32,  p_submits: [*c]const SubmitInfo,  fence: Fence) Result;
+pub const queueSubmit = vkQueueSubmit;
+extern fn vkQueueWaitIdle(queue: Queue) Result;
+pub const queueWaitIdle = vkQueueWaitIdle;
+extern fn vkDeviceWaitIdle(device: Device) Result;
+pub const deviceWaitIdle = vkDeviceWaitIdle;
+extern fn vkAllocateMemory(device: Device,  p_allocate_info: [*c]const MemoryAllocateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_memory: [*c]DeviceMemory) Result;
+pub const allocateMemory = vkAllocateMemory;
+extern fn vkFreeMemory(device: Device,  memory: DeviceMemory,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const freeMemory = vkFreeMemory;
+extern fn vkMapMemory(device: Device,  memory: DeviceMemory,  offset: DeviceSize,  size: DeviceSize,  flags: MemoryMapFlags,  pp_data: [*c]?*anyopaque) Result;
+pub const mapMemory = vkMapMemory;
+extern fn vkUnmapMemory(device: Device,  memory: DeviceMemory) void;
+pub const unmapMemory = vkUnmapMemory;
+extern fn vkFlushMappedMemoryRanges(device: Device,  memory_range_count: u32,  p_memory_ranges: [*c]const MappedMemoryRange) Result;
+pub const flushMappedMemoryRanges = vkFlushMappedMemoryRanges;
+extern fn vkInvalidateMappedMemoryRanges(device: Device,  memory_range_count: u32,  p_memory_ranges: [*c]const MappedMemoryRange) Result;
+pub const invalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
+extern fn vkGetDeviceMemoryCommitment(device: Device,  memory: DeviceMemory,  p_committed_memory_in_bytes: [*c]DeviceSize) void;
+pub const getDeviceMemoryCommitment = vkGetDeviceMemoryCommitment;
+extern fn vkBindBufferMemory(device: Device,  buffer: Buffer,  memory: DeviceMemory,  memory_offset: DeviceSize) Result;
+pub const bindBufferMemory = vkBindBufferMemory;
+extern fn vkBindImageMemory(device: Device,  image: Image,  memory: DeviceMemory,  memory_offset: DeviceSize) Result;
+pub const bindImageMemory = vkBindImageMemory;
+extern fn vkGetBufferMemoryRequirements(device: Device,  buffer: Buffer,  p_memory_requirements: [*c]MemoryRequirements) void;
+pub const getBufferMemoryRequirements = vkGetBufferMemoryRequirements;
+extern fn vkGetImageMemoryRequirements(device: Device,  image: Image,  p_memory_requirements: [*c]MemoryRequirements) void;
+pub const getImageMemoryRequirements = vkGetImageMemoryRequirements;
+extern fn vkGetImageSparseMemoryRequirements(device: Device,  image: Image,  p_sparse_memory_requirement_count: [*c]u32,  p_sparse_memory_requirements: [*c]SparseImageMemoryRequirements) void;
+pub const getImageSparseMemoryRequirements = vkGetImageSparseMemoryRequirements;
+extern fn vkGetPhysicalDeviceSparseImageFormatProperties(physical_device: PhysicalDevice,  format: Format,  @"type": ImageType,  samples: SampleCountFlagBits,  usage: ImageUsageFlags,  tiling: ImageTiling,  p_property_count: [*c]u32,  p_properties: [*c]SparseImageFormatProperties) void;
+pub const getPhysicalDeviceSparseImageFormatProperties = vkGetPhysicalDeviceSparseImageFormatProperties;
+extern fn vkQueueBindSparse(queue: Queue,  bind_info_count: u32,  p_bind_info: [*c]const BindSparseInfo,  fence: Fence) Result;
+pub const queueBindSparse = vkQueueBindSparse;
+extern fn vkCreateFence(device: Device,  p_create_info: [*c]const FenceCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_fence: [*c]Fence) Result;
+pub const createFence = vkCreateFence;
+extern fn vkDestroyFence(device: Device,  fence: Fence,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyFence = vkDestroyFence;
+extern fn vkResetFences(device: Device,  fence_count: u32,  p_fences: [*c]const Fence) Result;
+pub const resetFences = vkResetFences;
+extern fn vkGetFenceStatus(device: Device,  fence: Fence) Result;
+pub const getFenceStatus = vkGetFenceStatus;
+extern fn vkWaitForFences(device: Device,  fence_count: u32,  p_fences: [*c]const Fence,  wait_all: Bool32,  timeout: u64) Result;
+pub const waitForFences = vkWaitForFences;
+extern fn vkCreateSemaphore(device: Device,  p_create_info: [*c]const SemaphoreCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_semaphore: [*c]Semaphore) Result;
+pub const createSemaphore = vkCreateSemaphore;
+extern fn vkDestroySemaphore(device: Device,  semaphore: Semaphore,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySemaphore = vkDestroySemaphore;
+extern fn vkCreateEvent(device: Device,  p_create_info: [*c]const EventCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_event: [*c]Event) Result;
+pub const createEvent = vkCreateEvent;
+extern fn vkDestroyEvent(device: Device,  event: Event,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyEvent = vkDestroyEvent;
+extern fn vkGetEventStatus(device: Device,  event: Event) Result;
+pub const getEventStatus = vkGetEventStatus;
+extern fn vkSetEvent(device: Device,  event: Event) Result;
+pub const setEvent = vkSetEvent;
+extern fn vkResetEvent(device: Device,  event: Event) Result;
+pub const resetEvent = vkResetEvent;
+extern fn vkCreateQueryPool(device: Device,  p_create_info: [*c]const QueryPoolCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_query_pool: [*c]QueryPool) Result;
+pub const createQueryPool = vkCreateQueryPool;
+extern fn vkDestroyQueryPool(device: Device,  query_pool: QueryPool,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyQueryPool = vkDestroyQueryPool;
+extern fn vkGetQueryPoolResults(device: Device,  query_pool: QueryPool,  first_query: u32,  query_count: u32,  data_size: usize,  p_data: ?*anyopaque,  stride: DeviceSize,  flags: QueryResultFlags) Result;
+pub const getQueryPoolResults = vkGetQueryPoolResults;
+extern fn vkCreateBuffer(device: Device,  p_create_info: [*c]const BufferCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_buffer: [*c]Buffer) Result;
+pub const createBuffer = vkCreateBuffer;
+extern fn vkDestroyBuffer(device: Device,  buffer: Buffer,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyBuffer = vkDestroyBuffer;
+extern fn vkCreateBufferView(device: Device,  p_create_info: [*c]const BufferViewCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_view: [*c]BufferView) Result;
+pub const createBufferView = vkCreateBufferView;
+extern fn vkDestroyBufferView(device: Device,  buffer_view: BufferView,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyBufferView = vkDestroyBufferView;
+extern fn vkCreateImage(device: Device,  p_create_info: [*c]const ImageCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_image: [*c]Image) Result;
+pub const createImage = vkCreateImage;
+extern fn vkDestroyImage(device: Device,  image: Image,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyImage = vkDestroyImage;
+extern fn vkGetImageSubresourceLayout(device: Device,  image: Image,  p_subresource: [*c]const ImageSubresource,  p_layout: [*c]SubresourceLayout) void;
+pub const getImageSubresourceLayout = vkGetImageSubresourceLayout;
+extern fn vkCreateImageView(device: Device,  p_create_info: [*c]const ImageViewCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_view: [*c]ImageView) Result;
+pub const createImageView = vkCreateImageView;
+extern fn vkDestroyImageView(device: Device,  image_view: ImageView,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyImageView = vkDestroyImageView;
+extern fn vkCreateShaderModule(device: Device,  p_create_info: [*c]const ShaderModuleCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_shader_module: [*c]ShaderModule) Result;
+pub const createShaderModule = vkCreateShaderModule;
+extern fn vkDestroyShaderModule(device: Device,  shader_module: ShaderModule,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyShaderModule = vkDestroyShaderModule;
+extern fn vkCreatePipelineCache(device: Device,  p_create_info: [*c]const PipelineCacheCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_pipeline_cache: [*c]PipelineCache) Result;
+pub const createPipelineCache = vkCreatePipelineCache;
+extern fn vkDestroyPipelineCache(device: Device,  pipeline_cache: PipelineCache,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPipelineCache = vkDestroyPipelineCache;
+extern fn vkGetPipelineCacheData(device: Device,  pipeline_cache: PipelineCache,  p_data_size: [*c]usize,  p_data: ?*anyopaque) Result;
+pub const getPipelineCacheData = vkGetPipelineCacheData;
+extern fn vkMergePipelineCaches(device: Device,  dst_cache: PipelineCache,  src_cache_count: u32,  p_src_caches: [*c]const PipelineCache) Result;
+pub const mergePipelineCaches = vkMergePipelineCaches;
+extern fn vkCreateGraphicsPipelines(device: Device,  pipeline_cache: PipelineCache,  create_info_count: u32,  p_create_infos: [*c]const GraphicsPipelineCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_pipelines: [*c]Pipeline) Result;
+pub const createGraphicsPipelines = vkCreateGraphicsPipelines;
+extern fn vkCreateComputePipelines(device: Device,  pipeline_cache: PipelineCache,  create_info_count: u32,  p_create_infos: [*c]const ComputePipelineCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_pipelines: [*c]Pipeline) Result;
+pub const createComputePipelines = vkCreateComputePipelines;
+extern fn vkDestroyPipeline(device: Device,  pipeline: Pipeline,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPipeline = vkDestroyPipeline;
+extern fn vkCreatePipelineLayout(device: Device,  p_create_info: [*c]const PipelineLayoutCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_pipeline_layout: [*c]PipelineLayout) Result;
+pub const createPipelineLayout = vkCreatePipelineLayout;
+extern fn vkDestroyPipelineLayout(device: Device,  pipeline_layout: PipelineLayout,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPipelineLayout = vkDestroyPipelineLayout;
+extern fn vkCreateSampler(device: Device,  p_create_info: [*c]const SamplerCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_sampler: [*c]Sampler) Result;
+pub const createSampler = vkCreateSampler;
+extern fn vkDestroySampler(device: Device,  sampler: Sampler,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySampler = vkDestroySampler;
+extern fn vkCreateDescriptorSetLayout(device: Device,  p_create_info: [*c]const DescriptorSetLayoutCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_set_layout: [*c]DescriptorSetLayout) Result;
+pub const createDescriptorSetLayout = vkCreateDescriptorSetLayout;
+extern fn vkDestroyDescriptorSetLayout(device: Device,  descriptor_set_layout: DescriptorSetLayout,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDescriptorSetLayout = vkDestroyDescriptorSetLayout;
+extern fn vkCreateDescriptorPool(device: Device,  p_create_info: [*c]const DescriptorPoolCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_descriptor_pool: [*c]DescriptorPool) Result;
+pub const createDescriptorPool = vkCreateDescriptorPool;
+extern fn vkDestroyDescriptorPool(device: Device,  descriptor_pool: DescriptorPool,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDescriptorPool = vkDestroyDescriptorPool;
+extern fn vkResetDescriptorPool(device: Device,  descriptor_pool: DescriptorPool,  flags: DescriptorPoolResetFlags) Result;
+pub const resetDescriptorPool = vkResetDescriptorPool;
+extern fn vkAllocateDescriptorSets(device: Device,  p_allocate_info: [*c]const DescriptorSetAllocateInfo,  p_descriptor_sets: [*c]DescriptorSet) Result;
+pub const allocateDescriptorSets = vkAllocateDescriptorSets;
+extern fn vkFreeDescriptorSets(device: Device,  descriptor_pool: DescriptorPool,  descriptor_set_count: u32,  p_descriptor_sets: [*c]const DescriptorSet) Result;
+pub const freeDescriptorSets = vkFreeDescriptorSets;
+extern fn vkUpdateDescriptorSets(device: Device,  descriptor_write_count: u32,  p_descriptor_writes: [*c]const WriteDescriptorSet,  descriptor_copy_count: u32,  p_descriptor_copies: [*c]const CopyDescriptorSet) void;
+pub const updateDescriptorSets = vkUpdateDescriptorSets;
+extern fn vkCreateFramebuffer(device: Device,  p_create_info: [*c]const FramebufferCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_framebuffer: [*c]Framebuffer) Result;
+pub const createFramebuffer = vkCreateFramebuffer;
+extern fn vkDestroyFramebuffer(device: Device,  framebuffer: Framebuffer,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyFramebuffer = vkDestroyFramebuffer;
+extern fn vkCreateRenderPass(device: Device,  p_create_info: [*c]const RenderPassCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_render_pass: [*c]RenderPass) Result;
+pub const createRenderPass = vkCreateRenderPass;
+extern fn vkDestroyRenderPass(device: Device,  render_pass: RenderPass,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyRenderPass = vkDestroyRenderPass;
+extern fn vkGetRenderAreaGranularity(device: Device,  render_pass: RenderPass,  p_granularity: [*c]Extent2D) void;
+pub const getRenderAreaGranularity = vkGetRenderAreaGranularity;
+extern fn vkCreateCommandPool(device: Device,  p_create_info: [*c]const CommandPoolCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_command_pool: [*c]CommandPool) Result;
+pub const createCommandPool = vkCreateCommandPool;
+extern fn vkDestroyCommandPool(device: Device,  command_pool: CommandPool,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyCommandPool = vkDestroyCommandPool;
+extern fn vkResetCommandPool(device: Device,  command_pool: CommandPool,  flags: CommandPoolResetFlags) Result;
+pub const resetCommandPool = vkResetCommandPool;
+extern fn vkAllocateCommandBuffers(device: Device,  p_allocate_info: [*c]const CommandBufferAllocateInfo,  p_command_buffers: [*c]CommandBuffer) Result;
+pub const allocateCommandBuffers = vkAllocateCommandBuffers;
+extern fn vkFreeCommandBuffers(device: Device,  command_pool: CommandPool,  command_buffer_count: u32,  p_command_buffers: [*c]const CommandBuffer) void;
+pub const freeCommandBuffers = vkFreeCommandBuffers;
+extern fn vkBeginCommandBuffer(command_buffer: CommandBuffer,  p_begin_info: [*c]const CommandBufferBeginInfo) Result;
+pub const beginCommandBuffer = vkBeginCommandBuffer;
+extern fn vkEndCommandBuffer(command_buffer: CommandBuffer) Result;
+pub const endCommandBuffer = vkEndCommandBuffer;
+extern fn vkResetCommandBuffer(command_buffer: CommandBuffer,  flags: CommandBufferResetFlags) Result;
+pub const resetCommandBuffer = vkResetCommandBuffer;
+extern fn vkCmdBindPipeline(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  pipeline: Pipeline) void;
+pub const cmdBindPipeline = vkCmdBindPipeline;
+extern fn vkCmdSetViewport(command_buffer: CommandBuffer,  first_viewport: u32,  viewport_count: u32,  p_viewports: [*c]const Viewport) void;
+pub const cmdSetViewport = vkCmdSetViewport;
+extern fn vkCmdSetScissor(command_buffer: CommandBuffer,  first_scissor: u32,  scissor_count: u32,  p_scissors: [*c]const Rect2D) void;
+pub const cmdSetScissor = vkCmdSetScissor;
+extern fn vkCmdSetLineWidth(command_buffer: CommandBuffer,  line_width: f32) void;
+pub const cmdSetLineWidth = vkCmdSetLineWidth;
+extern fn vkCmdSetDepthBias(command_buffer: CommandBuffer,  depth_bias_constant_factor: f32,  depth_bias_clamp: f32,  depth_bias_slope_factor: f32) void;
+pub const cmdSetDepthBias = vkCmdSetDepthBias;
+extern fn vkCmdSetBlendConstants(command_buffer: CommandBuffer,  blend_constants: [*c]const f32) void;
+pub const cmdSetBlendConstants = vkCmdSetBlendConstants;
+extern fn vkCmdSetDepthBounds(command_buffer: CommandBuffer,  min_depth_bounds: f32,  max_depth_bounds: f32) void;
+pub const cmdSetDepthBounds = vkCmdSetDepthBounds;
+extern fn vkCmdSetStencilCompareMask(command_buffer: CommandBuffer,  face_mask: StencilFaceFlags,  compare_mask: u32) void;
+pub const cmdSetStencilCompareMask = vkCmdSetStencilCompareMask;
+extern fn vkCmdSetStencilWriteMask(command_buffer: CommandBuffer,  face_mask: StencilFaceFlags,  write_mask: u32) void;
+pub const cmdSetStencilWriteMask = vkCmdSetStencilWriteMask;
+extern fn vkCmdSetStencilReference(command_buffer: CommandBuffer,  face_mask: StencilFaceFlags,  reference: u32) void;
+pub const cmdSetStencilReference = vkCmdSetStencilReference;
+extern fn vkCmdBindDescriptorSets(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  layout: PipelineLayout,  first_set: u32,  descriptor_set_count: u32,  p_descriptor_sets: [*c]const DescriptorSet,  dynamic_offset_count: u32,  p_dynamic_offsets: [*c]const u32) void;
+pub const cmdBindDescriptorSets = vkCmdBindDescriptorSets;
+extern fn vkCmdBindIndexBuffer(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  index_type: IndexType) void;
+pub const cmdBindIndexBuffer = vkCmdBindIndexBuffer;
+extern fn vkCmdBindVertexBuffers(command_buffer: CommandBuffer,  first_binding: u32,  binding_count: u32,  p_buffers: [*c]const Buffer,  p_offsets: [*c]const DeviceSize) void;
+pub const cmdBindVertexBuffers = vkCmdBindVertexBuffers;
+extern fn vkCmdDraw(command_buffer: CommandBuffer,  vertex_count: u32,  instance_count: u32,  first_vertex: u32,  first_instance: u32) void;
+pub const cmdDraw = vkCmdDraw;
+extern fn vkCmdDrawIndexed(command_buffer: CommandBuffer,  index_count: u32,  instance_count: u32,  first_index: u32,  vertex_offset: i32,  first_instance: u32) void;
+pub const cmdDrawIndexed = vkCmdDrawIndexed;
+extern fn vkCmdDrawIndirect(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndirect = vkCmdDrawIndirect;
+extern fn vkCmdDrawIndexedIndirect(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndexedIndirect = vkCmdDrawIndexedIndirect;
+extern fn vkCmdDispatch(command_buffer: CommandBuffer,  group_count_x: u32,  group_count_y: u32,  group_count_z: u32) void;
+pub const cmdDispatch = vkCmdDispatch;
+extern fn vkCmdDispatchIndirect(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize) void;
+pub const cmdDispatchIndirect = vkCmdDispatchIndirect;
+extern fn vkCmdCopyBuffer(command_buffer: CommandBuffer,  src_buffer: Buffer,  dst_buffer: Buffer,  region_count: u32,  p_regions: [*c]const BufferCopy) void;
+pub const cmdCopyBuffer = vkCmdCopyBuffer;
+extern fn vkCmdCopyImage(command_buffer: CommandBuffer,  src_image: Image,  src_image_layout: ImageLayout,  dst_image: Image,  dst_image_layout: ImageLayout,  region_count: u32,  p_regions: [*c]const ImageCopy) void;
+pub const cmdCopyImage = vkCmdCopyImage;
+extern fn vkCmdBlitImage(command_buffer: CommandBuffer,  src_image: Image,  src_image_layout: ImageLayout,  dst_image: Image,  dst_image_layout: ImageLayout,  region_count: u32,  p_regions: [*c]const ImageBlit,  filter: Filter) void;
+pub const cmdBlitImage = vkCmdBlitImage;
+extern fn vkCmdCopyBufferToImage(command_buffer: CommandBuffer,  src_buffer: Buffer,  dst_image: Image,  dst_image_layout: ImageLayout,  region_count: u32,  p_regions: [*c]const BufferImageCopy) void;
+pub const cmdCopyBufferToImage = vkCmdCopyBufferToImage;
+extern fn vkCmdCopyImageToBuffer(command_buffer: CommandBuffer,  src_image: Image,  src_image_layout: ImageLayout,  dst_buffer: Buffer,  region_count: u32,  p_regions: [*c]const BufferImageCopy) void;
+pub const cmdCopyImageToBuffer = vkCmdCopyImageToBuffer;
+extern fn vkCmdUpdateBuffer(command_buffer: CommandBuffer,  dst_buffer: Buffer,  dst_offset: DeviceSize,  data_size: DeviceSize,  p_data: ?*const anyopaque) void;
+pub const cmdUpdateBuffer = vkCmdUpdateBuffer;
+extern fn vkCmdFillBuffer(command_buffer: CommandBuffer,  dst_buffer: Buffer,  dst_offset: DeviceSize,  size: DeviceSize,  data: u32) void;
+pub const cmdFillBuffer = vkCmdFillBuffer;
+extern fn vkCmdClearColorImage(command_buffer: CommandBuffer,  image: Image,  image_layout: ImageLayout,  p_color: [*c]const ClearColorValue,  range_count: u32,  p_ranges: [*c]const ImageSubresourceRange) void;
+pub const cmdClearColorImage = vkCmdClearColorImage;
+extern fn vkCmdClearDepthStencilImage(command_buffer: CommandBuffer,  image: Image,  image_layout: ImageLayout,  p_depth_stencil: [*c]const ClearDepthStencilValue,  range_count: u32,  p_ranges: [*c]const ImageSubresourceRange) void;
+pub const cmdClearDepthStencilImage = vkCmdClearDepthStencilImage;
+extern fn vkCmdClearAttachments(command_buffer: CommandBuffer,  attachment_count: u32,  p_attachments: [*c]const ClearAttachment,  rect_count: u32,  p_rects: [*c]const ClearRect) void;
+pub const cmdClearAttachments = vkCmdClearAttachments;
+extern fn vkCmdResolveImage(command_buffer: CommandBuffer,  src_image: Image,  src_image_layout: ImageLayout,  dst_image: Image,  dst_image_layout: ImageLayout,  region_count: u32,  p_regions: [*c]const ImageResolve) void;
+pub const cmdResolveImage = vkCmdResolveImage;
+extern fn vkCmdSetEvent(command_buffer: CommandBuffer,  event: Event,  stage_mask: PipelineStageFlags) void;
+pub const cmdSetEvent = vkCmdSetEvent;
+extern fn vkCmdResetEvent(command_buffer: CommandBuffer,  event: Event,  stage_mask: PipelineStageFlags) void;
+pub const cmdResetEvent = vkCmdResetEvent;
+extern fn vkCmdWaitEvents(command_buffer: CommandBuffer,  event_count: u32,  p_events: [*c]const Event,  src_stage_mask: PipelineStageFlags,  dst_stage_mask: PipelineStageFlags,  memory_barrier_count: u32,  p_memory_barriers: [*c]const MemoryBarrier,  buffer_memory_barrier_count: u32,  p_buffer_memory_barriers: [*c]const BufferMemoryBarrier,  image_memory_barrier_count: u32,  p_image_memory_barriers: [*c]const ImageMemoryBarrier) void;
+pub const cmdWaitEvents = vkCmdWaitEvents;
+extern fn vkCmdPipelineBarrier(command_buffer: CommandBuffer,  src_stage_mask: PipelineStageFlags,  dst_stage_mask: PipelineStageFlags,  dependency_flags: DependencyFlags,  memory_barrier_count: u32,  p_memory_barriers: [*c]const MemoryBarrier,  buffer_memory_barrier_count: u32,  p_buffer_memory_barriers: [*c]const BufferMemoryBarrier,  image_memory_barrier_count: u32,  p_image_memory_barriers: [*c]const ImageMemoryBarrier) void;
+pub const cmdPipelineBarrier = vkCmdPipelineBarrier;
+extern fn vkCmdBeginQuery(command_buffer: CommandBuffer,  query_pool: QueryPool,  query: u32,  flags: QueryControlFlags) void;
+pub const cmdBeginQuery = vkCmdBeginQuery;
+extern fn vkCmdEndQuery(command_buffer: CommandBuffer,  query_pool: QueryPool,  query: u32) void;
+pub const cmdEndQuery = vkCmdEndQuery;
+extern fn vkCmdResetQueryPool(command_buffer: CommandBuffer,  query_pool: QueryPool,  first_query: u32,  query_count: u32) void;
+pub const cmdResetQueryPool = vkCmdResetQueryPool;
+extern fn vkCmdWriteTimestamp(command_buffer: CommandBuffer,  pipeline_stage: PipelineStageFlagBits,  query_pool: QueryPool,  query: u32) void;
+pub const cmdWriteTimestamp = vkCmdWriteTimestamp;
+extern fn vkCmdCopyQueryPoolResults(command_buffer: CommandBuffer,  query_pool: QueryPool,  first_query: u32,  query_count: u32,  dst_buffer: Buffer,  dst_offset: DeviceSize,  stride: DeviceSize,  flags: QueryResultFlags) void;
+pub const cmdCopyQueryPoolResults = vkCmdCopyQueryPoolResults;
+extern fn vkCmdPushConstants(command_buffer: CommandBuffer,  layout: PipelineLayout,  stage_flags: ShaderStageFlags,  offset: u32,  size: u32,  p_values: ?*const anyopaque) void;
+pub const cmdPushConstants = vkCmdPushConstants;
+extern fn vkCmdBeginRenderPass(command_buffer: CommandBuffer,  p_render_pass_begin: [*c]const RenderPassBeginInfo,  contents: SubpassContents) void;
+pub const cmdBeginRenderPass = vkCmdBeginRenderPass;
+extern fn vkCmdNextSubpass(command_buffer: CommandBuffer,  contents: SubpassContents) void;
+pub const cmdNextSubpass = vkCmdNextSubpass;
+extern fn vkCmdEndRenderPass(command_buffer: CommandBuffer) void;
+pub const cmdEndRenderPass = vkCmdEndRenderPass;
+extern fn vkCmdExecuteCommands(command_buffer: CommandBuffer,  command_buffer_count: u32,  p_command_buffers: [*c]const CommandBuffer) void;
+pub const cmdExecuteCommands = vkCmdExecuteCommands;
+extern fn vkEnumerateInstanceVersion(p_api_version: [*c]u32) Result;
+pub const enumerateInstanceVersion = vkEnumerateInstanceVersion;
+extern fn vkBindBufferMemory2(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindBufferMemoryInfo) Result;
+pub const bindBufferMemory2 = vkBindBufferMemory2;
+extern fn vkBindImageMemory2(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindImageMemoryInfo) Result;
+pub const bindImageMemory2 = vkBindImageMemory2;
+extern fn vkGetDeviceGroupPeerMemoryFeatures(device: Device,  heap_index: u32,  local_device_index: u32,  remote_device_index: u32,  p_peer_memory_features: [*c]PeerMemoryFeatureFlags) void;
+pub const getDeviceGroupPeerMemoryFeatures = vkGetDeviceGroupPeerMemoryFeatures;
+extern fn vkCmdSetDeviceMask(command_buffer: CommandBuffer,  device_mask: u32) void;
+pub const cmdSetDeviceMask = vkCmdSetDeviceMask;
+extern fn vkCmdDispatchBase(command_buffer: CommandBuffer,  base_group_x: u32,  base_group_y: u32,  base_group_z: u32,  group_count_x: u32,  group_count_y: u32,  group_count_z: u32) void;
+pub const cmdDispatchBase = vkCmdDispatchBase;
+extern fn vkEnumeratePhysicalDeviceGroups(instance: Instance,  p_physical_device_group_count: [*c]u32,  p_physical_device_group_properties: [*c]PhysicalDeviceGroupProperties) Result;
+pub const enumeratePhysicalDeviceGroups = vkEnumeratePhysicalDeviceGroups;
+extern fn vkGetImageMemoryRequirements2(device: Device,  p_info: [*c]const ImageMemoryRequirementsInfo2,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getImageMemoryRequirements2 = vkGetImageMemoryRequirements2;
+extern fn vkGetBufferMemoryRequirements2(device: Device,  p_info: [*c]const BufferMemoryRequirementsInfo2,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getBufferMemoryRequirements2 = vkGetBufferMemoryRequirements2;
+extern fn vkGetImageSparseMemoryRequirements2(device: Device,  p_info: [*c]const ImageSparseMemoryRequirementsInfo2,  p_sparse_memory_requirement_count: [*c]u32,  p_sparse_memory_requirements: [*c]SparseImageMemoryRequirements2) void;
+pub const getImageSparseMemoryRequirements2 = vkGetImageSparseMemoryRequirements2;
+extern fn vkGetPhysicalDeviceFeatures2(physical_device: PhysicalDevice,  p_features: [*c]PhysicalDeviceFeatures2) void;
+pub const getPhysicalDeviceFeatures2 = vkGetPhysicalDeviceFeatures2;
+extern fn vkGetPhysicalDeviceProperties2(physical_device: PhysicalDevice,  p_properties: [*c]PhysicalDeviceProperties2) void;
+pub const getPhysicalDeviceProperties2 = vkGetPhysicalDeviceProperties2;
+extern fn vkGetPhysicalDeviceFormatProperties2(physical_device: PhysicalDevice,  format: Format,  p_format_properties: [*c]FormatProperties2) void;
+pub const getPhysicalDeviceFormatProperties2 = vkGetPhysicalDeviceFormatProperties2;
+extern fn vkGetPhysicalDeviceImageFormatProperties2(physical_device: PhysicalDevice,  p_image_format_info: [*c]const PhysicalDeviceImageFormatInfo2,  p_image_format_properties: [*c]ImageFormatProperties2) Result;
+pub const getPhysicalDeviceImageFormatProperties2 = vkGetPhysicalDeviceImageFormatProperties2;
+extern fn vkGetPhysicalDeviceQueueFamilyProperties2(physical_device: PhysicalDevice,  p_queue_family_property_count: [*c]u32,  p_queue_family_properties: [*c]QueueFamilyProperties2) void;
+pub const getPhysicalDeviceQueueFamilyProperties2 = vkGetPhysicalDeviceQueueFamilyProperties2;
+extern fn vkGetPhysicalDeviceMemoryProperties2(physical_device: PhysicalDevice,  p_memory_properties: [*c]PhysicalDeviceMemoryProperties2) void;
+pub const getPhysicalDeviceMemoryProperties2 = vkGetPhysicalDeviceMemoryProperties2;
+extern fn vkGetPhysicalDeviceSparseImageFormatProperties2(physical_device: PhysicalDevice,  p_format_info: [*c]const PhysicalDeviceSparseImageFormatInfo2,  p_property_count: [*c]u32,  p_properties: [*c]SparseImageFormatProperties2) void;
+pub const getPhysicalDeviceSparseImageFormatProperties2 = vkGetPhysicalDeviceSparseImageFormatProperties2;
+extern fn vkTrimCommandPool(device: Device,  command_pool: CommandPool,  flags: CommandPoolTrimFlags) void;
+pub const trimCommandPool = vkTrimCommandPool;
+extern fn vkGetDeviceQueue2(device: Device,  p_queue_info: [*c]const DeviceQueueInfo2,  p_queue: [*c]Queue) void;
+pub const getDeviceQueue2 = vkGetDeviceQueue2;
+extern fn vkCreateSamplerYcbcrConversion(device: Device,  p_create_info: [*c]const SamplerYcbcrConversionCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_ycbcr_conversion: [*c]SamplerYcbcrConversion) Result;
+pub const createSamplerYcbcrConversion = vkCreateSamplerYcbcrConversion;
+extern fn vkDestroySamplerYcbcrConversion(device: Device,  ycbcr_conversion: SamplerYcbcrConversion,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySamplerYcbcrConversion = vkDestroySamplerYcbcrConversion;
+extern fn vkCreateDescriptorUpdateTemplate(device: Device,  p_create_info: [*c]const DescriptorUpdateTemplateCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_descriptor_update_template: [*c]DescriptorUpdateTemplate) Result;
+pub const createDescriptorUpdateTemplate = vkCreateDescriptorUpdateTemplate;
+extern fn vkDestroyDescriptorUpdateTemplate(device: Device,  descriptor_update_template: DescriptorUpdateTemplate,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDescriptorUpdateTemplate = vkDestroyDescriptorUpdateTemplate;
+extern fn vkUpdateDescriptorSetWithTemplate(device: Device,  descriptor_set: DescriptorSet,  descriptor_update_template: DescriptorUpdateTemplate,  p_data: ?*const anyopaque) void;
+pub const updateDescriptorSetWithTemplate = vkUpdateDescriptorSetWithTemplate;
+extern fn vkGetPhysicalDeviceExternalBufferProperties(physical_device: PhysicalDevice,  p_external_buffer_info: [*c]const PhysicalDeviceExternalBufferInfo,  p_external_buffer_properties: [*c]ExternalBufferProperties) void;
+pub const getPhysicalDeviceExternalBufferProperties = vkGetPhysicalDeviceExternalBufferProperties;
+extern fn vkGetPhysicalDeviceExternalFenceProperties(physical_device: PhysicalDevice,  p_external_fence_info: [*c]const PhysicalDeviceExternalFenceInfo,  p_external_fence_properties: [*c]ExternalFenceProperties) void;
+pub const getPhysicalDeviceExternalFenceProperties = vkGetPhysicalDeviceExternalFenceProperties;
+extern fn vkGetPhysicalDeviceExternalSemaphoreProperties(physical_device: PhysicalDevice,  p_external_semaphore_info: [*c]const PhysicalDeviceExternalSemaphoreInfo,  p_external_semaphore_properties: [*c]ExternalSemaphoreProperties) void;
+pub const getPhysicalDeviceExternalSemaphoreProperties = vkGetPhysicalDeviceExternalSemaphoreProperties;
+extern fn vkGetDescriptorSetLayoutSupport(device: Device,  p_create_info: [*c]const DescriptorSetLayoutCreateInfo,  p_support: [*c]DescriptorSetLayoutSupport) void;
+pub const getDescriptorSetLayoutSupport = vkGetDescriptorSetLayoutSupport;
+extern fn vkCmdDrawIndirectCount(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndirectCount = vkCmdDrawIndirectCount;
+extern fn vkCmdDrawIndexedIndirectCount(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndexedIndirectCount = vkCmdDrawIndexedIndirectCount;
+extern fn vkCreateRenderPass2(device: Device,  p_create_info: [*c]const RenderPassCreateInfo2,  p_allocator: [*c]const AllocationCallbacks,  p_render_pass: [*c]RenderPass) Result;
+pub const createRenderPass2 = vkCreateRenderPass2;
+extern fn vkCmdBeginRenderPass2(command_buffer: CommandBuffer,  p_render_pass_begin: [*c]const RenderPassBeginInfo,  p_subpass_begin_info: [*c]const SubpassBeginInfo) void;
+pub const cmdBeginRenderPass2 = vkCmdBeginRenderPass2;
+extern fn vkCmdNextSubpass2(command_buffer: CommandBuffer,  p_subpass_begin_info: [*c]const SubpassBeginInfo,  p_subpass_end_info: [*c]const SubpassEndInfo) void;
+pub const cmdNextSubpass2 = vkCmdNextSubpass2;
+extern fn vkCmdEndRenderPass2(command_buffer: CommandBuffer,  p_subpass_end_info: [*c]const SubpassEndInfo) void;
+pub const cmdEndRenderPass2 = vkCmdEndRenderPass2;
+extern fn vkResetQueryPool(device: Device,  query_pool: QueryPool,  first_query: u32,  query_count: u32) void;
+pub const resetQueryPool = vkResetQueryPool;
+extern fn vkGetSemaphoreCounterValue(device: Device,  semaphore: Semaphore,  p_value: [*c]u64) Result;
+pub const getSemaphoreCounterValue = vkGetSemaphoreCounterValue;
+extern fn vkWaitSemaphores(device: Device,  p_wait_info: [*c]const SemaphoreWaitInfo,  timeout: u64) Result;
+pub const waitSemaphores = vkWaitSemaphores;
+extern fn vkSignalSemaphore(device: Device,  p_signal_info: [*c]const SemaphoreSignalInfo) Result;
+pub const signalSemaphore = vkSignalSemaphore;
+extern fn vkGetBufferDeviceAddress(device: Device,  p_info: [*c]const BufferDeviceAddressInfo) DeviceAddress;
+pub const getBufferDeviceAddress = vkGetBufferDeviceAddress;
+extern fn vkGetBufferOpaqueCaptureAddress(device: Device,  p_info: [*c]const BufferDeviceAddressInfo) u64;
+pub const getBufferOpaqueCaptureAddress = vkGetBufferOpaqueCaptureAddress;
+extern fn vkGetDeviceMemoryOpaqueCaptureAddress(device: Device,  p_info: [*c]const DeviceMemoryOpaqueCaptureAddressInfo) u64;
+pub const getDeviceMemoryOpaqueCaptureAddress = vkGetDeviceMemoryOpaqueCaptureAddress;
+extern fn vkGetPhysicalDeviceToolProperties(physical_device: PhysicalDevice,  p_tool_count: [*c]u32,  p_tool_properties: [*c]PhysicalDeviceToolProperties) Result;
+pub const getPhysicalDeviceToolProperties = vkGetPhysicalDeviceToolProperties;
+extern fn vkCreatePrivateDataSlot(device: Device,  p_create_info: [*c]const PrivateDataSlotCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_private_data_slot: [*c]PrivateDataSlot) Result;
+pub const createPrivateDataSlot = vkCreatePrivateDataSlot;
+extern fn vkDestroyPrivateDataSlot(device: Device,  private_data_slot: PrivateDataSlot,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPrivateDataSlot = vkDestroyPrivateDataSlot;
+extern fn vkSetPrivateData(device: Device,  object_type: ObjectType,  object_handle: u64,  private_data_slot: PrivateDataSlot,  data: u64) Result;
+pub const setPrivateData = vkSetPrivateData;
+extern fn vkGetPrivateData(device: Device,  object_type: ObjectType,  object_handle: u64,  private_data_slot: PrivateDataSlot,  p_data: [*c]u64) void;
+pub const getPrivateData = vkGetPrivateData;
+extern fn vkCmdSetEvent2(command_buffer: CommandBuffer,  event: Event,  p_dependency_info: [*c]const DependencyInfo) void;
+pub const cmdSetEvent2 = vkCmdSetEvent2;
+extern fn vkCmdResetEvent2(command_buffer: CommandBuffer,  event: Event,  stage_mask: PipelineStageFlags2) void;
+pub const cmdResetEvent2 = vkCmdResetEvent2;
+extern fn vkCmdWaitEvents2(command_buffer: CommandBuffer,  event_count: u32,  p_events: [*c]const Event,  p_dependency_infos: [*c]const DependencyInfo) void;
+pub const cmdWaitEvents2 = vkCmdWaitEvents2;
+extern fn vkCmdPipelineBarrier2(command_buffer: CommandBuffer,  p_dependency_info: [*c]const DependencyInfo) void;
+pub const cmdPipelineBarrier2 = vkCmdPipelineBarrier2;
+extern fn vkCmdWriteTimestamp2(command_buffer: CommandBuffer,  stage: PipelineStageFlags2,  query_pool: QueryPool,  query: u32) void;
+pub const cmdWriteTimestamp2 = vkCmdWriteTimestamp2;
+extern fn vkQueueSubmit2(queue: Queue,  submit_count: u32,  p_submits: [*c]const SubmitInfo2,  fence: Fence) Result;
+pub const queueSubmit2 = vkQueueSubmit2;
+extern fn vkCmdCopyBuffer2(command_buffer: CommandBuffer,  p_copy_buffer_info: [*c]const CopyBufferInfo2) void;
+pub const cmdCopyBuffer2 = vkCmdCopyBuffer2;
+extern fn vkCmdCopyImage2(command_buffer: CommandBuffer,  p_copy_image_info: [*c]const CopyImageInfo2) void;
+pub const cmdCopyImage2 = vkCmdCopyImage2;
+extern fn vkCmdCopyBufferToImage2(command_buffer: CommandBuffer,  p_copy_buffer_to_image_info: [*c]const CopyBufferToImageInfo2) void;
+pub const cmdCopyBufferToImage2 = vkCmdCopyBufferToImage2;
+extern fn vkCmdCopyImageToBuffer2(command_buffer: CommandBuffer,  p_copy_image_to_buffer_info: [*c]const CopyImageToBufferInfo2) void;
+pub const cmdCopyImageToBuffer2 = vkCmdCopyImageToBuffer2;
+extern fn vkCmdBlitImage2(command_buffer: CommandBuffer,  p_blit_image_info: [*c]const BlitImageInfo2) void;
+pub const cmdBlitImage2 = vkCmdBlitImage2;
+extern fn vkCmdResolveImage2(command_buffer: CommandBuffer,  p_resolve_image_info: [*c]const ResolveImageInfo2) void;
+pub const cmdResolveImage2 = vkCmdResolveImage2;
+extern fn vkCmdBeginRendering(command_buffer: CommandBuffer,  p_rendering_info: [*c]const RenderingInfo) void;
+pub const cmdBeginRendering = vkCmdBeginRendering;
+extern fn vkCmdEndRendering(command_buffer: CommandBuffer) void;
+pub const cmdEndRendering = vkCmdEndRendering;
+extern fn vkCmdSetCullMode(command_buffer: CommandBuffer,  cull_mode: CullModeFlags) void;
+pub const cmdSetCullMode = vkCmdSetCullMode;
+extern fn vkCmdSetFrontFace(command_buffer: CommandBuffer,  front_face: FrontFace) void;
+pub const cmdSetFrontFace = vkCmdSetFrontFace;
+extern fn vkCmdSetPrimitiveTopology(command_buffer: CommandBuffer,  primitive_topology: PrimitiveTopology) void;
+pub const cmdSetPrimitiveTopology = vkCmdSetPrimitiveTopology;
+extern fn vkCmdSetViewportWithCount(command_buffer: CommandBuffer,  viewport_count: u32,  p_viewports: [*c]const Viewport) void;
+pub const cmdSetViewportWithCount = vkCmdSetViewportWithCount;
+extern fn vkCmdSetScissorWithCount(command_buffer: CommandBuffer,  scissor_count: u32,  p_scissors: [*c]const Rect2D) void;
+pub const cmdSetScissorWithCount = vkCmdSetScissorWithCount;
+extern fn vkCmdBindVertexBuffers2(command_buffer: CommandBuffer,  first_binding: u32,  binding_count: u32,  p_buffers: [*c]const Buffer,  p_offsets: [*c]const DeviceSize,  p_sizes: [*c]const DeviceSize,  p_strides: [*c]const DeviceSize) void;
+pub const cmdBindVertexBuffers2 = vkCmdBindVertexBuffers2;
+extern fn vkCmdSetDepthTestEnable(command_buffer: CommandBuffer,  depth_test_enable: Bool32) void;
+pub const cmdSetDepthTestEnable = vkCmdSetDepthTestEnable;
+extern fn vkCmdSetDepthWriteEnable(command_buffer: CommandBuffer,  depth_write_enable: Bool32) void;
+pub const cmdSetDepthWriteEnable = vkCmdSetDepthWriteEnable;
+extern fn vkCmdSetDepthCompareOp(command_buffer: CommandBuffer,  depth_compare_op: CompareOp) void;
+pub const cmdSetDepthCompareOp = vkCmdSetDepthCompareOp;
+extern fn vkCmdSetDepthBoundsTestEnable(command_buffer: CommandBuffer,  depth_bounds_test_enable: Bool32) void;
+pub const cmdSetDepthBoundsTestEnable = vkCmdSetDepthBoundsTestEnable;
+extern fn vkCmdSetStencilTestEnable(command_buffer: CommandBuffer,  stencil_test_enable: Bool32) void;
+pub const cmdSetStencilTestEnable = vkCmdSetStencilTestEnable;
+extern fn vkCmdSetStencilOp(command_buffer: CommandBuffer,  face_mask: StencilFaceFlags,  fail_op: StencilOp,  pass_op: StencilOp,  depth_fail_op: StencilOp,  compare_op: CompareOp) void;
+pub const cmdSetStencilOp = vkCmdSetStencilOp;
+extern fn vkCmdSetRasterizerDiscardEnable(command_buffer: CommandBuffer,  rasterizer_discard_enable: Bool32) void;
+pub const cmdSetRasterizerDiscardEnable = vkCmdSetRasterizerDiscardEnable;
+extern fn vkCmdSetDepthBiasEnable(command_buffer: CommandBuffer,  depth_bias_enable: Bool32) void;
+pub const cmdSetDepthBiasEnable = vkCmdSetDepthBiasEnable;
+extern fn vkCmdSetPrimitiveRestartEnable(command_buffer: CommandBuffer,  primitive_restart_enable: Bool32) void;
+pub const cmdSetPrimitiveRestartEnable = vkCmdSetPrimitiveRestartEnable;
+extern fn vkGetDeviceBufferMemoryRequirements(device: Device,  p_info: [*c]const DeviceBufferMemoryRequirements,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDeviceBufferMemoryRequirements = vkGetDeviceBufferMemoryRequirements;
+extern fn vkGetDeviceImageMemoryRequirements(device: Device,  p_info: [*c]const DeviceImageMemoryRequirements,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDeviceImageMemoryRequirements = vkGetDeviceImageMemoryRequirements;
+extern fn vkGetDeviceImageSparseMemoryRequirements(device: Device,  p_info: [*c]const DeviceImageMemoryRequirements,  p_sparse_memory_requirement_count: [*c]u32,  p_sparse_memory_requirements: [*c]SparseImageMemoryRequirements2) void;
+pub const getDeviceImageSparseMemoryRequirements = vkGetDeviceImageSparseMemoryRequirements;
+extern fn vkCmdSetLineStipple(command_buffer: CommandBuffer,  line_stipple_factor: u32,  line_stipple_pattern: u16) void;
+pub const cmdSetLineStipple = vkCmdSetLineStipple;
+extern fn vkMapMemory2(device: Device,  p_memory_map_info: [*c]const MemoryMapInfo,  pp_data: [*c]?*anyopaque) Result;
+pub const mapMemory2 = vkMapMemory2;
+extern fn vkUnmapMemory2(device: Device,  p_memory_unmap_info: [*c]const MemoryUnmapInfo) Result;
+pub const unmapMemory2 = vkUnmapMemory2;
+extern fn vkCmdBindIndexBuffer2(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  size: DeviceSize,  index_type: IndexType) void;
+pub const cmdBindIndexBuffer2 = vkCmdBindIndexBuffer2;
+extern fn vkGetRenderingAreaGranularity(device: Device,  p_rendering_area_info: [*c]const RenderingAreaInfo,  p_granularity: [*c]Extent2D) void;
+pub const getRenderingAreaGranularity = vkGetRenderingAreaGranularity;
+extern fn vkGetDeviceImageSubresourceLayout(device: Device,  p_info: [*c]const DeviceImageSubresourceInfo,  p_layout: [*c]SubresourceLayout2) void;
+pub const getDeviceImageSubresourceLayout = vkGetDeviceImageSubresourceLayout;
+extern fn vkGetImageSubresourceLayout2(device: Device,  image: Image,  p_subresource: [*c]const ImageSubresource2,  p_layout: [*c]SubresourceLayout2) void;
+pub const getImageSubresourceLayout2 = vkGetImageSubresourceLayout2;
+extern fn vkCmdPushDescriptorSet(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  layout: PipelineLayout,  set: u32,  descriptor_write_count: u32,  p_descriptor_writes: [*c]const WriteDescriptorSet) void;
+pub const cmdPushDescriptorSet = vkCmdPushDescriptorSet;
+extern fn vkCmdPushDescriptorSetWithTemplate(command_buffer: CommandBuffer,  descriptor_update_template: DescriptorUpdateTemplate,  layout: PipelineLayout,  set: u32,  p_data: ?*const anyopaque) void;
+pub const cmdPushDescriptorSetWithTemplate = vkCmdPushDescriptorSetWithTemplate;
+extern fn vkCmdSetRenderingAttachmentLocations(command_buffer: CommandBuffer,  p_location_info: [*c]const RenderingAttachmentLocationInfo) void;
+pub const cmdSetRenderingAttachmentLocations = vkCmdSetRenderingAttachmentLocations;
+extern fn vkCmdSetRenderingInputAttachmentIndices(command_buffer: CommandBuffer,  p_input_attachment_index_info: [*c]const RenderingInputAttachmentIndexInfo) void;
+pub const cmdSetRenderingInputAttachmentIndices = vkCmdSetRenderingInputAttachmentIndices;
+extern fn vkCmdBindDescriptorSets2(command_buffer: CommandBuffer,  p_bind_descriptor_sets_info: [*c]const BindDescriptorSetsInfo) void;
+pub const cmdBindDescriptorSets2 = vkCmdBindDescriptorSets2;
+extern fn vkCmdPushConstants2(command_buffer: CommandBuffer,  p_push_constants_info: [*c]const PushConstantsInfo) void;
+pub const cmdPushConstants2 = vkCmdPushConstants2;
+extern fn vkCmdPushDescriptorSet2(command_buffer: CommandBuffer,  p_push_descriptor_set_info: [*c]const PushDescriptorSetInfo) void;
+pub const cmdPushDescriptorSet2 = vkCmdPushDescriptorSet2;
+extern fn vkCmdPushDescriptorSetWithTemplate2(command_buffer: CommandBuffer,  p_push_descriptor_set_with_template_info: [*c]const PushDescriptorSetWithTemplateInfo) void;
+pub const cmdPushDescriptorSetWithTemplate2 = vkCmdPushDescriptorSetWithTemplate2;
+extern fn vkCopyMemoryToImage(device: Device,  p_copy_memory_to_image_info: [*c]const CopyMemoryToImageInfo) Result;
+pub const copyMemoryToImage = vkCopyMemoryToImage;
+extern fn vkCopyImageToMemory(device: Device,  p_copy_image_to_memory_info: [*c]const CopyImageToMemoryInfo) Result;
+pub const copyImageToMemory = vkCopyImageToMemory;
+extern fn vkCopyImageToImage(device: Device,  p_copy_image_to_image_info: [*c]const CopyImageToImageInfo) Result;
+pub const copyImageToImage = vkCopyImageToImage;
+extern fn vkTransitionImageLayout(device: Device,  transition_count: u32,  p_transitions: [*c]const HostImageLayoutTransitionInfo) Result;
+pub const transitionImageLayout = vkTransitionImageLayout;
+extern fn vkDestroySurfaceKHR(instance: Instance,  surface: SurfaceKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySurfaceKHR = vkDestroySurfaceKHR;
+extern fn vkGetPhysicalDeviceSurfaceSupportKHR(physical_device: PhysicalDevice,  queue_family_index: u32,  surface: SurfaceKHR,  p_supported: [*c]Bool32) Result;
+pub const getPhysicalDeviceSurfaceSupportKHR = vkGetPhysicalDeviceSurfaceSupportKHR;
+extern fn vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device: PhysicalDevice,  surface: SurfaceKHR,  p_surface_capabilities: [*c]SurfaceCapabilitiesKHR) Result;
+pub const getPhysicalDeviceSurfaceCapabilitiesKHR = vkGetPhysicalDeviceSurfaceCapabilitiesKHR;
+extern fn vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device: PhysicalDevice,  surface: SurfaceKHR,  p_surface_format_count: [*c]u32,  p_surface_formats: [*c]SurfaceFormatKHR) Result;
+pub const getPhysicalDeviceSurfaceFormatsKHR = vkGetPhysicalDeviceSurfaceFormatsKHR;
+extern fn vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device: PhysicalDevice,  surface: SurfaceKHR,  p_present_mode_count: [*c]u32,  p_present_modes: [*c]PresentModeKHR) Result;
+pub const getPhysicalDeviceSurfacePresentModesKHR = vkGetPhysicalDeviceSurfacePresentModesKHR;
+extern fn vkCreateSwapchainKHR(device: Device,  p_create_info: [*c]const SwapchainCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_swapchain: [*c]SwapchainKHR) Result;
+pub const createSwapchainKHR = vkCreateSwapchainKHR;
+extern fn vkDestroySwapchainKHR(device: Device,  swapchain: SwapchainKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySwapchainKHR = vkDestroySwapchainKHR;
+extern fn vkGetSwapchainImagesKHR(device: Device,  swapchain: SwapchainKHR,  p_swapchain_image_count: [*c]u32,  p_swapchain_images: [*c]Image) Result;
+pub const getSwapchainImagesKHR = vkGetSwapchainImagesKHR;
+extern fn vkAcquireNextImageKHR(device: Device,  swapchain: SwapchainKHR,  timeout: u64,  semaphore: Semaphore,  fence: Fence,  p_image_index: [*c]u32) Result;
+pub const acquireNextImageKHR = vkAcquireNextImageKHR;
+extern fn vkQueuePresentKHR(queue: Queue,  p_present_info: [*c]const PresentInfoKHR) Result;
+pub const queuePresentKHR = vkQueuePresentKHR;
+extern fn vkGetDeviceGroupPresentCapabilitiesKHR(device: Device,  p_device_group_present_capabilities: [*c]DeviceGroupPresentCapabilitiesKHR) Result;
+pub const getDeviceGroupPresentCapabilitiesKHR = vkGetDeviceGroupPresentCapabilitiesKHR;
+extern fn vkGetDeviceGroupSurfacePresentModesKHR(device: Device,  surface: SurfaceKHR,  p_modes: [*c]DeviceGroupPresentModeFlagsKHR) Result;
+pub const getDeviceGroupSurfacePresentModesKHR = vkGetDeviceGroupSurfacePresentModesKHR;
+extern fn vkGetPhysicalDevicePresentRectanglesKHR(physical_device: PhysicalDevice,  surface: SurfaceKHR,  p_rect_count: [*c]u32,  p_rects: [*c]Rect2D) Result;
+pub const getPhysicalDevicePresentRectanglesKHR = vkGetPhysicalDevicePresentRectanglesKHR;
+extern fn vkAcquireNextImage2KHR(device: Device,  p_acquire_info: [*c]const AcquireNextImageInfoKHR,  p_image_index: [*c]u32) Result;
+pub const acquireNextImage2KHR = vkAcquireNextImage2KHR;
+extern fn vkGetPhysicalDeviceDisplayPropertiesKHR(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]DisplayPropertiesKHR) Result;
+pub const getPhysicalDeviceDisplayPropertiesKHR = vkGetPhysicalDeviceDisplayPropertiesKHR;
+extern fn vkGetPhysicalDeviceDisplayPlanePropertiesKHR(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]DisplayPlanePropertiesKHR) Result;
+pub const getPhysicalDeviceDisplayPlanePropertiesKHR = vkGetPhysicalDeviceDisplayPlanePropertiesKHR;
+extern fn vkGetDisplayPlaneSupportedDisplaysKHR(physical_device: PhysicalDevice,  plane_index: u32,  p_display_count: [*c]u32,  p_displays: [*c]DisplayKHR) Result;
+pub const getDisplayPlaneSupportedDisplaysKHR = vkGetDisplayPlaneSupportedDisplaysKHR;
+extern fn vkGetDisplayModePropertiesKHR(physical_device: PhysicalDevice,  display: DisplayKHR,  p_property_count: [*c]u32,  p_properties: [*c]DisplayModePropertiesKHR) Result;
+pub const getDisplayModePropertiesKHR = vkGetDisplayModePropertiesKHR;
+extern fn vkCreateDisplayModeKHR(physical_device: PhysicalDevice,  display: DisplayKHR,  p_create_info: [*c]const DisplayModeCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_mode: [*c]DisplayModeKHR) Result;
+pub const createDisplayModeKHR = vkCreateDisplayModeKHR;
+extern fn vkGetDisplayPlaneCapabilitiesKHR(physical_device: PhysicalDevice,  mode: DisplayModeKHR,  plane_index: u32,  p_capabilities: [*c]DisplayPlaneCapabilitiesKHR) Result;
+pub const getDisplayPlaneCapabilitiesKHR = vkGetDisplayPlaneCapabilitiesKHR;
+extern fn vkCreateDisplayPlaneSurfaceKHR(instance: Instance,  p_create_info: [*c]const DisplaySurfaceCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_surface: [*c]SurfaceKHR) Result;
+pub const createDisplayPlaneSurfaceKHR = vkCreateDisplayPlaneSurfaceKHR;
+extern fn vkCreateSharedSwapchainsKHR(device: Device,  swapchain_count: u32,  p_create_infos: [*c]const SwapchainCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_swapchains: [*c]SwapchainKHR) Result;
+pub const createSharedSwapchainsKHR = vkCreateSharedSwapchainsKHR;
+extern fn vkGetPhysicalDeviceVideoCapabilitiesKHR(physical_device: PhysicalDevice,  p_video_profile: [*c]const VideoProfileInfoKHR,  p_capabilities: [*c]VideoCapabilitiesKHR) Result;
+pub const getPhysicalDeviceVideoCapabilitiesKHR = vkGetPhysicalDeviceVideoCapabilitiesKHR;
+extern fn vkGetPhysicalDeviceVideoFormatPropertiesKHR(physical_device: PhysicalDevice,  p_video_format_info: [*c]const PhysicalDeviceVideoFormatInfoKHR,  p_video_format_property_count: [*c]u32,  p_video_format_properties: [*c]VideoFormatPropertiesKHR) Result;
+pub const getPhysicalDeviceVideoFormatPropertiesKHR = vkGetPhysicalDeviceVideoFormatPropertiesKHR;
+extern fn vkCreateVideoSessionKHR(device: Device,  p_create_info: [*c]const VideoSessionCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_video_session: [*c]VideoSessionKHR) Result;
+pub const createVideoSessionKHR = vkCreateVideoSessionKHR;
+extern fn vkDestroyVideoSessionKHR(device: Device,  video_session: VideoSessionKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyVideoSessionKHR = vkDestroyVideoSessionKHR;
+extern fn vkGetVideoSessionMemoryRequirementsKHR(device: Device,  video_session: VideoSessionKHR,  p_memory_requirements_count: [*c]u32,  p_memory_requirements: [*c]VideoSessionMemoryRequirementsKHR) Result;
+pub const getVideoSessionMemoryRequirementsKHR = vkGetVideoSessionMemoryRequirementsKHR;
+extern fn vkBindVideoSessionMemoryKHR(device: Device,  video_session: VideoSessionKHR,  bind_session_memory_info_count: u32,  p_bind_session_memory_infos: [*c]const BindVideoSessionMemoryInfoKHR) Result;
+pub const bindVideoSessionMemoryKHR = vkBindVideoSessionMemoryKHR;
+extern fn vkCreateVideoSessionParametersKHR(device: Device,  p_create_info: [*c]const VideoSessionParametersCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_video_session_parameters: [*c]VideoSessionParametersKHR) Result;
+pub const createVideoSessionParametersKHR = vkCreateVideoSessionParametersKHR;
+extern fn vkUpdateVideoSessionParametersKHR(device: Device,  video_session_parameters: VideoSessionParametersKHR,  p_update_info: [*c]const VideoSessionParametersUpdateInfoKHR) Result;
+pub const updateVideoSessionParametersKHR = vkUpdateVideoSessionParametersKHR;
+extern fn vkDestroyVideoSessionParametersKHR(device: Device,  video_session_parameters: VideoSessionParametersKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyVideoSessionParametersKHR = vkDestroyVideoSessionParametersKHR;
+extern fn vkCmdBeginVideoCodingKHR(command_buffer: CommandBuffer,  p_begin_info: [*c]const VideoBeginCodingInfoKHR) void;
+pub const cmdBeginVideoCodingKHR = vkCmdBeginVideoCodingKHR;
+extern fn vkCmdEndVideoCodingKHR(command_buffer: CommandBuffer,  p_end_coding_info: [*c]const VideoEndCodingInfoKHR) void;
+pub const cmdEndVideoCodingKHR = vkCmdEndVideoCodingKHR;
+extern fn vkCmdControlVideoCodingKHR(command_buffer: CommandBuffer,  p_coding_control_info: [*c]const VideoCodingControlInfoKHR) void;
+pub const cmdControlVideoCodingKHR = vkCmdControlVideoCodingKHR;
+extern fn vkCmdDecodeVideoKHR(command_buffer: CommandBuffer,  p_decode_info: [*c]const VideoDecodeInfoKHR) void;
+pub const cmdDecodeVideoKHR = vkCmdDecodeVideoKHR;
+extern fn vkCmdBeginRenderingKHR(command_buffer: CommandBuffer,  p_rendering_info: [*c]const RenderingInfo) void;
+pub const cmdBeginRenderingKHR = vkCmdBeginRenderingKHR;
+extern fn vkCmdEndRenderingKHR(command_buffer: CommandBuffer) void;
+pub const cmdEndRenderingKHR = vkCmdEndRenderingKHR;
+extern fn vkGetPhysicalDeviceFeatures2KHR(physical_device: PhysicalDevice,  p_features: [*c]PhysicalDeviceFeatures2) void;
+pub const getPhysicalDeviceFeatures2KHR = vkGetPhysicalDeviceFeatures2KHR;
+extern fn vkGetPhysicalDeviceProperties2KHR(physical_device: PhysicalDevice,  p_properties: [*c]PhysicalDeviceProperties2) void;
+pub const getPhysicalDeviceProperties2KHR = vkGetPhysicalDeviceProperties2KHR;
+extern fn vkGetPhysicalDeviceFormatProperties2KHR(physical_device: PhysicalDevice,  format: Format,  p_format_properties: [*c]FormatProperties2) void;
+pub const getPhysicalDeviceFormatProperties2KHR = vkGetPhysicalDeviceFormatProperties2KHR;
+extern fn vkGetPhysicalDeviceImageFormatProperties2KHR(physical_device: PhysicalDevice,  p_image_format_info: [*c]const PhysicalDeviceImageFormatInfo2,  p_image_format_properties: [*c]ImageFormatProperties2) Result;
+pub const getPhysicalDeviceImageFormatProperties2KHR = vkGetPhysicalDeviceImageFormatProperties2KHR;
+extern fn vkGetPhysicalDeviceQueueFamilyProperties2KHR(physical_device: PhysicalDevice,  p_queue_family_property_count: [*c]u32,  p_queue_family_properties: [*c]QueueFamilyProperties2) void;
+pub const getPhysicalDeviceQueueFamilyProperties2KHR = vkGetPhysicalDeviceQueueFamilyProperties2KHR;
+extern fn vkGetPhysicalDeviceMemoryProperties2KHR(physical_device: PhysicalDevice,  p_memory_properties: [*c]PhysicalDeviceMemoryProperties2) void;
+pub const getPhysicalDeviceMemoryProperties2KHR = vkGetPhysicalDeviceMemoryProperties2KHR;
+extern fn vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physical_device: PhysicalDevice,  p_format_info: [*c]const PhysicalDeviceSparseImageFormatInfo2,  p_property_count: [*c]u32,  p_properties: [*c]SparseImageFormatProperties2) void;
+pub const getPhysicalDeviceSparseImageFormatProperties2KHR = vkGetPhysicalDeviceSparseImageFormatProperties2KHR;
+extern fn vkGetDeviceGroupPeerMemoryFeaturesKHR(device: Device,  heap_index: u32,  local_device_index: u32,  remote_device_index: u32,  p_peer_memory_features: [*c]PeerMemoryFeatureFlags) void;
+pub const getDeviceGroupPeerMemoryFeaturesKHR = vkGetDeviceGroupPeerMemoryFeaturesKHR;
+extern fn vkCmdSetDeviceMaskKHR(command_buffer: CommandBuffer,  device_mask: u32) void;
+pub const cmdSetDeviceMaskKHR = vkCmdSetDeviceMaskKHR;
+extern fn vkCmdDispatchBaseKHR(command_buffer: CommandBuffer,  base_group_x: u32,  base_group_y: u32,  base_group_z: u32,  group_count_x: u32,  group_count_y: u32,  group_count_z: u32) void;
+pub const cmdDispatchBaseKHR = vkCmdDispatchBaseKHR;
+extern fn vkTrimCommandPoolKHR(device: Device,  command_pool: CommandPool,  flags: CommandPoolTrimFlags) void;
+pub const trimCommandPoolKHR = vkTrimCommandPoolKHR;
+extern fn vkEnumeratePhysicalDeviceGroupsKHR(instance: Instance,  p_physical_device_group_count: [*c]u32,  p_physical_device_group_properties: [*c]PhysicalDeviceGroupProperties) Result;
+pub const enumeratePhysicalDeviceGroupsKHR = vkEnumeratePhysicalDeviceGroupsKHR;
+extern fn vkGetPhysicalDeviceExternalBufferPropertiesKHR(physical_device: PhysicalDevice,  p_external_buffer_info: [*c]const PhysicalDeviceExternalBufferInfo,  p_external_buffer_properties: [*c]ExternalBufferProperties) void;
+pub const getPhysicalDeviceExternalBufferPropertiesKHR = vkGetPhysicalDeviceExternalBufferPropertiesKHR;
+extern fn vkGetMemoryFdKHR(device: Device,  p_get_fd_info: [*c]const MemoryGetFdInfoKHR,  p_fd: [*c]c_int) Result;
+pub const getMemoryFdKHR = vkGetMemoryFdKHR;
+extern fn vkGetMemoryFdPropertiesKHR(device: Device,  handle_type: ExternalMemoryHandleTypeFlagBits,  fd: c_int,  p_memory_fd_properties: [*c]MemoryFdPropertiesKHR) Result;
+pub const getMemoryFdPropertiesKHR = vkGetMemoryFdPropertiesKHR;
+extern fn vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physical_device: PhysicalDevice,  p_external_semaphore_info: [*c]const PhysicalDeviceExternalSemaphoreInfo,  p_external_semaphore_properties: [*c]ExternalSemaphoreProperties) void;
+pub const getPhysicalDeviceExternalSemaphorePropertiesKHR = vkGetPhysicalDeviceExternalSemaphorePropertiesKHR;
+extern fn vkImportSemaphoreFdKHR(device: Device,  p_import_semaphore_fd_info: [*c]const ImportSemaphoreFdInfoKHR) Result;
+pub const importSemaphoreFdKHR = vkImportSemaphoreFdKHR;
+extern fn vkGetSemaphoreFdKHR(device: Device,  p_get_fd_info: [*c]const SemaphoreGetFdInfoKHR,  p_fd: [*c]c_int) Result;
+pub const getSemaphoreFdKHR = vkGetSemaphoreFdKHR;
+extern fn vkCmdPushDescriptorSetKHR(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  layout: PipelineLayout,  set: u32,  descriptor_write_count: u32,  p_descriptor_writes: [*c]const WriteDescriptorSet) void;
+pub const cmdPushDescriptorSetKHR = vkCmdPushDescriptorSetKHR;
+extern fn vkCmdPushDescriptorSetWithTemplateKHR(command_buffer: CommandBuffer,  descriptor_update_template: DescriptorUpdateTemplate,  layout: PipelineLayout,  set: u32,  p_data: ?*const anyopaque) void;
+pub const cmdPushDescriptorSetWithTemplateKHR = vkCmdPushDescriptorSetWithTemplateKHR;
+extern fn vkCreateDescriptorUpdateTemplateKHR(device: Device,  p_create_info: [*c]const DescriptorUpdateTemplateCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_descriptor_update_template: [*c]DescriptorUpdateTemplate) Result;
+pub const createDescriptorUpdateTemplateKHR = vkCreateDescriptorUpdateTemplateKHR;
+extern fn vkDestroyDescriptorUpdateTemplateKHR(device: Device,  descriptor_update_template: DescriptorUpdateTemplate,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDescriptorUpdateTemplateKHR = vkDestroyDescriptorUpdateTemplateKHR;
+extern fn vkUpdateDescriptorSetWithTemplateKHR(device: Device,  descriptor_set: DescriptorSet,  descriptor_update_template: DescriptorUpdateTemplate,  p_data: ?*const anyopaque) void;
+pub const updateDescriptorSetWithTemplateKHR = vkUpdateDescriptorSetWithTemplateKHR;
+extern fn vkCreateRenderPass2KHR(device: Device,  p_create_info: [*c]const RenderPassCreateInfo2,  p_allocator: [*c]const AllocationCallbacks,  p_render_pass: [*c]RenderPass) Result;
+pub const createRenderPass2KHR = vkCreateRenderPass2KHR;
+extern fn vkCmdBeginRenderPass2KHR(command_buffer: CommandBuffer,  p_render_pass_begin: [*c]const RenderPassBeginInfo,  p_subpass_begin_info: [*c]const SubpassBeginInfo) void;
+pub const cmdBeginRenderPass2KHR = vkCmdBeginRenderPass2KHR;
+extern fn vkCmdNextSubpass2KHR(command_buffer: CommandBuffer,  p_subpass_begin_info: [*c]const SubpassBeginInfo,  p_subpass_end_info: [*c]const SubpassEndInfo) void;
+pub const cmdNextSubpass2KHR = vkCmdNextSubpass2KHR;
+extern fn vkCmdEndRenderPass2KHR(command_buffer: CommandBuffer,  p_subpass_end_info: [*c]const SubpassEndInfo) void;
+pub const cmdEndRenderPass2KHR = vkCmdEndRenderPass2KHR;
+extern fn vkGetSwapchainStatusKHR(device: Device,  swapchain: SwapchainKHR) Result;
+pub const getSwapchainStatusKHR = vkGetSwapchainStatusKHR;
+extern fn vkGetPhysicalDeviceExternalFencePropertiesKHR(physical_device: PhysicalDevice,  p_external_fence_info: [*c]const PhysicalDeviceExternalFenceInfo,  p_external_fence_properties: [*c]ExternalFenceProperties) void;
+pub const getPhysicalDeviceExternalFencePropertiesKHR = vkGetPhysicalDeviceExternalFencePropertiesKHR;
+extern fn vkImportFenceFdKHR(device: Device,  p_import_fence_fd_info: [*c]const ImportFenceFdInfoKHR) Result;
+pub const importFenceFdKHR = vkImportFenceFdKHR;
+extern fn vkGetFenceFdKHR(device: Device,  p_get_fd_info: [*c]const FenceGetFdInfoKHR,  p_fd: [*c]c_int) Result;
+pub const getFenceFdKHR = vkGetFenceFdKHR;
+extern fn vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physical_device: PhysicalDevice,  queue_family_index: u32,  p_counter_count: [*c]u32,  p_counters: [*c]PerformanceCounterKHR,  p_counter_descriptions: [*c]PerformanceCounterDescriptionKHR) Result;
+pub const enumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR;
+extern fn vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physical_device: PhysicalDevice,  p_performance_query_create_info: [*c]const QueryPoolPerformanceCreateInfoKHR,  p_num_passes: [*c]u32) void;
+pub const getPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR;
+extern fn vkAcquireProfilingLockKHR(device: Device,  p_info: [*c]const AcquireProfilingLockInfoKHR) Result;
+pub const acquireProfilingLockKHR = vkAcquireProfilingLockKHR;
+extern fn vkReleaseProfilingLockKHR(device: Device) void;
+pub const releaseProfilingLockKHR = vkReleaseProfilingLockKHR;
+extern fn vkGetPhysicalDeviceSurfaceCapabilities2KHR(physical_device: PhysicalDevice,  p_surface_info: [*c]const PhysicalDeviceSurfaceInfo2KHR,  p_surface_capabilities: [*c]SurfaceCapabilities2KHR) Result;
+pub const getPhysicalDeviceSurfaceCapabilities2KHR = vkGetPhysicalDeviceSurfaceCapabilities2KHR;
+extern fn vkGetPhysicalDeviceSurfaceFormats2KHR(physical_device: PhysicalDevice,  p_surface_info: [*c]const PhysicalDeviceSurfaceInfo2KHR,  p_surface_format_count: [*c]u32,  p_surface_formats: [*c]SurfaceFormat2KHR) Result;
+pub const getPhysicalDeviceSurfaceFormats2KHR = vkGetPhysicalDeviceSurfaceFormats2KHR;
+extern fn vkGetPhysicalDeviceDisplayProperties2KHR(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]DisplayProperties2KHR) Result;
+pub const getPhysicalDeviceDisplayProperties2KHR = vkGetPhysicalDeviceDisplayProperties2KHR;
+extern fn vkGetPhysicalDeviceDisplayPlaneProperties2KHR(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]DisplayPlaneProperties2KHR) Result;
+pub const getPhysicalDeviceDisplayPlaneProperties2KHR = vkGetPhysicalDeviceDisplayPlaneProperties2KHR;
+extern fn vkGetDisplayModeProperties2KHR(physical_device: PhysicalDevice,  display: DisplayKHR,  p_property_count: [*c]u32,  p_properties: [*c]DisplayModeProperties2KHR) Result;
+pub const getDisplayModeProperties2KHR = vkGetDisplayModeProperties2KHR;
+extern fn vkGetDisplayPlaneCapabilities2KHR(physical_device: PhysicalDevice,  p_display_plane_info: [*c]const DisplayPlaneInfo2KHR,  p_capabilities: [*c]DisplayPlaneCapabilities2KHR) Result;
+pub const getDisplayPlaneCapabilities2KHR = vkGetDisplayPlaneCapabilities2KHR;
+extern fn vkGetImageMemoryRequirements2KHR(device: Device,  p_info: [*c]const ImageMemoryRequirementsInfo2,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getImageMemoryRequirements2KHR = vkGetImageMemoryRequirements2KHR;
+extern fn vkGetBufferMemoryRequirements2KHR(device: Device,  p_info: [*c]const BufferMemoryRequirementsInfo2,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getBufferMemoryRequirements2KHR = vkGetBufferMemoryRequirements2KHR;
+extern fn vkGetImageSparseMemoryRequirements2KHR(device: Device,  p_info: [*c]const ImageSparseMemoryRequirementsInfo2,  p_sparse_memory_requirement_count: [*c]u32,  p_sparse_memory_requirements: [*c]SparseImageMemoryRequirements2) void;
+pub const getImageSparseMemoryRequirements2KHR = vkGetImageSparseMemoryRequirements2KHR;
+extern fn vkCreateSamplerYcbcrConversionKHR(device: Device,  p_create_info: [*c]const SamplerYcbcrConversionCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_ycbcr_conversion: [*c]SamplerYcbcrConversion) Result;
+pub const createSamplerYcbcrConversionKHR = vkCreateSamplerYcbcrConversionKHR;
+extern fn vkDestroySamplerYcbcrConversionKHR(device: Device,  ycbcr_conversion: SamplerYcbcrConversion,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroySamplerYcbcrConversionKHR = vkDestroySamplerYcbcrConversionKHR;
+extern fn vkBindBufferMemory2KHR(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindBufferMemoryInfo) Result;
+pub const bindBufferMemory2KHR = vkBindBufferMemory2KHR;
+extern fn vkBindImageMemory2KHR(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindImageMemoryInfo) Result;
+pub const bindImageMemory2KHR = vkBindImageMemory2KHR;
+extern fn vkGetDescriptorSetLayoutSupportKHR(device: Device,  p_create_info: [*c]const DescriptorSetLayoutCreateInfo,  p_support: [*c]DescriptorSetLayoutSupport) void;
+pub const getDescriptorSetLayoutSupportKHR = vkGetDescriptorSetLayoutSupportKHR;
+extern fn vkCmdDrawIndirectCountKHR(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndirectCountKHR = vkCmdDrawIndirectCountKHR;
+extern fn vkCmdDrawIndexedIndirectCountKHR(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndexedIndirectCountKHR = vkCmdDrawIndexedIndirectCountKHR;
+extern fn vkGetSemaphoreCounterValueKHR(device: Device,  semaphore: Semaphore,  p_value: [*c]u64) Result;
+pub const getSemaphoreCounterValueKHR = vkGetSemaphoreCounterValueKHR;
+extern fn vkWaitSemaphoresKHR(device: Device,  p_wait_info: [*c]const SemaphoreWaitInfo,  timeout: u64) Result;
+pub const waitSemaphoresKHR = vkWaitSemaphoresKHR;
+extern fn vkSignalSemaphoreKHR(device: Device,  p_signal_info: [*c]const SemaphoreSignalInfo) Result;
+pub const signalSemaphoreKHR = vkSignalSemaphoreKHR;
+extern fn vkGetPhysicalDeviceFragmentShadingRatesKHR(physical_device: PhysicalDevice,  p_fragment_shading_rate_count: [*c]u32,  p_fragment_shading_rates: [*c]PhysicalDeviceFragmentShadingRateKHR) Result;
+pub const getPhysicalDeviceFragmentShadingRatesKHR = vkGetPhysicalDeviceFragmentShadingRatesKHR;
+extern fn vkCmdSetFragmentShadingRateKHR(command_buffer: CommandBuffer,  p_fragment_size: [*c]const Extent2D,  combiner_ops: [*c]const FragmentShadingRateCombinerOpKHR) void;
+pub const cmdSetFragmentShadingRateKHR = vkCmdSetFragmentShadingRateKHR;
+extern fn vkCmdSetRenderingAttachmentLocationsKHR(command_buffer: CommandBuffer,  p_location_info: [*c]const RenderingAttachmentLocationInfo) void;
+pub const cmdSetRenderingAttachmentLocationsKHR = vkCmdSetRenderingAttachmentLocationsKHR;
+extern fn vkCmdSetRenderingInputAttachmentIndicesKHR(command_buffer: CommandBuffer,  p_input_attachment_index_info: [*c]const RenderingInputAttachmentIndexInfo) void;
+pub const cmdSetRenderingInputAttachmentIndicesKHR = vkCmdSetRenderingInputAttachmentIndicesKHR;
+extern fn vkWaitForPresentKHR(device: Device,  swapchain: SwapchainKHR,  present_id: u64,  timeout: u64) Result;
+pub const waitForPresentKHR = vkWaitForPresentKHR;
+extern fn vkGetBufferDeviceAddressKHR(device: Device,  p_info: [*c]const BufferDeviceAddressInfo) DeviceAddress;
+pub const getBufferDeviceAddressKHR = vkGetBufferDeviceAddressKHR;
+extern fn vkGetBufferOpaqueCaptureAddressKHR(device: Device,  p_info: [*c]const BufferDeviceAddressInfo) u64;
+pub const getBufferOpaqueCaptureAddressKHR = vkGetBufferOpaqueCaptureAddressKHR;
+extern fn vkGetDeviceMemoryOpaqueCaptureAddressKHR(device: Device,  p_info: [*c]const DeviceMemoryOpaqueCaptureAddressInfo) u64;
+pub const getDeviceMemoryOpaqueCaptureAddressKHR = vkGetDeviceMemoryOpaqueCaptureAddressKHR;
+extern fn vkCreateDeferredOperationKHR(device: Device,  p_allocator: [*c]const AllocationCallbacks,  p_deferred_operation: [*c]DeferredOperationKHR) Result;
+pub const createDeferredOperationKHR = vkCreateDeferredOperationKHR;
+extern fn vkDestroyDeferredOperationKHR(device: Device,  operation: DeferredOperationKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDeferredOperationKHR = vkDestroyDeferredOperationKHR;
+extern fn vkGetDeferredOperationMaxConcurrencyKHR(device: Device,  operation: DeferredOperationKHR) u32;
+pub const getDeferredOperationMaxConcurrencyKHR = vkGetDeferredOperationMaxConcurrencyKHR;
+extern fn vkGetDeferredOperationResultKHR(device: Device,  operation: DeferredOperationKHR) Result;
+pub const getDeferredOperationResultKHR = vkGetDeferredOperationResultKHR;
+extern fn vkDeferredOperationJoinKHR(device: Device,  operation: DeferredOperationKHR) Result;
+pub const deferredOperationJoinKHR = vkDeferredOperationJoinKHR;
+extern fn vkGetPipelineExecutablePropertiesKHR(device: Device,  p_pipeline_info: [*c]const PipelineInfoKHR,  p_executable_count: [*c]u32,  p_properties: [*c]PipelineExecutablePropertiesKHR) Result;
+pub const getPipelineExecutablePropertiesKHR = vkGetPipelineExecutablePropertiesKHR;
+extern fn vkGetPipelineExecutableStatisticsKHR(device: Device,  p_executable_info: [*c]const PipelineExecutableInfoKHR,  p_statistic_count: [*c]u32,  p_statistics: [*c]PipelineExecutableStatisticKHR) Result;
+pub const getPipelineExecutableStatisticsKHR = vkGetPipelineExecutableStatisticsKHR;
+extern fn vkGetPipelineExecutableInternalRepresentationsKHR(device: Device,  p_executable_info: [*c]const PipelineExecutableInfoKHR,  p_internal_representation_count: [*c]u32,  p_internal_representations: [*c]PipelineExecutableInternalRepresentationKHR) Result;
+pub const getPipelineExecutableInternalRepresentationsKHR = vkGetPipelineExecutableInternalRepresentationsKHR;
+extern fn vkMapMemory2KHR(device: Device,  p_memory_map_info: [*c]const MemoryMapInfo,  pp_data: [*c]?*anyopaque) Result;
+pub const mapMemory2KHR = vkMapMemory2KHR;
+extern fn vkUnmapMemory2KHR(device: Device,  p_memory_unmap_info: [*c]const MemoryUnmapInfo) Result;
+pub const unmapMemory2KHR = vkUnmapMemory2KHR;
+extern fn vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(physical_device: PhysicalDevice,  p_quality_level_info: [*c]const PhysicalDeviceVideoEncodeQualityLevelInfoKHR,  p_quality_level_properties: [*c]VideoEncodeQualityLevelPropertiesKHR) Result;
+pub const getPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR = vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR;
+extern fn vkGetEncodedVideoSessionParametersKHR(device: Device,  p_video_session_parameters_info: [*c]const VideoEncodeSessionParametersGetInfoKHR,  p_feedback_info: [*c]VideoEncodeSessionParametersFeedbackInfoKHR,  p_data_size: [*c]usize,  p_data: ?*anyopaque) Result;
+pub const getEncodedVideoSessionParametersKHR = vkGetEncodedVideoSessionParametersKHR;
+extern fn vkCmdEncodeVideoKHR(command_buffer: CommandBuffer,  p_encode_info: [*c]const VideoEncodeInfoKHR) void;
+pub const cmdEncodeVideoKHR = vkCmdEncodeVideoKHR;
+extern fn vkCmdSetEvent2KHR(command_buffer: CommandBuffer,  event: Event,  p_dependency_info: [*c]const DependencyInfo) void;
+pub const cmdSetEvent2KHR = vkCmdSetEvent2KHR;
+extern fn vkCmdResetEvent2KHR(command_buffer: CommandBuffer,  event: Event,  stage_mask: PipelineStageFlags2) void;
+pub const cmdResetEvent2KHR = vkCmdResetEvent2KHR;
+extern fn vkCmdWaitEvents2KHR(command_buffer: CommandBuffer,  event_count: u32,  p_events: [*c]const Event,  p_dependency_infos: [*c]const DependencyInfo) void;
+pub const cmdWaitEvents2KHR = vkCmdWaitEvents2KHR;
+extern fn vkCmdPipelineBarrier2KHR(command_buffer: CommandBuffer,  p_dependency_info: [*c]const DependencyInfo) void;
+pub const cmdPipelineBarrier2KHR = vkCmdPipelineBarrier2KHR;
+extern fn vkCmdWriteTimestamp2KHR(command_buffer: CommandBuffer,  stage: PipelineStageFlags2,  query_pool: QueryPool,  query: u32) void;
+pub const cmdWriteTimestamp2KHR = vkCmdWriteTimestamp2KHR;
+extern fn vkQueueSubmit2KHR(queue: Queue,  submit_count: u32,  p_submits: [*c]const SubmitInfo2,  fence: Fence) Result;
+pub const queueSubmit2KHR = vkQueueSubmit2KHR;
+extern fn vkCmdCopyBuffer2KHR(command_buffer: CommandBuffer,  p_copy_buffer_info: [*c]const CopyBufferInfo2) void;
+pub const cmdCopyBuffer2KHR = vkCmdCopyBuffer2KHR;
+extern fn vkCmdCopyImage2KHR(command_buffer: CommandBuffer,  p_copy_image_info: [*c]const CopyImageInfo2) void;
+pub const cmdCopyImage2KHR = vkCmdCopyImage2KHR;
+extern fn vkCmdCopyBufferToImage2KHR(command_buffer: CommandBuffer,  p_copy_buffer_to_image_info: [*c]const CopyBufferToImageInfo2) void;
+pub const cmdCopyBufferToImage2KHR = vkCmdCopyBufferToImage2KHR;
+extern fn vkCmdCopyImageToBuffer2KHR(command_buffer: CommandBuffer,  p_copy_image_to_buffer_info: [*c]const CopyImageToBufferInfo2) void;
+pub const cmdCopyImageToBuffer2KHR = vkCmdCopyImageToBuffer2KHR;
+extern fn vkCmdBlitImage2KHR(command_buffer: CommandBuffer,  p_blit_image_info: [*c]const BlitImageInfo2) void;
+pub const cmdBlitImage2KHR = vkCmdBlitImage2KHR;
+extern fn vkCmdResolveImage2KHR(command_buffer: CommandBuffer,  p_resolve_image_info: [*c]const ResolveImageInfo2) void;
+pub const cmdResolveImage2KHR = vkCmdResolveImage2KHR;
+extern fn vkCmdTraceRaysIndirect2KHR(command_buffer: CommandBuffer,  indirect_device_address: DeviceAddress) void;
+pub const cmdTraceRaysIndirect2KHR = vkCmdTraceRaysIndirect2KHR;
+extern fn vkGetDeviceBufferMemoryRequirementsKHR(device: Device,  p_info: [*c]const DeviceBufferMemoryRequirements,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDeviceBufferMemoryRequirementsKHR = vkGetDeviceBufferMemoryRequirementsKHR;
+extern fn vkGetDeviceImageMemoryRequirementsKHR(device: Device,  p_info: [*c]const DeviceImageMemoryRequirements,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDeviceImageMemoryRequirementsKHR = vkGetDeviceImageMemoryRequirementsKHR;
+extern fn vkGetDeviceImageSparseMemoryRequirementsKHR(device: Device,  p_info: [*c]const DeviceImageMemoryRequirements,  p_sparse_memory_requirement_count: [*c]u32,  p_sparse_memory_requirements: [*c]SparseImageMemoryRequirements2) void;
+pub const getDeviceImageSparseMemoryRequirementsKHR = vkGetDeviceImageSparseMemoryRequirementsKHR;
+extern fn vkCmdBindIndexBuffer2KHR(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  size: DeviceSize,  index_type: IndexType) void;
+pub const cmdBindIndexBuffer2KHR = vkCmdBindIndexBuffer2KHR;
+extern fn vkGetRenderingAreaGranularityKHR(device: Device,  p_rendering_area_info: [*c]const RenderingAreaInfo,  p_granularity: [*c]Extent2D) void;
+pub const getRenderingAreaGranularityKHR = vkGetRenderingAreaGranularityKHR;
+extern fn vkGetDeviceImageSubresourceLayoutKHR(device: Device,  p_info: [*c]const DeviceImageSubresourceInfo,  p_layout: [*c]SubresourceLayout2) void;
+pub const getDeviceImageSubresourceLayoutKHR = vkGetDeviceImageSubresourceLayoutKHR;
+extern fn vkGetImageSubresourceLayout2KHR(device: Device,  image: Image,  p_subresource: [*c]const ImageSubresource2,  p_layout: [*c]SubresourceLayout2) void;
+pub const getImageSubresourceLayout2KHR = vkGetImageSubresourceLayout2KHR;
+extern fn vkWaitForPresent2KHR(device: Device,  swapchain: SwapchainKHR,  p_present_wait2info: [*c]const PresentWait2InfoKHR) Result;
+pub const waitForPresent2KHR = vkWaitForPresent2KHR;
+extern fn vkCreatePipelineBinariesKHR(device: Device,  p_create_info: [*c]const PipelineBinaryCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_binaries: [*c]PipelineBinaryHandlesInfoKHR) Result;
+pub const createPipelineBinariesKHR = vkCreatePipelineBinariesKHR;
+extern fn vkDestroyPipelineBinaryKHR(device: Device,  pipeline_binary: PipelineBinaryKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPipelineBinaryKHR = vkDestroyPipelineBinaryKHR;
+extern fn vkGetPipelineKeyKHR(device: Device,  p_pipeline_create_info: [*c]const PipelineCreateInfoKHR,  p_pipeline_key: [*c]PipelineBinaryKeyKHR) Result;
+pub const getPipelineKeyKHR = vkGetPipelineKeyKHR;
+extern fn vkGetPipelineBinaryDataKHR(device: Device,  p_info: [*c]const PipelineBinaryDataInfoKHR,  p_pipeline_binary_key: [*c]PipelineBinaryKeyKHR,  p_pipeline_binary_data_size: [*c]usize,  p_pipeline_binary_data: ?*anyopaque) Result;
+pub const getPipelineBinaryDataKHR = vkGetPipelineBinaryDataKHR;
+extern fn vkReleaseCapturedPipelineDataKHR(device: Device,  p_info: [*c]const ReleaseCapturedPipelineDataInfoKHR,  p_allocator: [*c]const AllocationCallbacks) Result;
+pub const releaseCapturedPipelineDataKHR = vkReleaseCapturedPipelineDataKHR;
+extern fn vkReleaseSwapchainImagesKHR(device: Device,  p_release_info: [*c]const ReleaseSwapchainImagesInfoKHR) Result;
+pub const releaseSwapchainImagesKHR = vkReleaseSwapchainImagesKHR;
+extern fn vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]CooperativeMatrixPropertiesKHR) Result;
+pub const getPhysicalDeviceCooperativeMatrixPropertiesKHR = vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR;
+extern fn vkCmdSetLineStippleKHR(command_buffer: CommandBuffer,  line_stipple_factor: u32,  line_stipple_pattern: u16) void;
+pub const cmdSetLineStippleKHR = vkCmdSetLineStippleKHR;
+extern fn vkGetPhysicalDeviceCalibrateableTimeDomainsKHR(physical_device: PhysicalDevice,  p_time_domain_count: [*c]u32,  p_time_domains: [*c]TimeDomainKHR) Result;
+pub const getPhysicalDeviceCalibrateableTimeDomainsKHR = vkGetPhysicalDeviceCalibrateableTimeDomainsKHR;
+extern fn vkGetCalibratedTimestampsKHR(device: Device,  timestamp_count: u32,  p_timestamp_infos: [*c]const CalibratedTimestampInfoKHR,  p_timestamps: [*c]u64,  p_max_deviation: [*c]u64) Result;
+pub const getCalibratedTimestampsKHR = vkGetCalibratedTimestampsKHR;
+extern fn vkCmdBindDescriptorSets2KHR(command_buffer: CommandBuffer,  p_bind_descriptor_sets_info: [*c]const BindDescriptorSetsInfo) void;
+pub const cmdBindDescriptorSets2KHR = vkCmdBindDescriptorSets2KHR;
+extern fn vkCmdPushConstants2KHR(command_buffer: CommandBuffer,  p_push_constants_info: [*c]const PushConstantsInfo) void;
+pub const cmdPushConstants2KHR = vkCmdPushConstants2KHR;
+extern fn vkCmdPushDescriptorSet2KHR(command_buffer: CommandBuffer,  p_push_descriptor_set_info: [*c]const PushDescriptorSetInfo) void;
+pub const cmdPushDescriptorSet2KHR = vkCmdPushDescriptorSet2KHR;
+extern fn vkCmdPushDescriptorSetWithTemplate2KHR(command_buffer: CommandBuffer,  p_push_descriptor_set_with_template_info: [*c]const PushDescriptorSetWithTemplateInfo) void;
+pub const cmdPushDescriptorSetWithTemplate2KHR = vkCmdPushDescriptorSetWithTemplate2KHR;
+extern fn vkCmdSetDescriptorBufferOffsets2EXT(command_buffer: CommandBuffer,  p_set_descriptor_buffer_offsets_info: [*c]const SetDescriptorBufferOffsetsInfoEXT) void;
+pub const cmdSetDescriptorBufferOffsets2EXT = vkCmdSetDescriptorBufferOffsets2EXT;
+extern fn vkCmdBindDescriptorBufferEmbeddedSamplers2EXT(command_buffer: CommandBuffer,  p_bind_descriptor_buffer_embedded_samplers_info: [*c]const BindDescriptorBufferEmbeddedSamplersInfoEXT) void;
+pub const cmdBindDescriptorBufferEmbeddedSamplers2EXT = vkCmdBindDescriptorBufferEmbeddedSamplers2EXT;
+extern fn vkCreateDebugReportCallbackEXT(instance: Instance,  p_create_info: [*c]const DebugReportCallbackCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_callback: [*c]DebugReportCallbackEXT) Result;
+pub const createDebugReportCallbackEXT = vkCreateDebugReportCallbackEXT;
+extern fn vkDestroyDebugReportCallbackEXT(instance: Instance,  callback: DebugReportCallbackEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDebugReportCallbackEXT = vkDestroyDebugReportCallbackEXT;
+extern fn vkDebugReportMessageEXT(instance: Instance,  flags: DebugReportFlagsEXT,  object_type: DebugReportObjectTypeEXT,  object: u64,  location: usize,  message_code: i32,  p_layer_prefix: [*c]const u8,  p_message: [*c]const u8) void;
+pub const debugReportMessageEXT = vkDebugReportMessageEXT;
+extern fn vkDebugMarkerSetObjectTagEXT(device: Device,  p_tag_info: [*c]const DebugMarkerObjectTagInfoEXT) Result;
+pub const debugMarkerSetObjectTagEXT = vkDebugMarkerSetObjectTagEXT;
+extern fn vkDebugMarkerSetObjectNameEXT(device: Device,  p_name_info: [*c]const DebugMarkerObjectNameInfoEXT) Result;
+pub const debugMarkerSetObjectNameEXT = vkDebugMarkerSetObjectNameEXT;
+extern fn vkCmdDebugMarkerBeginEXT(command_buffer: CommandBuffer,  p_marker_info: [*c]const DebugMarkerMarkerInfoEXT) void;
+pub const cmdDebugMarkerBeginEXT = vkCmdDebugMarkerBeginEXT;
+extern fn vkCmdDebugMarkerEndEXT(command_buffer: CommandBuffer) void;
+pub const cmdDebugMarkerEndEXT = vkCmdDebugMarkerEndEXT;
+extern fn vkCmdDebugMarkerInsertEXT(command_buffer: CommandBuffer,  p_marker_info: [*c]const DebugMarkerMarkerInfoEXT) void;
+pub const cmdDebugMarkerInsertEXT = vkCmdDebugMarkerInsertEXT;
+extern fn vkCmdBindTransformFeedbackBuffersEXT(command_buffer: CommandBuffer,  first_binding: u32,  binding_count: u32,  p_buffers: [*c]const Buffer,  p_offsets: [*c]const DeviceSize,  p_sizes: [*c]const DeviceSize) void;
+pub const cmdBindTransformFeedbackBuffersEXT = vkCmdBindTransformFeedbackBuffersEXT;
+extern fn vkCmdBeginTransformFeedbackEXT(command_buffer: CommandBuffer,  first_counter_buffer: u32,  counter_buffer_count: u32,  p_counter_buffers: [*c]const Buffer,  p_counter_buffer_offsets: [*c]const DeviceSize) void;
+pub const cmdBeginTransformFeedbackEXT = vkCmdBeginTransformFeedbackEXT;
+extern fn vkCmdEndTransformFeedbackEXT(command_buffer: CommandBuffer,  first_counter_buffer: u32,  counter_buffer_count: u32,  p_counter_buffers: [*c]const Buffer,  p_counter_buffer_offsets: [*c]const DeviceSize) void;
+pub const cmdEndTransformFeedbackEXT = vkCmdEndTransformFeedbackEXT;
+extern fn vkCmdBeginQueryIndexedEXT(command_buffer: CommandBuffer,  query_pool: QueryPool,  query: u32,  flags: QueryControlFlags,  index: u32) void;
+pub const cmdBeginQueryIndexedEXT = vkCmdBeginQueryIndexedEXT;
+extern fn vkCmdEndQueryIndexedEXT(command_buffer: CommandBuffer,  query_pool: QueryPool,  query: u32,  index: u32) void;
+pub const cmdEndQueryIndexedEXT = vkCmdEndQueryIndexedEXT;
+extern fn vkCmdDrawIndirectByteCountEXT(command_buffer: CommandBuffer,  instance_count: u32,  first_instance: u32,  counter_buffer: Buffer,  counter_buffer_offset: DeviceSize,  counter_offset: u32,  vertex_stride: u32) void;
+pub const cmdDrawIndirectByteCountEXT = vkCmdDrawIndirectByteCountEXT;
+extern fn vkCreateCuModuleNVX(device: Device,  p_create_info: [*c]const CuModuleCreateInfoNVX,  p_allocator: [*c]const AllocationCallbacks,  p_module: [*c]CuModuleNVX) Result;
+pub const createCuModuleNVX = vkCreateCuModuleNVX;
+extern fn vkCreateCuFunctionNVX(device: Device,  p_create_info: [*c]const CuFunctionCreateInfoNVX,  p_allocator: [*c]const AllocationCallbacks,  p_function: [*c]CuFunctionNVX) Result;
+pub const createCuFunctionNVX = vkCreateCuFunctionNVX;
+extern fn vkDestroyCuModuleNVX(device: Device,  module: CuModuleNVX,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyCuModuleNVX = vkDestroyCuModuleNVX;
+extern fn vkDestroyCuFunctionNVX(device: Device,  function: CuFunctionNVX,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyCuFunctionNVX = vkDestroyCuFunctionNVX;
+extern fn vkCmdCuLaunchKernelNVX(command_buffer: CommandBuffer,  p_launch_info: [*c]const CuLaunchInfoNVX) void;
+pub const cmdCuLaunchKernelNVX = vkCmdCuLaunchKernelNVX;
+extern fn vkGetImageViewHandleNVX(device: Device,  p_info: [*c]const ImageViewHandleInfoNVX) u32;
+pub const getImageViewHandleNVX = vkGetImageViewHandleNVX;
+extern fn vkGetImageViewHandle64NVX(device: Device,  p_info: [*c]const ImageViewHandleInfoNVX) u64;
+pub const getImageViewHandle64NVX = vkGetImageViewHandle64NVX;
+extern fn vkGetImageViewAddressNVX(device: Device,  image_view: ImageView,  p_properties: [*c]ImageViewAddressPropertiesNVX) Result;
+pub const getImageViewAddressNVX = vkGetImageViewAddressNVX;
+extern fn vkCmdDrawIndirectCountAMD(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndirectCountAMD = vkCmdDrawIndirectCountAMD;
+extern fn vkCmdDrawIndexedIndirectCountAMD(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawIndexedIndirectCountAMD = vkCmdDrawIndexedIndirectCountAMD;
+extern fn vkGetShaderInfoAMD(device: Device,  pipeline: Pipeline,  shader_stage: ShaderStageFlagBits,  info_type: ShaderInfoTypeAMD,  p_info_size: [*c]usize,  p_info: ?*anyopaque) Result;
+pub const getShaderInfoAMD = vkGetShaderInfoAMD;
+extern fn vkGetPhysicalDeviceExternalImageFormatPropertiesNV(physical_device: PhysicalDevice,  format: Format,  @"type": ImageType,  tiling: ImageTiling,  usage: ImageUsageFlags,  flags: ImageCreateFlags,  external_handle_type: ExternalMemoryHandleTypeFlagsNV,  p_external_image_format_properties: [*c]ExternalImageFormatPropertiesNV) Result;
+pub const getPhysicalDeviceExternalImageFormatPropertiesNV = vkGetPhysicalDeviceExternalImageFormatPropertiesNV;
+extern fn vkCmdBeginConditionalRenderingEXT(command_buffer: CommandBuffer,  p_conditional_rendering_begin: [*c]const ConditionalRenderingBeginInfoEXT) void;
+pub const cmdBeginConditionalRenderingEXT = vkCmdBeginConditionalRenderingEXT;
+extern fn vkCmdEndConditionalRenderingEXT(command_buffer: CommandBuffer) void;
+pub const cmdEndConditionalRenderingEXT = vkCmdEndConditionalRenderingEXT;
+extern fn vkCmdSetViewportWScalingNV(command_buffer: CommandBuffer,  first_viewport: u32,  viewport_count: u32,  p_viewport_wscalings: [*c]const ViewportWScalingNV) void;
+pub const cmdSetViewportWScalingNV = vkCmdSetViewportWScalingNV;
+extern fn vkReleaseDisplayEXT(physical_device: PhysicalDevice,  display: DisplayKHR) Result;
+pub const releaseDisplayEXT = vkReleaseDisplayEXT;
+extern fn vkGetPhysicalDeviceSurfaceCapabilities2EXT(physical_device: PhysicalDevice,  surface: SurfaceKHR,  p_surface_capabilities: [*c]SurfaceCapabilities2EXT) Result;
+pub const getPhysicalDeviceSurfaceCapabilities2EXT = vkGetPhysicalDeviceSurfaceCapabilities2EXT;
+extern fn vkDisplayPowerControlEXT(device: Device,  display: DisplayKHR,  p_display_power_info: [*c]const DisplayPowerInfoEXT) Result;
+pub const displayPowerControlEXT = vkDisplayPowerControlEXT;
+extern fn vkRegisterDeviceEventEXT(device: Device,  p_device_event_info: [*c]const DeviceEventInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_fence: [*c]Fence) Result;
+pub const registerDeviceEventEXT = vkRegisterDeviceEventEXT;
+extern fn vkRegisterDisplayEventEXT(device: Device,  display: DisplayKHR,  p_display_event_info: [*c]const DisplayEventInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_fence: [*c]Fence) Result;
+pub const registerDisplayEventEXT = vkRegisterDisplayEventEXT;
+extern fn vkGetSwapchainCounterEXT(device: Device,  swapchain: SwapchainKHR,  counter: SurfaceCounterFlagBitsEXT,  p_counter_value: [*c]u64) Result;
+pub const getSwapchainCounterEXT = vkGetSwapchainCounterEXT;
+extern fn vkGetRefreshCycleDurationGOOGLE(device: Device,  swapchain: SwapchainKHR,  p_display_timing_properties: [*c]RefreshCycleDurationGOOGLE) Result;
+pub const getRefreshCycleDurationGOOGLE = vkGetRefreshCycleDurationGOOGLE;
+extern fn vkGetPastPresentationTimingGOOGLE(device: Device,  swapchain: SwapchainKHR,  p_presentation_timing_count: [*c]u32,  p_presentation_timings: [*c]PastPresentationTimingGOOGLE) Result;
+pub const getPastPresentationTimingGOOGLE = vkGetPastPresentationTimingGOOGLE;
+extern fn vkCmdSetDiscardRectangleEXT(command_buffer: CommandBuffer,  first_discard_rectangle: u32,  discard_rectangle_count: u32,  p_discard_rectangles: [*c]const Rect2D) void;
+pub const cmdSetDiscardRectangleEXT = vkCmdSetDiscardRectangleEXT;
+extern fn vkCmdSetDiscardRectangleEnableEXT(command_buffer: CommandBuffer,  discard_rectangle_enable: Bool32) void;
+pub const cmdSetDiscardRectangleEnableEXT = vkCmdSetDiscardRectangleEnableEXT;
+extern fn vkCmdSetDiscardRectangleModeEXT(command_buffer: CommandBuffer,  discard_rectangle_mode: DiscardRectangleModeEXT) void;
+pub const cmdSetDiscardRectangleModeEXT = vkCmdSetDiscardRectangleModeEXT;
+extern fn vkSetHdrMetadataEXT(device: Device,  swapchain_count: u32,  p_swapchains: [*c]const SwapchainKHR,  p_metadata: [*c]const HdrMetadataEXT) void;
+pub const setHdrMetadataEXT = vkSetHdrMetadataEXT;
+extern fn vkSetDebugUtilsObjectNameEXT(device: Device,  p_name_info: [*c]const DebugUtilsObjectNameInfoEXT) Result;
+pub const setDebugUtilsObjectNameEXT = vkSetDebugUtilsObjectNameEXT;
+extern fn vkSetDebugUtilsObjectTagEXT(device: Device,  p_tag_info: [*c]const DebugUtilsObjectTagInfoEXT) Result;
+pub const setDebugUtilsObjectTagEXT = vkSetDebugUtilsObjectTagEXT;
+extern fn vkQueueBeginDebugUtilsLabelEXT(queue: Queue,  p_label_info: [*c]const DebugUtilsLabelEXT) void;
+pub const queueBeginDebugUtilsLabelEXT = vkQueueBeginDebugUtilsLabelEXT;
+extern fn vkQueueEndDebugUtilsLabelEXT(queue: Queue) void;
+pub const queueEndDebugUtilsLabelEXT = vkQueueEndDebugUtilsLabelEXT;
+extern fn vkQueueInsertDebugUtilsLabelEXT(queue: Queue,  p_label_info: [*c]const DebugUtilsLabelEXT) void;
+pub const queueInsertDebugUtilsLabelEXT = vkQueueInsertDebugUtilsLabelEXT;
+extern fn vkCmdBeginDebugUtilsLabelEXT(command_buffer: CommandBuffer,  p_label_info: [*c]const DebugUtilsLabelEXT) void;
+pub const cmdBeginDebugUtilsLabelEXT = vkCmdBeginDebugUtilsLabelEXT;
+extern fn vkCmdEndDebugUtilsLabelEXT(command_buffer: CommandBuffer) void;
+pub const cmdEndDebugUtilsLabelEXT = vkCmdEndDebugUtilsLabelEXT;
+extern fn vkCmdInsertDebugUtilsLabelEXT(command_buffer: CommandBuffer,  p_label_info: [*c]const DebugUtilsLabelEXT) void;
+pub const cmdInsertDebugUtilsLabelEXT = vkCmdInsertDebugUtilsLabelEXT;
+extern fn vkCreateDebugUtilsMessengerEXT(instance: Instance,  p_create_info: [*c]const DebugUtilsMessengerCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_messenger: [*c]DebugUtilsMessengerEXT) Result;
+pub const createDebugUtilsMessengerEXT = vkCreateDebugUtilsMessengerEXT;
+extern fn vkDestroyDebugUtilsMessengerEXT(instance: Instance,  messenger: DebugUtilsMessengerEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDebugUtilsMessengerEXT = vkDestroyDebugUtilsMessengerEXT;
+extern fn vkSubmitDebugUtilsMessageEXT(instance: Instance,  message_severity: DebugUtilsMessageSeverityFlagBitsEXT,  message_types: DebugUtilsMessageTypeFlagsEXT,  p_callback_data: [*c]const DebugUtilsMessengerCallbackDataEXT) void;
+pub const submitDebugUtilsMessageEXT = vkSubmitDebugUtilsMessageEXT;
+extern fn vkCmdSetSampleLocationsEXT(command_buffer: CommandBuffer,  p_sample_locations_info: [*c]const SampleLocationsInfoEXT) void;
+pub const cmdSetSampleLocationsEXT = vkCmdSetSampleLocationsEXT;
+extern fn vkGetPhysicalDeviceMultisamplePropertiesEXT(physical_device: PhysicalDevice,  samples: SampleCountFlagBits,  p_multisample_properties: [*c]MultisamplePropertiesEXT) void;
+pub const getPhysicalDeviceMultisamplePropertiesEXT = vkGetPhysicalDeviceMultisamplePropertiesEXT;
+extern fn vkGetImageDrmFormatModifierPropertiesEXT(device: Device,  image: Image,  p_properties: [*c]ImageDrmFormatModifierPropertiesEXT) Result;
+pub const getImageDrmFormatModifierPropertiesEXT = vkGetImageDrmFormatModifierPropertiesEXT;
+extern fn vkCreateValidationCacheEXT(device: Device,  p_create_info: [*c]const ValidationCacheCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_validation_cache: [*c]ValidationCacheEXT) Result;
+pub const createValidationCacheEXT = vkCreateValidationCacheEXT;
+extern fn vkDestroyValidationCacheEXT(device: Device,  validation_cache: ValidationCacheEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyValidationCacheEXT = vkDestroyValidationCacheEXT;
+extern fn vkMergeValidationCachesEXT(device: Device,  dst_cache: ValidationCacheEXT,  src_cache_count: u32,  p_src_caches: [*c]const ValidationCacheEXT) Result;
+pub const mergeValidationCachesEXT = vkMergeValidationCachesEXT;
+extern fn vkGetValidationCacheDataEXT(device: Device,  validation_cache: ValidationCacheEXT,  p_data_size: [*c]usize,  p_data: ?*anyopaque) Result;
+pub const getValidationCacheDataEXT = vkGetValidationCacheDataEXT;
+extern fn vkCmdBindShadingRateImageNV(command_buffer: CommandBuffer,  image_view: ImageView,  image_layout: ImageLayout) void;
+pub const cmdBindShadingRateImageNV = vkCmdBindShadingRateImageNV;
+extern fn vkCmdSetViewportShadingRatePaletteNV(command_buffer: CommandBuffer,  first_viewport: u32,  viewport_count: u32,  p_shading_rate_palettes: [*c]const ShadingRatePaletteNV) void;
+pub const cmdSetViewportShadingRatePaletteNV = vkCmdSetViewportShadingRatePaletteNV;
+extern fn vkCmdSetCoarseSampleOrderNV(command_buffer: CommandBuffer,  sample_order_type: CoarseSampleOrderTypeNV,  custom_sample_order_count: u32,  p_custom_sample_orders: [*c]const CoarseSampleOrderCustomNV) void;
+pub const cmdSetCoarseSampleOrderNV = vkCmdSetCoarseSampleOrderNV;
+extern fn vkCreateAccelerationStructureNV(device: Device,  p_create_info: [*c]const AccelerationStructureCreateInfoNV,  p_allocator: [*c]const AllocationCallbacks,  p_acceleration_structure: [*c]AccelerationStructureNV) Result;
+pub const createAccelerationStructureNV = vkCreateAccelerationStructureNV;
+extern fn vkDestroyAccelerationStructureNV(device: Device,  acceleration_structure: AccelerationStructureNV,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyAccelerationStructureNV = vkDestroyAccelerationStructureNV;
+extern fn vkGetAccelerationStructureMemoryRequirementsNV(device: Device,  p_info: [*c]const AccelerationStructureMemoryRequirementsInfoNV,  p_memory_requirements: [*c]MemoryRequirements2KHR) void;
+pub const getAccelerationStructureMemoryRequirementsNV = vkGetAccelerationStructureMemoryRequirementsNV;
+extern fn vkBindAccelerationStructureMemoryNV(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindAccelerationStructureMemoryInfoNV) Result;
+pub const bindAccelerationStructureMemoryNV = vkBindAccelerationStructureMemoryNV;
+extern fn vkCmdBuildAccelerationStructureNV(command_buffer: CommandBuffer,  p_info: [*c]const AccelerationStructureInfoNV,  instance_data: Buffer,  instance_offset: DeviceSize,  update: Bool32,  dst: AccelerationStructureNV,  src: AccelerationStructureNV,  scratch: Buffer,  scratch_offset: DeviceSize) void;
+pub const cmdBuildAccelerationStructureNV = vkCmdBuildAccelerationStructureNV;
+extern fn vkCmdCopyAccelerationStructureNV(command_buffer: CommandBuffer,  dst: AccelerationStructureNV,  src: AccelerationStructureNV,  mode: CopyAccelerationStructureModeKHR) void;
+pub const cmdCopyAccelerationStructureNV = vkCmdCopyAccelerationStructureNV;
+extern fn vkCmdTraceRaysNV(command_buffer: CommandBuffer,  raygen_shader_binding_table_buffer: Buffer,  raygen_shader_binding_offset: DeviceSize,  miss_shader_binding_table_buffer: Buffer,  miss_shader_binding_offset: DeviceSize,  miss_shader_binding_stride: DeviceSize,  hit_shader_binding_table_buffer: Buffer,  hit_shader_binding_offset: DeviceSize,  hit_shader_binding_stride: DeviceSize,  callable_shader_binding_table_buffer: Buffer,  callable_shader_binding_offset: DeviceSize,  callable_shader_binding_stride: DeviceSize,  width: u32,  height: u32,  depth: u32) void;
+pub const cmdTraceRaysNV = vkCmdTraceRaysNV;
+extern fn vkCreateRayTracingPipelinesNV(device: Device,  pipeline_cache: PipelineCache,  create_info_count: u32,  p_create_infos: [*c]const RayTracingPipelineCreateInfoNV,  p_allocator: [*c]const AllocationCallbacks,  p_pipelines: [*c]Pipeline) Result;
+pub const createRayTracingPipelinesNV = vkCreateRayTracingPipelinesNV;
+extern fn vkGetRayTracingShaderGroupHandlesKHR(device: Device,  pipeline: Pipeline,  first_group: u32,  group_count: u32,  data_size: usize,  p_data: ?*anyopaque) Result;
+pub const getRayTracingShaderGroupHandlesKHR = vkGetRayTracingShaderGroupHandlesKHR;
+extern fn vkGetRayTracingShaderGroupHandlesNV(device: Device,  pipeline: Pipeline,  first_group: u32,  group_count: u32,  data_size: usize,  p_data: ?*anyopaque) Result;
+pub const getRayTracingShaderGroupHandlesNV = vkGetRayTracingShaderGroupHandlesNV;
+extern fn vkGetAccelerationStructureHandleNV(device: Device,  acceleration_structure: AccelerationStructureNV,  data_size: usize,  p_data: ?*anyopaque) Result;
+pub const getAccelerationStructureHandleNV = vkGetAccelerationStructureHandleNV;
+extern fn vkCmdWriteAccelerationStructuresPropertiesNV(command_buffer: CommandBuffer,  acceleration_structure_count: u32,  p_acceleration_structures: [*c]const AccelerationStructureNV,  query_type: QueryType,  query_pool: QueryPool,  first_query: u32) void;
+pub const cmdWriteAccelerationStructuresPropertiesNV = vkCmdWriteAccelerationStructuresPropertiesNV;
+extern fn vkCompileDeferredNV(device: Device,  pipeline: Pipeline,  shader: u32) Result;
+pub const compileDeferredNV = vkCompileDeferredNV;
+extern fn vkGetMemoryHostPointerPropertiesEXT(device: Device,  handle_type: ExternalMemoryHandleTypeFlagBits,  p_host_pointer: ?*const anyopaque,  p_memory_host_pointer_properties: [*c]MemoryHostPointerPropertiesEXT) Result;
+pub const getMemoryHostPointerPropertiesEXT = vkGetMemoryHostPointerPropertiesEXT;
+extern fn vkCmdWriteBufferMarkerAMD(command_buffer: CommandBuffer,  pipeline_stage: PipelineStageFlagBits,  dst_buffer: Buffer,  dst_offset: DeviceSize,  marker: u32) void;
+pub const cmdWriteBufferMarkerAMD = vkCmdWriteBufferMarkerAMD;
+extern fn vkCmdWriteBufferMarker2AMD(command_buffer: CommandBuffer,  stage: PipelineStageFlags2,  dst_buffer: Buffer,  dst_offset: DeviceSize,  marker: u32) void;
+pub const cmdWriteBufferMarker2AMD = vkCmdWriteBufferMarker2AMD;
+extern fn vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(physical_device: PhysicalDevice,  p_time_domain_count: [*c]u32,  p_time_domains: [*c]TimeDomainKHR) Result;
+pub const getPhysicalDeviceCalibrateableTimeDomainsEXT = vkGetPhysicalDeviceCalibrateableTimeDomainsEXT;
+extern fn vkGetCalibratedTimestampsEXT(device: Device,  timestamp_count: u32,  p_timestamp_infos: [*c]const CalibratedTimestampInfoKHR,  p_timestamps: [*c]u64,  p_max_deviation: [*c]u64) Result;
+pub const getCalibratedTimestampsEXT = vkGetCalibratedTimestampsEXT;
+extern fn vkCmdDrawMeshTasksNV(command_buffer: CommandBuffer,  task_count: u32,  first_task: u32) void;
+pub const cmdDrawMeshTasksNV = vkCmdDrawMeshTasksNV;
+extern fn vkCmdDrawMeshTasksIndirectNV(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  draw_count: u32,  stride: u32) void;
+pub const cmdDrawMeshTasksIndirectNV = vkCmdDrawMeshTasksIndirectNV;
+extern fn vkCmdDrawMeshTasksIndirectCountNV(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawMeshTasksIndirectCountNV = vkCmdDrawMeshTasksIndirectCountNV;
+extern fn vkCmdSetExclusiveScissorEnableNV(command_buffer: CommandBuffer,  first_exclusive_scissor: u32,  exclusive_scissor_count: u32,  p_exclusive_scissor_enables: [*c]const Bool32) void;
+pub const cmdSetExclusiveScissorEnableNV = vkCmdSetExclusiveScissorEnableNV;
+extern fn vkCmdSetExclusiveScissorNV(command_buffer: CommandBuffer,  first_exclusive_scissor: u32,  exclusive_scissor_count: u32,  p_exclusive_scissors: [*c]const Rect2D) void;
+pub const cmdSetExclusiveScissorNV = vkCmdSetExclusiveScissorNV;
+extern fn vkCmdSetCheckpointNV(command_buffer: CommandBuffer,  p_checkpoint_marker: ?*const anyopaque) void;
+pub const cmdSetCheckpointNV = vkCmdSetCheckpointNV;
+extern fn vkGetQueueCheckpointDataNV(queue: Queue,  p_checkpoint_data_count: [*c]u32,  p_checkpoint_data: [*c]CheckpointDataNV) void;
+pub const getQueueCheckpointDataNV = vkGetQueueCheckpointDataNV;
+extern fn vkGetQueueCheckpointData2NV(queue: Queue,  p_checkpoint_data_count: [*c]u32,  p_checkpoint_data: [*c]CheckpointData2NV) void;
+pub const getQueueCheckpointData2NV = vkGetQueueCheckpointData2NV;
+extern fn vkInitializePerformanceApiINTEL(device: Device,  p_initialize_info: [*c]const InitializePerformanceApiInfoINTEL) Result;
+pub const initializePerformanceApiINTEL = vkInitializePerformanceApiINTEL;
+extern fn vkUninitializePerformanceApiINTEL(device: Device) void;
+pub const uninitializePerformanceApiINTEL = vkUninitializePerformanceApiINTEL;
+extern fn vkCmdSetPerformanceMarkerINTEL(command_buffer: CommandBuffer,  p_marker_info: [*c]const PerformanceMarkerInfoINTEL) Result;
+pub const cmdSetPerformanceMarkerINTEL = vkCmdSetPerformanceMarkerINTEL;
+extern fn vkCmdSetPerformanceStreamMarkerINTEL(command_buffer: CommandBuffer,  p_marker_info: [*c]const PerformanceStreamMarkerInfoINTEL) Result;
+pub const cmdSetPerformanceStreamMarkerINTEL = vkCmdSetPerformanceStreamMarkerINTEL;
+extern fn vkCmdSetPerformanceOverrideINTEL(command_buffer: CommandBuffer,  p_override_info: [*c]const PerformanceOverrideInfoINTEL) Result;
+pub const cmdSetPerformanceOverrideINTEL = vkCmdSetPerformanceOverrideINTEL;
+extern fn vkAcquirePerformanceConfigurationINTEL(device: Device,  p_acquire_info: [*c]const PerformanceConfigurationAcquireInfoINTEL,  p_configuration: [*c]PerformanceConfigurationINTEL) Result;
+pub const acquirePerformanceConfigurationINTEL = vkAcquirePerformanceConfigurationINTEL;
+extern fn vkReleasePerformanceConfigurationINTEL(device: Device,  configuration: PerformanceConfigurationINTEL) Result;
+pub const releasePerformanceConfigurationINTEL = vkReleasePerformanceConfigurationINTEL;
+extern fn vkQueueSetPerformanceConfigurationINTEL(queue: Queue,  configuration: PerformanceConfigurationINTEL) Result;
+pub const queueSetPerformanceConfigurationINTEL = vkQueueSetPerformanceConfigurationINTEL;
+extern fn vkGetPerformanceParameterINTEL(device: Device,  parameter: PerformanceParameterTypeINTEL,  p_value: [*c]PerformanceValueINTEL) Result;
+pub const getPerformanceParameterINTEL = vkGetPerformanceParameterINTEL;
+extern fn vkSetLocalDimmingAMD(device: Device,  swap_chain: SwapchainKHR,  local_dimming_enable: Bool32) void;
+pub const setLocalDimmingAMD = vkSetLocalDimmingAMD;
+extern fn vkGetBufferDeviceAddressEXT(device: Device,  p_info: [*c]const BufferDeviceAddressInfo) DeviceAddress;
+pub const getBufferDeviceAddressEXT = vkGetBufferDeviceAddressEXT;
+extern fn vkGetPhysicalDeviceToolPropertiesEXT(physical_device: PhysicalDevice,  p_tool_count: [*c]u32,  p_tool_properties: [*c]PhysicalDeviceToolProperties) Result;
+pub const getPhysicalDeviceToolPropertiesEXT = vkGetPhysicalDeviceToolPropertiesEXT;
+extern fn vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]CooperativeMatrixPropertiesNV) Result;
+pub const getPhysicalDeviceCooperativeMatrixPropertiesNV = vkGetPhysicalDeviceCooperativeMatrixPropertiesNV;
+extern fn vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physical_device: PhysicalDevice,  p_combination_count: [*c]u32,  p_combinations: [*c]FramebufferMixedSamplesCombinationNV) Result;
+pub const getPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV = vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV;
+extern fn vkCreateHeadlessSurfaceEXT(instance: Instance,  p_create_info: [*c]const HeadlessSurfaceCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_surface: [*c]SurfaceKHR) Result;
+pub const createHeadlessSurfaceEXT = vkCreateHeadlessSurfaceEXT;
+extern fn vkCmdSetLineStippleEXT(command_buffer: CommandBuffer,  line_stipple_factor: u32,  line_stipple_pattern: u16) void;
+pub const cmdSetLineStippleEXT = vkCmdSetLineStippleEXT;
+extern fn vkResetQueryPoolEXT(device: Device,  query_pool: QueryPool,  first_query: u32,  query_count: u32) void;
+pub const resetQueryPoolEXT = vkResetQueryPoolEXT;
+extern fn vkCmdSetCullModeEXT(command_buffer: CommandBuffer,  cull_mode: CullModeFlags) void;
+pub const cmdSetCullModeEXT = vkCmdSetCullModeEXT;
+extern fn vkCmdSetFrontFaceEXT(command_buffer: CommandBuffer,  front_face: FrontFace) void;
+pub const cmdSetFrontFaceEXT = vkCmdSetFrontFaceEXT;
+extern fn vkCmdSetPrimitiveTopologyEXT(command_buffer: CommandBuffer,  primitive_topology: PrimitiveTopology) void;
+pub const cmdSetPrimitiveTopologyEXT = vkCmdSetPrimitiveTopologyEXT;
+extern fn vkCmdSetViewportWithCountEXT(command_buffer: CommandBuffer,  viewport_count: u32,  p_viewports: [*c]const Viewport) void;
+pub const cmdSetViewportWithCountEXT = vkCmdSetViewportWithCountEXT;
+extern fn vkCmdSetScissorWithCountEXT(command_buffer: CommandBuffer,  scissor_count: u32,  p_scissors: [*c]const Rect2D) void;
+pub const cmdSetScissorWithCountEXT = vkCmdSetScissorWithCountEXT;
+extern fn vkCmdBindVertexBuffers2EXT(command_buffer: CommandBuffer,  first_binding: u32,  binding_count: u32,  p_buffers: [*c]const Buffer,  p_offsets: [*c]const DeviceSize,  p_sizes: [*c]const DeviceSize,  p_strides: [*c]const DeviceSize) void;
+pub const cmdBindVertexBuffers2EXT = vkCmdBindVertexBuffers2EXT;
+extern fn vkCmdSetDepthTestEnableEXT(command_buffer: CommandBuffer,  depth_test_enable: Bool32) void;
+pub const cmdSetDepthTestEnableEXT = vkCmdSetDepthTestEnableEXT;
+extern fn vkCmdSetDepthWriteEnableEXT(command_buffer: CommandBuffer,  depth_write_enable: Bool32) void;
+pub const cmdSetDepthWriteEnableEXT = vkCmdSetDepthWriteEnableEXT;
+extern fn vkCmdSetDepthCompareOpEXT(command_buffer: CommandBuffer,  depth_compare_op: CompareOp) void;
+pub const cmdSetDepthCompareOpEXT = vkCmdSetDepthCompareOpEXT;
+extern fn vkCmdSetDepthBoundsTestEnableEXT(command_buffer: CommandBuffer,  depth_bounds_test_enable: Bool32) void;
+pub const cmdSetDepthBoundsTestEnableEXT = vkCmdSetDepthBoundsTestEnableEXT;
+extern fn vkCmdSetStencilTestEnableEXT(command_buffer: CommandBuffer,  stencil_test_enable: Bool32) void;
+pub const cmdSetStencilTestEnableEXT = vkCmdSetStencilTestEnableEXT;
+extern fn vkCmdSetStencilOpEXT(command_buffer: CommandBuffer,  face_mask: StencilFaceFlags,  fail_op: StencilOp,  pass_op: StencilOp,  depth_fail_op: StencilOp,  compare_op: CompareOp) void;
+pub const cmdSetStencilOpEXT = vkCmdSetStencilOpEXT;
+extern fn vkCopyMemoryToImageEXT(device: Device,  p_copy_memory_to_image_info: [*c]const CopyMemoryToImageInfo) Result;
+pub const copyMemoryToImageEXT = vkCopyMemoryToImageEXT;
+extern fn vkCopyImageToMemoryEXT(device: Device,  p_copy_image_to_memory_info: [*c]const CopyImageToMemoryInfo) Result;
+pub const copyImageToMemoryEXT = vkCopyImageToMemoryEXT;
+extern fn vkCopyImageToImageEXT(device: Device,  p_copy_image_to_image_info: [*c]const CopyImageToImageInfo) Result;
+pub const copyImageToImageEXT = vkCopyImageToImageEXT;
+extern fn vkTransitionImageLayoutEXT(device: Device,  transition_count: u32,  p_transitions: [*c]const HostImageLayoutTransitionInfo) Result;
+pub const transitionImageLayoutEXT = vkTransitionImageLayoutEXT;
+extern fn vkGetImageSubresourceLayout2EXT(device: Device,  image: Image,  p_subresource: [*c]const ImageSubresource2,  p_layout: [*c]SubresourceLayout2) void;
+pub const getImageSubresourceLayout2EXT = vkGetImageSubresourceLayout2EXT;
+extern fn vkReleaseSwapchainImagesEXT(device: Device,  p_release_info: [*c]const ReleaseSwapchainImagesInfoKHR) Result;
+pub const releaseSwapchainImagesEXT = vkReleaseSwapchainImagesEXT;
+extern fn vkGetGeneratedCommandsMemoryRequirementsNV(device: Device,  p_info: [*c]const GeneratedCommandsMemoryRequirementsInfoNV,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getGeneratedCommandsMemoryRequirementsNV = vkGetGeneratedCommandsMemoryRequirementsNV;
+extern fn vkCmdPreprocessGeneratedCommandsNV(command_buffer: CommandBuffer,  p_generated_commands_info: [*c]const GeneratedCommandsInfoNV) void;
+pub const cmdPreprocessGeneratedCommandsNV = vkCmdPreprocessGeneratedCommandsNV;
+extern fn vkCmdExecuteGeneratedCommandsNV(command_buffer: CommandBuffer,  is_preprocessed: Bool32,  p_generated_commands_info: [*c]const GeneratedCommandsInfoNV) void;
+pub const cmdExecuteGeneratedCommandsNV = vkCmdExecuteGeneratedCommandsNV;
+extern fn vkCmdBindPipelineShaderGroupNV(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  pipeline: Pipeline,  group_index: u32) void;
+pub const cmdBindPipelineShaderGroupNV = vkCmdBindPipelineShaderGroupNV;
+extern fn vkCreateIndirectCommandsLayoutNV(device: Device,  p_create_info: [*c]const IndirectCommandsLayoutCreateInfoNV,  p_allocator: [*c]const AllocationCallbacks,  p_indirect_commands_layout: [*c]IndirectCommandsLayoutNV) Result;
+pub const createIndirectCommandsLayoutNV = vkCreateIndirectCommandsLayoutNV;
+extern fn vkDestroyIndirectCommandsLayoutNV(device: Device,  indirect_commands_layout: IndirectCommandsLayoutNV,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyIndirectCommandsLayoutNV = vkDestroyIndirectCommandsLayoutNV;
+extern fn vkCmdSetDepthBias2EXT(command_buffer: CommandBuffer,  p_depth_bias_info: [*c]const DepthBiasInfoEXT) void;
+pub const cmdSetDepthBias2EXT = vkCmdSetDepthBias2EXT;
+extern fn vkAcquireDrmDisplayEXT(physical_device: PhysicalDevice,  drm_fd: i32,  display: DisplayKHR) Result;
+pub const acquireDrmDisplayEXT = vkAcquireDrmDisplayEXT;
+extern fn vkGetDrmDisplayEXT(physical_device: PhysicalDevice,  drm_fd: i32,  connector_id: u32,  display: [*c]DisplayKHR) Result;
+pub const getDrmDisplayEXT = vkGetDrmDisplayEXT;
+extern fn vkCreatePrivateDataSlotEXT(device: Device,  p_create_info: [*c]const PrivateDataSlotCreateInfo,  p_allocator: [*c]const AllocationCallbacks,  p_private_data_slot: [*c]PrivateDataSlot) Result;
+pub const createPrivateDataSlotEXT = vkCreatePrivateDataSlotEXT;
+extern fn vkDestroyPrivateDataSlotEXT(device: Device,  private_data_slot: PrivateDataSlot,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyPrivateDataSlotEXT = vkDestroyPrivateDataSlotEXT;
+extern fn vkSetPrivateDataEXT(device: Device,  object_type: ObjectType,  object_handle: u64,  private_data_slot: PrivateDataSlot,  data: u64) Result;
+pub const setPrivateDataEXT = vkSetPrivateDataEXT;
+extern fn vkGetPrivateDataEXT(device: Device,  object_type: ObjectType,  object_handle: u64,  private_data_slot: PrivateDataSlot,  p_data: [*c]u64) void;
+pub const getPrivateDataEXT = vkGetPrivateDataEXT;
+extern fn vkCmdDispatchTileQCOM(command_buffer: CommandBuffer,  p_dispatch_tile_info: [*c]const DispatchTileInfoQCOM) void;
+pub const cmdDispatchTileQCOM = vkCmdDispatchTileQCOM;
+extern fn vkCmdBeginPerTileExecutionQCOM(command_buffer: CommandBuffer,  p_per_tile_begin_info: [*c]const PerTileBeginInfoQCOM) void;
+pub const cmdBeginPerTileExecutionQCOM = vkCmdBeginPerTileExecutionQCOM;
+extern fn vkCmdEndPerTileExecutionQCOM(command_buffer: CommandBuffer,  p_per_tile_end_info: [*c]const PerTileEndInfoQCOM) void;
+pub const cmdEndPerTileExecutionQCOM = vkCmdEndPerTileExecutionQCOM;
+extern fn vkGetDescriptorSetLayoutSizeEXT(device: Device,  layout: DescriptorSetLayout,  p_layout_size_in_bytes: [*c]DeviceSize) void;
+pub const getDescriptorSetLayoutSizeEXT = vkGetDescriptorSetLayoutSizeEXT;
+extern fn vkGetDescriptorSetLayoutBindingOffsetEXT(device: Device,  layout: DescriptorSetLayout,  binding: u32,  p_offset: [*c]DeviceSize) void;
+pub const getDescriptorSetLayoutBindingOffsetEXT = vkGetDescriptorSetLayoutBindingOffsetEXT;
+extern fn vkGetDescriptorEXT(device: Device,  p_descriptor_info: [*c]const DescriptorGetInfoEXT,  data_size: usize,  p_descriptor: ?*anyopaque) void;
+pub const getDescriptorEXT = vkGetDescriptorEXT;
+extern fn vkCmdBindDescriptorBuffersEXT(command_buffer: CommandBuffer,  buffer_count: u32,  p_binding_infos: [*c]const DescriptorBufferBindingInfoEXT) void;
+pub const cmdBindDescriptorBuffersEXT = vkCmdBindDescriptorBuffersEXT;
+extern fn vkCmdSetDescriptorBufferOffsetsEXT(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  layout: PipelineLayout,  first_set: u32,  set_count: u32,  p_buffer_indices: [*c]const u32,  p_offsets: [*c]const DeviceSize) void;
+pub const cmdSetDescriptorBufferOffsetsEXT = vkCmdSetDescriptorBufferOffsetsEXT;
+extern fn vkCmdBindDescriptorBufferEmbeddedSamplersEXT(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  layout: PipelineLayout,  set: u32) void;
+pub const cmdBindDescriptorBufferEmbeddedSamplersEXT = vkCmdBindDescriptorBufferEmbeddedSamplersEXT;
+extern fn vkGetBufferOpaqueCaptureDescriptorDataEXT(device: Device,  p_info: [*c]const BufferCaptureDescriptorDataInfoEXT,  p_data: ?*anyopaque) Result;
+pub const getBufferOpaqueCaptureDescriptorDataEXT = vkGetBufferOpaqueCaptureDescriptorDataEXT;
+extern fn vkGetImageOpaqueCaptureDescriptorDataEXT(device: Device,  p_info: [*c]const ImageCaptureDescriptorDataInfoEXT,  p_data: ?*anyopaque) Result;
+pub const getImageOpaqueCaptureDescriptorDataEXT = vkGetImageOpaqueCaptureDescriptorDataEXT;
+extern fn vkGetImageViewOpaqueCaptureDescriptorDataEXT(device: Device,  p_info: [*c]const ImageViewCaptureDescriptorDataInfoEXT,  p_data: ?*anyopaque) Result;
+pub const getImageViewOpaqueCaptureDescriptorDataEXT = vkGetImageViewOpaqueCaptureDescriptorDataEXT;
+extern fn vkGetSamplerOpaqueCaptureDescriptorDataEXT(device: Device,  p_info: [*c]const SamplerCaptureDescriptorDataInfoEXT,  p_data: ?*anyopaque) Result;
+pub const getSamplerOpaqueCaptureDescriptorDataEXT = vkGetSamplerOpaqueCaptureDescriptorDataEXT;
+extern fn vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT(device: Device,  p_info: [*c]const AccelerationStructureCaptureDescriptorDataInfoEXT,  p_data: ?*anyopaque) Result;
+pub const getAccelerationStructureOpaqueCaptureDescriptorDataEXT = vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT;
+extern fn vkCmdSetFragmentShadingRateEnumNV(command_buffer: CommandBuffer,  shading_rate: FragmentShadingRateNV,  combiner_ops: [*c]const FragmentShadingRateCombinerOpKHR) void;
+pub const cmdSetFragmentShadingRateEnumNV = vkCmdSetFragmentShadingRateEnumNV;
+extern fn vkGetDeviceFaultInfoEXT(device: Device,  p_fault_counts: [*c]DeviceFaultCountsEXT,  p_fault_info: [*c]DeviceFaultInfoEXT) Result;
+pub const getDeviceFaultInfoEXT = vkGetDeviceFaultInfoEXT;
+extern fn vkCmdSetVertexInputEXT(command_buffer: CommandBuffer,  vertex_binding_description_count: u32,  p_vertex_binding_descriptions: [*c]const VertexInputBindingDescription2EXT,  vertex_attribute_description_count: u32,  p_vertex_attribute_descriptions: [*c]const VertexInputAttributeDescription2EXT) void;
+pub const cmdSetVertexInputEXT = vkCmdSetVertexInputEXT;
+extern fn vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(device: Device,  renderpass: RenderPass,  p_max_workgroup_size: [*c]Extent2D) Result;
+pub const getDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI;
+extern fn vkCmdSubpassShadingHUAWEI(command_buffer: CommandBuffer) void;
+pub const cmdSubpassShadingHUAWEI = vkCmdSubpassShadingHUAWEI;
+extern fn vkCmdBindInvocationMaskHUAWEI(command_buffer: CommandBuffer,  image_view: ImageView,  image_layout: ImageLayout) void;
+pub const cmdBindInvocationMaskHUAWEI = vkCmdBindInvocationMaskHUAWEI;
+extern fn vkGetMemoryRemoteAddressNV(device: Device,  p_memory_get_remote_address_info: [*c]const MemoryGetRemoteAddressInfoNV,  p_address: [*c]RemoteAddressNV) Result;
+pub const getMemoryRemoteAddressNV = vkGetMemoryRemoteAddressNV;
+extern fn vkGetPipelinePropertiesEXT(device: Device,  p_pipeline_info: [*c]const PipelineInfoEXT,  p_pipeline_properties: [*c]BaseOutStructure) Result;
+pub const getPipelinePropertiesEXT = vkGetPipelinePropertiesEXT;
+extern fn vkCmdSetPatchControlPointsEXT(command_buffer: CommandBuffer,  patch_control_points: u32) void;
+pub const cmdSetPatchControlPointsEXT = vkCmdSetPatchControlPointsEXT;
+extern fn vkCmdSetRasterizerDiscardEnableEXT(command_buffer: CommandBuffer,  rasterizer_discard_enable: Bool32) void;
+pub const cmdSetRasterizerDiscardEnableEXT = vkCmdSetRasterizerDiscardEnableEXT;
+extern fn vkCmdSetDepthBiasEnableEXT(command_buffer: CommandBuffer,  depth_bias_enable: Bool32) void;
+pub const cmdSetDepthBiasEnableEXT = vkCmdSetDepthBiasEnableEXT;
+extern fn vkCmdSetLogicOpEXT(command_buffer: CommandBuffer,  logic_op: LogicOp) void;
+pub const cmdSetLogicOpEXT = vkCmdSetLogicOpEXT;
+extern fn vkCmdSetPrimitiveRestartEnableEXT(command_buffer: CommandBuffer,  primitive_restart_enable: Bool32) void;
+pub const cmdSetPrimitiveRestartEnableEXT = vkCmdSetPrimitiveRestartEnableEXT;
+extern fn vkCmdSetColorWriteEnableEXT(command_buffer: CommandBuffer,  attachment_count: u32,  p_color_write_enables: [*c]const Bool32) void;
+pub const cmdSetColorWriteEnableEXT = vkCmdSetColorWriteEnableEXT;
+extern fn vkCmdDrawMultiEXT(command_buffer: CommandBuffer,  draw_count: u32,  p_vertex_info: [*c]const MultiDrawInfoEXT,  instance_count: u32,  first_instance: u32,  stride: u32) void;
+pub const cmdDrawMultiEXT = vkCmdDrawMultiEXT;
+extern fn vkCmdDrawMultiIndexedEXT(command_buffer: CommandBuffer,  draw_count: u32,  p_index_info: [*c]const MultiDrawIndexedInfoEXT,  instance_count: u32,  first_instance: u32,  stride: u32,  p_vertex_offset: [*c]const i32) void;
+pub const cmdDrawMultiIndexedEXT = vkCmdDrawMultiIndexedEXT;
+extern fn vkCreateMicromapEXT(device: Device,  p_create_info: [*c]const MicromapCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_micromap: [*c]MicromapEXT) Result;
+pub const createMicromapEXT = vkCreateMicromapEXT;
+extern fn vkDestroyMicromapEXT(device: Device,  micromap: MicromapEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyMicromapEXT = vkDestroyMicromapEXT;
+extern fn vkCmdBuildMicromapsEXT(command_buffer: CommandBuffer,  info_count: u32,  p_infos: [*c]const MicromapBuildInfoEXT) void;
+pub const cmdBuildMicromapsEXT = vkCmdBuildMicromapsEXT;
+extern fn vkBuildMicromapsEXT(device: Device,  deferred_operation: DeferredOperationKHR,  info_count: u32,  p_infos: [*c]const MicromapBuildInfoEXT) Result;
+pub const buildMicromapsEXT = vkBuildMicromapsEXT;
+extern fn vkCopyMicromapEXT(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyMicromapInfoEXT) Result;
+pub const copyMicromapEXT = vkCopyMicromapEXT;
+extern fn vkCopyMicromapToMemoryEXT(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyMicromapToMemoryInfoEXT) Result;
+pub const copyMicromapToMemoryEXT = vkCopyMicromapToMemoryEXT;
+extern fn vkCopyMemoryToMicromapEXT(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyMemoryToMicromapInfoEXT) Result;
+pub const copyMemoryToMicromapEXT = vkCopyMemoryToMicromapEXT;
+extern fn vkWriteMicromapsPropertiesEXT(device: Device,  micromap_count: u32,  p_micromaps: [*c]const MicromapEXT,  query_type: QueryType,  data_size: usize,  p_data: ?*anyopaque,  stride: usize) Result;
+pub const writeMicromapsPropertiesEXT = vkWriteMicromapsPropertiesEXT;
+extern fn vkCmdCopyMicromapEXT(command_buffer: CommandBuffer,  p_info: [*c]const CopyMicromapInfoEXT) void;
+pub const cmdCopyMicromapEXT = vkCmdCopyMicromapEXT;
+extern fn vkCmdCopyMicromapToMemoryEXT(command_buffer: CommandBuffer,  p_info: [*c]const CopyMicromapToMemoryInfoEXT) void;
+pub const cmdCopyMicromapToMemoryEXT = vkCmdCopyMicromapToMemoryEXT;
+extern fn vkCmdCopyMemoryToMicromapEXT(command_buffer: CommandBuffer,  p_info: [*c]const CopyMemoryToMicromapInfoEXT) void;
+pub const cmdCopyMemoryToMicromapEXT = vkCmdCopyMemoryToMicromapEXT;
+extern fn vkCmdWriteMicromapsPropertiesEXT(command_buffer: CommandBuffer,  micromap_count: u32,  p_micromaps: [*c]const MicromapEXT,  query_type: QueryType,  query_pool: QueryPool,  first_query: u32) void;
+pub const cmdWriteMicromapsPropertiesEXT = vkCmdWriteMicromapsPropertiesEXT;
+extern fn vkGetDeviceMicromapCompatibilityEXT(device: Device,  p_version_info: [*c]const MicromapVersionInfoEXT,  p_compatibility: [*c]AccelerationStructureCompatibilityKHR) void;
+pub const getDeviceMicromapCompatibilityEXT = vkGetDeviceMicromapCompatibilityEXT;
+extern fn vkGetMicromapBuildSizesEXT(device: Device,  build_type: AccelerationStructureBuildTypeKHR,  p_build_info: [*c]const MicromapBuildInfoEXT,  p_size_info: [*c]MicromapBuildSizesInfoEXT) void;
+pub const getMicromapBuildSizesEXT = vkGetMicromapBuildSizesEXT;
+extern fn vkCmdDrawClusterHUAWEI(command_buffer: CommandBuffer,  group_count_x: u32,  group_count_y: u32,  group_count_z: u32) void;
+pub const cmdDrawClusterHUAWEI = vkCmdDrawClusterHUAWEI;
+extern fn vkCmdDrawClusterIndirectHUAWEI(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize) void;
+pub const cmdDrawClusterIndirectHUAWEI = vkCmdDrawClusterIndirectHUAWEI;
+extern fn vkSetDeviceMemoryPriorityEXT(device: Device,  memory: DeviceMemory,  priority: f32) void;
+pub const setDeviceMemoryPriorityEXT = vkSetDeviceMemoryPriorityEXT;
+extern fn vkGetDescriptorSetLayoutHostMappingInfoVALVE(device: Device,  p_binding_reference: [*c]const DescriptorSetBindingReferenceVALVE,  p_host_mapping: [*c]DescriptorSetLayoutHostMappingInfoVALVE) void;
+pub const getDescriptorSetLayoutHostMappingInfoVALVE = vkGetDescriptorSetLayoutHostMappingInfoVALVE;
+extern fn vkGetDescriptorSetHostMappingVALVE(device: Device,  descriptor_set: DescriptorSet,  pp_data: [*c]?*anyopaque) void;
+pub const getDescriptorSetHostMappingVALVE = vkGetDescriptorSetHostMappingVALVE;
+extern fn vkCmdCopyMemoryIndirectNV(command_buffer: CommandBuffer,  copy_buffer_address: DeviceAddress,  copy_count: u32,  stride: u32) void;
+pub const cmdCopyMemoryIndirectNV = vkCmdCopyMemoryIndirectNV;
+extern fn vkCmdCopyMemoryToImageIndirectNV(command_buffer: CommandBuffer,  copy_buffer_address: DeviceAddress,  copy_count: u32,  stride: u32,  dst_image: Image,  dst_image_layout: ImageLayout,  p_image_subresources: [*c]const ImageSubresourceLayers) void;
+pub const cmdCopyMemoryToImageIndirectNV = vkCmdCopyMemoryToImageIndirectNV;
+extern fn vkCmdDecompressMemoryNV(command_buffer: CommandBuffer,  decompress_region_count: u32,  p_decompress_memory_regions: [*c]const DecompressMemoryRegionNV) void;
+pub const cmdDecompressMemoryNV = vkCmdDecompressMemoryNV;
+extern fn vkCmdDecompressMemoryIndirectCountNV(command_buffer: CommandBuffer,  indirect_commands_address: DeviceAddress,  indirect_commands_count_address: DeviceAddress,  stride: u32) void;
+pub const cmdDecompressMemoryIndirectCountNV = vkCmdDecompressMemoryIndirectCountNV;
+extern fn vkGetPipelineIndirectMemoryRequirementsNV(device: Device,  p_create_info: [*c]const ComputePipelineCreateInfo,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getPipelineIndirectMemoryRequirementsNV = vkGetPipelineIndirectMemoryRequirementsNV;
+extern fn vkCmdUpdatePipelineIndirectBufferNV(command_buffer: CommandBuffer,  pipeline_bind_point: PipelineBindPoint,  pipeline: Pipeline) void;
+pub const cmdUpdatePipelineIndirectBufferNV = vkCmdUpdatePipelineIndirectBufferNV;
+extern fn vkGetPipelineIndirectDeviceAddressNV(device: Device,  p_info: [*c]const PipelineIndirectDeviceAddressInfoNV) DeviceAddress;
+pub const getPipelineIndirectDeviceAddressNV = vkGetPipelineIndirectDeviceAddressNV;
+extern fn vkCmdSetDepthClampEnableEXT(command_buffer: CommandBuffer,  depth_clamp_enable: Bool32) void;
+pub const cmdSetDepthClampEnableEXT = vkCmdSetDepthClampEnableEXT;
+extern fn vkCmdSetPolygonModeEXT(command_buffer: CommandBuffer,  polygon_mode: PolygonMode) void;
+pub const cmdSetPolygonModeEXT = vkCmdSetPolygonModeEXT;
+extern fn vkCmdSetRasterizationSamplesEXT(command_buffer: CommandBuffer,  rasterization_samples: SampleCountFlagBits) void;
+pub const cmdSetRasterizationSamplesEXT = vkCmdSetRasterizationSamplesEXT;
+extern fn vkCmdSetSampleMaskEXT(command_buffer: CommandBuffer,  samples: SampleCountFlagBits,  p_sample_mask: [*c]const SampleMask) void;
+pub const cmdSetSampleMaskEXT = vkCmdSetSampleMaskEXT;
+extern fn vkCmdSetAlphaToCoverageEnableEXT(command_buffer: CommandBuffer,  alpha_to_coverage_enable: Bool32) void;
+pub const cmdSetAlphaToCoverageEnableEXT = vkCmdSetAlphaToCoverageEnableEXT;
+extern fn vkCmdSetAlphaToOneEnableEXT(command_buffer: CommandBuffer,  alpha_to_one_enable: Bool32) void;
+pub const cmdSetAlphaToOneEnableEXT = vkCmdSetAlphaToOneEnableEXT;
+extern fn vkCmdSetLogicOpEnableEXT(command_buffer: CommandBuffer,  logic_op_enable: Bool32) void;
+pub const cmdSetLogicOpEnableEXT = vkCmdSetLogicOpEnableEXT;
+extern fn vkCmdSetColorBlendEnableEXT(command_buffer: CommandBuffer,  first_attachment: u32,  attachment_count: u32,  p_color_blend_enables: [*c]const Bool32) void;
+pub const cmdSetColorBlendEnableEXT = vkCmdSetColorBlendEnableEXT;
+extern fn vkCmdSetColorBlendEquationEXT(command_buffer: CommandBuffer,  first_attachment: u32,  attachment_count: u32,  p_color_blend_equations: [*c]const ColorBlendEquationEXT) void;
+pub const cmdSetColorBlendEquationEXT = vkCmdSetColorBlendEquationEXT;
+extern fn vkCmdSetColorWriteMaskEXT(command_buffer: CommandBuffer,  first_attachment: u32,  attachment_count: u32,  p_color_write_masks: [*c]const ColorComponentFlags) void;
+pub const cmdSetColorWriteMaskEXT = vkCmdSetColorWriteMaskEXT;
+extern fn vkCmdSetTessellationDomainOriginEXT(command_buffer: CommandBuffer,  domain_origin: TessellationDomainOrigin) void;
+pub const cmdSetTessellationDomainOriginEXT = vkCmdSetTessellationDomainOriginEXT;
+extern fn vkCmdSetRasterizationStreamEXT(command_buffer: CommandBuffer,  rasterization_stream: u32) void;
+pub const cmdSetRasterizationStreamEXT = vkCmdSetRasterizationStreamEXT;
+extern fn vkCmdSetConservativeRasterizationModeEXT(command_buffer: CommandBuffer,  conservative_rasterization_mode: ConservativeRasterizationModeEXT) void;
+pub const cmdSetConservativeRasterizationModeEXT = vkCmdSetConservativeRasterizationModeEXT;
+extern fn vkCmdSetExtraPrimitiveOverestimationSizeEXT(command_buffer: CommandBuffer,  extra_primitive_overestimation_size: f32) void;
+pub const cmdSetExtraPrimitiveOverestimationSizeEXT = vkCmdSetExtraPrimitiveOverestimationSizeEXT;
+extern fn vkCmdSetDepthClipEnableEXT(command_buffer: CommandBuffer,  depth_clip_enable: Bool32) void;
+pub const cmdSetDepthClipEnableEXT = vkCmdSetDepthClipEnableEXT;
+extern fn vkCmdSetSampleLocationsEnableEXT(command_buffer: CommandBuffer,  sample_locations_enable: Bool32) void;
+pub const cmdSetSampleLocationsEnableEXT = vkCmdSetSampleLocationsEnableEXT;
+extern fn vkCmdSetColorBlendAdvancedEXT(command_buffer: CommandBuffer,  first_attachment: u32,  attachment_count: u32,  p_color_blend_advanced: [*c]const ColorBlendAdvancedEXT) void;
+pub const cmdSetColorBlendAdvancedEXT = vkCmdSetColorBlendAdvancedEXT;
+extern fn vkCmdSetProvokingVertexModeEXT(command_buffer: CommandBuffer,  provoking_vertex_mode: ProvokingVertexModeEXT) void;
+pub const cmdSetProvokingVertexModeEXT = vkCmdSetProvokingVertexModeEXT;
+extern fn vkCmdSetLineRasterizationModeEXT(command_buffer: CommandBuffer,  line_rasterization_mode: LineRasterizationModeEXT) void;
+pub const cmdSetLineRasterizationModeEXT = vkCmdSetLineRasterizationModeEXT;
+extern fn vkCmdSetLineStippleEnableEXT(command_buffer: CommandBuffer,  stippled_line_enable: Bool32) void;
+pub const cmdSetLineStippleEnableEXT = vkCmdSetLineStippleEnableEXT;
+extern fn vkCmdSetDepthClipNegativeOneToOneEXT(command_buffer: CommandBuffer,  negative_one_to_one: Bool32) void;
+pub const cmdSetDepthClipNegativeOneToOneEXT = vkCmdSetDepthClipNegativeOneToOneEXT;
+extern fn vkCmdSetViewportWScalingEnableNV(command_buffer: CommandBuffer,  viewport_wscaling_enable: Bool32) void;
+pub const cmdSetViewportWScalingEnableNV = vkCmdSetViewportWScalingEnableNV;
+extern fn vkCmdSetViewportSwizzleNV(command_buffer: CommandBuffer,  first_viewport: u32,  viewport_count: u32,  p_viewport_swizzles: [*c]const ViewportSwizzleNV) void;
+pub const cmdSetViewportSwizzleNV = vkCmdSetViewportSwizzleNV;
+extern fn vkCmdSetCoverageToColorEnableNV(command_buffer: CommandBuffer,  coverage_to_color_enable: Bool32) void;
+pub const cmdSetCoverageToColorEnableNV = vkCmdSetCoverageToColorEnableNV;
+extern fn vkCmdSetCoverageToColorLocationNV(command_buffer: CommandBuffer,  coverage_to_color_location: u32) void;
+pub const cmdSetCoverageToColorLocationNV = vkCmdSetCoverageToColorLocationNV;
+extern fn vkCmdSetCoverageModulationModeNV(command_buffer: CommandBuffer,  coverage_modulation_mode: CoverageModulationModeNV) void;
+pub const cmdSetCoverageModulationModeNV = vkCmdSetCoverageModulationModeNV;
+extern fn vkCmdSetCoverageModulationTableEnableNV(command_buffer: CommandBuffer,  coverage_modulation_table_enable: Bool32) void;
+pub const cmdSetCoverageModulationTableEnableNV = vkCmdSetCoverageModulationTableEnableNV;
+extern fn vkCmdSetCoverageModulationTableNV(command_buffer: CommandBuffer,  coverage_modulation_table_count: u32,  p_coverage_modulation_table: [*c]const f32) void;
+pub const cmdSetCoverageModulationTableNV = vkCmdSetCoverageModulationTableNV;
+extern fn vkCmdSetShadingRateImageEnableNV(command_buffer: CommandBuffer,  shading_rate_image_enable: Bool32) void;
+pub const cmdSetShadingRateImageEnableNV = vkCmdSetShadingRateImageEnableNV;
+extern fn vkCmdSetRepresentativeFragmentTestEnableNV(command_buffer: CommandBuffer,  representative_fragment_test_enable: Bool32) void;
+pub const cmdSetRepresentativeFragmentTestEnableNV = vkCmdSetRepresentativeFragmentTestEnableNV;
+extern fn vkCmdSetCoverageReductionModeNV(command_buffer: CommandBuffer,  coverage_reduction_mode: CoverageReductionModeNV) void;
+pub const cmdSetCoverageReductionModeNV = vkCmdSetCoverageReductionModeNV;
+extern fn vkCreateTensorARM(device: Device,  p_create_info: [*c]const TensorCreateInfoARM,  p_allocator: [*c]const AllocationCallbacks,  p_tensor: [*c]TensorARM) Result;
+pub const createTensorARM = vkCreateTensorARM;
+extern fn vkDestroyTensorARM(device: Device,  tensor: TensorARM,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyTensorARM = vkDestroyTensorARM;
+extern fn vkCreateTensorViewARM(device: Device,  p_create_info: [*c]const TensorViewCreateInfoARM,  p_allocator: [*c]const AllocationCallbacks,  p_view: [*c]TensorViewARM) Result;
+pub const createTensorViewARM = vkCreateTensorViewARM;
+extern fn vkDestroyTensorViewARM(device: Device,  tensor_view: TensorViewARM,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyTensorViewARM = vkDestroyTensorViewARM;
+extern fn vkGetTensorMemoryRequirementsARM(device: Device,  p_info: [*c]const TensorMemoryRequirementsInfoARM,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getTensorMemoryRequirementsARM = vkGetTensorMemoryRequirementsARM;
+extern fn vkBindTensorMemoryARM(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindTensorMemoryInfoARM) Result;
+pub const bindTensorMemoryARM = vkBindTensorMemoryARM;
+extern fn vkGetDeviceTensorMemoryRequirementsARM(device: Device,  p_info: [*c]const DeviceTensorMemoryRequirementsARM,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDeviceTensorMemoryRequirementsARM = vkGetDeviceTensorMemoryRequirementsARM;
+extern fn vkCmdCopyTensorARM(command_buffer: CommandBuffer,  p_copy_tensor_info: [*c]const CopyTensorInfoARM) void;
+pub const cmdCopyTensorARM = vkCmdCopyTensorARM;
+extern fn vkGetPhysicalDeviceExternalTensorPropertiesARM(physical_device: PhysicalDevice,  p_external_tensor_info: [*c]const PhysicalDeviceExternalTensorInfoARM,  p_external_tensor_properties: [*c]ExternalTensorPropertiesARM) void;
+pub const getPhysicalDeviceExternalTensorPropertiesARM = vkGetPhysicalDeviceExternalTensorPropertiesARM;
+extern fn vkGetTensorOpaqueCaptureDescriptorDataARM(device: Device,  p_info: [*c]const TensorCaptureDescriptorDataInfoARM,  p_data: ?*anyopaque) Result;
+pub const getTensorOpaqueCaptureDescriptorDataARM = vkGetTensorOpaqueCaptureDescriptorDataARM;
+extern fn vkGetTensorViewOpaqueCaptureDescriptorDataARM(device: Device,  p_info: [*c]const TensorViewCaptureDescriptorDataInfoARM,  p_data: ?*anyopaque) Result;
+pub const getTensorViewOpaqueCaptureDescriptorDataARM = vkGetTensorViewOpaqueCaptureDescriptorDataARM;
+extern fn vkGetShaderModuleIdentifierEXT(device: Device,  shader_module: ShaderModule,  p_identifier: [*c]ShaderModuleIdentifierEXT) void;
+pub const getShaderModuleIdentifierEXT = vkGetShaderModuleIdentifierEXT;
+extern fn vkGetShaderModuleCreateInfoIdentifierEXT(device: Device,  p_create_info: [*c]const ShaderModuleCreateInfo,  p_identifier: [*c]ShaderModuleIdentifierEXT) void;
+pub const getShaderModuleCreateInfoIdentifierEXT = vkGetShaderModuleCreateInfoIdentifierEXT;
+extern fn vkGetPhysicalDeviceOpticalFlowImageFormatsNV(physical_device: PhysicalDevice,  p_optical_flow_image_format_info: [*c]const OpticalFlowImageFormatInfoNV,  p_format_count: [*c]u32,  p_image_format_properties: [*c]OpticalFlowImageFormatPropertiesNV) Result;
+pub const getPhysicalDeviceOpticalFlowImageFormatsNV = vkGetPhysicalDeviceOpticalFlowImageFormatsNV;
+extern fn vkCreateOpticalFlowSessionNV(device: Device,  p_create_info: [*c]const OpticalFlowSessionCreateInfoNV,  p_allocator: [*c]const AllocationCallbacks,  p_session: [*c]OpticalFlowSessionNV) Result;
+pub const createOpticalFlowSessionNV = vkCreateOpticalFlowSessionNV;
+extern fn vkDestroyOpticalFlowSessionNV(device: Device,  session: OpticalFlowSessionNV,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyOpticalFlowSessionNV = vkDestroyOpticalFlowSessionNV;
+extern fn vkBindOpticalFlowSessionImageNV(device: Device,  session: OpticalFlowSessionNV,  binding_point: OpticalFlowSessionBindingPointNV,  view: ImageView,  layout: ImageLayout) Result;
+pub const bindOpticalFlowSessionImageNV = vkBindOpticalFlowSessionImageNV;
+extern fn vkCmdOpticalFlowExecuteNV(command_buffer: CommandBuffer,  session: OpticalFlowSessionNV,  p_execute_info: [*c]const OpticalFlowExecuteInfoNV) void;
+pub const cmdOpticalFlowExecuteNV = vkCmdOpticalFlowExecuteNV;
+extern fn vkAntiLagUpdateAMD(device: Device,  p_data: [*c]const AntiLagDataAMD) void;
+pub const antiLagUpdateAMD = vkAntiLagUpdateAMD;
+extern fn vkCreateShadersEXT(device: Device,  create_info_count: u32,  p_create_infos: [*c]const ShaderCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_shaders: [*c]ShaderEXT) Result;
+pub const createShadersEXT = vkCreateShadersEXT;
+extern fn vkDestroyShaderEXT(device: Device,  shader: ShaderEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyShaderEXT = vkDestroyShaderEXT;
+extern fn vkGetShaderBinaryDataEXT(device: Device,  shader: ShaderEXT,  p_data_size: [*c]usize,  p_data: ?*anyopaque) Result;
+pub const getShaderBinaryDataEXT = vkGetShaderBinaryDataEXT;
+extern fn vkCmdBindShadersEXT(command_buffer: CommandBuffer,  stage_count: u32,  p_stages: [*c]const ShaderStageFlagBits,  p_shaders: [*c]const ShaderEXT) void;
+pub const cmdBindShadersEXT = vkCmdBindShadersEXT;
+extern fn vkCmdSetDepthClampRangeEXT(command_buffer: CommandBuffer,  depth_clamp_mode: DepthClampModeEXT,  p_depth_clamp_range: [*c]const DepthClampRangeEXT) void;
+pub const cmdSetDepthClampRangeEXT = vkCmdSetDepthClampRangeEXT;
+extern fn vkGetFramebufferTilePropertiesQCOM(device: Device,  framebuffer: Framebuffer,  p_properties_count: [*c]u32,  p_properties: [*c]TilePropertiesQCOM) Result;
+pub const getFramebufferTilePropertiesQCOM = vkGetFramebufferTilePropertiesQCOM;
+extern fn vkGetDynamicRenderingTilePropertiesQCOM(device: Device,  p_rendering_info: [*c]const RenderingInfo,  p_properties: [*c]TilePropertiesQCOM) Result;
+pub const getDynamicRenderingTilePropertiesQCOM = vkGetDynamicRenderingTilePropertiesQCOM;
+extern fn vkGetPhysicalDeviceCooperativeVectorPropertiesNV(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]CooperativeVectorPropertiesNV) Result;
+pub const getPhysicalDeviceCooperativeVectorPropertiesNV = vkGetPhysicalDeviceCooperativeVectorPropertiesNV;
+extern fn vkConvertCooperativeVectorMatrixNV(device: Device,  p_info: [*c]const ConvertCooperativeVectorMatrixInfoNV) Result;
+pub const convertCooperativeVectorMatrixNV = vkConvertCooperativeVectorMatrixNV;
+extern fn vkCmdConvertCooperativeVectorMatrixNV(command_buffer: CommandBuffer,  info_count: u32,  p_infos: [*c]const ConvertCooperativeVectorMatrixInfoNV) void;
+pub const cmdConvertCooperativeVectorMatrixNV = vkCmdConvertCooperativeVectorMatrixNV;
+extern fn vkSetLatencySleepModeNV(device: Device,  swapchain: SwapchainKHR,  p_sleep_mode_info: [*c]const LatencySleepModeInfoNV) Result;
+pub const setLatencySleepModeNV = vkSetLatencySleepModeNV;
+extern fn vkLatencySleepNV(device: Device,  swapchain: SwapchainKHR,  p_sleep_info: [*c]const LatencySleepInfoNV) Result;
+pub const latencySleepNV = vkLatencySleepNV;
+extern fn vkSetLatencyMarkerNV(device: Device,  swapchain: SwapchainKHR,  p_latency_marker_info: [*c]const SetLatencyMarkerInfoNV) void;
+pub const setLatencyMarkerNV = vkSetLatencyMarkerNV;
+extern fn vkGetLatencyTimingsNV(device: Device,  swapchain: SwapchainKHR,  p_latency_marker_info: [*c]GetLatencyMarkerInfoNV) void;
+pub const getLatencyTimingsNV = vkGetLatencyTimingsNV;
+extern fn vkQueueNotifyOutOfBandNV(queue: Queue,  p_queue_type_info: [*c]const OutOfBandQueueTypeInfoNV) void;
+pub const queueNotifyOutOfBandNV = vkQueueNotifyOutOfBandNV;
+extern fn vkCreateDataGraphPipelinesARM(device: Device,  deferred_operation: DeferredOperationKHR,  pipeline_cache: PipelineCache,  create_info_count: u32,  p_create_infos: [*c]const DataGraphPipelineCreateInfoARM,  p_allocator: [*c]const AllocationCallbacks,  p_pipelines: [*c]Pipeline) Result;
+pub const createDataGraphPipelinesARM = vkCreateDataGraphPipelinesARM;
+extern fn vkCreateDataGraphPipelineSessionARM(device: Device,  p_create_info: [*c]const DataGraphPipelineSessionCreateInfoARM,  p_allocator: [*c]const AllocationCallbacks,  p_session: [*c]DataGraphPipelineSessionARM) Result;
+pub const createDataGraphPipelineSessionARM = vkCreateDataGraphPipelineSessionARM;
+extern fn vkGetDataGraphPipelineSessionBindPointRequirementsARM(device: Device,  p_info: [*c]const DataGraphPipelineSessionBindPointRequirementsInfoARM,  p_bind_point_requirement_count: [*c]u32,  p_bind_point_requirements: [*c]DataGraphPipelineSessionBindPointRequirementARM) Result;
+pub const getDataGraphPipelineSessionBindPointRequirementsARM = vkGetDataGraphPipelineSessionBindPointRequirementsARM;
+extern fn vkGetDataGraphPipelineSessionMemoryRequirementsARM(device: Device,  p_info: [*c]const DataGraphPipelineSessionMemoryRequirementsInfoARM,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getDataGraphPipelineSessionMemoryRequirementsARM = vkGetDataGraphPipelineSessionMemoryRequirementsARM;
+extern fn vkBindDataGraphPipelineSessionMemoryARM(device: Device,  bind_info_count: u32,  p_bind_infos: [*c]const BindDataGraphPipelineSessionMemoryInfoARM) Result;
+pub const bindDataGraphPipelineSessionMemoryARM = vkBindDataGraphPipelineSessionMemoryARM;
+extern fn vkDestroyDataGraphPipelineSessionARM(device: Device,  session: DataGraphPipelineSessionARM,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyDataGraphPipelineSessionARM = vkDestroyDataGraphPipelineSessionARM;
+extern fn vkCmdDispatchDataGraphARM(command_buffer: CommandBuffer,  session: DataGraphPipelineSessionARM,  p_info: [*c]const DataGraphPipelineDispatchInfoARM) void;
+pub const cmdDispatchDataGraphARM = vkCmdDispatchDataGraphARM;
+extern fn vkGetDataGraphPipelineAvailablePropertiesARM(device: Device,  p_pipeline_info: [*c]const DataGraphPipelineInfoARM,  p_properties_count: [*c]u32,  p_properties: [*c]DataGraphPipelinePropertyARM) Result;
+pub const getDataGraphPipelineAvailablePropertiesARM = vkGetDataGraphPipelineAvailablePropertiesARM;
+extern fn vkGetDataGraphPipelinePropertiesARM(device: Device,  p_pipeline_info: [*c]const DataGraphPipelineInfoARM,  properties_count: u32,  p_properties: [*c]DataGraphPipelinePropertyQueryResultARM) Result;
+pub const getDataGraphPipelinePropertiesARM = vkGetDataGraphPipelinePropertiesARM;
+extern fn vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM(physical_device: PhysicalDevice,  queue_family_index: u32,  p_queue_family_data_graph_property_count: [*c]u32,  p_queue_family_data_graph_properties: [*c]QueueFamilyDataGraphPropertiesARM) Result;
+pub const getPhysicalDeviceQueueFamilyDataGraphPropertiesARM = vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM;
+extern fn vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(physical_device: PhysicalDevice,  p_queue_family_data_graph_processing_engine_info: [*c]const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM,  p_queue_family_data_graph_processing_engine_properties: [*c]QueueFamilyDataGraphProcessingEnginePropertiesARM) void;
+pub const getPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM = vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM;
+extern fn vkCmdSetAttachmentFeedbackLoopEnableEXT(command_buffer: CommandBuffer,  aspect_mask: ImageAspectFlags) void;
+pub const cmdSetAttachmentFeedbackLoopEnableEXT = vkCmdSetAttachmentFeedbackLoopEnableEXT;
+extern fn vkCmdBindTileMemoryQCOM(command_buffer: CommandBuffer,  p_tile_memory_bind_info: [*c]const TileMemoryBindInfoQCOM) void;
+pub const cmdBindTileMemoryQCOM = vkCmdBindTileMemoryQCOM;
+extern fn vkCreateExternalComputeQueueNV(device: Device,  p_create_info: [*c]const ExternalComputeQueueCreateInfoNV,  p_allocator: [*c]const AllocationCallbacks,  p_external_queue: [*c]ExternalComputeQueueNV) Result;
+pub const createExternalComputeQueueNV = vkCreateExternalComputeQueueNV;
+extern fn vkDestroyExternalComputeQueueNV(device: Device,  external_queue: ExternalComputeQueueNV,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyExternalComputeQueueNV = vkDestroyExternalComputeQueueNV;
+extern fn vkGetExternalComputeQueueDataNV(external_queue: ExternalComputeQueueNV,  params: [*c]ExternalComputeQueueDataParamsNV,  p_data: ?*anyopaque) void;
+pub const getExternalComputeQueueDataNV = vkGetExternalComputeQueueDataNV;
+extern fn vkGetClusterAccelerationStructureBuildSizesNV(device: Device,  p_info: [*c]const ClusterAccelerationStructureInputInfoNV,  p_size_info: [*c]AccelerationStructureBuildSizesInfoKHR) void;
+pub const getClusterAccelerationStructureBuildSizesNV = vkGetClusterAccelerationStructureBuildSizesNV;
+extern fn vkCmdBuildClusterAccelerationStructureIndirectNV(command_buffer: CommandBuffer,  p_command_infos: [*c]const ClusterAccelerationStructureCommandsInfoNV) void;
+pub const cmdBuildClusterAccelerationStructureIndirectNV = vkCmdBuildClusterAccelerationStructureIndirectNV;
+extern fn vkGetPartitionedAccelerationStructuresBuildSizesNV(device: Device,  p_info: [*c]const PartitionedAccelerationStructureInstancesInputNV,  p_size_info: [*c]AccelerationStructureBuildSizesInfoKHR) void;
+pub const getPartitionedAccelerationStructuresBuildSizesNV = vkGetPartitionedAccelerationStructuresBuildSizesNV;
+extern fn vkCmdBuildPartitionedAccelerationStructuresNV(command_buffer: CommandBuffer,  p_build_info: [*c]const BuildPartitionedAccelerationStructureInfoNV) void;
+pub const cmdBuildPartitionedAccelerationStructuresNV = vkCmdBuildPartitionedAccelerationStructuresNV;
+extern fn vkGetGeneratedCommandsMemoryRequirementsEXT(device: Device,  p_info: [*c]const GeneratedCommandsMemoryRequirementsInfoEXT,  p_memory_requirements: [*c]MemoryRequirements2) void;
+pub const getGeneratedCommandsMemoryRequirementsEXT = vkGetGeneratedCommandsMemoryRequirementsEXT;
+extern fn vkCmdPreprocessGeneratedCommandsEXT(command_buffer: CommandBuffer,  p_generated_commands_info: [*c]const GeneratedCommandsInfoEXT,  state_command_buffer: CommandBuffer) void;
+pub const cmdPreprocessGeneratedCommandsEXT = vkCmdPreprocessGeneratedCommandsEXT;
+extern fn vkCmdExecuteGeneratedCommandsEXT(command_buffer: CommandBuffer,  is_preprocessed: Bool32,  p_generated_commands_info: [*c]const GeneratedCommandsInfoEXT) void;
+pub const cmdExecuteGeneratedCommandsEXT = vkCmdExecuteGeneratedCommandsEXT;
+extern fn vkCreateIndirectCommandsLayoutEXT(device: Device,  p_create_info: [*c]const IndirectCommandsLayoutCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_indirect_commands_layout: [*c]IndirectCommandsLayoutEXT) Result;
+pub const createIndirectCommandsLayoutEXT = vkCreateIndirectCommandsLayoutEXT;
+extern fn vkDestroyIndirectCommandsLayoutEXT(device: Device,  indirect_commands_layout: IndirectCommandsLayoutEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyIndirectCommandsLayoutEXT = vkDestroyIndirectCommandsLayoutEXT;
+extern fn vkCreateIndirectExecutionSetEXT(device: Device,  p_create_info: [*c]const IndirectExecutionSetCreateInfoEXT,  p_allocator: [*c]const AllocationCallbacks,  p_indirect_execution_set: [*c]IndirectExecutionSetEXT) Result;
+pub const createIndirectExecutionSetEXT = vkCreateIndirectExecutionSetEXT;
+extern fn vkDestroyIndirectExecutionSetEXT(device: Device,  indirect_execution_set: IndirectExecutionSetEXT,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyIndirectExecutionSetEXT = vkDestroyIndirectExecutionSetEXT;
+extern fn vkUpdateIndirectExecutionSetPipelineEXT(device: Device,  indirect_execution_set: IndirectExecutionSetEXT,  execution_set_write_count: u32,  p_execution_set_writes: [*c]const WriteIndirectExecutionSetPipelineEXT) void;
+pub const updateIndirectExecutionSetPipelineEXT = vkUpdateIndirectExecutionSetPipelineEXT;
+extern fn vkUpdateIndirectExecutionSetShaderEXT(device: Device,  indirect_execution_set: IndirectExecutionSetEXT,  execution_set_write_count: u32,  p_execution_set_writes: [*c]const WriteIndirectExecutionSetShaderEXT) void;
+pub const updateIndirectExecutionSetShaderEXT = vkUpdateIndirectExecutionSetShaderEXT;
+extern fn vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(physical_device: PhysicalDevice,  p_property_count: [*c]u32,  p_properties: [*c]CooperativeMatrixFlexibleDimensionsPropertiesNV) Result;
+pub const getPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV = vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV;
+extern fn vkCmdEndRendering2EXT(command_buffer: CommandBuffer,  p_rendering_end_info: [*c]const RenderingEndInfoEXT) void;
+pub const cmdEndRendering2EXT = vkCmdEndRendering2EXT;
+extern fn vkCreateAccelerationStructureKHR(device: Device,  p_create_info: [*c]const AccelerationStructureCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_acceleration_structure: [*c]AccelerationStructureKHR) Result;
+pub const createAccelerationStructureKHR = vkCreateAccelerationStructureKHR;
+extern fn vkDestroyAccelerationStructureKHR(device: Device,  acceleration_structure: AccelerationStructureKHR,  p_allocator: [*c]const AllocationCallbacks) void;
+pub const destroyAccelerationStructureKHR = vkDestroyAccelerationStructureKHR;
+extern fn vkCmdBuildAccelerationStructuresKHR(command_buffer: CommandBuffer,  info_count: u32,  p_infos: [*c]const AccelerationStructureBuildGeometryInfoKHR,  pp_build_range_infos: [*c]const [*c]const AccelerationStructureBuildRangeInfoKHR) void;
+pub const cmdBuildAccelerationStructuresKHR = vkCmdBuildAccelerationStructuresKHR;
+extern fn vkCmdBuildAccelerationStructuresIndirectKHR(command_buffer: CommandBuffer,  info_count: u32,  p_infos: [*c]const AccelerationStructureBuildGeometryInfoKHR,  p_indirect_device_addresses: [*c]const DeviceAddress,  p_indirect_strides: [*c]const u32,  pp_max_primitive_counts: [*c]const [*c]const u32) void;
+pub const cmdBuildAccelerationStructuresIndirectKHR = vkCmdBuildAccelerationStructuresIndirectKHR;
+extern fn vkBuildAccelerationStructuresKHR(device: Device,  deferred_operation: DeferredOperationKHR,  info_count: u32,  p_infos: [*c]const AccelerationStructureBuildGeometryInfoKHR,  pp_build_range_infos: [*c]const [*c]const AccelerationStructureBuildRangeInfoKHR) Result;
+pub const buildAccelerationStructuresKHR = vkBuildAccelerationStructuresKHR;
+extern fn vkCopyAccelerationStructureKHR(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyAccelerationStructureInfoKHR) Result;
+pub const copyAccelerationStructureKHR = vkCopyAccelerationStructureKHR;
+extern fn vkCopyAccelerationStructureToMemoryKHR(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyAccelerationStructureToMemoryInfoKHR) Result;
+pub const copyAccelerationStructureToMemoryKHR = vkCopyAccelerationStructureToMemoryKHR;
+extern fn vkCopyMemoryToAccelerationStructureKHR(device: Device,  deferred_operation: DeferredOperationKHR,  p_info: [*c]const CopyMemoryToAccelerationStructureInfoKHR) Result;
+pub const copyMemoryToAccelerationStructureKHR = vkCopyMemoryToAccelerationStructureKHR;
+extern fn vkWriteAccelerationStructuresPropertiesKHR(device: Device,  acceleration_structure_count: u32,  p_acceleration_structures: [*c]const AccelerationStructureKHR,  query_type: QueryType,  data_size: usize,  p_data: ?*anyopaque,  stride: usize) Result;
+pub const writeAccelerationStructuresPropertiesKHR = vkWriteAccelerationStructuresPropertiesKHR;
+extern fn vkCmdCopyAccelerationStructureKHR(command_buffer: CommandBuffer,  p_info: [*c]const CopyAccelerationStructureInfoKHR) void;
+pub const cmdCopyAccelerationStructureKHR = vkCmdCopyAccelerationStructureKHR;
+extern fn vkCmdCopyAccelerationStructureToMemoryKHR(command_buffer: CommandBuffer,  p_info: [*c]const CopyAccelerationStructureToMemoryInfoKHR) void;
+pub const cmdCopyAccelerationStructureToMemoryKHR = vkCmdCopyAccelerationStructureToMemoryKHR;
+extern fn vkCmdCopyMemoryToAccelerationStructureKHR(command_buffer: CommandBuffer,  p_info: [*c]const CopyMemoryToAccelerationStructureInfoKHR) void;
+pub const cmdCopyMemoryToAccelerationStructureKHR = vkCmdCopyMemoryToAccelerationStructureKHR;
+extern fn vkGetAccelerationStructureDeviceAddressKHR(device: Device,  p_info: [*c]const AccelerationStructureDeviceAddressInfoKHR) DeviceAddress;
+pub const getAccelerationStructureDeviceAddressKHR = vkGetAccelerationStructureDeviceAddressKHR;
+extern fn vkCmdWriteAccelerationStructuresPropertiesKHR(command_buffer: CommandBuffer,  acceleration_structure_count: u32,  p_acceleration_structures: [*c]const AccelerationStructureKHR,  query_type: QueryType,  query_pool: QueryPool,  first_query: u32) void;
+pub const cmdWriteAccelerationStructuresPropertiesKHR = vkCmdWriteAccelerationStructuresPropertiesKHR;
+extern fn vkGetDeviceAccelerationStructureCompatibilityKHR(device: Device,  p_version_info: [*c]const AccelerationStructureVersionInfoKHR,  p_compatibility: [*c]AccelerationStructureCompatibilityKHR) void;
+pub const getDeviceAccelerationStructureCompatibilityKHR = vkGetDeviceAccelerationStructureCompatibilityKHR;
+extern fn vkGetAccelerationStructureBuildSizesKHR(device: Device,  build_type: AccelerationStructureBuildTypeKHR,  p_build_info: [*c]const AccelerationStructureBuildGeometryInfoKHR,  p_max_primitive_counts: [*c]const u32,  p_size_info: [*c]AccelerationStructureBuildSizesInfoKHR) void;
+pub const getAccelerationStructureBuildSizesKHR = vkGetAccelerationStructureBuildSizesKHR;
+extern fn vkCmdTraceRaysKHR(command_buffer: CommandBuffer,  p_raygen_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_miss_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_hit_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_callable_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  width: u32,  height: u32,  depth: u32) void;
+pub const cmdTraceRaysKHR = vkCmdTraceRaysKHR;
+extern fn vkCreateRayTracingPipelinesKHR(device: Device,  deferred_operation: DeferredOperationKHR,  pipeline_cache: PipelineCache,  create_info_count: u32,  p_create_infos: [*c]const RayTracingPipelineCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_pipelines: [*c]Pipeline) Result;
+pub const createRayTracingPipelinesKHR = vkCreateRayTracingPipelinesKHR;
+extern fn vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device: Device,  pipeline: Pipeline,  first_group: u32,  group_count: u32,  data_size: usize,  p_data: ?*anyopaque) Result;
+pub const getRayTracingCaptureReplayShaderGroupHandlesKHR = vkGetRayTracingCaptureReplayShaderGroupHandlesKHR;
+extern fn vkCmdTraceRaysIndirectKHR(command_buffer: CommandBuffer,  p_raygen_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_miss_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_hit_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  p_callable_shader_binding_table: [*c]const StridedDeviceAddressRegionKHR,  indirect_device_address: DeviceAddress) void;
+pub const cmdTraceRaysIndirectKHR = vkCmdTraceRaysIndirectKHR;
+extern fn vkGetRayTracingShaderGroupStackSizeKHR(device: Device,  pipeline: Pipeline,  group: u32,  group_shader: ShaderGroupShaderKHR) DeviceSize;
+pub const getRayTracingShaderGroupStackSizeKHR = vkGetRayTracingShaderGroupStackSizeKHR;
+extern fn vkCmdSetRayTracingPipelineStackSizeKHR(command_buffer: CommandBuffer,  pipeline_stack_size: u32) void;
+pub const cmdSetRayTracingPipelineStackSizeKHR = vkCmdSetRayTracingPipelineStackSizeKHR;
+extern fn vkCmdDrawMeshTasksEXT(command_buffer: CommandBuffer,  group_count_x: u32,  group_count_y: u32,  group_count_z: u32) void;
+pub const cmdDrawMeshTasksEXT = vkCmdDrawMeshTasksEXT;
+extern fn vkCmdDrawMeshTasksIndirectEXT(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  draw_count: u32,  stride: u32) void;
+pub const cmdDrawMeshTasksIndirectEXT = vkCmdDrawMeshTasksIndirectEXT;
+extern fn vkCmdDrawMeshTasksIndirectCountEXT(command_buffer: CommandBuffer,  buffer: Buffer,  offset: DeviceSize,  count_buffer: Buffer,  count_buffer_offset: DeviceSize,  max_draw_count: u32,  stride: u32) void;
+pub const cmdDrawMeshTasksIndirectCountEXT = vkCmdDrawMeshTasksIndirectCountEXT;
+extern fn vkCreateWin32SurfaceKHR(instance: Instance,  p_create_info: [*c]const Win32SurfaceCreateInfoKHR,  p_allocator: [*c]const AllocationCallbacks,  p_surface: [*c]SurfaceKHR) Result;
+pub const createWin32SurfaceKHR = vkCreateWin32SurfaceKHR;
+extern fn vkGetPhysicalDeviceWin32PresentationSupportKHR(physical_device: PhysicalDevice,  queue_family_index: u32) Bool32;
+pub const getPhysicalDeviceWin32PresentationSupportKHR = vkGetPhysicalDeviceWin32PresentationSupportKHR;
+extern fn vkGetMemoryWin32HandleKHR(device: Device,  p_get_win32_handle_info: [*c]const MemoryGetWin32HandleInfoKHR,  p_handle: [*c]HANDLE) Result;
+pub const getMemoryWin32HandleKHR = vkGetMemoryWin32HandleKHR;
+extern fn vkGetMemoryWin32HandlePropertiesKHR(device: Device,  handle_type: ExternalMemoryHandleTypeFlagBits,  handle: HANDLE,  p_memory_win32_handle_properties: [*c]MemoryWin32HandlePropertiesKHR) Result;
+pub const getMemoryWin32HandlePropertiesKHR = vkGetMemoryWin32HandlePropertiesKHR;
+extern fn vkImportSemaphoreWin32HandleKHR(device: Device,  p_import_semaphore_win32_handle_info: [*c]const ImportSemaphoreWin32HandleInfoKHR) Result;
+pub const importSemaphoreWin32HandleKHR = vkImportSemaphoreWin32HandleKHR;
+extern fn vkGetSemaphoreWin32HandleKHR(device: Device,  p_get_win32_handle_info: [*c]const SemaphoreGetWin32HandleInfoKHR,  p_handle: [*c]HANDLE) Result;
+pub const getSemaphoreWin32HandleKHR = vkGetSemaphoreWin32HandleKHR;
+extern fn vkImportFenceWin32HandleKHR(device: Device,  p_import_fence_win32_handle_info: [*c]const ImportFenceWin32HandleInfoKHR) Result;
+pub const importFenceWin32HandleKHR = vkImportFenceWin32HandleKHR;
+extern fn vkGetFenceWin32HandleKHR(device: Device,  p_get_win32_handle_info: [*c]const FenceGetWin32HandleInfoKHR,  p_handle: [*c]HANDLE) Result;
+pub const getFenceWin32HandleKHR = vkGetFenceWin32HandleKHR;
+extern fn vkGetMemoryWin32HandleNV(device: Device,  memory: DeviceMemory,  handle_type: ExternalMemoryHandleTypeFlagsNV,  p_handle: [*c]HANDLE) Result;
+pub const getMemoryWin32HandleNV = vkGetMemoryWin32HandleNV;
+extern fn vkGetPhysicalDeviceSurfacePresentModes2EXT(physical_device: PhysicalDevice,  p_surface_info: [*c]const PhysicalDeviceSurfaceInfo2KHR,  p_present_mode_count: [*c]u32,  p_present_modes: [*c]PresentModeKHR) Result;
+pub const getPhysicalDeviceSurfacePresentModes2EXT = vkGetPhysicalDeviceSurfacePresentModes2EXT;
+extern fn vkAcquireFullScreenExclusiveModeEXT(device: Device,  swapchain: SwapchainKHR) Result;
+pub const acquireFullScreenExclusiveModeEXT = vkAcquireFullScreenExclusiveModeEXT;
+extern fn vkReleaseFullScreenExclusiveModeEXT(device: Device,  swapchain: SwapchainKHR) Result;
+pub const releaseFullScreenExclusiveModeEXT = vkReleaseFullScreenExclusiveModeEXT;
+extern fn vkGetDeviceGroupSurfacePresentModes2EXT(device: Device,  p_surface_info: [*c]const PhysicalDeviceSurfaceInfo2KHR,  p_modes: [*c]DeviceGroupPresentModeFlagsKHR) Result;
+pub const getDeviceGroupSurfacePresentModes2EXT = vkGetDeviceGroupSurfacePresentModes2EXT;
+extern fn vkAcquireWinrtDisplayNV(physical_device: PhysicalDevice,  display: DisplayKHR) Result;
+pub const acquireWinrtDisplayNV = vkAcquireWinrtDisplayNV;
+extern fn vkGetWinrtDisplayNV(physical_device: PhysicalDevice,  device_relative_id: u32,  p_display: [*c]DisplayKHR) Result;
+pub const getWinrtDisplayNV = vkGetWinrtDisplayNV;
