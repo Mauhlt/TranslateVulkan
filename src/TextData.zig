@@ -35,7 +35,7 @@ const end_str = switch (@import("builtin").os.tag) {
     .windows => "\r\n",
     else => "\n",
 };
-const Pair = @import("Pair.zig");
+const VarData = @import("VarData.zig");
 const LineTypes = @import("Types.zig").LineTypes;
 const write_filenames = std.meta.fieldNames(LineTypes);
 const DescTypes = @import("Types.zig").DescTypes;
@@ -57,6 +57,11 @@ spec_versions: std.ArrayList([]const u8),
 // Writer
 write_files: [write_filenames.len]std.fs.File,
 // Flags
+// Flag1
+enum_fields: std.ArrayList(VarData),
+enum_field_names: std.StringHashMap(void),
+enum_field_values: std.StringHashMap(void),
+// Flag2
 is_enum2: bool = false,
 enum2_title: Buffer = .{},
 enum2_field_names: std.StringHashMap(void),
@@ -74,6 +79,11 @@ pub fn init(allo: Allocator) !TextData {
     // storage
     self.extension_names = try .initCapacity(allo, 8);
     self.spec_versions = try .initCapacity(allo, 8);
+    // flag1
+    self.enum_fields = try .initCapacity(allo, 8);
+    self.enum_field_names = .init(allo);
+    self.enum_field_values = .init(allo);
+    // flag2
     self.enum2_field_names = .init(allo);
     self.enum2_field_values = .init(allo);
     // write files
@@ -97,6 +107,15 @@ pub fn deinit(self: *TextData, allo: Allocator) void {
     // spec versions
     for (self.spec_versions.items) |spec_version| allo.free(spec_version);
     self.spec_versions.deinit(allo);
+    // flag1
+    self.enum_field_names.deinit();
+    self.enum_field_values.deinit();
+    for (self.enum_fields.items) |item| {
+        allo.free(item.name);
+        allo.free(item.value);
+    }
+    self.enum_fields.deinit(allo);
+    // flag2
     // field names
     var kit = self.enum2_field_names.keyIterator();
     while (kit.next()) |item| allo.free(item.*);
@@ -133,13 +152,6 @@ pub fn parse(self: *TextData, allo: Allocator) !void {
                     .title => if (self.is_enum2) try self.writeCloseEnum(allo),
                 }
             },
-            // .flag2 => {
-            //     const desc_type = determineDescType(line, line_type).?;
-            //     switch (desc_type) {
-            //         .field => {},
-            //         .title => if (self.is_enum2) try self.writeCloseEnum(allo),
-            //     }
-            // },
             else => if (self.is_enum2) try self.writeCloseEnum(allo),
         }
         switch (line_type) {
@@ -147,11 +159,11 @@ pub fn parse(self: *TextData, allo: Allocator) !void {
             .extern_fn => try self.processExternFn(line),
             .pfn => try self.processPFN(line),
             .flag1 => {
-                // const desc_type = determineDescType(line).?;
-                // switch (desc_type) {
-                //     .title => try self.processFlag1EnumTitle(allo, line),
-                //     .field => try self.processFlag1EnumField(allo, line),
-                // }
+                const desc_type = determineDescType(line, line_type).?;
+                switch (desc_type) {
+                    .title => try self.processFlag1EnumTitle(allo, line),
+                    .field => try self.processFlag1EnumField(allo, line),
+                }
             },
             .flag2 => {
                 const desc_type = determineDescType(line, line_type).?;
@@ -380,15 +392,47 @@ fn processPFN(self: *TextData, line: []const u8) !void {
     try self.writeToFile(.pfn, line3);
 }
 
-fn processFlag1EnumTitle(self: *TextData, allo: Allocator, line: []const u8) !void {
-    _ = self;
-    _ = allo;
+fn processFlag1EnumTitle(
+    self: *TextData,
+    allo: Allocator,
+    line: []const u8,
+) !void {
     const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
     const var_value = varValue(line);
-    const var_value1 = if (eql(u8, var_value, "c_uint")) "u32" else "i32";
-
+    const var_value1 = if (eql(u8, var_value, "c_uint")) "u32" //
+        else if (eql(u8, var_value, "c_int")) "i32" //
+        else unreachable;
+    // Write Title
     var buf1: Buffer = .{};
     const line1 = buf1.extends(&.{
+        "pub const ",
+        var_name,
+        " = enum(",
+        var_value1,
+        ") {",
+        end_str,
+    });
+    try self.writeToFile(.flag1, line1);
+    // write fields
+    for (self.enum_fields.items) |field| {
+        var buf2: Buffer = .{};
+        const line2 = buf2.extends(&.{
+            "    ",
+            field.name,
+            ": ",
+            field.value,
+            ",",
+            end_str,
+        });
+        try self.writeToFile(.flag1, line2);
+    }
+    // close enum
+    buf1.reset();
+    const line3 = buf1.extends(&.{ "};", end_str });
+    try self.writeToFile(.flag1, line3);
+    // write PES
+    buf1.reset();
+    const line4 = buf1.extends(&.{
         "pub const ",
         var_name,
         " = PES(",
@@ -396,13 +440,23 @@ fn processFlag1EnumTitle(self: *TextData, allo: Allocator, line: []const u8) !vo
         ");",
         end_str,
     });
-    _ = line1;
-    // try self.writeToFile(.flag1_pes, line);
+    try self.writeToFile(.flag1, line4);
+    // cleanup mem
+    for (self.enum_fields.items) |field| {
+        allo.free(field.name);
+        allo.free(field.value);
+    }
+    self.enum_fields.deinit(allo);
+    self.enum_fields = try .initCapacity(allo, 8);
+    // deinit
+    self.enum_field_names.deinit();
+    self.enum_field_values.deinit();
+    // re-alloc
+    self.enum_field_names = .init(allo);
+    self.enum_field_values = .init(allo);
 }
 
 fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
-    _ = self;
-    _ = allo;
     const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
     print("Var Name: {s}\n", .{var_name});
     var buf: Buffer = .init(var_name);
@@ -410,7 +464,20 @@ fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !vo
     print("Var Name: {s}\n", .{var_name1});
     const var_value = varValue(line);
     print("Var Value: {s}\n", .{var_value});
-    // try self.writeToFile(.flag1_enum, line1);
+    // check if it exists
+    if (self.enum_field_names.get(var_name1) != null) return;
+    if (self.enum_field_values.get(var_value) != null) return;
+    // duplicate
+    const dup_name = try allo.dupe(u8, var_name);
+    const dup_value = try allo.dupe(u8, var_value);
+    // add to string maps
+    try self.enum_field_names.put(dup_name, {});
+    try self.enum_field_values.put(dup_value, {});
+    // add to arraylist
+    try self.enum_fields.append(allo, .{
+        .name = dup_name,
+        .value = dup_value,
+    });
 }
 
 fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
