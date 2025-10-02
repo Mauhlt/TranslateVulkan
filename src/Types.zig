@@ -1,17 +1,17 @@
-pub const Types = enum {
+pub const LineTypes = enum {
     inline_fn,
     extern_fn,
     pfn,
     flag1,
-    flag1_enum_title,
-    flag1_enum_field,
     flag2,
-    flag2_enum_title,
-    flag2_enum_field,
     _opaque,
     extern_struct,
     extern_union,
     extension_name,
     spec_version,
     _type,
+};
+pub const DescTypes = enum {
+    field,
+    title,
 };
