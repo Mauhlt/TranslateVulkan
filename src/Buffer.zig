@@ -84,10 +84,33 @@ pub fn removeSuffixes(buf: *Buffer, names: []const []const u8) []const u8 {
     return buf.str();
 }
 
-pub fn pascalFromSnake(buf: *Buffer, name: []const u8) []const u8 {
+pub fn camelFromSnake(buf: *Buffer, name: []const u8) []const u8 {
     assert(buf.end + name.len < BUFFER_SIZE);
     var i: usize = buf.end;
     buf.buf[i] = toLower(name[i]);
+    i += 1;
+    for (
+        name[0 .. name.len - 1],
+        name[1..name.len],
+    ) |ch1, ch2| {
+        switch (ch2) {
+            '_' => continue,
+            else => {},
+        }
+        buf.buf[i] = switch (ch1) {
+            '_' => toUpper(ch2),
+            else => toLower(ch2),
+        };
+        i += 1;
+    }
+    buf.end = i;
+    return buf.str();
+}
+
+pub fn pascalFromSnake(buf: *Buffer, name: []const u8) []const u8 {
+    assert(buf.end + name.len < BUFFER_SIZE);
+    var i: usize = buf.end;
+    buf.buf[i] = toUpper(name[i]);
     i += 1;
     for (
         name[0 .. name.len - 1],

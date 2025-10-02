@@ -37,7 +37,7 @@ pub fn varValue(line: []const u8) []const u8 {
 pub fn varTypePreEql(line: []const u8) []const u8 {
     const eql_idx = indexOfScalar(u8, line, '=').?;
     const colon_idx = lastIndexOfScalar(u8, line, ':').?;
-    return line[colon_idx + 1 .. eql_idx - 1];
+    return line[colon_idx + 2 .. eql_idx - 1];
 }
 
 pub fn varTypePostEql(line: []const u8) []const u8 {

@@ -29,18 +29,19 @@ const trimRight = @import("TextProcessing.zig").trimRight;
 const trimLine = @import("TextProcessing.zig").trimLine;
 const varName = @import("TextProcessing.zig").varName;
 const varValue = @import("TextProcessing.zig").varValue;
-const varType = @import("TextProcessing.zig").varType;
+const varType = @import("TextProcessing.zig").varTypePreEql;
 // Custom Data Types
 const end_str = switch (@import("builtin").os.tag) {
     .windows => "\r\n",
     else => "\n",
 };
 const Pair = @import("Pair.zig");
-const Types = @import("Types.zig").Types;
+const LineTypes = @import("Types.zig").LineTypes;
+const write_filenames = std.meta.fieldNames(LineTypes);
+const DescTypes = @import("Types.zig").DescTypes;
 const EnumField = @import("EnumField.zig");
 const Buffer = @import("Buffer.zig");
 const BUFFER_SIZE = @import("constants.zig").BUFFER_SIZE;
-const write_filenames = std.meta.fieldNames(Types);
 const TextData = @This();
 // Fields
 // Reader
@@ -123,67 +124,55 @@ pub fn parse(self: *TextData, allo: Allocator) !void {
             error.EndOfStream => break,
             else => return err,
         };
-        const line_type = self.determineLineType(line) orelse continue;
+        const line_type = determineLineType(line) orelse continue;
         switch (line_type) {
-            .flag2_enum_field => {},
-            else => {
-                if (self.is_enum2) {
-                    // close enum
-                    var buf: Buffer = .{};
-                    const line1 = buf.extends(&.{ "};", end_str });
-                    try self.writeToFile(.flag2, line1);
-                    self.is_enum2 = false;
-                    // remove enum field names
-                    var kit = self.enum2_field_names.keyIterator();
-                    while (kit.next()) |item| allo.free(item.*);
-                    self.enum2_field_names.deinit();
-                    self.enum2_field_names = .init(allo);
-                    // remove enum field values
-                    kit = self.enum2_field_values.keyIterator();
-                    while (kit.next()) |item| allo.free(item.*);
-                    self.enum2_field_values.deinit();
-                    self.enum2_field_values = .init(allo);
-                    // write PES
-                    const title = self.enum2_title.str();
-                    print("Title: {s}\n", .{title});
-                    // var buf1: Buffer = .{};
-                    // const line2 = buf1.extends(&.{
-                    //     "pub const ",
-                    //     title,
-                    //     "PES = PackedEnumStruct(",
-                    //     title,
-                    //     ");",
-                    //     end_str,
-                    // });
-                    // try self.writeToFile(.flag2, line2);
+            .flag1, .flag2 => {
+                const desc_type = determineDescType(line, line_type).?;
+                switch (desc_type) {
+                    .field => {},
+                    .title => if (self.is_enum2) try self.writeCloseEnum(allo),
                 }
             },
+            // .flag2 => {
+            //     const desc_type = determineDescType(line, line_type).?;
+            //     switch (desc_type) {
+            //         .field => {},
+            //         .title => if (self.is_enum2) try self.writeCloseEnum(allo),
+            //     }
+            // },
+            else => if (self.is_enum2) try self.writeCloseEnum(allo),
         }
         switch (line_type) {
             .inline_fn => try self.processInlineFn(line),
             .extern_fn => try self.processExternFn(line),
             .pfn => try self.processPFN(line),
-            // .flag1_enum => {},
-            // .flag1_pes => {},
-            .flag2_enum_field => try self.processFlag2EnumField(allo, line),
-            .flag2_enum_title => try self.processFlag2EnumTitle(line),
+            .flag1 => {
+                // const desc_type = determineDescType(line).?;
+                // switch (desc_type) {
+                //     .title => try self.processFlag1EnumTitle(allo, line),
+                //     .field => try self.processFlag1EnumField(allo, line),
+                // }
+            },
+            .flag2 => {
+                const desc_type = determineDescType(line, line_type).?;
+                switch (desc_type) {
+                    .field => try self.processFlag2EnumField(allo, line),
+                    .title => try self.processFlag2EnumTitle(line),
+                }
+            },
             ._opaque => try self.processOpaque(),
             .extern_struct => try self.processExternStruct(line),
             .extern_union => try self.processExternUnion(line),
             .extension_name => try self.processExtensionName(allo, line),
             .spec_version => try self.processSpecVersion(allo, line),
             ._type => try self.processTypes(line),
-            inline else => |tag| {
-                _ = tag;
-                // try self.writeToFile(tag, line);
-            }
         }
     }
     try self.writeExtensionNames();
     try self.writeSpecVersions();
 }
 
-fn determineLineType(self: *const TextData, line: []const u8) ?Types {
+fn determineLineType(line: []const u8) ?LineTypes {
     // base
     if (line.len == 0) return null;
     var newline = line;
@@ -196,10 +185,10 @@ fn determineLineType(self: *const TextData, line: []const u8) ?Types {
     if (!startsWith(u8, newline, "const ")) return null;
     newline = trimLeft(newline, &.{ "const ", "" });
     if (isPFN(newline)) return .pfn;
-    if (isFlag1EnumTitle(newline)) return .flag1_enum_title;
-    if (isFlag1EnumField(newline)) return .flag1_enum_field;
-    if (isFlag2EnumTitle(newline)) return .flag2_enum_title;
-    if (self.isFlag2EnumField(newline)) return .flag2_enum_field;
+    if (isFlag1EnumTitle(newline)) return .flag1;
+    if (isFlag1EnumField(newline)) return .flag1;
+    if (isFlag2EnumTitle(newline)) return .flag2;
+    if (isFlag2EnumField(newline)) return .flag2;
     if (isOpaque(newline)) return ._opaque;
     if (isExternStruct(newline)) return .extern_struct;
     if (isExternUnion(newline)) return .extern_union;
@@ -208,6 +197,28 @@ fn determineLineType(self: *const TextData, line: []const u8) ?Types {
     if (isType(newline)) return ._type;
     // base
     return null;
+}
+
+fn determineDescType(line: []const u8, line_type: LineTypes) ?DescTypes {
+    switch (line_type) {
+        .flag1 => {
+            var newline = line;
+            newline = trimLeft(newline, &.{ "pub ", "" });
+            newline = trimLeft(newline, &.{ "const ", "" });
+            if (isFlag1EnumField(newline)) return .field;
+            if (isFlag1EnumTitle(newline)) return .title;
+            unreachable;
+        },
+        .flag2 => {
+            var newline = line;
+            newline = trimLeft(newline, &.{ "pub ", "" });
+            newline = trimLeft(newline, &.{ "const ", "" });
+            if (isFlag2EnumField(newline)) return .field;
+            if (isFlag2EnumTitle(newline)) return .title;
+            unreachable;
+        },
+        else => return null,
+    }
 }
 
 fn isInlineFn(line: []const u8) bool {
@@ -224,15 +235,19 @@ fn isPFN(line: []const u8) bool {
 
 fn isFlag1EnumTitle(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    const var_value = varValue(line);
-    const start = startsWith(u8, var_name, "Vk");
-    const end = endsWith(u8, var_value, "VkFlags");
-    return start and end;
+    if (!startsWith(u8, var_name, "enum_Vk")) return false;
+    if (indexOf(u8, var_name, "2") != null) return false;
+    return true;
 }
 
 fn isFlag1EnumField(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    return startsWith(u8, var_name, "enum_Vk") and endsWith(u8, var_name, "FlagBits");
+    if (!startsWith(u8, var_name, "VK_")) return false;
+    if (indexOfScalar(u8, var_name, ':') == null) return false;
+    const var_type = varType(line);
+    if (eql(u8, var_type, "c_uint")) return true;
+    if (eql(u8, var_type, "c_int")) return true;
+    return false;
 }
 
 fn isFlag2EnumTitle(line: []const u8) bool {
@@ -240,37 +255,45 @@ fn isFlag2EnumTitle(line: []const u8) bool {
     return endsWith(u8, var_name, "Flags2");
 }
 
-fn isFlag2EnumField(self: *const TextData, line: []const u8) bool {
+fn isFlag2EnumField(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    const vk = startsWith(u8, var_name, "VK_");
-    const colon = endsWith(u8, var_name, ":");
-    const has_double = indexOf(u8, var_name, "_2_") != null;
-    return self.is_enum2 and vk and colon and has_double;
+    if (!startsWith(u8, var_name, "VK_")) return false;
+    if (!endsWith(u8, var_name, ":")) return false;
+    const var_type = varType(line);
+    if (endsWith(u8, var_type, "2")) return true;
+    return false;
 }
 
 fn isOpaque(line: []const u8) bool {
-    return startsWith(u8, line, "struct_Vk") and //
-        endsWith(u8, trimLine(line), "opaque {};");
+    if (!startsWith(u8, line, "struct_Vk")) return false;
+    if (!endsWith(u8, trimLine(line), "opaque {};")) return false;
+    return true;
 }
 
 fn isExternStruct(line: []const u8) bool {
-    return startsWith(u8, line, "struct_Vk") and //
-        endsWith(u8, trimLine(line), "extern struct {");
+    if (!startsWith(u8, line, "struct_Vk")) return false;
+    if (!endsWith(u8, trimLine(line), "extern struct {")) return false;
+    return true;
 }
 
 fn isExternUnion(line: []const u8) bool {
-    return startsWith(u8, line, "union_Vk") and //
-        endsWith(u8, trimLine(line), "extern union {");
+    if (!startsWith(u8, line, "union_Vk")) return false;
+    if (!endsWith(u8, trimLine(line), "extern union {")) return false;
+    return true;
 }
 
 fn isExtensionName(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    return endsWith(u8, var_name, "EXTENSION_NAME");
+    if (!startsWith(u8, var_name, "VK_")) return false;
+    if (!endsWith(u8, var_name, "EXTENSION_NAME")) return false;
+    return true;
 }
 
 fn isSpecVersion(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    return endsWith(u8, var_name, "SPEC_VERSION");
+    if (!startsWith(u8, var_name, "VK_")) return false;
+    if (!endsWith(u8, var_name, "SPEC_VERSION")) return false;
+    return true;
 }
 
 fn isType(line: []const u8) bool {
@@ -281,12 +304,11 @@ fn isType(line: []const u8) bool {
         "struct_Vk",
         "union_Vk",
         "Vk",
-        "?*anyopaque",
+        "?*",
         "__",
     };
-    for (bad_var_values) |bad_var_value| {
+    for (bad_var_values) |bad_var_value| //
         if (startsWith(u8, var_value, bad_var_value)) return false;
-    }
     return startsWith(u8, var_name, "Vk");
 }
 
@@ -298,7 +320,7 @@ fn processInlineFn(self: *TextData, line: []const u8) !void {
     var buf1: Buffer = .init(var_name);
     // Create New Var Name
     var buf2: Buffer = .{};
-    const var_name1 = buf2.pascalFromSnake(var_name[3..var_name.len]);
+    const var_name1 = buf2.camelFromSnake(var_name[3..var_name.len]);
     // Copy fn
     {
         const prefix = "pub ";
@@ -358,36 +380,38 @@ fn processPFN(self: *TextData, line: []const u8) !void {
     try self.writeToFile(.pfn, line3);
 }
 
-// fn processFlag1PES(self: *TextData, allo: Allocator, line: []const u8) !void {
-//     _ = self;
-//     _ = allo;
-//     const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{});
-//     const var_value = varValue(line);
-//
-//     var buf: [BUFFER_SIZE]u8 = undefined;
-//     try bufPrint(
-//         &buf,
-//         "pub const {s} = PES({s});{s}",
-//         .{ var_name, var_value, end_str },
-//     );
-//     // try self.writeToFile(.flag1_pes, line);
-// }
-//
-// fn processFlag1Enum(self: *TextData, allo: Allocator, line: []const u8) !void {
-//     _ = self;
-//     _ = allo;
-//     const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
-//     const var_value = varValue(line);
-//
-//     var buf: [BUFFER_SIZE]u8 = undefined;
-//     const line1 = try bufPrint(
-//         &buf,
-//         "pub const {s} = enum({s}){{{s}",
-//         .{ var_name, var_value, end_str },
-//     );
-//     _ = line1;
-//     // try self.writeToFile(.flag1_enum, line1);
-// }
+fn processFlag1EnumTitle(self: *TextData, allo: Allocator, line: []const u8) !void {
+    _ = self;
+    _ = allo;
+    const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
+    const var_value = varValue(line);
+    const var_value1 = if (eql(u8, var_value, "c_uint")) "u32" else "i32";
+
+    var buf1: Buffer = .{};
+    const line1 = buf1.extends(&.{
+        "pub const ",
+        var_name,
+        " = PES(",
+        var_value1,
+        ");",
+        end_str,
+    });
+    _ = line1;
+    // try self.writeToFile(.flag1_pes, line);
+}
+
+fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
+    _ = self;
+    _ = allo;
+    const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
+    print("Var Name: {s}\n", .{var_name});
+    var buf: Buffer = .init(var_name);
+    const var_name1 = buf.lower();
+    print("Var Name: {s}\n", .{var_name1});
+    const var_value = varValue(line);
+    print("Var Value: {s}\n", .{var_value});
+    // try self.writeToFile(.flag1_enum, line1);
+}
 
 fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
     // Parse Flag Name
@@ -404,7 +428,7 @@ fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
     // Update Flag
     self.is_enum2 = true;
     self.enum2_title.reset();
-    _ = self.enum2_title.pascalFromSnake(var_name);
+    _ = self.enum2_title.snakeFromCamel(var_name);
     // Skip Next Line
     _ = try self.nextline(&self.buffer);
 }
@@ -653,12 +677,19 @@ fn bsEF(self: *TextData) void {
     }
 }
 
-fn writeToFile(self: *TextData, comptime filename: Types, line: []const u8) !void {
-    const idx: usize = std.meta.fieldIndex(Types, @tagName(filename)).?;
+fn writeToFile(
+    self: *TextData,
+    comptime filename: LineTypes,
+    line: []const u8,
+) !void {
+    const idx: usize = std.meta.fieldIndex(LineTypes, @tagName(filename)).?;
     _ = try self.write_files[idx].write(line);
 }
 
-fn splitTitle(allo: Allocator, name: []const u8) !std.ArrayList([]const u8) {
+fn splitTitle(
+    allo: Allocator,
+    name: []const u8,
+) !std.ArrayList([]const u8) {
     const len = name.len;
     var n_splits: usize = 1;
     var split_idxs: [64]usize = undefined;
@@ -771,6 +802,7 @@ fn writeExtensionNames(self: *TextData) !void {
     try self.writeToFile(.extension_name, "pub const ExtensionName = struct {");
     try self.writeToFile(.extension_name, end_str);
     for (self.extension_names.items) |extension_name| {
+        try self.writeToFile(.extension_name, "    "); // spacing
         try self.writeToFile(.extension_name, extension_name);
     }
     try self.writeToFile(.extension_name, "};");
@@ -781,8 +813,42 @@ fn writeSpecVersions(self: *TextData) !void {
     try self.writeToFile(.spec_version, "pub const SpecVersion = struct {");
     try self.writeToFile(.spec_version, end_str);
     for (self.spec_versions.items) |spec_version| {
+        try self.writeToFile(.spec_version, "    ");
         try self.writeToFile(.spec_version, spec_version);
     }
     try self.writeToFile(.spec_version, "};");
     try self.writeToFile(.spec_version, end_str);
+}
+
+fn writeCloseEnum(self: *TextData, allo: Allocator) !void {
+    // close enum
+    var buf: Buffer = .{};
+    const line1 = buf.extends(&.{ "};", end_str });
+    try self.writeToFile(.flag2, line1);
+    self.is_enum2 = false;
+    // remove enum field names
+    var kit = self.enum2_field_names.keyIterator();
+    while (kit.next()) |item| allo.free(item.*);
+    self.enum2_field_names.deinit();
+    self.enum2_field_names = .init(allo);
+    // remove enum field values
+    kit = self.enum2_field_values.keyIterator();
+    while (kit.next()) |item| allo.free(item.*);
+    self.enum2_field_values.deinit();
+    self.enum2_field_values = .init(allo);
+    // extract title
+    const title = self.enum2_title.str();
+    var buf1: Buffer = .{};
+    const title2 = buf1.pascalFromSnake(title);
+    var buf2: Buffer = .{};
+    // write
+    const line2 = buf2.extends(&.{
+        "pub const ",
+        title2,
+        "2PES = PackedEnumStruct(",
+        title2,
+        "2);",
+        end_str,
+    });
+    try self.writeToFile(.flag2, line2);
 }
