@@ -380,3 +380,90 @@ pub fn lower(buf: *Buffer) []const u8 {
     const line = buf.str();
     return lowerString(&buf.buf, line);
 }
+
+fn starts(buf: *[128]usize, line: []const u8) usize {
+    buf[0] = 0;
+    var j: usize = 1;
+    for (line, 0..) |ch, i| {
+        switch (ch) {
+            '_' => {
+                buf[j] = i + 1;
+                j += 1;
+            },
+            else => continue,
+        }
+    }
+    return j;
+}
+
+fn ends(buf: *[128]usize, line: []const u8) usize {
+    var j: usize = 0;
+    for (line, 0..) |ch, i| {
+        switch (ch) {
+            '_' => {
+                buf[j] = i;
+                j += 1;
+            },
+            else => continue,
+        }
+    }
+    buf[j] = line.len;
+    j += 1;
+    return j;
+}
+
+pub fn removeOverlaps(
+    buf: *Buffer,
+    line1: []const u8,
+    line2: []const u8,
+) []const u8 {
+    // assumes line1 + line2 are snake variables
+    // assumes # of overlaps <= 128 words
+    // assumes line1 = overlaps to remove
+    // assumes line2 = overlaps to preserve
+    // split 1
+    const BUF_LEN: usize = 128;
+    var s1: [BUF_LEN]usize = undefined;
+    const n_starts = starts(&s1, line1);
+    var e1: [BUF_LEN]usize = undefined;
+    const n_ends = ends(&e1, line1);
+    assert(n_starts == n_ends);
+    // split 2
+    var s2: [BUF_LEN]usize = undefined;
+    const n_starts2 = starts(&s2, line2);
+    var e2: [BUF_LEN]usize = undefined;
+    const n_ends2 = ends(&e2, line2);
+    assert(n_starts2 == n_ends2);
+    // identify matches
+    var matches = [_]bool{false} ** BUF_LEN;
+    outer: for (0..n_starts) |i| {
+        const str1 = line1[s1[i]..e1[i]];
+        for (0..n_starts2) |j| {
+            if (matches[j]) continue;
+            const str2 = line2[s2[j]..e2[j]];
+            if (eql(u8, str1, str2)) {
+                matches[j] = true;
+                continue :outer;
+            }
+        }
+    }
+    // count num not matches
+    var n_not_matches: usize = 0;
+    for (0..n_starts2) |i| n_not_matches += @intFromBool(!matches[i]);
+    // reconstruct
+    if (n_not_matches > 0) {
+        for (0..n_starts2) |i| {
+            if (matches[i]) continue;
+            const str2 = line2[s2[i]..e2[i]];
+            buf.extend(str2);
+            if (n_not_matches > 1) {
+                n_not_matches -= 1;
+                buf.extend("_");
+            }
+        }
+    } else {
+        buf.extend("base");
+    }
+    // return new str
+    return buf.str();
+}

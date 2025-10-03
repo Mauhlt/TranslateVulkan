@@ -398,13 +398,15 @@ fn processFlag1EnumTitle(
     line: []const u8,
 ) !void {
     const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
+    var buf1: Buffer = .{};
+    const snake_var_name = buf1.snakeFromCamel(var_name);
     const var_value = varValue(line);
     const var_value1 = if (eql(u8, var_value, "c_uint")) "u32" //
         else if (eql(u8, var_value, "c_int")) "i32" //
         else unreachable;
     // Write Title
-    var buf1: Buffer = .{};
-    const line1 = buf1.extends(&.{
+    var buf2: Buffer = .{};
+    const line1 = buf2.extends(&.{
         "pub const ",
         var_name,
         " = enum(",
@@ -415,11 +417,14 @@ fn processFlag1EnumTitle(
     try self.writeToFile(.flag1, line1);
     // write fields
     for (self.enum_fields.items) |field| {
-        var buf2: Buffer = .{};
-        const line2 = buf2.extends(&.{
+        var buf3: Buffer = .{};
+        const var_name1 = buf3.removeOverlaps(snake_var_name, field.name);
+        print("Var Name: {s}\n", .{var_name1});
+        var buf4: Buffer = .{};
+        const line2 = buf4.extends(&.{
             "    ",
-            field.name,
-            ": ",
+            var_name1,
+            " = ",
             field.value,
             ",",
             end_str,
@@ -427,16 +432,16 @@ fn processFlag1EnumTitle(
         try self.writeToFile(.flag1, line2);
     }
     // close enum
-    buf1.reset();
-    const line3 = buf1.extends(&.{ "};", end_str });
+    buf2.reset();
+    const line3 = buf2.extends(&.{ "};", end_str });
     try self.writeToFile(.flag1, line3);
     // write PES
-    buf1.reset();
-    const line4 = buf1.extends(&.{
+    buf2.reset();
+    const line4 = buf2.extends(&.{
         "pub const ",
         var_name,
-        " = PES(",
-        var_value1,
+        "PES = PES(",
+        var_name,
         ");",
         end_str,
     });
@@ -457,18 +462,15 @@ fn processFlag1EnumTitle(
 }
 
 fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
-    const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
-    print("Var Name: {s}\n", .{var_name});
+    const var_name = varName(line, &.{ "pub ", "const ", "VK_" }, &.{":"});
     var buf: Buffer = .init(var_name);
     const var_name1 = buf.lower();
-    print("Var Name: {s}\n", .{var_name1});
     const var_value = varValue(line);
-    print("Var Value: {s}\n", .{var_value});
     // check if it exists
     if (self.enum_field_names.get(var_name1) != null) return;
     if (self.enum_field_values.get(var_value) != null) return;
     // duplicate
-    const dup_name = try allo.dupe(u8, var_name);
+    const dup_name = try allo.dupe(u8, var_name1);
     const dup_value = try allo.dupe(u8, var_value);
     // add to string maps
     try self.enum_field_names.put(dup_name, {});
