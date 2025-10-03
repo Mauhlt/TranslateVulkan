@@ -10,6 +10,7 @@ pub const LineTypes = enum {
     extension_name,
     spec_version,
     _type,
+    base,
 };
 pub const DescTypes = enum {
     field,

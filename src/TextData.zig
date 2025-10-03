@@ -11,8 +11,6 @@ const count = std.mem.count;
 const eql = std.mem.eql;
 const startsWith = std.mem.startsWith;
 const endsWith = std.mem.endsWith;
-// debug
-const print = std.debug.print;
 // ascii
 const allocLowerString = std.ascii.allocLowerString;
 const lowerString = std.ascii.lowerString;
@@ -20,8 +18,8 @@ const toLower = std.ascii.toLower;
 const isLower = std.ascii.isLower;
 const isUpper = std.ascii.isUpper;
 const isDigit = std.ascii.isDigit;
-// fmt
-const bufPrint = std.fmt.bufPrint;
+// debug
+const print = std.debug.print;
 // Text Processing
 const modCwd = @import("TextProcessing.zig").modCwd;
 const trimLeft = @import("TextProcessing.zig").trimLeft;
@@ -30,6 +28,7 @@ const trimLine = @import("TextProcessing.zig").trimLine;
 const varName = @import("TextProcessing.zig").varName;
 const varValue = @import("TextProcessing.zig").varValue;
 const varType = @import("TextProcessing.zig").varTypePreEql;
+const isKeyword = @import("TextProcessing.zig").isKeyword;
 // Custom Data Types
 const end_str = switch (@import("builtin").os.tag) {
     .windows => "\r\n",
@@ -58,6 +57,7 @@ spec_versions: std.ArrayList([]const u8),
 write_files: [write_filenames.len]std.fs.File,
 // Flags
 // Flag1
+prev_enum1_titles: std.StringHashMap(void),
 enum_fields: std.ArrayList(VarData),
 enum_field_names: std.StringHashMap(void),
 enum_field_values: std.StringHashMap(void),
@@ -80,6 +80,7 @@ pub fn init(allo: Allocator) !TextData {
     self.extension_names = try .initCapacity(allo, 8);
     self.spec_versions = try .initCapacity(allo, 8);
     // flag1
+    self.prev_enum1_titles = .init(allo);
     self.enum_fields = try .initCapacity(allo, 8);
     self.enum_field_names = .init(allo);
     self.enum_field_values = .init(allo);
@@ -108,6 +109,9 @@ pub fn deinit(self: *TextData, allo: Allocator) void {
     for (self.spec_versions.items) |spec_version| allo.free(spec_version);
     self.spec_versions.deinit(allo);
     // flag1
+    var kit = self.prev_enum1_titles.keyIterator();
+    while (kit.next()) |item| allo.free(item.*);
+    self.prev_enum1_titles.deinit();
     self.enum_field_names.deinit();
     self.enum_field_values.deinit();
     for (self.enum_fields.items) |item| {
@@ -117,7 +121,7 @@ pub fn deinit(self: *TextData, allo: Allocator) void {
     self.enum_fields.deinit(allo);
     // flag2
     // field names
-    var kit = self.enum2_field_names.keyIterator();
+    kit = self.enum2_field_names.keyIterator();
     while (kit.next()) |item| allo.free(item.*);
     self.enum2_field_names.deinit();
     // field values
@@ -137,51 +141,87 @@ fn nextline(self: *TextData, buffer: *[BUFFER_SIZE]u8) ![]const u8 {
 }
 
 pub fn parse(self: *TextData, allo: Allocator) !void {
+    try self.writeHeader();
     // parse for variables
     while (true) {
+        // get line
         const line: []const u8 = self.nextline(&self.buffer) catch |err| switch (err) {
             error.EndOfStream => break,
             else => return err,
         };
+        // skips
+        if (skipExcept(line, &.{
+            "pub const STD_VIDEO_H264_LEVEL_IDC_1_0: c_int = 0;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_1_1: c_int = 1;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_1_2: c_int = 2;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_1_3: c_int = 3;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_2_0: c_int = 4;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_2_1: c_int = 5;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_2_2: c_int = 6;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_3_0: c_int = 7;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_3_1: c_int = 8;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_3_2: c_int = 9;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_4_0: c_int = 10;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_4_1: c_int = 11;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_4_2: c_int = 12;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_5_0: c_int = 13;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_5_1: c_int = 14;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_5_2: c_int = 15;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_6_0: c_int = 16;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_6_1: c_int = 17;",
+            "pub const STD_VIDEO_H264_LEVEL_IDC_6_2: c_int = 18;",
+            "pub const enum_StdVideoH264LevelIdc",
+            "pub const StdVideoH264LevelIdc = enum_StdVideoH264LevelIdc;",
+            "pub const STD_VIDEO_H264_POC_TYPE_0: c_int = 0;",
+        })) continue;
+        print("Line: {s}", .{line});
+        // line type
         const line_type = determineLineType(line) orelse continue;
+        print("Line Type: {s}\n", .{@tagName(line_type)});
+        // close enums
         switch (line_type) {
             .flag1, .flag2 => {
                 const desc_type = determineDescType(line, line_type).?;
+                print("Desc Type: {s}\n", .{@tagName(desc_type)});
                 switch (desc_type) {
                     .field => {},
-                    .title => if (self.is_enum2) try self.writeCloseEnum(allo),
+                    .title => if (self.is_enum2) try self.writeCloseEnum(allo, .base),
                 }
             },
-            else => if (self.is_enum2) try self.writeCloseEnum(allo),
+            else => if (self.is_enum2) try self.writeCloseEnum(allo, .base),
         }
+        // process line
         switch (line_type) {
-            .inline_fn => try self.processInlineFn(line),
-            .extern_fn => try self.processExternFn(line),
-            .pfn => try self.processPFN(line),
+            .inline_fn => try self.processInlineFn(line, .base),
+            .extern_fn => try self.processExternFn(line, .base),
+            .pfn => try self.processPFN(line, .base),
             .flag1 => {
                 const desc_type = determineDescType(line, line_type).?;
+                // print("Desc Type: {s}\n", .{@tagName(desc_type)});
                 switch (desc_type) {
-                    .title => try self.processFlag1EnumTitle(allo, line),
+                    .title => try self.processFlag1EnumTitle(allo, line, .base),
                     .field => try self.processFlag1EnumField(allo, line),
                 }
             },
             .flag2 => {
                 const desc_type = determineDescType(line, line_type).?;
                 switch (desc_type) {
-                    .field => try self.processFlag2EnumField(allo, line),
-                    .title => try self.processFlag2EnumTitle(line),
+                    .field => try self.processFlag2EnumField(allo, line, .base),
+                    .title => try self.processFlag2EnumTitle(line, .base),
                 }
             },
-            ._opaque => try self.processOpaque(),
-            .extern_struct => try self.processExternStruct(line),
-            .extern_union => try self.processExternUnion(line),
+            ._opaque => try self.processOpaque(.base),
+            .extern_struct => try self.processExternStruct(line, .base),
+            .extern_union => try self.processExternUnion(line, .base),
             .extension_name => try self.processExtensionName(allo, line),
             .spec_version => try self.processSpecVersion(allo, line),
-            ._type => try self.processTypes(line),
+            ._type => try self.processTypes(line, .base),
+            else => continue,
         }
     }
-    try self.writeExtensionNames();
-    try self.writeSpecVersions();
+    // write exts + specs
+    try self.writeExtensionNames(.base);
+    try self.writeSpecVersions(.base);
 }
 
 fn determineLineType(line: []const u8) ?LineTypes {
@@ -246,19 +286,31 @@ fn isPFN(line: []const u8) bool {
 }
 
 fn isFlag1EnumTitle(line: []const u8) bool {
+    // var name
     const var_name = varName(line, &.{}, &.{});
-    if (!startsWith(u8, var_name, "enum_Vk")) return false;
+    print("Var Name: {s}\n", .{var_name});
+    const vk_start = startsWith(u8, var_name, "enum_Vk");
+    const std_start = startsWith(u8, var_name, "enum_Std");
+    print("{} - {}\n", .{ vk_start, std_start });
+    print("{}\n", .{!(vk_start or std_start)});
+    if (!(vk_start or std_start)) return false;
     if (indexOf(u8, var_name, "2") != null) return false;
+    // default
     return true;
 }
 
 fn isFlag1EnumField(line: []const u8) bool {
+    // var name
     const var_name = varName(line, &.{}, &.{});
-    if (!startsWith(u8, var_name, "VK_")) return false;
+    const vk_start = startsWith(u8, var_name, "VK_");
+    const std_start = startsWith(u8, var_name, "STD_");
+    if (!(vk_start or std_start)) return false;
     if (indexOfScalar(u8, var_name, ':') == null) return false;
+    // var type
     const var_type = varType(line);
     if (eql(u8, var_type, "c_uint")) return true;
     if (eql(u8, var_type, "c_int")) return true;
+    // default
     return false;
 }
 
@@ -269,7 +321,9 @@ fn isFlag2EnumTitle(line: []const u8) bool {
 
 fn isFlag2EnumField(line: []const u8) bool {
     const var_name = varName(line, &.{}, &.{});
-    if (!startsWith(u8, var_name, "VK_")) return false;
+    const vk_start = startsWith(u8, var_name, "VK_");
+    const std_start = startsWith(u8, var_name, "STD_");
+    if (!(vk_start or std_start)) return false;
     if (!endsWith(u8, var_name, ":")) return false;
     const var_type = varType(line);
     if (endsWith(u8, var_type, "2")) return true;
@@ -315,7 +369,6 @@ fn isType(line: []const u8) bool {
         "enum_Vk",
         "struct_Vk",
         "union_Vk",
-        "Vk",
         "?*",
         "__",
     };
@@ -324,7 +377,11 @@ fn isType(line: []const u8) bool {
     return startsWith(u8, var_name, "Vk");
 }
 
-fn processInlineFn(self: *TextData, line: []const u8) !void {
+fn processInlineFn(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // Get Old Var Name - No Vk
     const vk_idx = indexOf(u8, line, "VK_").?;
     const open_paren_idx = indexOfScalar(u8, line, '(').?;
@@ -337,11 +394,11 @@ fn processInlineFn(self: *TextData, line: []const u8) !void {
     {
         const prefix = "pub ";
         const line1 = line[prefix.len..line.len];
-        try self.writeToFile(.inline_fn, line1);
+        try self.writeToFile(tag, line1);
     }
     while (true) {
         const line1: []const u8 = self.nextline(&self.buffer) catch unreachable;
-        try self.writeToFile(.inline_fn, line1);
+        try self.writeToFile(tag, line1);
         if (startsWith(u8, line1, "}")) break;
     }
     // Create new fn = easier interface
@@ -354,10 +411,14 @@ fn processInlineFn(self: *TextData, line: []const u8) !void {
         ";",
         end_str,
     });
-    try self.writeToFile(.inline_fn, line1);
+    try self.writeToFile(tag, line1);
 }
 
-fn processExternFn(self: *TextData, line: []const u8) !void {
+fn processExternFn(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // Remove vk from args + result
     var buf1: Buffer = .init(line);
     const line1 = buf1.remove("Vk");
@@ -373,31 +434,54 @@ fn processExternFn(self: *TextData, line: []const u8) !void {
     const line4 = buf3.extends(&.{ prefix, var_name, " = vk", var_name, ";", end_str });
     buf3.buf[prefix.len] = toLower(buf3.buf[prefix.len]);
     // Store both lines
-    try self.writeToFile(.extern_fn, line3);
-    try self.writeToFile(.extern_fn, line4);
+    try self.writeToFile(tag, line3);
+    try self.writeToFile(tag, line4);
 }
 
-fn processPFN(self: *TextData, line: []const u8) !void {
+fn processPFN(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // Replace Vks
     var buf1: Buffer = .{};
     const line1 = buf1.replaceAndExtend(line, "Vk");
     const line2 = buf1.remove("pub ");
-    try self.writeToFile(.pfn, line2);
+    try self.writeToFile(tag, line2);
     // Create custom PFN w/o vk prefix
     var buf2: Buffer = .{};
     const prefix = "pub const PFN_";
     const var_name = varName(line1, &.{ "pub ", "const ", "PFN_", "vk" }, &.{});
-    const line3 = buf2.extends(&.{ prefix, var_name, " = PFN_vk", var_name, ";", end_str });
+    const line3 = buf2.extends(&.{
+        prefix,
+        var_name,
+        " = PFN_vk",
+        var_name,
+        ";",
+        end_str,
+    });
     buf2.buf[prefix.len] = toLower(buf2.buf[prefix.len]);
-    try self.writeToFile(.pfn, line3);
+    try self.writeToFile(tag, line3);
 }
 
 fn processFlag1EnumTitle(
     self: *TextData,
     allo: Allocator,
     line: []const u8,
+    comptime tag: LineTypes,
 ) !void {
-    const var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
+    // get var name
+    var var_name: []const u8 = undefined;
+    if (indexOf(u8, line, "enum_Vk") != null) {
+        var_name = varName(line, &.{ "pub ", "const ", "enum_Vk" }, &.{});
+    } else if (indexOf(u8, line, "enum_Std") != null) {
+        var_name = varName(line, &.{ "pub ", "const ", "enum_Std" }, &.{});
+    } else {
+        print("Line: {s}", .{line});
+        unreachable;
+    }
+    print("Var Name1: {s}\n", .{var_name});
+    // get var value
     var buf1: Buffer = .{};
     const snake_var_name = buf1.snakeFromCamel(var_name);
     const var_value = varValue(line);
@@ -414,38 +498,47 @@ fn processFlag1EnumTitle(
         ") {",
         end_str,
     });
-    try self.writeToFile(.flag1, line1);
+    try self.writeToFile(tag, line1);
+    print("Line1: {s}", .{line1});
     // write fields
     for (self.enum_fields.items) |field| {
         var buf3: Buffer = .{};
         const var_name1 = buf3.removeOverlaps(snake_var_name, field.name);
-        print("Var Name: {s}\n", .{var_name1});
         var buf4: Buffer = .{};
+        buf4.extend("    ");
+        if (isDigit(var_name1[0]) or isKeyword(var_name1)) {
+            _ = buf4.extends(&.{ "@\"", var_name1, "\"" });
+        } else {
+            _ = buf4.extend(var_name1);
+        }
         const line2 = buf4.extends(&.{
-            "    ",
-            var_name1,
             " = ",
             field.value,
             ",",
             end_str,
         });
-        try self.writeToFile(.flag1, line2);
+        try self.writeToFile(tag, line2);
     }
     // close enum
     buf2.reset();
     const line3 = buf2.extends(&.{ "};", end_str });
-    try self.writeToFile(.flag1, line3);
+    try self.writeToFile(tag, line3);
     // write PES
+    buf2.reset();
+    const var_name1 = varName(var_name, &.{}, &.{"FlagBits"});
+    const var_name2 = buf2.extends(&.{ var_name1, "Flags" });
+    const dup_var_name2 = try allo.dupe(u8, var_name2);
+    try self.prev_enum1_titles.putNoClobber(dup_var_name2, {});
     buf2.reset();
     const line4 = buf2.extends(&.{
         "pub const ",
-        var_name,
-        "PES = PES(",
+        var_name1,
+        "Flags = PES(",
         var_name,
         ");",
         end_str,
     });
-    try self.writeToFile(.flag1, line4);
+    try self.writeToFile(tag, line4);
     // cleanup mem
     for (self.enum_fields.items) |field| {
         allo.free(field.name);
@@ -461,8 +554,20 @@ fn processFlag1EnumTitle(
     self.enum_field_values = .init(allo);
 }
 
-fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
-    const var_name = varName(line, &.{ "pub ", "const ", "VK_" }, &.{":"});
+fn processFlag1EnumField(
+    self: *TextData,
+    allo: Allocator,
+    line: []const u8,
+) !void {
+    var var_name: []const u8 = undefined;
+    if (indexOf(u8, line, "VK_") != null) {
+        var_name = varName(line, &.{ "pub ", "const ", "VK_" }, &.{":"});
+    } else if (indexOf(u8, line, "STD_") != null) {
+        var_name = varName(line, &.{ "pub ", "const ", "STD_" }, &.{":"});
+    } else {
+        print("Line: {s}", .{line});
+        unreachable;
+    }
     var buf: Buffer = .init(var_name);
     const var_name1 = buf.lower();
     const var_value = varValue(line);
@@ -482,7 +587,11 @@ fn processFlag1EnumField(self: *TextData, allo: Allocator, line: []const u8) !vo
     });
 }
 
-fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
+fn processFlag2EnumTitle(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // Parse Flag Name
     const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{"Flags2"});
     // Write Title
@@ -490,10 +599,10 @@ fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
     const line1 = buf1.extends(&.{
         "pub const ",
         var_name,
-        "2 = enum(u64) {",
+        "FlagBits2 = enum(u64) {",
         end_str,
     });
-    try self.writeToFile(.flag2, line1);
+    try self.writeToFile(tag, line1);
     // Update Flag
     self.is_enum2 = true;
     self.enum2_title.reset();
@@ -502,7 +611,12 @@ fn processFlag2EnumTitle(self: *TextData, line: []const u8) !void {
     _ = try self.nextline(&self.buffer);
 }
 
-fn processFlag2EnumField(self: *TextData, allo: Allocator, line: []const u8) !void {
+fn processFlag2EnumField(
+    self: *TextData,
+    allo: Allocator,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // get var name
     const var_name = varName(line, &.{ "pub ", "const ", "VK_" }, &.{":"});
     var buf1: Buffer = .init(var_name);
@@ -533,10 +647,13 @@ fn processFlag2EnumField(self: *TextData, allo: Allocator, line: []const u8) !vo
         ",",
         end_str,
     });
-    try self.writeToFile(.flag2, line1);
+    try self.writeToFile(tag, line1);
 }
 
-fn processOpaque(self: *TextData) !void {
+fn processOpaque(
+    self: *TextData,
+    comptime tag: LineTypes,
+) !void {
     const line1 = self.nextline(&self.buffer) catch unreachable;
     const var_name = varName(line1, &.{ "pub const Vk", "" }, &.{});
     var buf: Buffer = .{};
@@ -552,14 +669,18 @@ fn processOpaque(self: *TextData) !void {
         "};",
         end_str,
     });
-    try self.writeToFile(._opaque, line2);
+    try self.writeToFile(tag, line2);
 }
 
-fn processExternStruct(self: *TextData, line: []const u8) !void {
+fn processExternStruct(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // Convert name to remove struct_Vk
     var buf1: Buffer = .init(line);
     const line1 = buf1.remove("struct_Vk");
-    try self.writeToFile(.extern_struct, line1);
+    try self.writeToFile(tag, line1);
     // get var name for s_type
     const var_name = varName(line1, &.{"pub const "}, &.{});
     var buf2: Buffer = .{};
@@ -567,7 +688,7 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
     while (true) {
         const line2: []const u8 = self.nextline(&self.buffer) catch unreachable;
         if (startsWith(u8, line, "}")) {
-            try self.writeToFile(.extern_struct, line2);
+            try self.writeToFile(tag, line2);
             break;
         }
         // idxs
@@ -593,26 +714,35 @@ fn processExternStruct(self: *TextData, line: []const u8) !void {
             buf3.replaceFieldValue(&.{ " = null,", end_str })
         else //
             buf3.str();
-        try self.writeToFile(.extern_struct, line5);
+        try self.writeToFile(tag, line5);
     }
 }
 
-fn processExternUnion(self: *TextData, line: []const u8) !void {
+fn processExternUnion(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     var buf1: Buffer = .{};
     const var_name = varName(line, &.{ "pub ", "const ", "union_Vk" }, &.{});
-    const line1 = buf1.extends(&.{ "pub const ", var_name, " = extern union {", end_str });
-    try self.writeToFile(.extern_union, line1);
+    const line1 = buf1.extends(&.{
+        "pub const ",
+        var_name,
+        " = extern union {",
+        end_str,
+    });
+    try self.writeToFile(tag, line1);
     while (true) {
         const line2 = self.nextline(&self.buffer) catch unreachable;
         if (startsWith(u8, line, "}")) {
-            try self.writeToFile(.extern_union, line2);
+            try self.writeToFile(tag, line2);
             break;
         }
 
         var buf2: Buffer = .{};
         _ = buf2.fieldNameToSnake(line2);
         const line4 = buf2.remove("Vk");
-        try self.writeToFile(.extern_union, line4);
+        try self.writeToFile(tag, line4);
     }
 }
 
@@ -663,7 +793,11 @@ fn processSpecVersion(
     line: []const u8,
 ) !void {
     // Grab name + value + type
-    const var_name = varName(line, &.{ "pub ", "const ", "VK_", "KHR_" }, &.{"_SPEC_VERSION"});
+    const var_name = varName(
+        line,
+        &.{ "pub ", "const ", "VK_", "KHR_" },
+        &.{"_SPEC_VERSION"},
+    );
     const var_value = varValue(line);
     if (lastIndexOf(u8, line, "@as") == null) return;
     const last_open_paren_idx = lastIndexOfScalar(u8, line, '(').?;
@@ -700,23 +834,33 @@ fn processSpecVersion(
     try self.spec_versions.append(allo, line2);
 }
 
-fn processTypes(self: *TextData, line: []const u8) !void {
+fn processTypes(
+    self: *TextData,
+    line: []const u8,
+    comptime tag: LineTypes,
+) !void {
     // get name + value
     const var_name = varName(line, &.{ "pub ", "const ", "Vk" }, &.{});
     const var_value = varValue(line);
     // create line
     var buf: Buffer = .{};
-    const line1 = if (!eql(u8, var_name, "Bool32")) //
-        buf.extends(&.{
+    var line1: []const u8 = undefined;
+    if (!eql(u8, var_name, "Bool32")) { //
+        const var_value1 = if (startsWith(u8, var_value, "Vk")) //
+            trimLeft(var_value, &.{"Vk"}) //
+        else //
+            var_value;
+        if (self.prev_enum1_titles.get(var_name) != null) return;
+        line1 = buf.extends(&.{
             "pub const ",
             var_name,
             " = ",
-            var_value,
+            var_value1,
             ";",
             end_str,
-        })
-    else
-        buf.extends(&.{
+        });
+    } else {
+        line1 = buf.extends(&.{
             "pub const ",
             var_name,
             " = enum(u32) {",
@@ -728,7 +872,8 @@ fn processTypes(self: *TextData, line: []const u8) !void {
             "};",
             end_str,
         });
-    try self.writeToFile(._type, line1);
+    }
+    try self.writeToFile(tag, line1);
 }
 
 fn bsEF(self: *TextData) void {
@@ -755,145 +900,43 @@ fn writeToFile(
     _ = try self.write_files[idx].write(line);
 }
 
-fn splitTitle(
-    allo: Allocator,
-    name: []const u8,
-) !std.ArrayList([]const u8) {
-    const len = name.len;
-    var n_splits: usize = 1;
-    var split_idxs: [64]usize = undefined;
-    var idx: usize = 0;
-    for (0..len - 1, 1..len) |i, j| {
-        if ((isLower(name[i]) or isDigit(name[i])) and isUpper(name[j])) {
-            split_idxs[idx] = j;
-            n_splits += 1;
-            idx += 1;
-        }
-    }
-    split_idxs[n_splits - 1] = name.len;
-    var splits: std.ArrayList([]const u8) = try .initCapacity(allo, n_splits);
-    var start: usize = 0;
-    var end: usize = split_idxs[0];
-    {
-        const lowered_name = try allocLowerString(allo, name[start..end]);
-        splits.appendAssumeCapacity(lowered_name);
-    }
-    for (1..n_splits) |i| {
-        start = end;
-        end = split_idxs[i];
-        const lowered_name = try allocLowerString(allo, name[start..end]);
-        splits.appendAssumeCapacity(lowered_name);
-    }
-    return splits;
-}
-
-fn splitFields(allo: Allocator, name: []const u8) !std.ArrayList([]const u8) {
-    var n_splits: usize = 1;
-    for (name) |ch| {
-        switch (ch) {
-            '_' => n_splits += 1,
-            else => continue,
-        }
-    }
-    var arr: std.ArrayList([]const u8) = try .initCapacity(allo, n_splits);
-    var start: usize = 0;
-    for (name, 0..) |ch, i| {
-        switch (ch) {
-            '_' => {
-                const split_name = try allocLowerString(allo, name[start..i]);
-                arr.appendAssumeCapacity(split_name);
-                start = i + 1;
-            },
-            else => continue,
-        }
-    }
-    const split_name = try allocLowerString(allo, name[start..name.len]);
-    arr.appendAssumeCapacity(split_name);
-    return arr;
-}
-
-fn removeMatches(
-    allo: Allocator,
-    arr1: *const std.ArrayList([]const u8),
-    arr2: *std.ArrayList([]const u8),
-) void {
-    const limit: usize = 64;
-    std.debug.assert(arr1.items.len < limit);
-    var matches1 = [_]bool{false} ** limit;
-    var matches2 = [_]bool{false} ** limit;
-    outer: for (arr2.items, 0..) |item2, j| {
-        inner: for (arr1.items, 0..) |item1, i| {
-            if (matches1[i]) continue :inner;
-            if (eql(u8, item2, item1)) {
-                matches2[j] = true;
-                matches1[i] = true;
-                continue :outer;
-            }
-        }
-    }
-    const len = arr2.items.len;
-    for (0..len) |i| {
-        const j = len - i - 1;
-        if (matches2[j]) {
-            const data = arr2.orderedRemove(j);
-            allo.free(data);
-        }
-    }
-}
-
-fn reconstructEnumFieldName(
-    allo: Allocator,
-    arr: *const std.ArrayList([]const u8),
-) ![]const u8 {
-    std.debug.assert(arr.items.len > 0);
-
-    var new_len: usize = arr.items[0].len;
-    for (arr.items[1..arr.items.len]) |item| {
-        new_len += item.len + 1;
-    }
-
-    var new_word = try allo.alloc(u8, new_len);
-    var start: usize = 0;
-    var end: usize = arr.items[0].len;
-    @memcpy(new_word[start..end], arr.items[0]);
-    for (arr.items[1..arr.items.len]) |item| {
-        start = end;
-        new_word[start] = '_';
-        start += 1;
-        end = start + item.len;
-        @memcpy(new_word[start..end], item);
-    }
-
-    return new_word;
-}
-
-fn writeExtensionNames(self: *TextData) !void {
-    try self.writeToFile(.extension_name, "pub const ExtensionName = struct {");
-    try self.writeToFile(.extension_name, end_str);
+fn writeExtensionNames(
+    self: *TextData,
+    comptime tag: LineTypes,
+) !void {
+    try self.writeToFile(tag, "pub const ExtensionName = struct {");
+    try self.writeToFile(tag, end_str);
     for (self.extension_names.items) |extension_name| {
-        try self.writeToFile(.extension_name, "    "); // spacing
-        try self.writeToFile(.extension_name, extension_name);
+        try self.writeToFile(tag, "    "); // spacing
+        try self.writeToFile(tag, extension_name);
     }
-    try self.writeToFile(.extension_name, "};");
-    try self.writeToFile(.extension_name, end_str);
+    try self.writeToFile(tag, "};");
+    try self.writeToFile(tag, end_str);
 }
 
-fn writeSpecVersions(self: *TextData) !void {
-    try self.writeToFile(.spec_version, "pub const SpecVersion = struct {");
-    try self.writeToFile(.spec_version, end_str);
+fn writeSpecVersions(
+    self: *TextData,
+    comptime tag: LineTypes,
+) !void {
+    try self.writeToFile(tag, "pub const SpecVersion = struct {");
+    try self.writeToFile(tag, end_str);
     for (self.spec_versions.items) |spec_version| {
-        try self.writeToFile(.spec_version, "    ");
-        try self.writeToFile(.spec_version, spec_version);
+        try self.writeToFile(tag, "    ");
+        try self.writeToFile(tag, spec_version);
     }
-    try self.writeToFile(.spec_version, "};");
-    try self.writeToFile(.spec_version, end_str);
+    try self.writeToFile(tag, "};");
+    try self.writeToFile(tag, end_str);
 }
 
-fn writeCloseEnum(self: *TextData, allo: Allocator) !void {
+fn writeCloseEnum(
+    self: *TextData,
+    allo: Allocator,
+    comptime tag: LineTypes,
+) !void {
     // close enum
     var buf: Buffer = .{};
     const line1 = buf.extends(&.{ "};", end_str });
-    try self.writeToFile(.flag2, line1);
+    try self.writeToFile(tag, line1);
     self.is_enum2 = false;
     // remove enum field names
     var kit = self.enum2_field_names.keyIterator();
@@ -914,10 +957,25 @@ fn writeCloseEnum(self: *TextData, allo: Allocator) !void {
     const line2 = buf2.extends(&.{
         "pub const ",
         title2,
-        "2PES = PackedEnumStruct(",
+        "Flags2 = PES(",
         title2,
-        "2);",
+        "FlagBits2);",
         end_str,
     });
-    try self.writeToFile(.flag2, line2);
+    try self.writeToFile(tag, line2);
+}
+
+fn skipExcept(line: []const u8, args: []const []const u8) bool {
+    for (args) |arg| {
+        if (startsWith(u8, line, arg)) return false;
+    } else return true;
+}
+
+fn writeHeader(self: *TextData) !void {
+    var buf: Buffer = .{};
+    const line = buf.extends(&.{
+        "pub const PES = @import(\"PackedEnumStruct\");",
+        end_str,
+    });
+    try self.writeToFile(.base, line);
 }

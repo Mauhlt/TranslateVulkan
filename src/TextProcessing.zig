@@ -111,3 +111,14 @@ pub fn hasType(type_name: []const u8) bool {
         if (eql(u8, type_name1, type_name)) return true;
     } else return false;
 }
+
+pub fn isKeyword(str1: []const u8) bool {
+    const map: std.StaticStringMap(void) = .initComptime(.{
+        .{ "and", {} },
+        .{ "or", {} },
+        .{ "inline", {} },
+        .{ "error", {} },
+        .{ "suspend", {} },
+    });
+    return map.has(str1);
+}

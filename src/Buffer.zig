@@ -467,3 +467,12 @@ pub fn removeOverlaps(
     // return new str
     return buf.str();
 }
+
+pub fn isKeyword(str1: []const u8) bool {
+    const map: std.StaticStringMap(void) = .initComptime(.{
+        .{ "and", {} },
+        .{ "or", {} },
+        .{ "inline", {} },
+    });
+    return map.has(str1);
+}
