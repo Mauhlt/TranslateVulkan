@@ -142,6 +142,12 @@ fn nextline(self: *TextData, buffer: *[BUFFER_SIZE]u8) ![]const u8 {
 
 pub fn parse(self: *TextData, allo: Allocator) !void {
     try self.writeHeader();
+    switch (@import("builtin").os.tag) {
+        .windows => try self.writeWindowsFns(),
+        .macos => try self.writeMacosFns(),
+        .linux => try self.writeLinuxFns(),
+        else => unreachable,
+    }
     // parse for variables
     while (true) {
         // get line
@@ -150,39 +156,15 @@ pub fn parse(self: *TextData, allo: Allocator) !void {
             else => return err,
         };
         // skips
-        if (skipExcept(line, &.{
-            "pub const STD_VIDEO_H264_LEVEL_IDC_1_0: c_int = 0;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_1_1: c_int = 1;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_1_2: c_int = 2;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_1_3: c_int = 3;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_2_0: c_int = 4;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_2_1: c_int = 5;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_2_2: c_int = 6;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_3_0: c_int = 7;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_3_1: c_int = 8;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_3_2: c_int = 9;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_4_0: c_int = 10;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_4_1: c_int = 11;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_4_2: c_int = 12;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_5_0: c_int = 13;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_5_1: c_int = 14;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_5_2: c_int = 15;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_6_0: c_int = 16;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_6_1: c_int = 17;",
-            "pub const STD_VIDEO_H264_LEVEL_IDC_6_2: c_int = 18;",
-            "pub const enum_StdVideoH264LevelIdc",
-            "pub const StdVideoH264LevelIdc = enum_StdVideoH264LevelIdc;",
-            "pub const STD_VIDEO_H264_POC_TYPE_0: c_int = 0;",
-        })) continue;
-        print("Line: {s}", .{line});
+        // if (skipExcept(line, &.{
+        //     "pub const struct_VkRect2D = extern struct {",
+        // })) continue;
         // line type
         const line_type = determineLineType(line) orelse continue;
-        print("Line Type: {s}\n", .{@tagName(line_type)});
         // close enums
         switch (line_type) {
             .flag1, .flag2 => {
                 const desc_type = determineDescType(line, line_type).?;
-                print("Desc Type: {s}\n", .{@tagName(desc_type)});
                 switch (desc_type) {
                     .field => {},
                     .title => if (self.is_enum2) try self.writeCloseEnum(allo, .base),
@@ -288,13 +270,12 @@ fn isPFN(line: []const u8) bool {
 fn isFlag1EnumTitle(line: []const u8) bool {
     // var name
     const var_name = varName(line, &.{}, &.{});
-    print("Var Name: {s}\n", .{var_name});
     const vk_start = startsWith(u8, var_name, "enum_Vk");
     const std_start = startsWith(u8, var_name, "enum_Std");
-    print("{} - {}\n", .{ vk_start, std_start });
-    print("{}\n", .{!(vk_start or std_start)});
     if (!(vk_start or std_start)) return false;
-    if (indexOf(u8, var_name, "2") != null) return false;
+    if (indexOfScalar(u8, var_name, '2')) |dub_idx| {
+        if (!isDigit(var_name[dub_idx - 1]) and !isDigit(var_name[dub_idx + 1])) return false;
+    }
     // default
     return true;
 }
@@ -306,6 +287,11 @@ fn isFlag1EnumField(line: []const u8) bool {
     const std_start = startsWith(u8, var_name, "STD_");
     if (!(vk_start or std_start)) return false;
     if (indexOfScalar(u8, var_name, ':') == null) return false;
+    if (indexOfScalar(u8, var_name, '2')) |dub_idx| {
+        const dub1 = isDigit(var_name[dub_idx - 1]);
+        const dub2 = isDigit(var_name[dub_idx + 1]);
+        if (!dub1 and !dub2) return false;
+    }
     // var type
     const var_type = varType(line);
     if (eql(u8, var_type, "c_uint")) return true;
@@ -331,13 +317,17 @@ fn isFlag2EnumField(line: []const u8) bool {
 }
 
 fn isOpaque(line: []const u8) bool {
-    if (!startsWith(u8, line, "struct_Vk")) return false;
+    const vk_start = startsWith(u8, line, "struct_Vk");
+    const std_start = startsWith(u8, line, "struct_Std");
+    if (!vk_start and !std_start) return false;
     if (!endsWith(u8, trimLine(line), "opaque {};")) return false;
     return true;
 }
 
 fn isExternStruct(line: []const u8) bool {
-    if (!startsWith(u8, line, "struct_Vk")) return false;
+    const vk_start = startsWith(u8, line, "struct_Vk");
+    const std_start = startsWith(u8, line, "struct_Std");
+    if (!vk_start and !std_start) return false;
     if (!endsWith(u8, trimLine(line), "extern struct {")) return false;
     return true;
 }
@@ -369,7 +359,7 @@ fn isType(line: []const u8) bool {
         "enum_Vk",
         "struct_Vk",
         "union_Vk",
-        "?*",
+        // "?*",
         "__",
     };
     for (bad_var_values) |bad_var_value| //
@@ -480,7 +470,6 @@ fn processFlag1EnumTitle(
         print("Line: {s}", .{line});
         unreachable;
     }
-    print("Var Name1: {s}\n", .{var_name});
     // get var value
     var buf1: Buffer = .{};
     const snake_var_name = buf1.snakeFromCamel(var_name);
@@ -499,7 +488,6 @@ fn processFlag1EnumTitle(
         end_str,
     });
     try self.writeToFile(tag, line1);
-    print("Line1: {s}", .{line1});
     // write fields
     for (self.enum_fields.items) |field| {
         var buf3: Buffer = .{};
@@ -525,15 +513,38 @@ fn processFlag1EnumTitle(
     try self.writeToFile(tag, line3);
     // write PES
     buf2.reset();
-    const var_name1 = varName(var_name, &.{}, &.{"FlagBits"});
-    const var_name2 = buf2.extends(&.{ var_name1, "Flags" });
+    var has_khr: bool = false;
+    const var_name1 = blk: {
+        var var_name1: []const u8 = undefined;
+        if (endsWith(u8, var_name, "FlagBitsKHR")) {
+            has_khr = true;
+            var_name1 = varName(var_name, &.{}, &.{"FlagBitsKHR"});
+        } else if (endsWith(u8, var_name, "FlagBits")) {
+            var_name1 = varName(var_name, &.{}, &.{"FlagBits"});
+        } else if (endsWith(u8, var_name, "FlagsKHR")) {
+            has_khr = true;
+            var_name1 = varName(var_name, &.{}, &.{"FlagsKHR"});
+        } else {
+            var_name1 = varName(var_name, &.{}, &.{"Flags"});
+        }
+        break :blk var_name1;
+    };
+    const var_name2: []const u8 = blk: {
+        var var_name2: []const u8 = undefined;
+        if (has_khr) {
+            var_name2 = buf2.extends(&.{ var_name1, "FlagsKHR" });
+        } else {
+            var_name2 = buf2.extends(&.{ var_name1, "Flags" });
+        }
+        break :blk var_name2;
+    };
     const dup_var_name2 = try allo.dupe(u8, var_name2);
     try self.prev_enum1_titles.putNoClobber(dup_var_name2, {});
     buf2.reset();
     const line4 = buf2.extends(&.{
         "pub const ",
-        var_name1,
-        "Flags = PES(",
+        dup_var_name2,
+        " = PES(",
         var_name,
         ");",
         end_str,
@@ -655,7 +666,12 @@ fn processOpaque(
     comptime tag: LineTypes,
 ) !void {
     const line1 = self.nextline(&self.buffer) catch unreachable;
-    const var_name = varName(line1, &.{ "pub const Vk", "" }, &.{});
+    var var_name: []const u8 = undefined;
+    if (startsWith(u8, line1, "pub const Vk")) {
+        var_name = varName(line1, &.{"pub const Vk"}, &.{});
+    } else if (startsWith(u8, line1, "pub const Std")) {
+        var_name = varName(line1, &.{"pub const Std"}, &.{});
+    }
     var buf: Buffer = .{};
     const line2 = buf.extends(&.{
         "pub const ",
@@ -679,7 +695,8 @@ fn processExternStruct(
 ) !void {
     // Convert name to remove struct_Vk
     var buf1: Buffer = .init(line);
-    const line1 = buf1.remove("struct_Vk");
+    _ = buf1.remove("struct_Vk");
+    const line1 = buf1.remove("struct_Std");
     try self.writeToFile(tag, line1);
     // get var name for s_type
     const var_name = varName(line1, &.{"pub const "}, &.{});
@@ -700,11 +717,16 @@ fn processExternStruct(
         std.debug.assert(colon_idx < eql_idx);
         // posiitons
         // copy field line spacing
+        // this is wrong
         var buf3: Buffer = .{};
         _ = buf3.fieldNameToSnake(line2);
-        _ = buf3.remove("struct_Vk");
-        _ = buf3.remove("union_Vk");
-        _ = buf3.remove("Vk");
+        _ = buf3.removePrefixesFromStructType(&.{
+            "union_Vk",
+            "struct_Vk",
+            "Vk",
+            "Std",
+        });
+        _ = buf3.removePrefixesFromStructValue(&.{ "Vk", "Std" });
         const snake_field_name = buf3.fieldName();
         // If Structure Type - write structure type
         // Else - write what it was
@@ -978,4 +1000,37 @@ fn writeHeader(self: *TextData) !void {
         end_str,
     });
     try self.writeToFile(.base, line);
+}
+
+fn writeWindowsFns(self: *TextData) !void {
+    var buf: Buffer = .{};
+    const lines = [_][]const u8{
+        "pub const HINSTANCE = @import(\"windows.zig\").HINSTANCE;",
+        "pub const HANDLE = @import(\"windows.zig\").HANDLE;",
+        "pub const SECURITY_ATTRIBUTES = @import(\"windows.zig\").SECURITY_ATTRIBUTES;",
+        "pub const HMONITOR = @import(\"windows.zig\").HMONITOR;",
+        "pub const HWND = @import(\"windows.zig\").HWND;",
+        "pub const LPCWSTR = @import(\"windows.zig\").LPCWSTR;",
+        "pub const DWORD = @import(\"windows.zig\").DWORD;",
+    };
+    for (lines) |line| {
+        const newline = buf.extends(&.{ line, end_str });
+        try self.writeToFile(.base, newline);
+        buf.reset();
+    }
+}
+
+fn writeMacosFns(self: *TextData) !void {
+    _ = self;
+    // var buf: Buffer = .{};
+    // const lines = [_][]const u8 {
+    //     "pub const ",
+    // };
+    // for (lines) |line| {
+    //     _ = buf.extends(&.{});
+    // }
+}
+
+fn writeLinuxFns(self: *TextData) !void {
+    _ = self;
 }
