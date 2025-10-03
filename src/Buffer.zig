@@ -64,12 +64,15 @@ pub fn remove(
     return buf.str();
 }
 
-pub fn removePrefixes(buf: *Buffer, names: []const []const u8) []const u8 {
-    for (names) |name| {
-        if (startsWith(u8, buf.str(), name)) {
-            for (name.len..buf.end) |i| //
-                buf.buf[i - name.len] = buf.buf[i];
-            buf.end -= name.len;
+pub fn removePrefixes(
+    buf: *Buffer,
+    prefixes: []const []const u8,
+) []const u8 {
+    for (prefixes) |prefix| {
+        if (startsWith(u8, buf.str(), prefix)) {
+            for (prefix.len..buf.end) |i| //
+                buf.buf[i - prefix.len] = buf.buf[i];
+            buf.end -= prefix.len;
         }
     }
     return buf.str();
@@ -270,24 +273,26 @@ pub fn removePrefixFromArgs(
     return buf.str();
 }
 
-pub fn removePrefixFromResult(
+pub fn removePrefixesFromFnResult(
     buf: *Buffer,
-    line: []const u8,
-    prefix: []const u8,
+    prefixes: []const []const u8,
 ) []const u8 {
-    const close_paren_idx = lastIndexOfScalar(u8, line, ')').?;
-    const line1 = line[0 .. close_paren_idx + 1];
-    const line2 = line[close_paren_idx + 1 .. line.len];
-    print("Buf: {s}\n", .{buf.str()});
-    buf.copy(line1);
-    const n_reps = replace(
-        u8,
-        line2,
-        prefix,
-        "",
-        buf.buf[close_paren_idx + 1 .. BUFFER_SIZE],
-    );
-    buf.end = line.len - (n_reps * prefix.len);
+    // get line
+    const line = buf.str();
+    // start
+    const start = if (lastIndexOfScalar(u8, line, ')')) |idx| idx + 1 else unreachable;
+    // remove prefixes
+    var start1: usize = start;
+    for (prefixes) |prefix| {
+        assert(start1 < line.len);
+        const result = line[start1..line.len];
+        if (startsWith(u8, result, prefix)) {
+            start1 += prefix.len;
+        }
+    }
+    // adjust buffer
+    buf.shiftBufferLeft(start, start1);
+    // return newline
     return buf.str();
 }
 
@@ -468,11 +473,98 @@ pub fn removeOverlaps(
     return buf.str();
 }
 
-pub fn isKeyword(str1: []const u8) bool {
-    const map: std.StaticStringMap(void) = .initComptime(.{
-        .{ "and", {} },
-        .{ "or", {} },
-        .{ "inline", {} },
-    });
-    return map.has(str1);
+pub fn removePrefixesFromStructName(
+    buf: *Buffer,
+    prefixes: []const []const u8,
+) []const u8 {
+    // get line
+    const line = buf.str();
+    // idxs
+    const colon = indexOfScalar(u8, line, ':').?;
+    const space = lastIndexOfScalar(u8, line[0..colon], ' ').?;
+    // get name
+    const start1 = space + 1;
+    const end = colon;
+    const name: []const u8 = line[start1..end];
+    // remove prefixes
+    var start2 = start1;
+    for (prefixes) |prefix| {
+        if (startsWith(u8, name, prefix)) {
+            start2 += prefix.len;
+        }
+    }
+    // update buffer
+    buf.shiftBufferLeft(start1, start2);
+    // return line
+    return buf.str();
+}
+
+pub fn removePrefixesFromStructType(
+    buf: *Buffer,
+    prefixes: []const []const u8,
+) []const u8 {
+    // line
+    const line = buf.str();
+    // idxs
+    const eql_ = indexOfScalar(u8, line, '=').?;
+    const br = if (lastIndexOfScalar(u8, line[0..eql_], ']')) |idx| idx + 1 else 0;
+    const space = if (lastIndexOfScalar(u8, line[0 .. eql_ - 1], ' ')) |idx| idx + 1 else 0;
+    const colon = lastIndexOfScalar(u8, line[0 .. eql_ - 1], ':').?;
+    // name
+    const start1: usize = @max(@max(br, space), colon);
+    const end1: usize = eql_ - 1;
+    const name = line[start1..end1];
+    // remove prefixes
+    var start2: usize = start1;
+    for (prefixes) |prefix| {
+        if (startsWith(u8, name, prefix)) {
+            start2 += prefix.len;
+        }
+    }
+    // adjust buffer
+    buf.shiftBufferLeft(start1, start2);
+    // return line
+    return buf.str();
+}
+
+pub fn removePrefixesFromStructValue(
+    buf: *Buffer,
+    prefixes: []const []const u8,
+) []const u8 {
+    // line
+    const line = buf.str();
+    // idxs
+    const close_paren = lastIndexOfScalar(u8, line, ')') orelse line.len;
+    const comma = lastIndexOfScalar(u8, line, ',').?;
+    const open_paren = if (lastIndexOfScalar(u8, line, '(')) |idx| idx + 1 else 0;
+    const eql_ = if (lastIndexOfScalar(u8, line, '=')) |idx| idx + 2 else 0;
+    const space = if (lastIndexOfScalar(u8, line, ' ')) |idx| idx + 1 else 0;
+    const close_br = if (lastIndexOfScalar(u8, line, ']')) |idx| idx + 1 else 0;
+    // name
+    const start1: usize = @max(@max(@max(open_paren, eql_), space), close_br);
+    const end1: usize = @min(close_paren, comma);
+    const name = line[start1..end1];
+    // remove prefixes
+    var start2: usize = start1;
+    for (prefixes) |prefix| {
+        if (startsWith(u8, name, prefix)) {
+            start2 += prefix.len;
+        }
+    }
+    // adjust buffer
+    buf.shiftBufferLeft(start1, start2);
+    // return line
+    return buf.str();
+}
+
+fn shiftBufferLeft(buf: *Buffer, start1: usize, start2: usize) void {
+    assert(start1 <= start2);
+    const line = buf.str();
+    assert(start2 < line.len);
+    if (start1 == start2) return;
+    const diff = start2 - start1;
+    for (start1..line.len - diff, start2..line.len) |i, j| {
+        buf.buf[i] = buf.buf[j];
+    }
+    buf.end -= diff;
 }
