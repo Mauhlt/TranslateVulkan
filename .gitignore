@@ -1,0 +1,4 @@
+.zig-cache/
+zig-out/
+# Zig's project-local package store (Vulkan-Headers lands here)
+zig-pkg/

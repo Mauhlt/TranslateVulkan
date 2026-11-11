@@ -1,0 +1,18 @@
+.{
+    .name = .translate_vulkan,
+    .version = "0.2.0",
+    .fingerprint = 0x74c0010ad5e0c16b,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{
+        .vulkan_headers = .{
+            .url = "git+https://github.com/KhronosGroup/Vulkan-Headers?ref=main#88487f687f3100ebe1d3559a8a34d971ee85b977",
+            .hash = "N-V-__8AAGrcigJk__pPsEdMgID-QhKWYAi-MHHn3sn5HOI6",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "README.md",
+    },
+}
