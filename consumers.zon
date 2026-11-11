@@ -1,0 +1,30 @@
+// Repos that use the generated vk.zig. `zig build compat` copies each one to
+// .zig-cache/compat/<name>, swaps in the new vk.zig, builds it, and appends the
+// result to compat/log.md. Your repos are never modified.
+//
+// Fields:
+//   .name           label used in the log
+//   .path           repo root (relative to this project, or absolute)
+//   .vk_file        the consumer's own copy of vk.zig           (default "src/vk.zig")
+//   .vk_dependency  OR: the build.zig.zon dependency providing Vulkan; it is
+//                   replaced by a package exposing vk.zig as module .vk_module
+//   .vk_module      module name for .vk_dependency              (default "vulkan")
+//   .args           zig arguments                                (default .{"build"})
+//   .pin            hold at a generated version, e.g. "1.4.368"  (default null = latest)
+.{
+    .consumers = .{
+        .{
+            .name = "hello-example",
+            .path = "examples/hello",
+            .vk_file = "src/vk.zig",
+        },
+        // Example for one of your repos that gets Vulkan from a path dependency
+        // (`.Vulkan = .{ .path = "../Vulkan2" }`). Uncomment to check it:
+        // .{
+        //     .name = "Renderer",
+        //     .path = "../Renderer",
+        //     .vk_dependency = "Vulkan",
+        //     .vk_module = "Vulkan",
+        // },
+    },
+}
