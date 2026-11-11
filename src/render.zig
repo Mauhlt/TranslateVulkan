@@ -151,8 +151,11 @@ const Renderer = struct {
                 "*"
             else
                 "[*]";
+            // Count-sized arrays (`[*]`) may be null when their count is 0, which
+            // vk.xml marks on the count rather than on the pointer.
             const optional = (innermost and is_void) or
                 (outer == 0 and ctx != .param) or
+                (outer == 0 and std.mem.eql(u8, ptr, "[*]")) or
                 (outer < optionals.len and std.mem.eql(u8, optionals[outer], "true"));
             t = try r.fmt("{s}{s}{s}{s}", .{ if (optional) "?" else "", ptr, if (level.pointee_const) "const " else "", t });
         }
@@ -341,7 +344,12 @@ const Renderer = struct {
         const block = r.reg.enums.getPtr(c_name);
         const is_result = std.mem.eql(u8, c_name, "VkResult");
         const is_bits = if (block) |b| b.is_bitmask else false;
-        const tag = if (!is_bits) "i32" else if (block.?.is_64) "u64" else "u32";
+        // Unsigned like the C values in practice; only enums with negative
+        // values (VkResult) are signed. Same size as C's `int` either way.
+        const has_negative = if (block) |b| for (b.values.items) |v| {
+            if (v.value == .int and v.value.int < 0) break true;
+        } else false else false;
+        const tag = if (has_negative) "i32" else if (is_bits and block.?.is_64) "u64" else "u32";
         try r.print("pub const {f} = enum({s}) {{\n", .{ fmtId(name), tag });
         if (!is_result) try r.sizeCheck(name, c_name);
 
@@ -351,12 +359,12 @@ const Renderer = struct {
         var by_value: std.AutoHashMapUnmanaged(i128, []const u8) = .empty;
         var decls: Writer.Allocating = .init(r.a);
         if (block) |b| {
-            const prefix = try naming.enumValuePrefix(r.a, c_name, r.reg.tagList());
+            const value_naming = try naming.enumNaming(r.a, c_name, r.reg.tagList());
             for ([_]bool{ false, true }) |aliases_pass| {
                 for (b.values.items) |v| {
                     const is_alias = v.value == .alias;
                     if (is_alias != aliases_pass) continue;
-                    const field = try naming.enumFieldName(r.a, prefix, v.name);
+                    const field = try naming.enumFieldName(r.a, value_naming, v.name);
                     if ((try names.getOrPut(r.a, field)).found_existing) continue;
                     const same_as: ?[]const u8 = switch (v.value) {
                         .alias => |target| r.enum_fields.get(target) orelse continue,

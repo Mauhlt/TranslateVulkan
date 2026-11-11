@@ -1347,7 +1347,7 @@ pub const google_hdr_smpte_st_209450_metadata_spec_version = 1;
 pub const google_hdr_smpte_st_209450_metadata_extension_name = "VK_GOOGLE_hdr_smpte_st_209450_metadata";
 
 // Types
-pub const StdVideoH264ChromaFormatIdc = enum(i32) {
+pub const StdVideoH264ChromaFormatIdc = enum(u32) {
     monochrome = 0,
     @"420" = 1,
     @"422" = 2,
@@ -1355,7 +1355,7 @@ pub const StdVideoH264ChromaFormatIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264ProfileIdc = enum(i32) {
+pub const StdVideoH264ProfileIdc = enum(u32) {
     baseline = 66,
     main = 77,
     high = 100,
@@ -1365,7 +1365,7 @@ pub const StdVideoH264ProfileIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264LevelIdc = enum(i32) {
+pub const StdVideoH264LevelIdc = enum(u32) {
     @"1_0" = 0,
     @"1_1" = 1,
     @"1_2" = 2,
@@ -1388,14 +1388,14 @@ pub const StdVideoH264LevelIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264PocType = enum(i32) {
+pub const StdVideoH264PocType = enum(u32) {
     @"0" = 0,
     @"1" = 1,
     @"2" = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264AspectRatioIdc = enum(i32) {
+pub const StdVideoH264AspectRatioIdc = enum(u32) {
     unspecified = 0,
     square = 1,
     @"12_11" = 2,
@@ -1417,14 +1417,14 @@ pub const StdVideoH264AspectRatioIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264WeightedBipredIdc = enum(i32) {
+pub const StdVideoH264WeightedBipredIdc = enum(u32) {
     default = 0,
     explicit = 1,
     implicit = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264ModificationOfPicNumsIdc = enum(i32) {
+pub const StdVideoH264ModificationOfPicNumsIdc = enum(u32) {
     short_term_subtract = 0,
     short_term_add = 1,
     long_term = 2,
@@ -1432,7 +1432,7 @@ pub const StdVideoH264ModificationOfPicNumsIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264MemMgmtControlOp = enum(i32) {
+pub const StdVideoH264MemMgmtControlOp = enum(u32) {
     end = 0,
     unmark_short_term = 1,
     unmark_long_term = 2,
@@ -1443,28 +1443,28 @@ pub const StdVideoH264MemMgmtControlOp = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264CabacInitIdc = enum(i32) {
+pub const StdVideoH264CabacInitIdc = enum(u32) {
     @"0" = 0,
     @"1" = 1,
     @"2" = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264DisableDeblockingFilterIdc = enum(i32) {
+pub const StdVideoH264DisableDeblockingFilterIdc = enum(u32) {
     disabled = 0,
     enabled = 1,
     partial = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264SliceType = enum(i32) {
+pub const StdVideoH264SliceType = enum(u32) {
     p = 0,
     b = 1,
     i = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264PictureType = enum(i32) {
+pub const StdVideoH264PictureType = enum(u32) {
     p = 0,
     b = 1,
     i = 2,
@@ -1472,7 +1472,7 @@ pub const StdVideoH264PictureType = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH264NonVclNaluType = enum(i32) {
+pub const StdVideoH264NonVclNaluType = enum(u32) {
     sps = 0,
     pps = 1,
     aud = 2,
@@ -1483,13 +1483,13 @@ pub const StdVideoH264NonVclNaluType = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoDecodeH264FieldOrderCount = enum(i32) {
+pub const StdVideoDecodeH264FieldOrderCount = enum(u32) {
     top = 0,
     bottom = 1,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265ChromaFormatIdc = enum(i32) {
+pub const StdVideoH265ChromaFormatIdc = enum(u32) {
     monochrome = 0,
     @"420" = 1,
     @"422" = 2,
@@ -1497,7 +1497,7 @@ pub const StdVideoH265ChromaFormatIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265ProfileIdc = enum(i32) {
+pub const StdVideoH265ProfileIdc = enum(u32) {
     main = 1,
     main_10 = 2,
     main_still_picture = 3,
@@ -1506,7 +1506,7 @@ pub const StdVideoH265ProfileIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265LevelIdc = enum(i32) {
+pub const StdVideoH265LevelIdc = enum(u32) {
     @"1_0" = 0,
     @"2_0" = 1,
     @"2_1" = 2,
@@ -1523,14 +1523,14 @@ pub const StdVideoH265LevelIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265SliceType = enum(i32) {
+pub const StdVideoH265SliceType = enum(u32) {
     b = 0,
     p = 1,
     i = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265PictureType = enum(i32) {
+pub const StdVideoH265PictureType = enum(u32) {
     p = 0,
     b = 1,
     i = 2,
@@ -1538,7 +1538,7 @@ pub const StdVideoH265PictureType = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoH265AspectRatioIdc = enum(i32) {
+pub const StdVideoH265AspectRatioIdc = enum(u32) {
     unspecified = 0,
     square = 1,
     @"12_11" = 2,
@@ -1560,7 +1560,7 @@ pub const StdVideoH265AspectRatioIdc = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9Profile = enum(i32) {
+pub const StdVideoVP9Profile = enum(u32) {
     @"0" = 0,
     @"1" = 1,
     @"2" = 2,
@@ -1568,7 +1568,7 @@ pub const StdVideoVP9Profile = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9Level = enum(i32) {
+pub const StdVideoVP9Level = enum(u32) {
     @"1_0" = 0,
     @"1_1" = 1,
     @"2_0" = 2,
@@ -1586,13 +1586,13 @@ pub const StdVideoVP9Level = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9FrameType = enum(i32) {
+pub const StdVideoVP9FrameType = enum(u32) {
     key = 0,
     non_key = 1,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9ReferenceName = enum(i32) {
+pub const StdVideoVP9ReferenceName = enum(u32) {
     intra_frame = 0,
     last_frame = 1,
     golden_frame = 2,
@@ -1600,7 +1600,7 @@ pub const StdVideoVP9ReferenceName = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9InterpolationFilter = enum(i32) {
+pub const StdVideoVP9InterpolationFilter = enum(u32) {
     eighttap = 0,
     eighttap_smooth = 1,
     eighttap_sharp = 2,
@@ -1609,7 +1609,7 @@ pub const StdVideoVP9InterpolationFilter = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoVP9ColorSpace = enum(i32) {
+pub const StdVideoVP9ColorSpace = enum(u32) {
     unknown = 0,
     bt_601 = 1,
     bt_709 = 2,
@@ -1621,14 +1621,14 @@ pub const StdVideoVP9ColorSpace = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1Profile = enum(i32) {
+pub const StdVideoAV1Profile = enum(u32) {
     main = 0,
     high = 1,
     professional = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1Level = enum(i32) {
+pub const StdVideoAV1Level = enum(u32) {
     @"2_0" = 0,
     @"2_1" = 1,
     @"2_2" = 2,
@@ -1656,7 +1656,7 @@ pub const StdVideoAV1Level = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1FrameType = enum(i32) {
+pub const StdVideoAV1FrameType = enum(u32) {
     key = 0,
     inter = 1,
     intra_only = 2,
@@ -1664,7 +1664,7 @@ pub const StdVideoAV1FrameType = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1ReferenceName = enum(i32) {
+pub const StdVideoAV1ReferenceName = enum(u32) {
     intra_frame = 0,
     last_frame = 1,
     last2_frame = 2,
@@ -1676,7 +1676,7 @@ pub const StdVideoAV1ReferenceName = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1InterpolationFilter = enum(i32) {
+pub const StdVideoAV1InterpolationFilter = enum(u32) {
     eighttap = 0,
     eighttap_smooth = 1,
     eighttap_sharp = 2,
@@ -1685,14 +1685,14 @@ pub const StdVideoAV1InterpolationFilter = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1TxMode = enum(i32) {
+pub const StdVideoAV1TxMode = enum(u32) {
     only_4x4 = 0,
     largest = 1,
     select = 2,
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1FrameRestorationType = enum(i32) {
+pub const StdVideoAV1FrameRestorationType = enum(u32) {
     none = 0,
     wiener = 1,
     sgrproj = 2,
@@ -1700,7 +1700,7 @@ pub const StdVideoAV1FrameRestorationType = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1ColorPrimaries = enum(i32) {
+pub const StdVideoAV1ColorPrimaries = enum(u32) {
     bt_709 = 1,
     unspecified = 2,
     bt_470_m = 4,
@@ -1717,7 +1717,7 @@ pub const StdVideoAV1ColorPrimaries = enum(i32) {
     _,
     pub const bt_unspecified: StdVideoAV1ColorPrimaries = .unspecified;
 };
-pub const StdVideoAV1TransferCharacteristics = enum(i32) {
+pub const StdVideoAV1TransferCharacteristics = enum(u32) {
     reserved_0 = 0,
     bt_709 = 1,
     unspecified = 2,
@@ -1740,7 +1740,7 @@ pub const StdVideoAV1TransferCharacteristics = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1MatrixCoefficients = enum(i32) {
+pub const StdVideoAV1MatrixCoefficients = enum(u32) {
     identity = 0,
     bt_709 = 1,
     unspecified = 2,
@@ -1759,7 +1759,7 @@ pub const StdVideoAV1MatrixCoefficients = enum(i32) {
     invalid = 2147483647,
     _,
 };
-pub const StdVideoAV1ChromaSamplePosition = enum(i32) {
+pub const StdVideoAV1ChromaSamplePosition = enum(u32) {
     unknown = 0,
     vertical = 1,
     colocated = 2,
@@ -2136,7 +2136,7 @@ pub const DebugReportCallbackEXT = enum(u64) { null = 0, _ };
 pub const DebugUtilsMessengerEXT = enum(u64) { null = 0, _ };
 pub const VideoSessionKHR = enum(u64) { null = 0, _ };
 pub const VideoSessionParametersKHR = enum(u64) { null = 0, _ };
-pub const AttachmentLoadOp = enum(i32) {
+pub const AttachmentLoadOp = enum(u32) {
     load = 0,
     clear = 1,
     dont_care = 2,
@@ -2145,7 +2145,7 @@ pub const AttachmentLoadOp = enum(i32) {
     pub const none_ext: AttachmentLoadOp = .none;
     pub const none_khr: AttachmentLoadOp = .none;
 };
-pub const AttachmentStoreOp = enum(i32) {
+pub const AttachmentStoreOp = enum(u32) {
     store = 0,
     dont_care = 1,
     none = 1000301000,
@@ -2154,7 +2154,7 @@ pub const AttachmentStoreOp = enum(i32) {
     pub const none_qcom: AttachmentStoreOp = .none;
     pub const none_ext: AttachmentStoreOp = .none;
 };
-pub const BlendFactor = enum(i32) {
+pub const BlendFactor = enum(u32) {
     zero = 0,
     one = 1,
     src_color = 2,
@@ -2176,7 +2176,7 @@ pub const BlendFactor = enum(i32) {
     one_minus_src1_alpha = 18,
     _,
 };
-pub const BlendOp = enum(i32) {
+pub const BlendOp = enum(u32) {
     add = 0,
     subtract = 1,
     reverse_subtract = 2,
@@ -2230,7 +2230,7 @@ pub const BlendOp = enum(i32) {
     blue_ext = 1000148045,
     _,
 };
-pub const BorderColor = enum(i32) {
+pub const BorderColor = enum(u32) {
     float_transparent_black = 0,
     int_transparent_black = 1,
     float_opaque_black = 2,
@@ -2263,7 +2263,7 @@ pub const SamplerCreateFlagBits = enum(u32) {
     image_processing_bit_qcom = 0x10,
     _,
 };
-pub const PipelineCacheHeaderVersion = enum(i32) {
+pub const PipelineCacheHeaderVersion = enum(u32) {
     one = 1,
     data_graph_qcom = 1000629000,
     _,
@@ -2356,7 +2356,7 @@ pub const ColorComponentFlagBits = enum(u32) {
     a_bit = 0x8,
     _,
 };
-pub const ComponentSwizzle = enum(i32) {
+pub const ComponentSwizzle = enum(u32) {
     identity = 0,
     zero = 1,
     one = 2,
@@ -2380,7 +2380,7 @@ pub const CommandBufferResetFlagBits = enum(u32) {
     release_resources_bit = 0x1,
     _,
 };
-pub const CommandBufferLevel = enum(i32) {
+pub const CommandBufferLevel = enum(u32) {
     primary = 0,
     secondary = 1,
     _,
@@ -2391,7 +2391,7 @@ pub const CommandBufferUsageFlagBits = enum(u32) {
     simultaneous_use_bit = 0x4,
     _,
 };
-pub const CompareOp = enum(i32) {
+pub const CompareOp = enum(u32) {
     never = 0,
     less = 1,
     equal = 2,
@@ -2409,7 +2409,7 @@ pub const CullModeFlagBits = enum(u32) {
     front_and_back = 0x3,
     _,
 };
-pub const DescriptorType = enum(i32) {
+pub const DescriptorType = enum(u32) {
     sampler = 0,
     combined_image_sampler = 1,
     sampled_image = 2,
@@ -2433,7 +2433,7 @@ pub const DescriptorType = enum(i32) {
     pub const inline_uniform_block_ext: DescriptorType = .inline_uniform_block;
     pub const mutable_valve: DescriptorType = .mutable_ext;
 };
-pub const DynamicState = enum(i32) {
+pub const DynamicState = enum(u32) {
     viewport = 0,
     scissor = 1,
     line_width = 2,
@@ -2530,14 +2530,14 @@ pub const FenceCreateFlagBits = enum(u32) {
     signaled_bit = 0x1,
     _,
 };
-pub const PolygonMode = enum(i32) {
+pub const PolygonMode = enum(u32) {
     fill = 0,
     line = 1,
     point = 2,
     fill_rectangle_nv = 1000153000,
     _,
 };
-pub const Format = enum(i32) {
+pub const Format = enum(u32) {
     undefined = 0,
     r4g4_unorm_pack8 = 1,
     r4g4b4a4_unorm_pack16 = 2,
@@ -2940,7 +2940,7 @@ pub const FormatFeatureFlagBits = enum(u32) {
     pub const disjoint_bit_khr: FormatFeatureFlagBits = .disjoint_bit;
     pub const cosited_chroma_samples_bit_khr: FormatFeatureFlagBits = .cosited_chroma_samples_bit;
 };
-pub const FrontFace = enum(i32) {
+pub const FrontFace = enum(u32) {
     counter_clockwise = 0,
     clockwise = 1,
     _,
@@ -3000,7 +3000,7 @@ pub const ImageCreateFlagBits = enum(u32) {
     pub const descriptor_buffer_capture_replay_bit_ext: ImageCreateFlagBits = .descriptor_heap_capture_replay_bit_ext;
     pub const fragment_density_map_offset_bit_qcom: ImageCreateFlagBits = .fragment_density_map_offset_bit_ext;
 };
-pub const ImageLayout = enum(i32) {
+pub const ImageLayout = enum(u32) {
     undefined = 0,
     general = 1,
     color_attachment_optimal = 2,
@@ -3045,13 +3045,13 @@ pub const ImageLayout = enum(i32) {
     pub const read_only_optimal_khr: ImageLayout = .read_only_optimal;
     pub const attachment_optimal_khr: ImageLayout = .attachment_optimal;
 };
-pub const ImageTiling = enum(i32) {
+pub const ImageTiling = enum(u32) {
     optimal = 0,
     linear = 1,
     drm_format_modifier_ext = 1000158000,
     _,
 };
-pub const ImageType = enum(i32) {
+pub const ImageType = enum(u32) {
     @"1d" = 0,
     @"2d" = 1,
     @"3d" = 2,
@@ -3093,7 +3093,7 @@ pub const ImageViewCreateFlagBits = enum(u32) {
     fragment_density_map_deferred_bit_ext = 0x2,
     _,
 };
-pub const ImageViewType = enum(i32) {
+pub const ImageViewType = enum(u32) {
     @"1d" = 0,
     @"2d" = 1,
     @"3d" = 2,
@@ -3103,32 +3103,32 @@ pub const ImageViewType = enum(i32) {
     cube_array = 6,
     _,
 };
-pub const IndirectCommandsTokenTypeEXT = enum(i32) {
-    execution_set_ext = 0,
-    push_constant_ext = 1,
-    sequence_index_ext = 2,
-    index_buffer_ext = 3,
-    vertex_buffer_ext = 4,
-    draw_indexed_ext = 5,
-    draw_ext = 6,
-    draw_indexed_count_ext = 7,
-    draw_count_ext = 8,
-    dispatch_ext = 9,
-    push_data_ext = 1000135000,
-    push_data_sequence_index_ext = 1000135001,
-    draw_mesh_tasks_nv_ext = 1000202002,
-    draw_mesh_tasks_count_nv_ext = 1000202003,
-    draw_mesh_tasks_ext = 1000328000,
-    draw_mesh_tasks_count_ext = 1000328001,
-    trace_rays2_ext = 1000386004,
+pub const IndirectCommandsTokenTypeEXT = enum(u32) {
+    execution_set = 0,
+    push_constant = 1,
+    sequence_index = 2,
+    index_buffer = 3,
+    vertex_buffer = 4,
+    draw_indexed = 5,
+    draw = 6,
+    draw_indexed_count = 7,
+    draw_count = 8,
+    dispatch = 9,
+    push_data = 1000135000,
+    push_data_sequence_index = 1000135001,
+    draw_mesh_tasks_nv = 1000202002,
+    draw_mesh_tasks_count_nv = 1000202003,
+    draw_mesh_tasks = 1000328000,
+    draw_mesh_tasks_count = 1000328001,
+    trace_rays2 = 1000386004,
     _,
 };
-pub const SharingMode = enum(i32) {
+pub const SharingMode = enum(u32) {
     exclusive = 0,
     concurrent = 1,
     _,
 };
-pub const IndexType = enum(i32) {
+pub const IndexType = enum(u32) {
     uint16 = 0,
     uint32 = 1,
     uint8 = 1000265000,
@@ -3138,7 +3138,7 @@ pub const IndexType = enum(i32) {
     pub const uint8_ext: IndexType = .uint8;
     pub const uint8_khr: IndexType = .uint8;
 };
-pub const LogicOp = enum(i32) {
+pub const LogicOp = enum(u32) {
     clear = 0,
     @"and" = 1,
     and_reverse = 2,
@@ -3214,7 +3214,7 @@ pub const MemoryPropertyFlagBits = enum(u32) {
     rdma_capable_bit_nv = 0x100,
     _,
 };
-pub const PhysicalDeviceType = enum(i32) {
+pub const PhysicalDeviceType = enum(u32) {
     other = 0,
     integrated_gpu = 1,
     discrete_gpu = 2,
@@ -3222,7 +3222,7 @@ pub const PhysicalDeviceType = enum(i32) {
     cpu = 4,
     _,
 };
-pub const PipelineBindPoint = enum(i32) {
+pub const PipelineBindPoint = enum(u32) {
     graphics = 0,
     compute = 1,
     execution_graph_amdx = 1000134000,
@@ -3277,7 +3277,7 @@ pub const PipelineCreateFlagBits = enum(u32) {
     pub const no_protected_access_bit_ext: PipelineCreateFlagBits = .no_protected_access_bit;
     pub const protected_access_only_bit_ext: PipelineCreateFlagBits = .protected_access_only_bit;
 };
-pub const PrimitiveTopology = enum(i32) {
+pub const PrimitiveTopology = enum(u32) {
     point_list = 0,
     line_list = 1,
     line_strip = 2,
@@ -3320,7 +3320,7 @@ pub const QueryResultFlagBits = enum(u32) {
     with_status_bit_khr = 0x10,
     _,
 };
-pub const QueryType = enum(i32) {
+pub const QueryType = enum(u32) {
     occlusion = 0,
     pipeline_statistics = 1,
     timestamp = 2,
@@ -3353,7 +3353,7 @@ pub const QueueFlagBits = enum(u32) {
     data_graph_bit_arm = 0x400,
     _,
 };
-pub const SubpassContents = enum(i32) {
+pub const SubpassContents = enum(u32) {
     @"inline" = 0,
     secondary_command_buffers = 1,
     inline_and_secondary_command_buffers_khr = 1000451000,
@@ -3469,7 +3469,7 @@ pub const StencilFaceFlagBits = enum(u32) {
     front_and_back = 0x3,
     _,
 };
-pub const StencilOp = enum(i32) {
+pub const StencilOp = enum(u32) {
     keep = 0,
     zero = 1,
     replace = 2,
@@ -3480,7 +3480,7 @@ pub const StencilOp = enum(i32) {
     decrement_and_wrap = 7,
     _,
 };
-pub const StructureType = enum(i32) {
+pub const StructureType = enum(u32) {
     application_info = 0,
     instance_create_info = 1,
     device_queue_create_info = 2,
@@ -5003,7 +5003,7 @@ pub const StructureType = enum(i32) {
     pub const push_descriptor_set_with_template_info_khr: StructureType = .push_descriptor_set_with_template_info;
     pub const rendering_end_info_ext: StructureType = .rendering_end_info_khr;
 };
-pub const SystemAllocationScope = enum(i32) {
+pub const SystemAllocationScope = enum(u32) {
     command = 0,
     object = 1,
     cache = 2,
@@ -5011,11 +5011,11 @@ pub const SystemAllocationScope = enum(i32) {
     instance = 4,
     _,
 };
-pub const InternalAllocationType = enum(i32) {
+pub const InternalAllocationType = enum(u32) {
     executable = 0,
     _,
 };
-pub const SamplerAddressMode = enum(i32) {
+pub const SamplerAddressMode = enum(u32) {
     repeat = 0,
     mirrored_repeat = 1,
     clamp_to_edge = 2,
@@ -5024,19 +5024,19 @@ pub const SamplerAddressMode = enum(i32) {
     _,
     pub const mirror_clamp_to_edge_khr: SamplerAddressMode = .mirror_clamp_to_edge;
 };
-pub const Filter = enum(i32) {
+pub const Filter = enum(u32) {
     nearest = 0,
     linear = 1,
     cubic_ext = 1000015000,
     _,
     pub const cubic_img: Filter = .cubic_ext;
 };
-pub const SamplerMipmapMode = enum(i32) {
+pub const SamplerMipmapMode = enum(u32) {
     nearest = 0,
     linear = 1,
     _,
 };
-pub const VertexInputRate = enum(i32) {
+pub const VertexInputRate = enum(u32) {
     vertex = 0,
     instance = 1,
     _,
@@ -5085,30 +5085,30 @@ pub const SparseImageFormatFlagBits = enum(u32) {
     _,
 };
 pub const ClusterAccelerationStructureIndexFormatFlagBitsNV = enum(u32) {
-    @"8bit_nv" = 0x1,
-    @"16bit_nv" = 0x2,
-    @"32bit_nv" = 0x4,
+    @"8bit" = 0x1,
+    @"16bit" = 0x2,
+    @"32bit" = 0x4,
     _,
 };
-pub const ClusterAccelerationStructureTypeNV = enum(i32) {
-    clusters_bottom_level_nv = 0,
-    triangle_cluster_nv = 1,
-    triangle_cluster_template_nv = 2,
+pub const ClusterAccelerationStructureTypeNV = enum(u32) {
+    clusters_bottom_level = 0,
+    triangle_cluster = 1,
+    triangle_cluster_template = 2,
     _,
 };
-pub const ClusterAccelerationStructureOpTypeNV = enum(i32) {
-    move_objects_nv = 0,
-    build_clusters_bottom_level_nv = 1,
-    build_triangle_cluster_nv = 2,
-    build_triangle_cluster_template_nv = 3,
-    instantiate_triangle_cluster_nv = 4,
-    get_cluster_template_indices_nv = 5,
+pub const ClusterAccelerationStructureOpTypeNV = enum(u32) {
+    move_objects = 0,
+    build_clusters_bottom_level = 1,
+    build_triangle_cluster = 2,
+    build_triangle_cluster_template = 3,
+    instantiate_triangle_cluster = 4,
+    get_cluster_template_indices = 5,
     _,
 };
-pub const ClusterAccelerationStructureOpModeNV = enum(i32) {
-    implicit_destinations_nv = 0,
-    explicit_destinations_nv = 1,
-    compute_sizes_nv = 2,
+pub const ClusterAccelerationStructureOpModeNV = enum(u32) {
+    implicit_destinations = 0,
+    explicit_destinations = 1,
+    compute_sizes = 2,
     _,
 };
 pub const SampleCountFlagBits = enum(u32) {
@@ -5148,7 +5148,7 @@ pub const DependencyFlagBits = enum(u32) {
     pub const view_local_bit_khr: DependencyFlagBits = .view_local_bit;
     pub const device_group_bit_khr: DependencyFlagBits = .device_group_bit;
 };
-pub const ObjectType = enum(i32) {
+pub const ObjectType = enum(u32) {
     unknown = 0,
     instance = 1,
     physical_device = 2,
@@ -5224,43 +5224,43 @@ pub const PipelineLayoutCreateFlagBits = enum(u32) {
     no_task_shader_bit_khr = 0x4,
     _,
 };
-pub const RayTracingInvocationReorderModeEXT = enum(i32) {
-    none_ext = 0,
-    reorder_ext = 1,
+pub const RayTracingInvocationReorderModeEXT = enum(u32) {
+    none = 0,
+    reorder = 1,
     _,
-    pub const none_nv: RayTracingInvocationReorderModeEXT = .none_ext;
-    pub const reorder_nv: RayTracingInvocationReorderModeEXT = .reorder_ext;
+    pub const none_nv: RayTracingInvocationReorderModeEXT = .none;
+    pub const reorder_nv: RayTracingInvocationReorderModeEXT = .reorder;
 };
 pub const RayTracingInvocationReorderModeNV = RayTracingInvocationReorderModeEXT;
-pub const ImageTilingControlEXT = enum(i32) {
-    default_ext = 0,
-    min_size_ext = 1,
-    max_performance_ext = 2,
+pub const ImageTilingControlEXT = enum(u32) {
+    default = 0,
+    min_size = 1,
+    max_performance = 2,
     _,
 };
 pub const IndirectCommandsLayoutUsageFlagBitsNV = enum(u32) {
-    explicit_preprocess_bit_nv = 0x1,
-    indexed_sequences_bit_nv = 0x2,
-    unordered_sequences_bit_nv = 0x4,
+    explicit_preprocess_bit = 0x1,
+    indexed_sequences_bit = 0x2,
+    unordered_sequences_bit = 0x4,
     _,
 };
-pub const IndirectCommandsTokenTypeNV = enum(i32) {
-    shader_group_nv = 0,
-    state_flags_nv = 1,
-    index_buffer_nv = 2,
-    vertex_buffer_nv = 3,
-    push_constant_nv = 4,
-    draw_indexed_nv = 5,
-    draw_nv = 6,
-    draw_tasks_nv = 7,
-    push_data_nv = 1000135000,
-    draw_mesh_tasks_nv = 1000328000,
-    pipeline_nv = 1000428003,
-    dispatch_nv = 1000428004,
+pub const IndirectCommandsTokenTypeNV = enum(u32) {
+    shader_group = 0,
+    state_flags = 1,
+    index_buffer = 2,
+    vertex_buffer = 3,
+    push_constant = 4,
+    draw_indexed = 5,
+    draw = 6,
+    draw_tasks = 7,
+    push_data = 1000135000,
+    draw_mesh_tasks = 1000328000,
+    pipeline = 1000428003,
+    dispatch = 1000428004,
     _,
 };
 pub const IndirectStateFlagBitsNV = enum(u32) {
-    flag_frontface_bit_nv = 0x1,
+    flag_frontface_bit = 0x1,
     _,
 };
 pub const PrivateDataSlotCreateFlagBits = enum(u32) {
@@ -5268,7 +5268,7 @@ pub const PrivateDataSlotCreateFlagBits = enum(u32) {
     _,
 };
 pub const PrivateDataSlotCreateFlagBitsEXT = PrivateDataSlotCreateFlagBits;
-pub const DescriptorUpdateTemplateType = enum(i32) {
+pub const DescriptorUpdateTemplateType = enum(u32) {
     descriptor_set = 0,
     push_descriptors = 1,
     _,
@@ -5276,20 +5276,20 @@ pub const DescriptorUpdateTemplateType = enum(i32) {
     pub const descriptor_set_khr: DescriptorUpdateTemplateType = .descriptor_set;
 };
 pub const DescriptorUpdateTemplateTypeKHR = DescriptorUpdateTemplateType;
-pub const ViewportCoordinateSwizzleNV = enum(i32) {
-    positive_x_nv = 0,
-    negative_x_nv = 1,
-    positive_y_nv = 2,
-    negative_y_nv = 3,
-    positive_z_nv = 4,
-    negative_z_nv = 5,
-    positive_w_nv = 6,
-    negative_w_nv = 7,
+pub const ViewportCoordinateSwizzleNV = enum(u32) {
+    positive_x = 0,
+    negative_x = 1,
+    positive_y = 2,
+    negative_y = 3,
+    positive_z = 4,
+    negative_z = 5,
+    positive_w = 6,
+    negative_w = 7,
     _,
 };
-pub const DiscardRectangleModeEXT = enum(i32) {
-    inclusive_ext = 0,
-    exclusive_ext = 1,
+pub const DiscardRectangleModeEXT = enum(u32) {
+    inclusive = 0,
+    exclusive = 1,
     _,
 };
 pub const SubpassDescriptionFlagBits = enum(u32) {
@@ -5309,7 +5309,7 @@ pub const SubpassDescriptionFlagBits = enum(u32) {
     pub const rasterization_order_attachment_depth_access_bit_arm: SubpassDescriptionFlagBits = .rasterization_order_attachment_depth_access_bit_ext;
     pub const rasterization_order_attachment_stencil_access_bit_arm: SubpassDescriptionFlagBits = .rasterization_order_attachment_stencil_access_bit_ext;
 };
-pub const PointClippingBehavior = enum(i32) {
+pub const PointClippingBehavior = enum(u32) {
     all_clip_planes = 0,
     user_clip_planes_only = 1,
     _,
@@ -5317,29 +5317,29 @@ pub const PointClippingBehavior = enum(i32) {
     pub const user_clip_planes_only_khr: PointClippingBehavior = .user_clip_planes_only;
 };
 pub const PointClippingBehaviorKHR = PointClippingBehavior;
-pub const CoverageModulationModeNV = enum(i32) {
-    none_nv = 0,
-    rgb_nv = 1,
-    alpha_nv = 2,
-    rgba_nv = 3,
+pub const CoverageModulationModeNV = enum(u32) {
+    none = 0,
+    rgb = 1,
+    alpha = 2,
+    rgba = 3,
     _,
 };
-pub const CoverageReductionModeNV = enum(i32) {
-    merge_nv = 0,
-    truncate_nv = 1,
+pub const CoverageReductionModeNV = enum(u32) {
+    merge = 0,
+    truncate = 1,
     _,
 };
-pub const ValidationCacheHeaderVersionEXT = enum(i32) {
-    one_ext = 1,
+pub const ValidationCacheHeaderVersionEXT = enum(u32) {
+    one = 1,
     _,
 };
-pub const ShaderInfoTypeAMD = enum(i32) {
-    statistics_amd = 0,
-    binary_amd = 1,
-    disassembly_amd = 2,
+pub const ShaderInfoTypeAMD = enum(u32) {
+    statistics = 0,
+    binary = 1,
+    disassembly = 2,
     _,
 };
-pub const QueueGlobalPriority = enum(i32) {
+pub const QueueGlobalPriority = enum(u32) {
     low = 128,
     medium = 256,
     high = 512,
@@ -5356,24 +5356,24 @@ pub const QueueGlobalPriority = enum(i32) {
 };
 pub const QueueGlobalPriorityKHR = QueueGlobalPriority;
 pub const QueueGlobalPriorityEXT = QueueGlobalPriority;
-pub const TimeDomainKHR = enum(i32) {
-    device_khr = 0,
-    clock_monotonic_khr = 1,
-    clock_monotonic_raw_khr = 2,
-    query_performance_counter_khr = 3,
+pub const TimeDomainKHR = enum(u32) {
+    device = 0,
+    clock_monotonic = 1,
+    clock_monotonic_raw = 2,
+    query_performance_counter = 3,
     present_stage_local_ext = 1000208000,
     swapchain_local_ext = 1000208001,
     _,
-    pub const device_ext: TimeDomainKHR = .device_khr;
-    pub const clock_monotonic_ext: TimeDomainKHR = .clock_monotonic_khr;
-    pub const clock_monotonic_raw_ext: TimeDomainKHR = .clock_monotonic_raw_khr;
-    pub const query_performance_counter_ext: TimeDomainKHR = .query_performance_counter_khr;
+    pub const device_ext: TimeDomainKHR = .device;
+    pub const clock_monotonic_ext: TimeDomainKHR = .clock_monotonic;
+    pub const clock_monotonic_raw_ext: TimeDomainKHR = .clock_monotonic_raw;
+    pub const query_performance_counter_ext: TimeDomainKHR = .query_performance_counter;
 };
 pub const TimeDomainEXT = TimeDomainKHR;
-pub const ConservativeRasterizationModeEXT = enum(i32) {
-    disabled_ext = 0,
-    overestimate_ext = 1,
-    underestimate_ext = 2,
+pub const ConservativeRasterizationModeEXT = enum(u32) {
+    disabled = 0,
+    overestimate = 1,
+    underestimate = 2,
     _,
 };
 pub const ResolveModeFlagBits = enum(u32) {
@@ -5406,10 +5406,10 @@ pub const DescriptorBindingFlagBits = enum(u32) {
 };
 pub const DescriptorBindingFlagBitsEXT = DescriptorBindingFlagBits;
 pub const ConditionalRenderingFlagBitsEXT = enum(u32) {
-    inverted_bit_ext = 0x1,
+    inverted_bit = 0x1,
     _,
 };
-pub const SemaphoreType = enum(i32) {
+pub const SemaphoreType = enum(u32) {
     binary = 0,
     timeline = 1,
     _,
@@ -5418,180 +5418,180 @@ pub const SemaphoreType = enum(i32) {
 };
 pub const SemaphoreTypeKHR = SemaphoreType;
 pub const GeometryFlagBitsKHR = enum(u32) {
-    opaque_bit_khr = 0x1,
-    no_duplicate_any_hit_invocation_bit_khr = 0x2,
+    opaque_bit = 0x1,
+    no_duplicate_any_hit_invocation_bit = 0x2,
     _,
-    pub const opaque_bit_nv: GeometryFlagBitsKHR = .opaque_bit_khr;
-    pub const no_duplicate_any_hit_invocation_bit_nv: GeometryFlagBitsKHR = .no_duplicate_any_hit_invocation_bit_khr;
+    pub const opaque_bit_nv: GeometryFlagBitsKHR = .opaque_bit;
+    pub const no_duplicate_any_hit_invocation_bit_nv: GeometryFlagBitsKHR = .no_duplicate_any_hit_invocation_bit;
 };
 pub const GeometryFlagBitsNV = GeometryFlagBitsKHR;
 pub const GeometryInstanceFlagBitsKHR = enum(u32) {
-    triangle_facing_cull_disable_bit_khr = 0x1,
-    triangle_flip_facing_bit_khr = 0x2,
-    force_opaque_bit_khr = 0x4,
-    force_no_opaque_bit_khr = 0x8,
-    force_opacity_micromap_2_state_bit_khr = 0x10,
-    disable_opacity_micromaps_bit_khr = 0x20,
+    triangle_facing_cull_disable_bit = 0x1,
+    triangle_flip_facing_bit = 0x2,
+    force_opaque_bit = 0x4,
+    force_no_opaque_bit = 0x8,
+    force_opacity_micromap_2_state_bit = 0x10,
+    disable_opacity_micromaps_bit = 0x20,
     _,
-    pub const triangle_front_counterclockwise_bit_khr: GeometryInstanceFlagBitsKHR = .triangle_flip_facing_bit_khr;
-    pub const triangle_cull_disable_bit_nv: GeometryInstanceFlagBitsKHR = .triangle_facing_cull_disable_bit_khr;
-    pub const triangle_front_counterclockwise_bit_nv: GeometryInstanceFlagBitsKHR = .triangle_front_counterclockwise_bit_khr;
-    pub const force_opaque_bit_nv: GeometryInstanceFlagBitsKHR = .force_opaque_bit_khr;
-    pub const force_no_opaque_bit_nv: GeometryInstanceFlagBitsKHR = .force_no_opaque_bit_khr;
-    pub const force_opacity_micromap_2_state_bit_ext: GeometryInstanceFlagBitsKHR = .force_opacity_micromap_2_state_bit_khr;
+    pub const triangle_front_counterclockwise_bit: GeometryInstanceFlagBitsKHR = .triangle_flip_facing_bit;
+    pub const triangle_cull_disable_bit_nv: GeometryInstanceFlagBitsKHR = .triangle_facing_cull_disable_bit;
+    pub const triangle_front_counterclockwise_bit_nv: GeometryInstanceFlagBitsKHR = .triangle_front_counterclockwise_bit;
+    pub const force_opaque_bit_nv: GeometryInstanceFlagBitsKHR = .force_opaque_bit;
+    pub const force_no_opaque_bit_nv: GeometryInstanceFlagBitsKHR = .force_no_opaque_bit;
+    pub const force_opacity_micromap_2_state_bit_ext: GeometryInstanceFlagBitsKHR = .force_opacity_micromap_2_state_bit;
     pub const force_opacity_micromap_2_state_ext: GeometryInstanceFlagBitsKHR = .force_opacity_micromap_2_state_bit_ext;
-    pub const disable_opacity_micromaps_bit_ext: GeometryInstanceFlagBitsKHR = .disable_opacity_micromaps_bit_khr;
+    pub const disable_opacity_micromaps_bit_ext: GeometryInstanceFlagBitsKHR = .disable_opacity_micromaps_bit;
     pub const disable_opacity_micromaps_ext: GeometryInstanceFlagBitsKHR = .disable_opacity_micromaps_bit_ext;
 };
 pub const GeometryInstanceFlagBitsNV = GeometryInstanceFlagBitsKHR;
 pub const ClusterAccelerationStructureAddressResolutionFlagBitsNV = enum(u32) {
-    none_nv = 0x0,
-    indirected_dst_implicit_data_bit_nv = 0x1,
-    indirected_scratch_data_bit_nv = 0x2,
-    indirected_dst_address_array_bit_nv = 0x4,
-    indirected_dst_sizes_array_bit_nv = 0x8,
-    indirected_src_infos_array_bit_nv = 0x10,
-    indirected_src_infos_count_bit_nv = 0x20,
+    none = 0x0,
+    indirected_dst_implicit_data_bit = 0x1,
+    indirected_scratch_data_bit = 0x2,
+    indirected_dst_address_array_bit = 0x4,
+    indirected_dst_sizes_array_bit = 0x8,
+    indirected_src_infos_array_bit = 0x10,
+    indirected_src_infos_count_bit = 0x20,
     _,
 };
 pub const ClusterAccelerationStructureGeometryFlagBitsNV = enum(u32) {
-    cull_disable_bit_nv = 0x1,
-    no_duplicate_anyhit_invocation_bit_nv = 0x2,
-    opaque_bit_nv = 0x4,
+    cull_disable_bit = 0x1,
+    no_duplicate_anyhit_invocation_bit = 0x2,
+    opaque_bit = 0x4,
     _,
 };
 pub const ClusterAccelerationStructureClusterFlagBitsNV = enum(u32) {
-    allow_disable_opacity_micromaps_nv = 0x1,
+    allow_disable_opacity_micromaps = 0x1,
     _,
 };
 pub const BuildAccelerationStructureFlagBitsKHR = enum(u32) {
-    allow_update_bit_khr = 0x1,
-    allow_compaction_bit_khr = 0x2,
-    prefer_fast_trace_bit_khr = 0x4,
-    prefer_fast_build_bit_khr = 0x8,
-    low_memory_bit_khr = 0x10,
+    allow_update_bit = 0x1,
+    allow_compaction_bit = 0x2,
+    prefer_fast_trace_bit = 0x4,
+    prefer_fast_build_bit = 0x8,
+    low_memory_bit = 0x10,
     motion_bit_nv = 0x20,
     allow_opacity_micromap_data_update_bit_ext = 0x100,
     allow_displacement_micromap_update_bit_nv = 0x200,
-    allow_data_access_bit_khr = 0x800,
+    allow_data_access_bit = 0x800,
     allow_cluster_opacity_micromaps_bit_nv = 0x1000,
-    allow_opacity_micromap_update_bit_khr = 0x40,
-    allow_disable_opacity_micromaps_bit_khr = 0x80,
-    micromap_lossy_bit_khr = 0x400,
+    allow_opacity_micromap_update_bit = 0x40,
+    allow_disable_opacity_micromaps_bit = 0x80,
+    micromap_lossy_bit = 0x400,
     _,
-    pub const allow_update_bit_nv: BuildAccelerationStructureFlagBitsKHR = .allow_update_bit_khr;
-    pub const allow_compaction_bit_nv: BuildAccelerationStructureFlagBitsKHR = .allow_compaction_bit_khr;
-    pub const prefer_fast_trace_bit_nv: BuildAccelerationStructureFlagBitsKHR = .prefer_fast_trace_bit_khr;
-    pub const prefer_fast_build_bit_nv: BuildAccelerationStructureFlagBitsKHR = .prefer_fast_build_bit_khr;
-    pub const low_memory_bit_nv: BuildAccelerationStructureFlagBitsKHR = .low_memory_bit_khr;
-    pub const allow_opacity_micromap_update_bit_ext: BuildAccelerationStructureFlagBitsKHR = .allow_opacity_micromap_update_bit_khr;
+    pub const allow_update_bit_nv: BuildAccelerationStructureFlagBitsKHR = .allow_update_bit;
+    pub const allow_compaction_bit_nv: BuildAccelerationStructureFlagBitsKHR = .allow_compaction_bit;
+    pub const prefer_fast_trace_bit_nv: BuildAccelerationStructureFlagBitsKHR = .prefer_fast_trace_bit;
+    pub const prefer_fast_build_bit_nv: BuildAccelerationStructureFlagBitsKHR = .prefer_fast_build_bit;
+    pub const low_memory_bit_nv: BuildAccelerationStructureFlagBitsKHR = .low_memory_bit;
+    pub const allow_opacity_micromap_update_bit_ext: BuildAccelerationStructureFlagBitsKHR = .allow_opacity_micromap_update_bit;
     pub const allow_opacity_micromap_update_ext: BuildAccelerationStructureFlagBitsKHR = .allow_opacity_micromap_update_bit_ext;
-    pub const allow_disable_opacity_micromaps_bit_ext: BuildAccelerationStructureFlagBitsKHR = .allow_disable_opacity_micromaps_bit_khr;
+    pub const allow_disable_opacity_micromaps_bit_ext: BuildAccelerationStructureFlagBitsKHR = .allow_disable_opacity_micromaps_bit;
     pub const allow_disable_opacity_micromaps_ext: BuildAccelerationStructureFlagBitsKHR = .allow_disable_opacity_micromaps_bit_ext;
     pub const allow_opacity_micromap_data_update_ext: BuildAccelerationStructureFlagBitsKHR = .allow_opacity_micromap_data_update_bit_ext;
     pub const allow_displacement_micromap_update_nv: BuildAccelerationStructureFlagBitsKHR = .allow_displacement_micromap_update_bit_nv;
-    pub const allow_data_access_khr: BuildAccelerationStructureFlagBitsKHR = .allow_data_access_bit_khr;
+    pub const allow_data_access: BuildAccelerationStructureFlagBitsKHR = .allow_data_access_bit;
 };
 pub const BuildAccelerationStructureFlagBitsNV = BuildAccelerationStructureFlagBitsKHR;
 pub const AccelerationStructureCreateFlagBitsKHR = enum(u32) {
-    device_address_capture_replay_bit_khr = 0x1,
+    device_address_capture_replay_bit = 0x1,
     descriptor_buffer_capture_replay_bit_ext = 0x8,
     motion_bit_nv = 0x4,
     _,
 };
-pub const BuildAccelerationStructureModeKHR = enum(i32) {
-    build_khr = 0,
-    update_khr = 1,
+pub const BuildAccelerationStructureModeKHR = enum(u32) {
+    build = 0,
+    update = 1,
     _,
 };
-pub const CopyAccelerationStructureModeKHR = enum(i32) {
-    clone_khr = 0,
-    compact_khr = 1,
-    serialize_khr = 2,
-    deserialize_khr = 3,
+pub const CopyAccelerationStructureModeKHR = enum(u32) {
+    clone = 0,
+    compact = 1,
+    serialize = 2,
+    deserialize = 3,
     _,
-    pub const clone_nv: CopyAccelerationStructureModeKHR = .clone_khr;
-    pub const compact_nv: CopyAccelerationStructureModeKHR = .compact_khr;
+    pub const clone_nv: CopyAccelerationStructureModeKHR = .clone;
+    pub const compact_nv: CopyAccelerationStructureModeKHR = .compact;
 };
 pub const CopyAccelerationStructureModeNV = CopyAccelerationStructureModeKHR;
-pub const AccelerationStructureTypeKHR = enum(i32) {
-    top_level_khr = 0,
-    bottom_level_khr = 1,
-    generic_khr = 2,
-    opacity_micromap_khr = 1000623000,
+pub const AccelerationStructureTypeKHR = enum(u32) {
+    top_level = 0,
+    bottom_level = 1,
+    generic = 2,
+    opacity_micromap = 1000623000,
     _,
-    pub const top_level_nv: AccelerationStructureTypeKHR = .top_level_khr;
-    pub const bottom_level_nv: AccelerationStructureTypeKHR = .bottom_level_khr;
+    pub const top_level_nv: AccelerationStructureTypeKHR = .top_level;
+    pub const bottom_level_nv: AccelerationStructureTypeKHR = .bottom_level;
 };
 pub const AccelerationStructureTypeNV = AccelerationStructureTypeKHR;
-pub const GeometryTypeKHR = enum(i32) {
-    triangles_khr = 0,
-    aabbs_khr = 1,
-    instances_khr = 2,
+pub const GeometryTypeKHR = enum(u32) {
+    triangles = 0,
+    aabbs = 1,
+    instances = 2,
     spheres_nv = 1000429004,
     linear_swept_spheres_nv = 1000429005,
     dense_geometry_format_triangles_amdx = 1000478000,
-    micromap_khr = 1000623000,
+    micromap = 1000623000,
     _,
-    pub const triangles_nv: GeometryTypeKHR = .triangles_khr;
-    pub const aabbs_nv: GeometryTypeKHR = .aabbs_khr;
+    pub const triangles_nv: GeometryTypeKHR = .triangles;
+    pub const aabbs_nv: GeometryTypeKHR = .aabbs;
 };
 pub const GeometryTypeNV = GeometryTypeKHR;
-pub const RayTracingShaderGroupTypeKHR = enum(i32) {
-    general_khr = 0,
-    triangles_hit_group_khr = 1,
-    procedural_hit_group_khr = 2,
+pub const RayTracingShaderGroupTypeKHR = enum(u32) {
+    general = 0,
+    triangles_hit_group = 1,
+    procedural_hit_group = 2,
     _,
-    pub const general_nv: RayTracingShaderGroupTypeKHR = .general_khr;
-    pub const triangles_hit_group_nv: RayTracingShaderGroupTypeKHR = .triangles_hit_group_khr;
-    pub const procedural_hit_group_nv: RayTracingShaderGroupTypeKHR = .procedural_hit_group_khr;
+    pub const general_nv: RayTracingShaderGroupTypeKHR = .general;
+    pub const triangles_hit_group_nv: RayTracingShaderGroupTypeKHR = .triangles_hit_group;
+    pub const procedural_hit_group_nv: RayTracingShaderGroupTypeKHR = .procedural_hit_group;
 };
 pub const RayTracingShaderGroupTypeNV = RayTracingShaderGroupTypeKHR;
-pub const AccelerationStructureMemoryRequirementsTypeNV = enum(i32) {
-    object_nv = 0,
-    build_scratch_nv = 1,
-    update_scratch_nv = 2,
+pub const AccelerationStructureMemoryRequirementsTypeNV = enum(u32) {
+    object = 0,
+    build_scratch = 1,
+    update_scratch = 2,
     _,
 };
-pub const AccelerationStructureBuildTypeKHR = enum(i32) {
-    host_khr = 0,
-    device_khr = 1,
-    host_or_device_khr = 2,
+pub const AccelerationStructureBuildTypeKHR = enum(u32) {
+    host = 0,
+    device = 1,
+    host_or_device = 2,
     _,
 };
-pub const AccelerationStructureCompatibilityKHR = enum(i32) {
-    compatible_khr = 0,
-    incompatible_khr = 1,
+pub const AccelerationStructureCompatibilityKHR = enum(u32) {
+    compatible = 0,
+    incompatible = 1,
     _,
 };
-pub const RayTracingLssIndexingModeNV = enum(i32) {
-    list_nv = 0,
-    successive_nv = 1,
+pub const RayTracingLssIndexingModeNV = enum(u32) {
+    list = 0,
+    successive = 1,
     _,
 };
-pub const RayTracingLssPrimitiveEndCapsModeNV = enum(i32) {
-    none_nv = 0,
-    chained_nv = 1,
+pub const RayTracingLssPrimitiveEndCapsModeNV = enum(u32) {
+    none = 0,
+    chained = 1,
     _,
 };
-pub const ShaderGroupShaderKHR = enum(i32) {
-    general_khr = 0,
-    closest_hit_khr = 1,
-    any_hit_khr = 2,
-    intersection_khr = 3,
+pub const ShaderGroupShaderKHR = enum(u32) {
+    general = 0,
+    closest_hit = 1,
+    any_hit = 2,
+    intersection = 3,
     _,
 };
-pub const MemoryOverallocationBehaviorAMD = enum(i32) {
-    default_amd = 0,
-    allowed_amd = 1,
-    disallowed_amd = 2,
+pub const MemoryOverallocationBehaviorAMD = enum(u32) {
+    default = 0,
+    allowed = 1,
+    disallowed = 2,
     _,
 };
 pub const DeviceDiagnosticsConfigFlagBitsNV = enum(u32) {
-    enable_shader_debug_info_bit_nv = 0x1,
-    enable_resource_tracking_bit_nv = 0x2,
-    enable_automatic_checkpoints_bit_nv = 0x4,
-    enable_shader_error_reporting_bit_nv = 0x8,
+    enable_shader_debug_info_bit = 0x1,
+    enable_resource_tracking_bit = 0x2,
+    enable_automatic_checkpoints_bit = 0x4,
+    enable_shader_error_reporting_bit = 0x8,
     _,
 };
 pub const PipelineCreationFeedbackFlagBits = enum(u32) {
@@ -5604,44 +5604,44 @@ pub const PipelineCreationFeedbackFlagBits = enum(u32) {
     pub const base_pipeline_acceleration_bit_ext: PipelineCreationFeedbackFlagBits = .base_pipeline_acceleration_bit;
 };
 pub const PipelineCreationFeedbackFlagBitsEXT = PipelineCreationFeedbackFlagBits;
-pub const PerformanceCounterScopeKHR = enum(i32) {
-    command_buffer_khr = 0,
-    render_pass_khr = 1,
-    command_khr = 2,
+pub const PerformanceCounterScopeKHR = enum(u32) {
+    command_buffer = 0,
+    render_pass = 1,
+    command = 2,
     _,
-    pub const query_scope_command_buffer_khr: PerformanceCounterScopeKHR = .command_buffer_khr;
-    pub const query_scope_render_pass_khr: PerformanceCounterScopeKHR = .render_pass_khr;
-    pub const query_scope_command_khr: PerformanceCounterScopeKHR = .command_khr;
+    pub const query_scope_command_buffer: PerformanceCounterScopeKHR = .command_buffer;
+    pub const query_scope_render_pass: PerformanceCounterScopeKHR = .render_pass;
+    pub const query_scope_command: PerformanceCounterScopeKHR = .command;
 };
-pub const PerformanceCounterUnitKHR = enum(i32) {
-    generic_khr = 0,
-    percentage_khr = 1,
-    nanoseconds_khr = 2,
-    bytes_khr = 3,
-    bytes_per_second_khr = 4,
-    kelvin_khr = 5,
-    watts_khr = 6,
-    volts_khr = 7,
-    amps_khr = 8,
-    hertz_khr = 9,
-    cycles_khr = 10,
+pub const PerformanceCounterUnitKHR = enum(u32) {
+    generic = 0,
+    percentage = 1,
+    nanoseconds = 2,
+    bytes = 3,
+    bytes_per_second = 4,
+    kelvin = 5,
+    watts = 6,
+    volts = 7,
+    amps = 8,
+    hertz = 9,
+    cycles = 10,
     _,
 };
-pub const PerformanceCounterStorageKHR = enum(i32) {
-    int32_khr = 0,
-    int64_khr = 1,
-    uint32_khr = 2,
-    uint64_khr = 3,
-    float32_khr = 4,
-    float64_khr = 5,
+pub const PerformanceCounterStorageKHR = enum(u32) {
+    int32 = 0,
+    int64 = 1,
+    uint32 = 2,
+    uint64 = 3,
+    float32 = 4,
+    float64 = 5,
     _,
 };
 pub const PerformanceCounterDescriptionFlagBitsKHR = enum(u32) {
-    performance_impacting_bit_khr = 0x1,
-    concurrently_impacted_bit_khr = 0x2,
+    performance_impacting_bit = 0x1,
+    concurrently_impacted_bit = 0x2,
     _,
-    pub const performance_impacting_khr: PerformanceCounterDescriptionFlagBitsKHR = .performance_impacting_bit_khr;
-    pub const concurrently_impacted_khr: PerformanceCounterDescriptionFlagBitsKHR = .concurrently_impacted_bit_khr;
+    pub const performance_impacting: PerformanceCounterDescriptionFlagBitsKHR = .performance_impacting_bit;
+    pub const concurrently_impacted: PerformanceCounterDescriptionFlagBitsKHR = .concurrently_impacted_bit;
 };
 pub const AcquireProfilingLockFlagBitsKHR = enum(u32) {
     _,
@@ -5652,33 +5652,33 @@ pub const SemaphoreWaitFlagBits = enum(u32) {
     pub const any_bit_khr: SemaphoreWaitFlagBits = .any_bit;
 };
 pub const SemaphoreWaitFlagBitsKHR = SemaphoreWaitFlagBits;
-pub const PerformanceConfigurationTypeINTEL = enum(i32) {
-    command_queue_metrics_discovery_activated_intel = 0,
+pub const PerformanceConfigurationTypeINTEL = enum(u32) {
+    command_queue_metrics_discovery_activated = 0,
     _,
 };
-pub const QueryPoolSamplingModeINTEL = enum(i32) {
-    manual_intel = 0,
+pub const QueryPoolSamplingModeINTEL = enum(u32) {
+    manual = 0,
     _,
 };
-pub const PerformanceOverrideTypeINTEL = enum(i32) {
-    null_hardware_intel = 0,
-    flush_gpu_caches_intel = 1,
+pub const PerformanceOverrideTypeINTEL = enum(u32) {
+    null_hardware = 0,
+    flush_gpu_caches = 1,
     _,
 };
-pub const PerformanceParameterTypeINTEL = enum(i32) {
-    hw_counters_supported_intel = 0,
-    stream_marker_valid_bits_intel = 1,
+pub const PerformanceParameterTypeINTEL = enum(u32) {
+    hw_counters_supported = 0,
+    stream_marker_valid_bits = 1,
     _,
 };
-pub const PerformanceValueTypeINTEL = enum(i32) {
-    uint32_intel = 0,
-    uint64_intel = 1,
-    float_intel = 2,
-    bool_intel = 3,
-    string_intel = 4,
+pub const PerformanceValueTypeINTEL = enum(u32) {
+    uint32 = 0,
+    uint64 = 1,
+    float = 2,
+    bool = 3,
+    string = 4,
     _,
 };
-pub const LineRasterizationMode = enum(i32) {
+pub const LineRasterizationMode = enum(u32) {
     default = 0,
     rectangular = 1,
     bresenham = 2,
@@ -5717,41 +5717,41 @@ pub const ToolPurposeFlagBits = enum(u32) {
     pub const modifying_features_bit_ext: ToolPurposeFlagBits = .modifying_features_bit;
 };
 pub const ToolPurposeFlagBitsEXT = ToolPurposeFlagBits;
-pub const FragmentShadingRateNV = enum(i32) {
-    @"1_invocation_per_pixel_nv" = 0,
-    @"1_invocation_per_1x2_pixels_nv" = 1,
-    @"1_invocation_per_2x1_pixels_nv" = 4,
-    @"1_invocation_per_2x2_pixels_nv" = 5,
-    @"1_invocation_per_2x4_pixels_nv" = 6,
-    @"1_invocation_per_4x2_pixels_nv" = 9,
-    @"1_invocation_per_4x4_pixels_nv" = 10,
-    @"2_invocations_per_pixel_nv" = 11,
-    @"4_invocations_per_pixel_nv" = 12,
-    @"8_invocations_per_pixel_nv" = 13,
-    @"16_invocations_per_pixel_nv" = 14,
-    no_invocations_nv = 15,
+pub const FragmentShadingRateNV = enum(u32) {
+    @"1_invocation_per_pixel" = 0,
+    @"1_invocation_per_1x2_pixels" = 1,
+    @"1_invocation_per_2x1_pixels" = 4,
+    @"1_invocation_per_2x2_pixels" = 5,
+    @"1_invocation_per_2x4_pixels" = 6,
+    @"1_invocation_per_4x2_pixels" = 9,
+    @"1_invocation_per_4x4_pixels" = 10,
+    @"2_invocations_per_pixel" = 11,
+    @"4_invocations_per_pixel" = 12,
+    @"8_invocations_per_pixel" = 13,
+    @"16_invocations_per_pixel" = 14,
+    no_invocations = 15,
     _,
 };
-pub const FragmentShadingRateTypeNV = enum(i32) {
-    fragment_size_nv = 0,
-    enums_nv = 1,
+pub const FragmentShadingRateTypeNV = enum(u32) {
+    fragment_size = 0,
+    enums = 1,
     _,
 };
-pub const SubpassMergeStatusEXT = enum(i32) {
-    merged_ext = 0,
-    disallowed_ext = 1,
-    not_merged_side_effects_ext = 2,
-    not_merged_samples_mismatch_ext = 3,
-    not_merged_views_mismatch_ext = 4,
-    not_merged_aliasing_ext = 5,
-    not_merged_dependencies_ext = 6,
-    not_merged_incompatible_input_attachment_ext = 7,
-    not_merged_too_many_attachments_ext = 8,
-    not_merged_insufficient_storage_ext = 9,
-    not_merged_depth_stencil_count_ext = 10,
-    not_merged_resolve_attachment_reuse_ext = 11,
-    not_merged_single_subpass_ext = 12,
-    not_merged_unspecified_ext = 13,
+pub const SubpassMergeStatusEXT = enum(u32) {
+    merged = 0,
+    disallowed = 1,
+    not_merged_side_effects = 2,
+    not_merged_samples_mismatch = 3,
+    not_merged_views_mismatch = 4,
+    not_merged_aliasing = 5,
+    not_merged_dependencies = 6,
+    not_merged_incompatible_input_attachment = 7,
+    not_merged_too_many_attachments = 8,
+    not_merged_insufficient_storage = 9,
+    not_merged_depth_stencil_count = 10,
+    not_merged_resolve_attachment_reuse = 11,
+    not_merged_single_subpass = 12,
+    not_merged_unspecified = 13,
     _,
 };
 pub const AccessFlagBits2 = enum(u64) {
@@ -5919,9 +5919,9 @@ pub const PipelineStageFlagBits2 = enum(u64) {
     pub const subpass_shading_bit_huawei: PipelineStageFlagBits2 = .subpass_shader_bit_huawei;
 };
 pub const PipelineStageFlagBits2KHR = PipelineStageFlagBits2;
-pub const ProvokingVertexModeEXT = enum(i32) {
-    first_vertex_ext = 0,
-    last_vertex_ext = 1,
+pub const ProvokingVertexModeEXT = enum(u32) {
+    first_vertex = 0,
+    last_vertex = 1,
     _,
 };
 pub const HostImageCopyFlagBits = enum(u32) {
@@ -5933,11 +5933,11 @@ pub const HostImageCopyFlagBits = enum(u32) {
 };
 pub const HostImageCopyFlagBitsEXT = HostImageCopyFlagBits;
 pub const ImageConstraintsInfoFlagBitsFUCHSIA = enum(u32) {
-    cpu_read_rarely_fuchsia = 0x1,
-    cpu_read_often_fuchsia = 0x2,
-    cpu_write_rarely_fuchsia = 0x4,
-    cpu_write_often_fuchsia = 0x8,
-    protected_optional_fuchsia = 0x10,
+    cpu_read_rarely = 0x1,
+    cpu_read_often = 0x2,
+    cpu_write_rarely = 0x4,
+    cpu_write_often = 0x8,
+    protected_optional = 0x10,
     _,
 };
 pub const FormatFeatureFlagBits2 = enum(u64) {
@@ -6064,50 +6064,50 @@ pub const PipelineColorBlendStateCreateFlagBits = enum(u32) {
     pub const rasterization_order_attachment_access_bit_arm: PipelineColorBlendStateCreateFlagBits = .rasterization_order_attachment_access_bit_ext;
 };
 pub const ImageCompressionFlagBitsEXT = enum(u32) {
-    default_ext = 0x0,
-    fixed_rate_default_ext = 0x1,
-    fixed_rate_explicit_ext = 0x2,
-    disabled_ext = 0x4,
+    default = 0x0,
+    fixed_rate_default = 0x1,
+    fixed_rate_explicit = 0x2,
+    disabled = 0x4,
     _,
 };
 pub const ImageCompressionFixedRateFlagBitsEXT = enum(u32) {
-    none_ext = 0x0,
-    @"1bpc_bit_ext" = 0x1,
-    @"2bpc_bit_ext" = 0x2,
-    @"3bpc_bit_ext" = 0x4,
-    @"4bpc_bit_ext" = 0x8,
-    @"5bpc_bit_ext" = 0x10,
-    @"6bpc_bit_ext" = 0x20,
-    @"7bpc_bit_ext" = 0x40,
-    @"8bpc_bit_ext" = 0x80,
-    @"9bpc_bit_ext" = 0x100,
-    @"10bpc_bit_ext" = 0x200,
-    @"11bpc_bit_ext" = 0x400,
-    @"12bpc_bit_ext" = 0x800,
-    @"13bpc_bit_ext" = 0x1000,
-    @"14bpc_bit_ext" = 0x2000,
-    @"15bpc_bit_ext" = 0x4000,
-    @"16bpc_bit_ext" = 0x8000,
-    @"17bpc_bit_ext" = 0x10000,
-    @"18bpc_bit_ext" = 0x20000,
-    @"19bpc_bit_ext" = 0x40000,
-    @"20bpc_bit_ext" = 0x80000,
-    @"21bpc_bit_ext" = 0x100000,
-    @"22bpc_bit_ext" = 0x200000,
-    @"23bpc_bit_ext" = 0x400000,
-    @"24bpc_bit_ext" = 0x800000,
+    none = 0x0,
+    @"1bpc_bit" = 0x1,
+    @"2bpc_bit" = 0x2,
+    @"3bpc_bit" = 0x4,
+    @"4bpc_bit" = 0x8,
+    @"5bpc_bit" = 0x10,
+    @"6bpc_bit" = 0x20,
+    @"7bpc_bit" = 0x40,
+    @"8bpc_bit" = 0x80,
+    @"9bpc_bit" = 0x100,
+    @"10bpc_bit" = 0x200,
+    @"11bpc_bit" = 0x400,
+    @"12bpc_bit" = 0x800,
+    @"13bpc_bit" = 0x1000,
+    @"14bpc_bit" = 0x2000,
+    @"15bpc_bit" = 0x4000,
+    @"16bpc_bit" = 0x8000,
+    @"17bpc_bit" = 0x10000,
+    @"18bpc_bit" = 0x20000,
+    @"19bpc_bit" = 0x40000,
+    @"20bpc_bit" = 0x80000,
+    @"21bpc_bit" = 0x100000,
+    @"22bpc_bit" = 0x200000,
+    @"23bpc_bit" = 0x400000,
+    @"24bpc_bit" = 0x800000,
     _,
 };
 pub const ExportMetalObjectTypeFlagBitsEXT = enum(u32) {
-    metal_device_bit_ext = 0x1,
-    metal_command_queue_bit_ext = 0x2,
-    metal_buffer_bit_ext = 0x4,
-    metal_texture_bit_ext = 0x8,
-    metal_iosurface_bit_ext = 0x10,
-    metal_shared_event_bit_ext = 0x20,
+    metal_device_bit = 0x1,
+    metal_command_queue_bit = 0x2,
+    metal_buffer_bit = 0x4,
+    metal_texture_bit = 0x8,
+    metal_iosurface_bit = 0x10,
+    metal_shared_event_bit = 0x20,
     _,
 };
-pub const PipelineRobustnessBufferBehavior = enum(i32) {
+pub const PipelineRobustnessBufferBehavior = enum(u32) {
     device_default = 0,
     disabled = 1,
     robust_buffer_access = 2,
@@ -6119,7 +6119,7 @@ pub const PipelineRobustnessBufferBehavior = enum(i32) {
     pub const robust_buffer_access_2_ext: PipelineRobustnessBufferBehavior = .robust_buffer_access_2;
 };
 pub const PipelineRobustnessBufferBehaviorEXT = PipelineRobustnessBufferBehavior;
-pub const PipelineRobustnessImageBehavior = enum(i32) {
+pub const PipelineRobustnessImageBehavior = enum(u32) {
     device_default = 0,
     disabled = 1,
     robust_image_access = 2,
@@ -6132,116 +6132,116 @@ pub const PipelineRobustnessImageBehavior = enum(i32) {
 };
 pub const PipelineRobustnessImageBehaviorEXT = PipelineRobustnessImageBehavior;
 pub const RenderingAttachmentFlagBitsKHR = enum(u32) {
-    input_attachment_feedback_bit_khr = 0x1,
-    resolve_skip_transfer_function_bit_khr = 0x2,
-    resolve_enable_transfer_function_bit_khr = 0x4,
+    input_attachment_feedback_bit = 0x1,
+    resolve_skip_transfer_function_bit = 0x2,
+    resolve_enable_transfer_function_bit = 0x4,
     _,
 };
 pub const ResolveImageFlagBitsKHR = enum(u32) {
-    skip_transfer_function_bit_khr = 0x1,
-    enable_transfer_function_bit_khr = 0x2,
+    skip_transfer_function_bit = 0x1,
+    enable_transfer_function_bit = 0x2,
     _,
 };
 pub const DeviceAddressBindingFlagBitsEXT = enum(u32) {
-    internal_object_bit_ext = 0x1,
+    internal_object_bit = 0x1,
     _,
 };
-pub const DeviceAddressBindingTypeEXT = enum(i32) {
-    bind_ext = 0,
-    unbind_ext = 1,
+pub const DeviceAddressBindingTypeEXT = enum(u32) {
+    bind = 0,
+    unbind = 1,
     _,
 };
-pub const MicromapTypeEXT = enum(i32) {
-    opacity_micromap_ext = 0,
+pub const MicromapTypeEXT = enum(u32) {
+    opacity_micromap = 0,
     displacement_micromap_nv = 1000397000,
     _,
 };
-pub const BuildMicromapModeEXT = enum(i32) {
-    build_ext = 0,
+pub const BuildMicromapModeEXT = enum(u32) {
+    build = 0,
     _,
 };
-pub const CopyMicromapModeEXT = enum(i32) {
-    clone_ext = 0,
-    serialize_ext = 1,
-    deserialize_ext = 2,
-    compact_ext = 3,
+pub const CopyMicromapModeEXT = enum(u32) {
+    clone = 0,
+    serialize = 1,
+    deserialize = 2,
+    compact = 3,
     _,
 };
 pub const BuildMicromapFlagBitsEXT = enum(u32) {
-    prefer_fast_trace_bit_ext = 0x1,
-    prefer_fast_build_bit_ext = 0x2,
-    allow_compaction_bit_ext = 0x4,
+    prefer_fast_trace_bit = 0x1,
+    prefer_fast_build_bit = 0x2,
+    allow_compaction_bit = 0x4,
     _,
 };
 pub const MicromapCreateFlagBitsEXT = enum(u32) {
-    device_address_capture_replay_bit_ext = 0x1,
+    device_address_capture_replay_bit = 0x1,
     _,
 };
-pub const OpacityMicromapFormatKHR = enum(i32) {
-    @"2_state_khr" = 1,
-    @"4_state_khr" = 2,
+pub const OpacityMicromapFormatKHR = enum(u32) {
+    @"2_state" = 1,
+    @"4_state" = 2,
     _,
-    pub const @"2_state_ext": OpacityMicromapFormatKHR = .@"2_state_khr";
-    pub const @"4_state_ext": OpacityMicromapFormatKHR = .@"4_state_khr";
+    pub const @"2_state_ext": OpacityMicromapFormatKHR = .@"2_state";
+    pub const @"4_state_ext": OpacityMicromapFormatKHR = .@"4_state";
 };
 pub const OpacityMicromapFormatEXT = OpacityMicromapFormatKHR;
 pub const OpacityMicromapSpecialIndexKHR = enum(i32) {
-    fully_transparent_khr = -1,
-    fully_opaque_khr = -2,
-    fully_unknown_transparent_khr = -3,
-    fully_unknown_opaque_khr = -4,
+    fully_transparent = -1,
+    fully_opaque = -2,
+    fully_unknown_transparent = -3,
+    fully_unknown_opaque = -4,
     cluster_geometry_disable_opacity_micromap_nv = -5,
     _,
-    pub const fully_transparent_ext: OpacityMicromapSpecialIndexKHR = .fully_transparent_khr;
-    pub const fully_opaque_ext: OpacityMicromapSpecialIndexKHR = .fully_opaque_khr;
-    pub const fully_unknown_transparent_ext: OpacityMicromapSpecialIndexKHR = .fully_unknown_transparent_khr;
-    pub const fully_unknown_opaque_ext: OpacityMicromapSpecialIndexKHR = .fully_unknown_opaque_khr;
+    pub const fully_transparent_ext: OpacityMicromapSpecialIndexKHR = .fully_transparent;
+    pub const fully_opaque_ext: OpacityMicromapSpecialIndexKHR = .fully_opaque;
+    pub const fully_unknown_transparent_ext: OpacityMicromapSpecialIndexKHR = .fully_unknown_transparent;
+    pub const fully_unknown_opaque_ext: OpacityMicromapSpecialIndexKHR = .fully_unknown_opaque;
 };
 pub const OpacityMicromapSpecialIndexEXT = OpacityMicromapSpecialIndexKHR;
-pub const AccelerationStructureSerializedBlockTypeKHR = enum(i32) {
-    opacity_micromap_khr = 0,
+pub const AccelerationStructureSerializedBlockTypeKHR = enum(u32) {
+    opacity_micromap = 0,
     _,
 };
 pub const IndirectCommandsLayoutUsageFlagBitsEXT = enum(u32) {
-    explicit_preprocess_bit_ext = 0x1,
-    unordered_sequences_bit_ext = 0x2,
+    explicit_preprocess_bit = 0x1,
+    unordered_sequences_bit = 0x2,
     _,
 };
-pub const IndirectExecutionSetInfoTypeEXT = enum(i32) {
-    pipelines_ext = 0,
-    shader_objects_ext = 1,
+pub const IndirectExecutionSetInfoTypeEXT = enum(u32) {
+    pipelines = 0,
+    shader_objects = 1,
     _,
 };
 pub const IndirectCommandsInputModeFlagBitsEXT = enum(u32) {
-    vulkan_index_buffer_ext = 0x1,
-    dxgi_index_buffer_ext = 0x2,
+    vulkan_index_buffer = 0x1,
+    dxgi_index_buffer = 0x2,
     _,
 };
-pub const DeviceFaultVendorBinaryHeaderVersionKHR = enum(i32) {
-    one_khr = 1,
+pub const DeviceFaultVendorBinaryHeaderVersionKHR = enum(u32) {
+    one = 1,
     _,
-    pub const one_ext: DeviceFaultVendorBinaryHeaderVersionKHR = .one_khr;
+    pub const one_ext: DeviceFaultVendorBinaryHeaderVersionKHR = .one;
 };
 pub const DeviceFaultVendorBinaryHeaderVersionEXT = DeviceFaultVendorBinaryHeaderVersionKHR;
 pub const FrameBoundaryFlagBitsEXT = enum(u32) {
-    frame_end_bit_ext = 0x1,
+    frame_end_bit = 0x1,
     _,
 };
 pub const MemoryDecompressionMethodFlagBitsEXT = enum(u64) {
-    gdeflate_1_0_bit_ext = 0x1,
+    gdeflate_1_0_bit = 0x1,
     _,
-    pub const gdeflate_1_0_bit_nv: MemoryDecompressionMethodFlagBitsEXT = .gdeflate_1_0_bit_ext;
+    pub const gdeflate_1_0_bit_nv: MemoryDecompressionMethodFlagBitsEXT = .gdeflate_1_0_bit;
 };
 pub const MemoryDecompressionMethodFlagBitsNV = MemoryDecompressionMethodFlagBitsEXT;
-pub const DepthBiasRepresentationEXT = enum(i32) {
-    least_representable_value_format_ext = 0,
-    least_representable_value_force_unorm_ext = 1,
-    float_ext = 2,
+pub const DepthBiasRepresentationEXT = enum(u32) {
+    least_representable_value_format = 0,
+    least_representable_value_force_unorm = 1,
+    float = 2,
     _,
 };
-pub const DirectDriverLoadingModeLUNARG = enum(i32) {
-    exclusive_lunarg = 0,
-    inclusive_lunarg = 1,
+pub const DirectDriverLoadingModeLUNARG = enum(u32) {
+    exclusive = 0,
+    inclusive = 1,
     _,
 };
 pub const PipelineCreateFlagBits2 = enum(u64) {
@@ -6349,47 +6349,47 @@ pub const BufferUsageFlagBits2 = enum(u64) {
 };
 pub const BufferUsageFlagBits2KHR = BufferUsageFlagBits2;
 pub const ImageUsageFlagBits2KHR = enum(u64) {
-    transfer_src_bit_khr = 0x1,
-    transfer_dst_bit_khr = 0x2,
-    sampled_bit_khr = 0x4,
-    storage_bit_khr = 0x8,
-    color_attachment_bit_khr = 0x10,
-    depth_stencil_attachment_bit_khr = 0x20,
-    transient_attachment_bit_khr = 0x40,
-    input_attachment_bit_khr = 0x80,
-    fragment_shading_rate_attachment_bit_khr = 0x100,
+    transfer_src_bit = 0x1,
+    transfer_dst_bit = 0x2,
+    sampled_bit = 0x4,
+    storage_bit = 0x8,
+    color_attachment_bit = 0x10,
+    depth_stencil_attachment_bit = 0x20,
+    transient_attachment_bit = 0x40,
+    input_attachment_bit = 0x80,
+    fragment_shading_rate_attachment_bit = 0x100,
     fragment_density_map_bit_ext = 0x200,
-    video_decode_dst_bit_khr = 0x400,
-    video_decode_src_bit_khr = 0x800,
-    video_decode_dpb_bit_khr = 0x1000,
-    video_encode_dst_bit_khr = 0x2000,
-    video_encode_src_bit_khr = 0x4000,
-    video_encode_dpb_bit_khr = 0x8000,
+    video_decode_dst_bit = 0x400,
+    video_decode_src_bit = 0x800,
+    video_decode_dpb_bit = 0x1000,
+    video_encode_dst_bit = 0x2000,
+    video_encode_src_bit = 0x4000,
+    video_encode_dpb_bit = 0x8000,
     invocation_mask_bit_huawei = 0x40000,
     attachment_feedback_loop_bit_ext = 0x80000,
     sample_weight_bit_qcom = 0x100000,
     sample_block_match_bit_qcom = 0x200000,
-    host_transfer_bit_khr = 0x400000,
+    host_transfer_bit = 0x400000,
     tensor_aliasing_bit_arm = 0x800000,
-    video_encode_quantization_delta_map_bit_khr = 0x2000000,
-    video_encode_emphasis_map_bit_khr = 0x4000000,
+    video_encode_quantization_delta_map_bit = 0x2000000,
+    video_encode_emphasis_map_bit = 0x4000000,
     tile_memory_bit_qcom = 0x8000000,
     _,
 };
 pub const ImageCreateFlagBits2KHR = enum(u64) {
-    sparse_binding_bit_khr = 0x1,
-    sparse_residency_bit_khr = 0x2,
-    sparse_aliased_bit_khr = 0x4,
-    mutable_format_bit_khr = 0x8,
-    cube_compatible_bit_khr = 0x10,
-    alias_single_layer_descriptor_bit_khr = 0x400000,
-    @"2d_array_compatible_bit_khr" = 0x20,
-    split_instance_bind_regions_bit_khr = 0x40,
-    block_texel_view_compatible_bit_khr = 0x80,
-    extended_usage_bit_khr = 0x100,
-    disjoint_bit_khr = 0x200,
-    alias_bit_khr = 0x400,
-    protected_bit_khr = 0x800,
+    sparse_binding_bit = 0x1,
+    sparse_residency_bit = 0x2,
+    sparse_aliased_bit = 0x4,
+    mutable_format_bit = 0x8,
+    cube_compatible_bit = 0x10,
+    alias_single_layer_descriptor_bit = 0x400000,
+    @"2d_array_compatible_bit" = 0x20,
+    split_instance_bind_regions_bit = 0x40,
+    block_texel_view_compatible_bit = 0x80,
+    extended_usage_bit = 0x100,
+    disjoint_bit = 0x200,
+    alias_bit = 0x400,
+    protected_bit = 0x800,
     sample_locations_compatible_depth_bit_ext = 0x1000,
     corner_sampled_bit_nv = 0x2000,
     subsampled_bit_ext = 0x4000,
@@ -6397,85 +6397,85 @@ pub const ImageCreateFlagBits2KHR = enum(u64) {
     descriptor_buffer_capture_replay_bit_ext = 0x10000,
     @"2d_view_compatible_bit_ext" = 0x20000,
     multisampled_render_to_single_sampled_bit_ext = 0x40000,
-    video_profile_independent_bit_khr = 0x100000,
+    video_profile_independent_bit = 0x100000,
     _,
 };
-pub const PartitionedAccelerationStructureOpTypeNV = enum(i32) {
-    write_instance_nv = 0,
-    update_instance_nv = 1,
-    write_partition_translation_nv = 2,
+pub const PartitionedAccelerationStructureOpTypeNV = enum(u32) {
+    write_instance = 0,
+    update_instance = 1,
+    write_partition_translation = 2,
     _,
 };
 pub const PartitionedAccelerationStructureInstanceFlagBitsNV = enum(u32) {
-    flag_triangle_facing_cull_disable_bit_nv = 0x1,
-    flag_triangle_flip_facing_bit_nv = 0x2,
-    flag_force_opaque_bit_nv = 0x4,
-    flag_force_no_opaque_bit_nv = 0x8,
-    flag_enable_explicit_bounding_box_nv = 0x10,
+    flag_triangle_facing_cull_disable_bit = 0x1,
+    flag_triangle_flip_facing_bit = 0x2,
+    flag_force_opaque_bit = 0x4,
+    flag_force_no_opaque_bit = 0x8,
+    flag_enable_explicit_bounding_box = 0x10,
     _,
 };
-pub const AntiLagModeAMD = enum(i32) {
-    driver_control_amd = 0,
-    on_amd = 1,
-    off_amd = 2,
+pub const AntiLagModeAMD = enum(u32) {
+    driver_control = 0,
+    on = 1,
+    off = 2,
     _,
 };
-pub const AntiLagStageAMD = enum(i32) {
-    input_amd = 0,
-    present_amd = 1,
+pub const AntiLagStageAMD = enum(u32) {
+    input = 0,
+    present = 1,
     _,
 };
-pub const DisplacementMicromapFormatNV = enum(i32) {
-    @"64_triangles_64_bytes_nv" = 1,
-    @"256_triangles_128_bytes_nv" = 2,
-    @"1024_triangles_128_bytes_nv" = 3,
+pub const DisplacementMicromapFormatNV = enum(u32) {
+    @"64_triangles_64_bytes" = 1,
+    @"256_triangles_128_bytes" = 2,
+    @"1024_triangles_128_bytes" = 3,
     _,
 };
 pub const ShaderCreateFlagBitsEXT = enum(u32) {
-    link_stage_bit_ext = 0x1,
-    descriptor_heap_bit_ext = 0x400,
+    link_stage_bit = 0x1,
+    descriptor_heap_bit = 0x400,
     instrument_shader_bit_arm = 0x800,
-    allow_varying_subgroup_size_bit_ext = 0x2,
-    require_full_subgroups_bit_ext = 0x4,
-    no_task_shader_bit_ext = 0x8,
-    dispatch_base_bit_ext = 0x10,
-    fragment_shading_rate_attachment_bit_ext = 0x20,
-    fragment_density_map_attachment_bit_ext = 0x40,
-    indirect_bindable_bit_ext = 0x80,
-    opacity_micromap_disallow_mixed_special_index_bit_ext = 0x1000,
-    @"64_bit_indexing_bit_ext" = 0x8000,
+    allow_varying_subgroup_size_bit = 0x2,
+    require_full_subgroups_bit = 0x4,
+    no_task_shader_bit = 0x8,
+    dispatch_base_bit = 0x10,
+    fragment_shading_rate_attachment_bit = 0x20,
+    fragment_density_map_attachment_bit = 0x40,
+    indirect_bindable_bit = 0x80,
+    opacity_micromap_disallow_mixed_special_index_bit = 0x1000,
+    @"64_bit_indexing_bit" = 0x8000,
     independent_sets_bit_khr = 0x40000,
     _,
 };
-pub const ShaderCodeTypeEXT = enum(i32) {
-    binary_ext = 0,
-    spirv_ext = 1,
+pub const ShaderCodeTypeEXT = enum(u32) {
+    binary = 0,
+    spirv = 1,
     _,
 };
-pub const ScopeKHR = enum(i32) {
-    device_khr = 1,
-    workgroup_khr = 2,
-    subgroup_khr = 3,
-    queue_family_khr = 5,
+pub const ScopeKHR = enum(u32) {
+    device = 1,
+    workgroup = 2,
+    subgroup = 3,
+    queue_family = 5,
     _,
-    pub const device_nv: ScopeKHR = .device_khr;
-    pub const workgroup_nv: ScopeKHR = .workgroup_khr;
-    pub const subgroup_nv: ScopeKHR = .subgroup_khr;
-    pub const queue_family_nv: ScopeKHR = .queue_family_khr;
+    pub const device_nv: ScopeKHR = .device;
+    pub const workgroup_nv: ScopeKHR = .workgroup;
+    pub const subgroup_nv: ScopeKHR = .subgroup;
+    pub const queue_family_nv: ScopeKHR = .queue_family;
 };
-pub const ComponentTypeKHR = enum(i32) {
-    float16_khr = 0,
-    float32_khr = 1,
-    float64_khr = 2,
-    sint8_khr = 3,
-    sint16_khr = 4,
-    sint32_khr = 5,
-    sint64_khr = 6,
-    uint8_khr = 7,
-    uint16_khr = 8,
-    uint32_khr = 9,
-    uint64_khr = 10,
-    bfloat16_khr = 1000141000,
+pub const ComponentTypeKHR = enum(u32) {
+    float16 = 0,
+    float32 = 1,
+    float64 = 2,
+    sint8 = 3,
+    sint16 = 4,
+    sint32 = 5,
+    sint64 = 6,
+    uint8 = 7,
+    uint16 = 8,
+    uint32 = 9,
+    uint64 = 10,
+    bfloat16 = 1000141000,
     sint8_packed_nv = 1000491000,
     uint8_packed_nv = 1000491001,
     float8_e4m3_ext = 1000491002,
@@ -6486,373 +6486,373 @@ pub const ComponentTypeKHR = enum(i32) {
     float8_unsigned_e8m0_ext = 1000672003,
     mxint8_ext = 1000672004,
     _,
-    pub const float16_nv: ComponentTypeKHR = .float16_khr;
-    pub const float32_nv: ComponentTypeKHR = .float32_khr;
-    pub const float64_nv: ComponentTypeKHR = .float64_khr;
-    pub const sint8_nv: ComponentTypeKHR = .sint8_khr;
-    pub const sint16_nv: ComponentTypeKHR = .sint16_khr;
-    pub const sint32_nv: ComponentTypeKHR = .sint32_khr;
-    pub const sint64_nv: ComponentTypeKHR = .sint64_khr;
-    pub const uint8_nv: ComponentTypeKHR = .uint8_khr;
-    pub const uint16_nv: ComponentTypeKHR = .uint16_khr;
-    pub const uint32_nv: ComponentTypeKHR = .uint32_khr;
-    pub const uint64_nv: ComponentTypeKHR = .uint64_khr;
+    pub const float16_nv: ComponentTypeKHR = .float16;
+    pub const float32_nv: ComponentTypeKHR = .float32;
+    pub const float64_nv: ComponentTypeKHR = .float64;
+    pub const sint8_nv: ComponentTypeKHR = .sint8;
+    pub const sint16_nv: ComponentTypeKHR = .sint16;
+    pub const sint32_nv: ComponentTypeKHR = .sint32;
+    pub const sint64_nv: ComponentTypeKHR = .sint64;
+    pub const uint8_nv: ComponentTypeKHR = .uint8;
+    pub const uint16_nv: ComponentTypeKHR = .uint16;
+    pub const uint32_nv: ComponentTypeKHR = .uint32;
+    pub const uint64_nv: ComponentTypeKHR = .uint64;
     pub const float_e4m3_nv: ComponentTypeKHR = .float8_e4m3_ext;
     pub const float_e5m2_nv: ComponentTypeKHR = .float8_e5m2_ext;
 };
 pub const ScopeNV = ScopeKHR;
 pub const ComponentTypeNV = ComponentTypeKHR;
 pub const CooperativeMatrixFlagBitsEXT = enum(u32) {
-    saturating_accumulation_bit_ext = 0x1,
+    saturating_accumulation_bit = 0x1,
     _,
 };
-pub const CubicFilterWeightsQCOM = enum(i32) {
-    catmull_rom_qcom = 0,
-    zero_tangent_cardinal_qcom = 1,
-    b_spline_qcom = 2,
-    mitchell_netravali_qcom = 3,
+pub const CubicFilterWeightsQCOM = enum(u32) {
+    catmull_rom = 0,
+    zero_tangent_cardinal = 1,
+    b_spline = 2,
+    mitchell_netravali = 3,
     _,
 };
-pub const BlockMatchWindowCompareModeQCOM = enum(i32) {
-    min_qcom = 0,
-    max_qcom = 1,
+pub const BlockMatchWindowCompareModeQCOM = enum(u32) {
+    min = 0,
+    max = 1,
     _,
 };
-pub const LayeredDriverUnderlyingApiMSFT = enum(i32) {
-    none_msft = 0,
-    d3d12_msft = 1,
+pub const LayeredDriverUnderlyingApiMSFT = enum(u32) {
+    none = 0,
+    d3d12 = 1,
     _,
 };
-pub const PhysicalDeviceLayeredApiKHR = enum(i32) {
-    vulkan_khr = 0,
-    d3d12_khr = 1,
-    metal_khr = 2,
-    opengl_khr = 3,
-    opengles_khr = 4,
+pub const PhysicalDeviceLayeredApiKHR = enum(u32) {
+    vulkan = 0,
+    d3d12 = 1,
+    metal = 2,
+    opengl = 3,
+    opengles = 4,
     _,
 };
-pub const CompressedTriangleFormatAMDX = enum(i32) {
-    dgf1_amdx = 0,
+pub const CompressedTriangleFormatAMDX = enum(u32) {
+    dgf1 = 0,
     _,
 };
-pub const DepthClampModeEXT = enum(i32) {
-    viewport_range_ext = 0,
-    user_defined_range_ext = 1,
+pub const DepthClampModeEXT = enum(u32) {
+    viewport_range = 0,
+    user_defined_range = 1,
     _,
 };
 pub const TileShadingRenderPassFlagBitsQCOM = enum(u32) {
-    enable_bit_qcom = 0x1,
-    per_tile_execution_bit_qcom = 0x2,
+    enable_bit = 0x1,
+    per_tile_execution_bit = 0x2,
     _,
 };
-pub const CooperativeVectorMatrixLayoutNV = enum(i32) {
-    row_major_nv = 0,
-    column_major_nv = 1,
-    inferencing_optimal_nv = 2,
-    training_optimal_nv = 3,
+pub const CooperativeVectorMatrixLayoutNV = enum(u32) {
+    row_major = 0,
+    column_major = 1,
+    inferencing_optimal = 2,
+    training_optimal = 3,
     _,
 };
 pub const AddressCopyFlagBitsKHR = enum(u32) {
-    device_local_bit_khr = 0x1,
-    sparse_bit_khr = 0x2,
-    protected_bit_khr = 0x4,
+    device_local_bit = 0x1,
+    sparse_bit = 0x2,
+    protected_bit = 0x4,
     _,
 };
 pub const TensorCreateFlagBitsARM = enum(u64) {
-    mutable_format_bit_arm = 0x1,
-    protected_bit_arm = 0x2,
-    descriptor_heap_capture_replay_bit_arm = 0x8,
-    descriptor_buffer_capture_replay_bit_arm = 0x4,
+    mutable_format_bit = 0x1,
+    protected_bit = 0x2,
+    descriptor_heap_capture_replay_bit = 0x8,
+    descriptor_buffer_capture_replay_bit = 0x4,
     _,
 };
 pub const TensorUsageFlagBitsARM = enum(u64) {
-    shader_bit_arm = 0x2,
-    transfer_src_bit_arm = 0x4,
-    transfer_dst_bit_arm = 0x8,
-    image_aliasing_bit_arm = 0x10,
-    data_graph_bit_arm = 0x20,
+    shader_bit = 0x2,
+    transfer_src_bit = 0x4,
+    transfer_dst_bit = 0x8,
+    image_aliasing_bit = 0x10,
+    data_graph_bit = 0x20,
     _,
 };
-pub const TensorTilingARM = enum(i32) {
-    optimal_arm = 0,
-    linear_arm = 1,
-    brick_16_wide_arm = 1000565000,
-    brick_8_wide_arm = 1000565001,
-    brick_4_wide_arm = 1000565002,
-    block_u_interleaved_arm = 1000565003,
-    block_u_interleaved_64k_arm = 1000565004,
+pub const TensorTilingARM = enum(u32) {
+    optimal = 0,
+    linear = 1,
+    brick_16_wide = 1000565000,
+    brick_8_wide = 1000565001,
+    brick_4_wide = 1000565002,
+    block_u_interleaved = 1000565003,
+    block_u_interleaved_64k = 1000565004,
     _,
 };
 pub const TensorViewCreateFlagBitsARM = enum(u64) {
-    descriptor_buffer_capture_replay_bit_arm = 0x1,
+    descriptor_buffer_capture_replay_bit = 0x1,
     _,
 };
 pub const DataGraphPipelineSessionCreateFlagBitsARM = enum(u64) {
-    protected_bit_arm = 0x1,
-    optical_flow_cache_bit_arm = 0x2,
+    protected_bit = 0x1,
+    optical_flow_cache_bit = 0x2,
     _,
 };
-pub const DataGraphPipelinePropertyARM = enum(i32) {
-    creation_log_arm = 0,
-    identifier_arm = 1,
-    neural_accelerator_debug_database_arm = 1000676000,
-    neural_accelerator_statistics_info_arm = 1000676001,
+pub const DataGraphPipelinePropertyARM = enum(u32) {
+    creation_log = 0,
+    identifier = 1,
+    neural_accelerator_debug_database = 1000676000,
+    neural_accelerator_statistics_info = 1000676001,
     _,
 };
-pub const DataGraphPipelineSessionBindPointARM = enum(i32) {
-    transient_arm = 0,
-    optical_flow_cache_arm = 1000631001,
-    neural_accelerator_statistics_arm = 1000676000,
+pub const DataGraphPipelineSessionBindPointARM = enum(u32) {
+    transient = 0,
+    optical_flow_cache = 1000631001,
+    neural_accelerator_statistics = 1000676000,
     _,
 };
-pub const DataGraphPipelineSessionBindPointTypeARM = enum(i32) {
-    memory_arm = 0,
+pub const DataGraphPipelineSessionBindPointTypeARM = enum(u32) {
+    memory = 0,
     _,
 };
 pub const DataGraphPipelineDispatchFlagBitsARM = enum(u64) {
     _,
 };
-pub const PhysicalDeviceDataGraphProcessingEngineTypeARM = enum(i32) {
-    default_arm = 0,
+pub const PhysicalDeviceDataGraphProcessingEngineTypeARM = enum(u32) {
+    default = 0,
     neural_qcom = 1000629000,
     compute_qcom = 1000629001,
     _,
 };
-pub const PhysicalDeviceDataGraphOperationTypeARM = enum(i32) {
-    spirv_extended_instruction_set_arm = 0,
+pub const PhysicalDeviceDataGraphOperationTypeARM = enum(u32) {
+    spirv_extended_instruction_set = 0,
     neural_model_qcom = 1000629000,
     builtin_model_qcom = 1000629001,
-    optical_flow_arm = 1000631000,
+    optical_flow = 1000631000,
     _,
 };
-pub const DataGraphModelCacheTypeQCOM = enum(i32) {
-    generic_binary_qcom = 0,
+pub const DataGraphModelCacheTypeQCOM = enum(u32) {
+    generic_binary = 0,
     _,
 };
-pub const PerfHintTypeQCOM = enum(i32) {
-    default_qcom = 0,
-    frequency_min_qcom = 1,
-    frequency_max_qcom = 2,
-    frequency_scaled_qcom = 3,
+pub const PerfHintTypeQCOM = enum(u32) {
+    default = 0,
+    frequency_min = 1,
+    frequency_max = 2,
+    frequency_scaled = 3,
     _,
 };
 pub const VideoEncodeRgbModelConversionFlagBitsVALVE = enum(u32) {
-    rgb_identity_bit_valve = 0x1,
-    ycbcr_identity_bit_valve = 0x2,
-    ycbcr_709_bit_valve = 0x4,
-    ycbcr_601_bit_valve = 0x8,
-    ycbcr_2020_bit_valve = 0x10,
+    rgb_identity_bit = 0x1,
+    ycbcr_identity_bit = 0x2,
+    ycbcr_709_bit = 0x4,
+    ycbcr_601_bit = 0x8,
+    ycbcr_2020_bit = 0x10,
     _,
 };
 pub const VideoEncodeRgbRangeCompressionFlagBitsVALVE = enum(u32) {
-    full_range_bit_valve = 0x1,
-    narrow_range_bit_valve = 0x2,
+    full_range_bit = 0x1,
+    narrow_range_bit = 0x2,
     _,
 };
 pub const VideoEncodeRgbChromaOffsetFlagBitsVALVE = enum(u32) {
-    cosited_even_bit_valve = 0x1,
-    midpoint_bit_valve = 0x2,
+    cosited_even_bit = 0x1,
+    midpoint_bit = 0x2,
     _,
 };
-pub const DescriptorMappingSourceEXT = enum(i32) {
-    heap_with_constant_offset_ext = 0,
-    heap_with_push_index_ext = 1,
-    heap_with_indirect_index_ext = 2,
-    heap_with_indirect_index_array_ext = 3,
-    resource_heap_data_ext = 4,
-    push_data_ext = 5,
-    push_address_ext = 6,
-    indirect_address_ext = 7,
-    heap_with_shader_record_index_ext = 8,
-    shader_record_data_ext = 9,
-    shader_record_address_ext = 10,
+pub const DescriptorMappingSourceEXT = enum(u32) {
+    heap_with_constant_offset = 0,
+    heap_with_push_index = 1,
+    heap_with_indirect_index = 2,
+    heap_with_indirect_index_array = 3,
+    resource_heap_data = 4,
+    push_data = 5,
+    push_address = 6,
+    indirect_address = 7,
+    heap_with_shader_record_index = 8,
+    shader_record_data = 9,
+    shader_record_address = 10,
     _,
 };
 pub const SpirvResourceTypeFlagBitsEXT = enum(u32) {
-    all_ext = 0x7fffffff,
-    sampler_bit_ext = 0x1,
-    sampled_image_bit_ext = 0x2,
-    read_only_image_bit_ext = 0x4,
-    read_write_image_bit_ext = 0x8,
-    combined_sampled_image_bit_ext = 0x10,
-    uniform_buffer_bit_ext = 0x20,
-    read_only_storage_buffer_bit_ext = 0x40,
-    read_write_storage_buffer_bit_ext = 0x80,
-    acceleration_structure_bit_ext = 0x100,
+    all = 0x7fffffff,
+    sampler_bit = 0x1,
+    sampled_image_bit = 0x2,
+    read_only_image_bit = 0x4,
+    read_write_image_bit = 0x8,
+    combined_sampled_image_bit = 0x10,
+    uniform_buffer_bit = 0x20,
+    read_only_storage_buffer_bit = 0x40,
+    read_write_storage_buffer_bit = 0x80,
+    acceleration_structure_bit = 0x100,
     tensor_bit_arm = 0x200,
     _,
 };
 pub const GpaSqShaderStageFlagBitsAMD = enum(u32) {
-    ps_bit_amd = 0x1,
-    vs_bit_amd = 0x2,
-    gs_bit_amd = 0x4,
-    es_bit_amd = 0x8,
-    hs_bit_amd = 0x10,
-    ls_bit_amd = 0x20,
-    cs_bit_amd = 0x40,
+    ps_bit = 0x1,
+    vs_bit = 0x2,
+    gs_bit = 0x4,
+    es_bit = 0x8,
+    hs_bit = 0x10,
+    ls_bit = 0x20,
+    cs_bit = 0x40,
     _,
 };
-pub const GpaPerfBlockAMD = enum(i32) {
-    cpf_amd = 0,
-    ia_amd = 1,
-    vgt_amd = 2,
-    pa_amd = 3,
-    sc_amd = 4,
-    spi_amd = 5,
-    sq_amd = 6,
-    sx_amd = 7,
-    ta_amd = 8,
-    td_amd = 9,
-    tcp_amd = 10,
-    tcc_amd = 11,
-    tca_amd = 12,
-    db_amd = 13,
-    cb_amd = 14,
-    gds_amd = 15,
-    srbm_amd = 16,
-    grbm_amd = 17,
-    grbm_se_amd = 18,
-    rlc_amd = 19,
-    dma_amd = 20,
-    mc_amd = 21,
-    cpg_amd = 22,
-    cpc_amd = 23,
-    wd_amd = 24,
-    tcs_amd = 25,
-    atc_amd = 26,
-    atc_l2_amd = 27,
-    mc_vm_l2_amd = 28,
-    ea_amd = 29,
-    rpb_amd = 30,
-    rmi_amd = 31,
-    umcch_amd = 32,
-    ge_amd = 33,
-    gl1a_amd = 34,
-    gl1c_amd = 35,
-    gl1cg_amd = 36,
-    gl2a_amd = 37,
-    gl2c_amd = 38,
-    cha_amd = 39,
-    chc_amd = 40,
-    chcg_amd = 41,
-    gus_amd = 42,
-    gcr_amd = 43,
-    ph_amd = 44,
-    utcl1_amd = 45,
-    ge_dist_amd = 46,
-    ge_se_amd = 47,
-    df_mall_amd = 48,
-    sq_wgp_amd = 49,
-    pc_amd = 50,
-    gl1xa_amd = 51,
-    gl1xc_amd = 52,
-    wgs_amd = 53,
-    eacpwd_amd = 54,
-    ease_amd = 55,
-    rlcuser_amd = 56,
+pub const GpaPerfBlockAMD = enum(u32) {
+    cpf = 0,
+    ia = 1,
+    vgt = 2,
+    pa = 3,
+    sc = 4,
+    spi = 5,
+    sq = 6,
+    sx = 7,
+    ta = 8,
+    td = 9,
+    tcp = 10,
+    tcc = 11,
+    tca = 12,
+    db = 13,
+    cb = 14,
+    gds = 15,
+    srbm = 16,
+    grbm = 17,
+    grbm_se = 18,
+    rlc = 19,
+    dma = 20,
+    mc = 21,
+    cpg = 22,
+    cpc = 23,
+    wd = 24,
+    tcs = 25,
+    atc = 26,
+    atc_l2 = 27,
+    mc_vm_l2 = 28,
+    ea = 29,
+    rpb = 30,
+    rmi = 31,
+    umcch = 32,
+    ge = 33,
+    gl1a = 34,
+    gl1c = 35,
+    gl1cg = 36,
+    gl2a = 37,
+    gl2c = 38,
+    cha = 39,
+    chc = 40,
+    chcg = 41,
+    gus = 42,
+    gcr = 43,
+    ph = 44,
+    utcl1 = 45,
+    ge_dist = 46,
+    ge_se = 47,
+    df_mall = 48,
+    sq_wgp = 49,
+    pc = 50,
+    gl1xa = 51,
+    gl1xc = 52,
+    wgs = 53,
+    eacpwd = 54,
+    ease = 55,
+    rlcuser = 56,
     _,
-    pub const ge1_amd: GpaPerfBlockAMD = .ge_amd;
-    pub const rlclocal_amd: GpaPerfBlockAMD = .rlcuser_amd;
+    pub const ge1: GpaPerfBlockAMD = .ge;
+    pub const rlclocal: GpaPerfBlockAMD = .rlcuser;
 };
-pub const GpaSampleTypeAMD = enum(i32) {
-    cumulative_amd = 0,
-    trace_amd = 1,
-    timing_amd = 2,
+pub const GpaSampleTypeAMD = enum(u32) {
+    cumulative = 0,
+    trace = 1,
+    timing = 2,
     _,
 };
-pub const GpaDeviceClockModeAMD = enum(i32) {
-    default_amd = 0,
-    query_amd = 1,
-    profiling_amd = 2,
-    min_memory_amd = 3,
-    min_engine_amd = 4,
-    peak_amd = 5,
+pub const GpaDeviceClockModeAMD = enum(u32) {
+    default = 0,
+    query = 1,
+    profiling = 2,
+    min_memory = 3,
+    min_engine = 4,
+    peak = 5,
     _,
 };
 pub const AddressCommandFlagBitsKHR = enum(u32) {
-    protected_bit_khr = 0x1,
-    fully_bound_bit_khr = 0x2,
-    storage_buffer_usage_bit_khr = 0x4,
-    unknown_storage_buffer_usage_bit_khr = 0x8,
-    transform_feedback_buffer_usage_bit_khr = 0x10,
-    unknown_transform_feedback_buffer_usage_bit_khr = 0x20,
+    protected_bit = 0x1,
+    fully_bound_bit = 0x2,
+    storage_buffer_usage_bit = 0x4,
+    unknown_storage_buffer_usage_bit = 0x8,
+    transform_feedback_buffer_usage_bit = 0x10,
+    unknown_transform_feedback_buffer_usage_bit = 0x20,
     _,
 };
 pub const DataGraphTOSAQualityFlagBitsARM = enum(u32) {
-    accelerated_arm = 0x1,
-    conformant_arm = 0x2,
-    experimental_arm = 0x4,
-    deprecated_arm = 0x8,
+    accelerated = 0x1,
+    conformant = 0x2,
+    experimental = 0x4,
+    deprecated = 0x8,
     _,
 };
-pub const DataGraphTOSALevelARM = enum(i32) {
-    none_arm = 0,
-    @"8k_arm" = 1,
+pub const DataGraphTOSALevelARM = enum(u32) {
+    none = 0,
+    @"8k" = 1,
     _,
 };
 pub const DataGraphOpticalFlowGridSizeFlagBitsARM = enum(u32) {
-    unknown_arm = 0x0,
-    @"1x1_bit_arm" = 0x1,
-    @"2x2_bit_arm" = 0x2,
-    @"4x4_bit_arm" = 0x4,
-    @"8x8_bit_arm" = 0x8,
+    unknown = 0x0,
+    @"1x1_bit" = 0x1,
+    @"2x2_bit" = 0x2,
+    @"4x4_bit" = 0x4,
+    @"8x8_bit" = 0x8,
     _,
 };
 pub const DataGraphOpticalFlowImageUsageFlagBitsARM = enum(u32) {
-    unknown_arm = 0x0,
-    input_bit_arm = 0x1,
-    output_bit_arm = 0x2,
-    hint_bit_arm = 0x4,
-    cost_bit_arm = 0x8,
+    unknown = 0x0,
+    input_bit = 0x1,
+    output_bit = 0x2,
+    hint_bit = 0x4,
+    cost_bit = 0x8,
     _,
 };
-pub const DataGraphOpticalFlowPerformanceLevelARM = enum(i32) {
-    unknown_arm = 0,
-    slow_arm = 1,
-    medium_arm = 2,
-    fast_arm = 3,
+pub const DataGraphOpticalFlowPerformanceLevelARM = enum(u32) {
+    unknown = 0,
+    slow = 1,
+    medium = 2,
+    fast = 3,
     _,
 };
-pub const DataGraphPipelineNodeConnectionTypeARM = enum(i32) {
-    optical_flow_input_arm = 1000631000,
-    optical_flow_reference_arm = 1000631001,
-    optical_flow_hint_arm = 1000631002,
-    optical_flow_flow_vector_arm = 1000631003,
-    optical_flow_cost_arm = 1000631004,
+pub const DataGraphPipelineNodeConnectionTypeARM = enum(u32) {
+    optical_flow_input = 1000631000,
+    optical_flow_reference = 1000631001,
+    optical_flow_hint = 1000631002,
+    optical_flow_flow_vector = 1000631003,
+    optical_flow_cost = 1000631004,
     _,
 };
-pub const DataGraphPipelineNodeTypeARM = enum(i32) {
-    optical_flow_arm = 1000631000,
+pub const DataGraphPipelineNodeTypeARM = enum(u32) {
+    optical_flow = 1000631000,
     _,
 };
 pub const DataGraphOpticalFlowCreateFlagBitsARM = enum(u32) {
-    enable_hint_bit_arm = 0x1,
-    enable_cost_bit_arm = 0x2,
-    reserved_30_bit_arm = 0x40000000,
+    enable_hint_bit = 0x1,
+    enable_cost_bit = 0x2,
+    reserved_30_bit = 0x40000000,
     _,
 };
 pub const DataGraphOpticalFlowExecuteFlagBitsARM = enum(u32) {
-    disable_temporal_hints_bit_arm = 0x1,
-    input_unchanged_bit_arm = 0x2,
-    reference_unchanged_bit_arm = 0x4,
-    input_is_previous_reference_bit_arm = 0x8,
-    reference_is_previous_input_bit_arm = 0x10,
+    disable_temporal_hints_bit = 0x1,
+    input_unchanged_bit = 0x2,
+    reference_unchanged_bit = 0x4,
+    input_is_previous_reference_bit = 0x8,
+    reference_is_previous_input_bit = 0x10,
     _,
 };
-pub const NeuralAcceleratorStatisticsModeARM = enum(i32) {
-    disabled_arm = 0,
-    statistics0_arm = 1,
-    statistics1_arm = 2,
+pub const NeuralAcceleratorStatisticsModeARM = enum(u32) {
+    disabled = 0,
+    statistics0 = 1,
+    statistics1 = 2,
     _,
 };
-pub const ThrottleHintTypeSEC = enum(i32) {
-    default_sec = 0,
-    low_sec = 1,
-    high_sec = 2,
+pub const ThrottleHintTypeSEC = enum(u32) {
+    default = 0,
+    low = 1,
+    high = 2,
     _,
 };
-pub const ColorSpaceKHR = enum(i32) {
-    srgb_nonlinear_khr = 0,
+pub const ColorSpaceKHR = enum(u32) {
+    srgb_nonlinear = 0,
     display_p3_nonlinear_ext = 1000104001,
     extended_srgb_linear_ext = 1000104002,
     display_p3_linear_ext = 1000104003,
@@ -6869,157 +6869,157 @@ pub const ColorSpaceKHR = enum(i32) {
     extended_srgb_nonlinear_ext = 1000104014,
     display_native_amd = 1000213000,
     _,
-    pub const colorspace_srgb_nonlinear_khr: ColorSpaceKHR = .srgb_nonlinear_khr;
+    pub const colorspace_srgb_nonlinear: ColorSpaceKHR = .srgb_nonlinear;
     pub const dci_p3_linear_ext: ColorSpaceKHR = .display_p3_linear_ext;
 };
 pub const CompositeAlphaFlagBitsKHR = enum(u32) {
-    opaque_bit_khr = 0x1,
-    pre_multiplied_bit_khr = 0x2,
-    post_multiplied_bit_khr = 0x4,
-    inherit_bit_khr = 0x8,
+    opaque_bit = 0x1,
+    pre_multiplied_bit = 0x2,
+    post_multiplied_bit = 0x4,
+    inherit_bit = 0x8,
     _,
 };
 pub const DisplayPlaneAlphaFlagBitsKHR = enum(u32) {
-    opaque_bit_khr = 0x1,
-    global_bit_khr = 0x2,
-    per_pixel_bit_khr = 0x4,
-    per_pixel_premultiplied_bit_khr = 0x8,
+    opaque_bit = 0x1,
+    global_bit = 0x2,
+    per_pixel_bit = 0x4,
+    per_pixel_premultiplied_bit = 0x8,
     _,
 };
-pub const PresentModeKHR = enum(i32) {
-    immediate_khr = 0,
-    mailbox_khr = 1,
-    fifo_khr = 2,
-    fifo_relaxed_khr = 3,
-    shared_demand_refresh_khr = 1000111000,
-    shared_continuous_refresh_khr = 1000111001,
-    fifo_latest_ready_khr = 1000361000,
+pub const PresentModeKHR = enum(u32) {
+    immediate = 0,
+    mailbox = 1,
+    fifo = 2,
+    fifo_relaxed = 3,
+    shared_demand_refresh = 1000111000,
+    shared_continuous_refresh = 1000111001,
+    fifo_latest_ready = 1000361000,
     _,
-    pub const fifo_latest_ready_ext: PresentModeKHR = .fifo_latest_ready_khr;
+    pub const fifo_latest_ready_ext: PresentModeKHR = .fifo_latest_ready;
 };
 pub const SurfaceTransformFlagBitsKHR = enum(u32) {
-    identity_bit_khr = 0x1,
-    rotate_90_bit_khr = 0x2,
-    rotate_180_bit_khr = 0x4,
-    rotate_270_bit_khr = 0x8,
-    horizontal_mirror_bit_khr = 0x10,
-    horizontal_mirror_rotate_90_bit_khr = 0x20,
-    horizontal_mirror_rotate_180_bit_khr = 0x40,
-    horizontal_mirror_rotate_270_bit_khr = 0x80,
-    inherit_bit_khr = 0x100,
+    identity_bit = 0x1,
+    rotate_90_bit = 0x2,
+    rotate_180_bit = 0x4,
+    rotate_270_bit = 0x8,
+    horizontal_mirror_bit = 0x10,
+    horizontal_mirror_rotate_90_bit = 0x20,
+    horizontal_mirror_rotate_180_bit = 0x40,
+    horizontal_mirror_rotate_270_bit = 0x80,
+    inherit_bit = 0x100,
     _,
 };
-pub const DisplaySurfaceStereoTypeNV = enum(i32) {
-    none_nv = 0,
-    onboard_din_nv = 1,
-    hdmi_3d_nv = 2,
-    inband_displayport_nv = 3,
+pub const DisplaySurfaceStereoTypeNV = enum(u32) {
+    none = 0,
+    onboard_din = 1,
+    hdmi_3d = 2,
+    inband_displayport = 3,
     _,
 };
 pub const DebugReportFlagBitsEXT = enum(u32) {
-    information_bit_ext = 0x1,
-    warning_bit_ext = 0x2,
-    performance_warning_bit_ext = 0x4,
-    error_bit_ext = 0x8,
-    debug_bit_ext = 0x10,
+    information_bit = 0x1,
+    warning_bit = 0x2,
+    performance_warning_bit = 0x4,
+    error_bit = 0x8,
+    debug_bit = 0x10,
     _,
 };
-pub const DebugReportObjectTypeEXT = enum(i32) {
-    unknown_ext = 0,
-    instance_ext = 1,
-    physical_device_ext = 2,
-    device_ext = 3,
-    queue_ext = 4,
-    semaphore_ext = 5,
-    command_buffer_ext = 6,
-    fence_ext = 7,
-    device_memory_ext = 8,
-    buffer_ext = 9,
-    image_ext = 10,
-    event_ext = 11,
-    query_pool_ext = 12,
-    buffer_view_ext = 13,
-    image_view_ext = 14,
-    shader_module_ext = 15,
-    pipeline_cache_ext = 16,
-    pipeline_layout_ext = 17,
-    render_pass_ext = 18,
-    pipeline_ext = 19,
-    descriptor_set_layout_ext = 20,
-    sampler_ext = 21,
-    descriptor_pool_ext = 22,
-    descriptor_set_ext = 23,
-    framebuffer_ext = 24,
-    command_pool_ext = 25,
-    surface_khr_ext = 26,
-    swapchain_khr_ext = 27,
-    debug_report_callback_ext_ext = 28,
-    display_khr_ext = 29,
-    display_mode_khr_ext = 30,
-    validation_cache_ext_ext = 33,
-    sampler_ycbcr_conversion_ext = 1000156000,
-    descriptor_update_template_ext = 1000085000,
-    cu_module_nvx_ext = 1000029000,
-    cu_function_nvx_ext = 1000029001,
-    acceleration_structure_khr_ext = 1000150000,
-    acceleration_structure_nv_ext = 1000165000,
-    cuda_module_nv_ext = 1000307000,
-    cuda_function_nv_ext = 1000307001,
-    buffer_collection_fuchsia_ext = 1000366000,
+pub const DebugReportObjectTypeEXT = enum(u32) {
+    unknown = 0,
+    instance = 1,
+    physical_device = 2,
+    device = 3,
+    queue = 4,
+    semaphore = 5,
+    command_buffer = 6,
+    fence = 7,
+    device_memory = 8,
+    buffer = 9,
+    image = 10,
+    event = 11,
+    query_pool = 12,
+    buffer_view = 13,
+    image_view = 14,
+    shader_module = 15,
+    pipeline_cache = 16,
+    pipeline_layout = 17,
+    render_pass = 18,
+    pipeline = 19,
+    descriptor_set_layout = 20,
+    sampler = 21,
+    descriptor_pool = 22,
+    descriptor_set = 23,
+    framebuffer = 24,
+    command_pool = 25,
+    surface_khr = 26,
+    swapchain_khr = 27,
+    debug_report_callback_ext = 28,
+    display_khr = 29,
+    display_mode_khr = 30,
+    validation_cache_ext = 33,
+    sampler_ycbcr_conversion = 1000156000,
+    descriptor_update_template = 1000085000,
+    cu_module_nvx = 1000029000,
+    cu_function_nvx = 1000029001,
+    acceleration_structure_khr = 1000150000,
+    acceleration_structure_nv = 1000165000,
+    cuda_module_nv = 1000307000,
+    cuda_function_nv = 1000307001,
+    buffer_collection_fuchsia = 1000366000,
     _,
-    pub const debug_report_ext: DebugReportObjectTypeEXT = .debug_report_callback_ext_ext;
-    pub const validation_cache_ext: DebugReportObjectTypeEXT = .validation_cache_ext_ext;
-    pub const descriptor_update_template_khr_ext: DebugReportObjectTypeEXT = .descriptor_update_template_ext;
-    pub const sampler_ycbcr_conversion_khr_ext: DebugReportObjectTypeEXT = .sampler_ycbcr_conversion_ext;
+    pub const debug_report: DebugReportObjectTypeEXT = .debug_report_callback_ext;
+    pub const validation_cache: DebugReportObjectTypeEXT = .validation_cache_ext;
+    pub const descriptor_update_template_khr: DebugReportObjectTypeEXT = .descriptor_update_template;
+    pub const sampler_ycbcr_conversion_khr: DebugReportObjectTypeEXT = .sampler_ycbcr_conversion;
 };
-pub const DeviceMemoryReportEventTypeEXT = enum(i32) {
-    allocate_ext = 0,
-    free_ext = 1,
-    import_ext = 2,
-    unimport_ext = 3,
-    allocation_failed_ext = 4,
+pub const DeviceMemoryReportEventTypeEXT = enum(u32) {
+    allocate = 0,
+    free = 1,
+    import = 2,
+    unimport = 3,
+    allocation_failed = 4,
     _,
 };
-pub const RasterizationOrderAMD = enum(i32) {
-    strict_amd = 0,
-    relaxed_amd = 1,
+pub const RasterizationOrderAMD = enum(u32) {
+    strict = 0,
+    relaxed = 1,
     _,
 };
 pub const ExternalMemoryHandleTypeFlagBitsNV = enum(u32) {
-    opaque_win32_bit_nv = 0x1,
-    opaque_win32_kmt_bit_nv = 0x2,
-    d3d11_image_bit_nv = 0x4,
-    d3d11_image_kmt_bit_nv = 0x8,
+    opaque_win32_bit = 0x1,
+    opaque_win32_kmt_bit = 0x2,
+    d3d11_image_bit = 0x4,
+    d3d11_image_kmt_bit = 0x8,
     _,
 };
 pub const ExternalMemoryFeatureFlagBitsNV = enum(u32) {
-    dedicated_only_bit_nv = 0x1,
-    exportable_bit_nv = 0x2,
-    importable_bit_nv = 0x4,
+    dedicated_only_bit = 0x1,
+    exportable_bit = 0x2,
+    importable_bit = 0x4,
     _,
 };
-pub const ValidationCheckEXT = enum(i32) {
-    all_ext = 0,
-    shaders_ext = 1,
+pub const ValidationCheckEXT = enum(u32) {
+    all = 0,
+    shaders = 1,
     _,
 };
-pub const ValidationFeatureEnableEXT = enum(i32) {
-    gpu_assisted_ext = 0,
-    gpu_assisted_reserve_binding_slot_ext = 1,
-    best_practices_ext = 2,
-    debug_printf_ext = 3,
-    synchronization_validation_ext = 4,
+pub const ValidationFeatureEnableEXT = enum(u32) {
+    gpu_assisted = 0,
+    gpu_assisted_reserve_binding_slot = 1,
+    best_practices = 2,
+    debug_printf = 3,
+    synchronization_validation = 4,
     _,
 };
-pub const ValidationFeatureDisableEXT = enum(i32) {
-    all_ext = 0,
-    shaders_ext = 1,
-    thread_safety_ext = 2,
-    api_parameters_ext = 3,
-    object_lifetimes_ext = 4,
-    core_checks_ext = 5,
-    unique_handles_ext = 6,
-    shader_validation_cache_ext = 7,
+pub const ValidationFeatureDisableEXT = enum(u32) {
+    all = 0,
+    shaders = 1,
+    thread_safety = 2,
+    api_parameters = 3,
+    object_lifetimes = 4,
+    core_checks = 5,
+    unique_handles = 6,
+    shader_validation_cache = 7,
     _,
 };
 pub const ExternalMemoryHandleTypeFlagBits = enum(u32) {
@@ -7118,22 +7118,22 @@ pub const FenceImportFlagBits = enum(u32) {
 };
 pub const FenceImportFlagBitsKHR = FenceImportFlagBits;
 pub const SurfaceCounterFlagBitsEXT = enum(u32) {
-    vblank_bit_ext = 0x1,
+    vblank_bit = 0x1,
     _,
-    pub const vblank_ext: SurfaceCounterFlagBitsEXT = .vblank_bit_ext;
+    pub const vblank: SurfaceCounterFlagBitsEXT = .vblank_bit;
 };
-pub const DisplayPowerStateEXT = enum(i32) {
-    off_ext = 0,
-    suspend_ext = 1,
-    on_ext = 2,
-    _,
-};
-pub const DeviceEventTypeEXT = enum(i32) {
-    display_hotplug_ext = 0,
+pub const DisplayPowerStateEXT = enum(u32) {
+    off = 0,
+    @"suspend" = 1,
+    on = 2,
     _,
 };
-pub const DisplayEventTypeEXT = enum(i32) {
-    first_pixel_out_ext = 0,
+pub const DeviceEventTypeEXT = enum(u32) {
+    display_hotplug = 0,
+    _,
+};
+pub const DisplayEventTypeEXT = enum(u32) {
+    first_pixel_out = 0,
     _,
 };
 pub const PeerMemoryFeatureFlagBits = enum(u32) {
@@ -7160,23 +7160,23 @@ pub const MemoryAllocateFlagBits = enum(u32) {
 };
 pub const MemoryAllocateFlagBitsKHR = MemoryAllocateFlagBits;
 pub const DeviceGroupPresentModeFlagBitsKHR = enum(u32) {
-    local_bit_khr = 0x1,
-    remote_bit_khr = 0x2,
-    sum_bit_khr = 0x4,
-    local_multi_device_bit_khr = 0x8,
+    local_bit = 0x1,
+    remote_bit = 0x2,
+    sum_bit = 0x4,
+    local_multi_device_bit = 0x8,
     _,
 };
 pub const SwapchainCreateFlagBitsKHR = enum(u32) {
-    split_instance_bind_regions_bit_khr = 0x1,
-    protected_bit_khr = 0x2,
-    mutable_format_bit_khr = 0x4,
+    split_instance_bind_regions_bit = 0x1,
+    protected_bit = 0x2,
+    mutable_format_bit = 0x4,
     present_timing_bit_ext = 0x200,
-    present_id_2_bit_khr = 0x40,
-    present_wait_2_bit_khr = 0x80,
-    deferred_memory_allocation_bit_khr = 0x8,
+    present_id_2_bit = 0x40,
+    present_wait_2_bit = 0x80,
+    deferred_memory_allocation_bit = 0x8,
     multisampled_render_to_single_sampled_bit_ext = 0x100,
     _,
-    pub const deferred_memory_allocation_bit_ext: SwapchainCreateFlagBitsKHR = .deferred_memory_allocation_bit_khr;
+    pub const deferred_memory_allocation_bit_ext: SwapchainCreateFlagBitsKHR = .deferred_memory_allocation_bit;
 };
 pub const SubgroupFeatureFlagBits = enum(u32) {
     basic_bit = 0x1,
@@ -7195,7 +7195,7 @@ pub const SubgroupFeatureFlagBits = enum(u32) {
     pub const rotate_bit_khr: SubgroupFeatureFlagBits = .rotate_bit;
     pub const rotate_clustered_bit_khr: SubgroupFeatureFlagBits = .rotate_clustered_bit;
 };
-pub const TessellationDomainOrigin = enum(i32) {
+pub const TessellationDomainOrigin = enum(u32) {
     upper_left = 0,
     lower_left = 1,
     _,
@@ -7203,7 +7203,7 @@ pub const TessellationDomainOrigin = enum(i32) {
     pub const lower_left_khr: TessellationDomainOrigin = .lower_left;
 };
 pub const TessellationDomainOriginKHR = TessellationDomainOrigin;
-pub const SamplerYcbcrModelConversion = enum(i32) {
+pub const SamplerYcbcrModelConversion = enum(u32) {
     rgb_identity = 0,
     ycbcr_identity = 1,
     ycbcr_709 = 2,
@@ -7217,7 +7217,7 @@ pub const SamplerYcbcrModelConversion = enum(i32) {
     pub const ycbcr_2020_khr: SamplerYcbcrModelConversion = .ycbcr_2020;
 };
 pub const SamplerYcbcrModelConversionKHR = SamplerYcbcrModelConversion;
-pub const SamplerYcbcrRange = enum(i32) {
+pub const SamplerYcbcrRange = enum(u32) {
     itu_full = 0,
     itu_narrow = 1,
     _,
@@ -7225,7 +7225,7 @@ pub const SamplerYcbcrRange = enum(i32) {
     pub const itu_narrow_khr: SamplerYcbcrRange = .itu_narrow;
 };
 pub const SamplerYcbcrRangeKHR = SamplerYcbcrRange;
-pub const ChromaLocation = enum(i32) {
+pub const ChromaLocation = enum(u32) {
     cosited_even = 0,
     midpoint = 1,
     _,
@@ -7233,7 +7233,7 @@ pub const ChromaLocation = enum(i32) {
     pub const midpoint_khr: ChromaLocation = .midpoint;
 };
 pub const ChromaLocationKHR = ChromaLocation;
-pub const SamplerReductionMode = enum(i32) {
+pub const SamplerReductionMode = enum(u32) {
     weighted_average = 0,
     min = 1,
     max = 2,
@@ -7244,34 +7244,34 @@ pub const SamplerReductionMode = enum(i32) {
     pub const max_ext: SamplerReductionMode = .max;
 };
 pub const SamplerReductionModeEXT = SamplerReductionMode;
-pub const BlendOverlapEXT = enum(i32) {
-    uncorrelated_ext = 0,
-    disjoint_ext = 1,
-    conjoint_ext = 2,
+pub const BlendOverlapEXT = enum(u32) {
+    uncorrelated = 0,
+    disjoint = 1,
+    conjoint = 2,
     _,
 };
 pub const DebugUtilsMessageSeverityFlagBitsEXT = enum(u32) {
-    verbose_bit_ext = 0x1,
-    info_bit_ext = 0x10,
-    warning_bit_ext = 0x100,
-    error_bit_ext = 0x1000,
+    verbose_bit = 0x1,
+    info_bit = 0x10,
+    warning_bit = 0x100,
+    error_bit = 0x1000,
     _,
 };
 pub const DebugUtilsMessageTypeFlagBitsEXT = enum(u32) {
-    general_bit_ext = 0x1,
-    validation_bit_ext = 0x2,
-    performance_bit_ext = 0x4,
-    device_address_binding_bit_ext = 0x8,
+    general_bit = 0x1,
+    validation_bit = 0x2,
+    performance_bit = 0x4,
+    device_address_binding_bit = 0x8,
     _,
 };
-pub const FullScreenExclusiveEXT = enum(i32) {
-    default_ext = 0,
-    allowed_ext = 1,
-    disallowed_ext = 2,
-    application_controlled_ext = 3,
+pub const FullScreenExclusiveEXT = enum(u32) {
+    default = 0,
+    allowed = 1,
+    disallowed = 2,
+    application_controlled = 3,
     _,
 };
-pub const ShaderFloatControlsIndependence = enum(i32) {
+pub const ShaderFloatControlsIndependence = enum(u32) {
     @"32_bit_only" = 0,
     all = 1,
     none = 2,
@@ -7281,12 +7281,12 @@ pub const ShaderFloatControlsIndependence = enum(i32) {
     pub const none_khr: ShaderFloatControlsIndependence = .none;
 };
 pub const ShaderFloatControlsIndependenceKHR = ShaderFloatControlsIndependence;
-pub const FragmentShadingRateCombinerOpKHR = enum(i32) {
-    keep_khr = 0,
-    replace_khr = 1,
-    min_khr = 2,
-    max_khr = 3,
-    mul_khr = 4,
+pub const FragmentShadingRateCombinerOpKHR = enum(u32) {
+    keep = 0,
+    replace = 1,
+    min = 2,
+    max = 3,
+    mul = 4,
     _,
 };
 pub const SubmitFlagBits = enum(u32) {
@@ -7296,132 +7296,132 @@ pub const SubmitFlagBits = enum(u32) {
 };
 pub const SubmitFlagBitsKHR = SubmitFlagBits;
 pub const GraphicsPipelineLibraryFlagBitsEXT = enum(u32) {
-    vertex_input_interface_bit_ext = 0x1,
-    pre_rasterization_shaders_bit_ext = 0x2,
-    fragment_shader_bit_ext = 0x4,
-    fragment_output_interface_bit_ext = 0x8,
+    vertex_input_interface_bit = 0x1,
+    pre_rasterization_shaders_bit = 0x2,
+    fragment_shader_bit = 0x4,
+    fragment_output_interface_bit = 0x8,
     _,
 };
 pub const OpticalFlowGridSizeFlagBitsNV = enum(u32) {
-    unknown_nv = 0x0,
-    @"1x1_bit_nv" = 0x1,
-    @"2x2_bit_nv" = 0x2,
-    @"4x4_bit_nv" = 0x4,
-    @"8x8_bit_nv" = 0x8,
+    unknown = 0x0,
+    @"1x1_bit" = 0x1,
+    @"2x2_bit" = 0x2,
+    @"4x4_bit" = 0x4,
+    @"8x8_bit" = 0x8,
     _,
 };
 pub const OpticalFlowUsageFlagBitsNV = enum(u32) {
-    unknown_nv = 0x0,
-    input_bit_nv = 0x1,
-    output_bit_nv = 0x2,
-    hint_bit_nv = 0x4,
-    cost_bit_nv = 0x8,
-    global_flow_bit_nv = 0x10,
+    unknown = 0x0,
+    input_bit = 0x1,
+    output_bit = 0x2,
+    hint_bit = 0x4,
+    cost_bit = 0x8,
+    global_flow_bit = 0x10,
     _,
 };
-pub const OpticalFlowPerformanceLevelNV = enum(i32) {
-    unknown_nv = 0,
-    slow_nv = 1,
-    medium_nv = 2,
-    fast_nv = 3,
+pub const OpticalFlowPerformanceLevelNV = enum(u32) {
+    unknown = 0,
+    slow = 1,
+    medium = 2,
+    fast = 3,
     _,
 };
-pub const OpticalFlowSessionBindingPointNV = enum(i32) {
-    unknown_nv = 0,
-    input_nv = 1,
-    reference_nv = 2,
-    hint_nv = 3,
-    flow_vector_nv = 4,
-    backward_flow_vector_nv = 5,
-    cost_nv = 6,
-    backward_cost_nv = 7,
-    global_flow_nv = 8,
+pub const OpticalFlowSessionBindingPointNV = enum(u32) {
+    unknown = 0,
+    input = 1,
+    reference = 2,
+    hint = 3,
+    flow_vector = 4,
+    backward_flow_vector = 5,
+    cost = 6,
+    backward_cost = 7,
+    global_flow = 8,
     _,
 };
 pub const OpticalFlowSessionCreateFlagBitsNV = enum(u32) {
-    enable_hint_bit_nv = 0x1,
-    enable_cost_bit_nv = 0x2,
-    enable_global_flow_bit_nv = 0x4,
-    allow_regions_bit_nv = 0x8,
-    both_directions_bit_nv = 0x10,
+    enable_hint_bit = 0x1,
+    enable_cost_bit = 0x2,
+    enable_global_flow_bit = 0x4,
+    allow_regions_bit = 0x8,
+    both_directions_bit = 0x10,
     _,
 };
 pub const OpticalFlowExecuteFlagBitsNV = enum(u32) {
-    disable_temporal_hints_bit_nv = 0x1,
+    disable_temporal_hints_bit = 0x1,
     _,
 };
-pub const DeviceFaultAddressTypeKHR = enum(i32) {
-    none_khr = 0,
-    read_invalid_khr = 1,
-    write_invalid_khr = 2,
-    execute_invalid_khr = 3,
-    instruction_pointer_unknown_khr = 4,
-    instruction_pointer_invalid_khr = 5,
-    instruction_pointer_fault_khr = 6,
+pub const DeviceFaultAddressTypeKHR = enum(u32) {
+    none = 0,
+    read_invalid = 1,
+    write_invalid = 2,
+    execute_invalid = 3,
+    instruction_pointer_unknown = 4,
+    instruction_pointer_invalid = 5,
+    instruction_pointer_fault = 6,
     _,
-    pub const none_ext: DeviceFaultAddressTypeKHR = .none_khr;
-    pub const read_invalid_ext: DeviceFaultAddressTypeKHR = .read_invalid_khr;
-    pub const write_invalid_ext: DeviceFaultAddressTypeKHR = .write_invalid_khr;
-    pub const execute_invalid_ext: DeviceFaultAddressTypeKHR = .execute_invalid_khr;
-    pub const instruction_pointer_unknown_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_unknown_khr;
-    pub const instruction_pointer_invalid_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_invalid_khr;
-    pub const instruction_pointer_fault_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_fault_khr;
+    pub const none_ext: DeviceFaultAddressTypeKHR = .none;
+    pub const read_invalid_ext: DeviceFaultAddressTypeKHR = .read_invalid;
+    pub const write_invalid_ext: DeviceFaultAddressTypeKHR = .write_invalid;
+    pub const execute_invalid_ext: DeviceFaultAddressTypeKHR = .execute_invalid;
+    pub const instruction_pointer_unknown_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_unknown;
+    pub const instruction_pointer_invalid_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_invalid;
+    pub const instruction_pointer_fault_ext: DeviceFaultAddressTypeKHR = .instruction_pointer_fault;
 };
 pub const DeviceFaultAddressTypeEXT = DeviceFaultAddressTypeKHR;
 pub const PresentScalingFlagBitsKHR = enum(u32) {
-    one_to_one_bit_khr = 0x1,
-    aspect_ratio_stretch_bit_khr = 0x2,
-    stretch_bit_khr = 0x4,
+    one_to_one_bit = 0x1,
+    aspect_ratio_stretch_bit = 0x2,
+    stretch_bit = 0x4,
     _,
-    pub const one_to_one_bit_ext: PresentScalingFlagBitsKHR = .one_to_one_bit_khr;
-    pub const aspect_ratio_stretch_bit_ext: PresentScalingFlagBitsKHR = .aspect_ratio_stretch_bit_khr;
-    pub const stretch_bit_ext: PresentScalingFlagBitsKHR = .stretch_bit_khr;
+    pub const one_to_one_bit_ext: PresentScalingFlagBitsKHR = .one_to_one_bit;
+    pub const aspect_ratio_stretch_bit_ext: PresentScalingFlagBitsKHR = .aspect_ratio_stretch_bit;
+    pub const stretch_bit_ext: PresentScalingFlagBitsKHR = .stretch_bit;
 };
 pub const PresentScalingFlagBitsEXT = PresentScalingFlagBitsKHR;
 pub const PresentGravityFlagBitsKHR = enum(u32) {
-    min_bit_khr = 0x1,
-    max_bit_khr = 0x2,
-    centered_bit_khr = 0x4,
+    min_bit = 0x1,
+    max_bit = 0x2,
+    centered_bit = 0x4,
     _,
-    pub const min_bit_ext: PresentGravityFlagBitsKHR = .min_bit_khr;
-    pub const max_bit_ext: PresentGravityFlagBitsKHR = .max_bit_khr;
-    pub const centered_bit_ext: PresentGravityFlagBitsKHR = .centered_bit_khr;
+    pub const min_bit_ext: PresentGravityFlagBitsKHR = .min_bit;
+    pub const max_bit_ext: PresentGravityFlagBitsKHR = .max_bit;
+    pub const centered_bit_ext: PresentGravityFlagBitsKHR = .centered_bit;
 };
 pub const PresentGravityFlagBitsEXT = PresentGravityFlagBitsKHR;
-pub const LayerSettingTypeEXT = enum(i32) {
-    bool32_ext = 0,
-    int32_ext = 1,
-    int64_ext = 2,
-    uint32_ext = 3,
-    uint64_ext = 4,
-    float32_ext = 5,
-    float64_ext = 6,
-    string_ext = 7,
+pub const LayerSettingTypeEXT = enum(u32) {
+    bool32 = 0,
+    int32 = 1,
+    int64 = 2,
+    uint32 = 3,
+    uint64 = 4,
+    float32 = 5,
+    float64 = 6,
+    string = 7,
     _,
 };
-pub const LatencyMarkerNV = enum(i32) {
-    simulation_start_nv = 0,
-    simulation_end_nv = 1,
-    rendersubmit_start_nv = 2,
-    rendersubmit_end_nv = 3,
-    present_start_nv = 4,
-    present_end_nv = 5,
-    input_sample_nv = 6,
-    trigger_flash_nv = 7,
-    out_of_band_rendersubmit_start_nv = 8,
-    out_of_band_rendersubmit_end_nv = 9,
-    out_of_band_present_start_nv = 10,
-    out_of_band_present_end_nv = 11,
+pub const LatencyMarkerNV = enum(u32) {
+    simulation_start = 0,
+    simulation_end = 1,
+    rendersubmit_start = 2,
+    rendersubmit_end = 3,
+    present_start = 4,
+    present_end = 5,
+    input_sample = 6,
+    trigger_flash = 7,
+    out_of_band_rendersubmit_start = 8,
+    out_of_band_rendersubmit_end = 9,
+    out_of_band_present_start = 10,
+    out_of_band_present_end = 11,
     _,
 };
-pub const OutOfBandQueueTypeNV = enum(i32) {
-    render_nv = 0,
-    present_nv = 1,
+pub const OutOfBandQueueTypeNV = enum(u32) {
+    render = 0,
+    present = 1,
     _,
 };
 pub const PhysicalDeviceSchedulingControlsFlagBitsARM = enum(u64) {
-    shader_core_count_arm = 0x1,
-    dispatch_parameters_arm = 0x2,
+    shader_core_count = 0x1,
+    dispatch_parameters = 0x2,
     _,
 };
 pub const MemoryUnmapFlagBits = enum(u32) {
@@ -7430,28 +7430,28 @@ pub const MemoryUnmapFlagBits = enum(u32) {
 };
 pub const MemoryUnmapFlagBitsKHR = MemoryUnmapFlagBits;
 pub const PresentStageFlagBitsEXT = enum(u32) {
-    queue_operations_end_bit_ext = 0x1,
-    request_dequeued_bit_ext = 0x2,
-    image_first_pixel_out_bit_ext = 0x4,
-    image_first_pixel_visible_bit_ext = 0x8,
+    queue_operations_end_bit = 0x1,
+    request_dequeued_bit = 0x2,
+    image_first_pixel_out_bit = 0x4,
+    image_first_pixel_visible_bit = 0x8,
     _,
 };
 pub const PastPresentationTimingFlagBitsEXT = enum(u32) {
-    allow_partial_results_bit_ext = 0x1,
-    allow_out_of_order_results_bit_ext = 0x2,
+    allow_partial_results_bit = 0x1,
+    allow_out_of_order_results_bit = 0x2,
     _,
 };
 pub const PresentTimingInfoFlagBitsEXT = enum(u32) {
-    present_at_relative_time_bit_ext = 0x1,
-    present_at_nearest_refresh_cycle_bit_ext = 0x2,
+    present_at_relative_time_bit = 0x1,
+    present_at_nearest_refresh_cycle_bit = 0x2,
     _,
 };
-pub const HdrSmpteSt209450PowerPreferenceGOOGLE = enum(i32) {
-    st_209450_power_preference_color_accuracy_google = 0,
-    st_209450_power_preference_low_power_google = 1,
+pub const HdrSmpteSt209450PowerPreferenceGOOGLE = enum(u32) {
+    st_209450_power_preference_color_accuracy = 0,
+    st_209450_power_preference_low_power = 1,
     _,
 };
-pub const VendorId = enum(i32) {
+pub const VendorId = enum(u32) {
     khronos = 65536,
     viv = 65537,
     vsi = 65538,
@@ -7464,7 +7464,7 @@ pub const VendorId = enum(i32) {
     apex = 65545,
     _,
 };
-pub const DriverId = enum(i32) {
+pub const DriverId = enum(u32) {
     amd_proprietary = 1,
     amd_open_source = 2,
     mesa_radv = 3,
@@ -7515,342 +7515,342 @@ pub const DriverId = enum(i32) {
     pub const broadcom_proprietary_khr: DriverId = .broadcom_proprietary;
 };
 pub const DriverIdKHR = DriverId;
-pub const ShadingRatePaletteEntryNV = enum(i32) {
-    no_invocations_nv = 0,
-    @"16_invocations_per_pixel_nv" = 1,
-    @"8_invocations_per_pixel_nv" = 2,
-    @"4_invocations_per_pixel_nv" = 3,
-    @"2_invocations_per_pixel_nv" = 4,
-    @"1_invocation_per_pixel_nv" = 5,
-    @"1_invocation_per_2x1_pixels_nv" = 6,
-    @"1_invocation_per_1x2_pixels_nv" = 7,
-    @"1_invocation_per_2x2_pixels_nv" = 8,
-    @"1_invocation_per_4x2_pixels_nv" = 9,
-    @"1_invocation_per_2x4_pixels_nv" = 10,
-    @"1_invocation_per_4x4_pixels_nv" = 11,
+pub const ShadingRatePaletteEntryNV = enum(u32) {
+    no_invocations = 0,
+    @"16_invocations_per_pixel" = 1,
+    @"8_invocations_per_pixel" = 2,
+    @"4_invocations_per_pixel" = 3,
+    @"2_invocations_per_pixel" = 4,
+    @"1_invocation_per_pixel" = 5,
+    @"1_invocation_per_2x1_pixels" = 6,
+    @"1_invocation_per_1x2_pixels" = 7,
+    @"1_invocation_per_2x2_pixels" = 8,
+    @"1_invocation_per_4x2_pixels" = 9,
+    @"1_invocation_per_2x4_pixels" = 10,
+    @"1_invocation_per_4x4_pixels" = 11,
     _,
 };
-pub const CoarseSampleOrderTypeNV = enum(i32) {
-    default_nv = 0,
-    custom_nv = 1,
-    pixel_major_nv = 2,
-    sample_major_nv = 3,
+pub const CoarseSampleOrderTypeNV = enum(u32) {
+    default = 0,
+    custom = 1,
+    pixel_major = 2,
+    sample_major = 3,
     _,
 };
-pub const PipelineExecutableStatisticFormatKHR = enum(i32) {
-    bool32_khr = 0,
-    int64_khr = 1,
-    uint64_khr = 2,
-    float64_khr = 3,
+pub const PipelineExecutableStatisticFormatKHR = enum(u32) {
+    bool32 = 0,
+    int64 = 1,
+    uint64 = 2,
+    float64 = 3,
     _,
 };
 pub const VideoCodecOperationFlagBitsKHR = enum(u32) {
-    none_khr = 0x0,
-    encode_h264_bit_khr = 0x10000,
-    encode_h265_bit_khr = 0x20000,
-    decode_h264_bit_khr = 0x1,
-    decode_h265_bit_khr = 0x2,
-    decode_av1_bit_khr = 0x4,
-    encode_av1_bit_khr = 0x40000,
-    decode_vp9_bit_khr = 0x8,
+    none = 0x0,
+    encode_h264_bit = 0x10000,
+    encode_h265_bit = 0x20000,
+    decode_h264_bit = 0x1,
+    decode_h265_bit = 0x2,
+    decode_av1_bit = 0x4,
+    encode_av1_bit = 0x40000,
+    decode_vp9_bit = 0x8,
     _,
 };
 pub const VideoChromaSubsamplingFlagBitsKHR = enum(u32) {
-    invalid_khr = 0x0,
-    monochrome_bit_khr = 0x1,
-    @"420_bit_khr" = 0x2,
-    @"422_bit_khr" = 0x4,
-    @"444_bit_khr" = 0x8,
+    invalid = 0x0,
+    monochrome_bit = 0x1,
+    @"420_bit" = 0x2,
+    @"422_bit" = 0x4,
+    @"444_bit" = 0x8,
     _,
 };
 pub const VideoComponentBitDepthFlagBitsKHR = enum(u32) {
-    invalid_khr = 0x0,
-    @"8_bit_khr" = 0x1,
-    @"10_bit_khr" = 0x4,
-    @"12_bit_khr" = 0x10,
+    invalid = 0x0,
+    @"8_bit" = 0x1,
+    @"10_bit" = 0x4,
+    @"12_bit" = 0x10,
     _,
 };
 pub const VideoCapabilityFlagBitsKHR = enum(u32) {
-    protected_content_bit_khr = 0x1,
-    separate_reference_images_bit_khr = 0x2,
+    protected_content_bit = 0x1,
+    separate_reference_images_bit = 0x2,
     _,
 };
 pub const VideoSessionCreateFlagBitsKHR = enum(u32) {
-    protected_content_bit_khr = 0x1,
-    allow_encode_parameter_optimizations_bit_khr = 0x2,
-    inline_queries_bit_khr = 0x4,
-    allow_encode_quantization_delta_map_bit_khr = 0x8,
-    allow_encode_emphasis_map_bit_khr = 0x10,
-    inline_session_parameters_bit_khr = 0x20,
+    protected_content_bit = 0x1,
+    allow_encode_parameter_optimizations_bit = 0x2,
+    inline_queries_bit = 0x4,
+    allow_encode_quantization_delta_map_bit = 0x8,
+    allow_encode_emphasis_map_bit = 0x10,
+    inline_session_parameters_bit = 0x20,
     _,
 };
 pub const VideoSessionParametersCreateFlagBitsKHR = enum(u32) {
-    quantization_map_compatible_bit_khr = 0x1,
+    quantization_map_compatible_bit = 0x1,
     _,
 };
 pub const VideoCodingControlFlagBitsKHR = enum(u32) {
-    reset_bit_khr = 0x1,
-    encode_rate_control_bit_khr = 0x2,
-    encode_quality_level_bit_khr = 0x4,
+    reset_bit = 0x1,
+    encode_rate_control_bit = 0x2,
+    encode_quality_level_bit = 0x4,
     _,
 };
 pub const QueryResultStatusKHR = enum(i32) {
-    error_khr = -1,
-    not_ready_khr = 0,
-    complete_khr = 1,
-    insufficient_bitstream_buffer_range_khr = -1000299000,
+    @"error" = -1,
+    not_ready = 0,
+    complete = 1,
+    insufficient_bitstream_buffer_range = -1000299000,
     _,
 };
 pub const VideoDecodeUsageFlagBitsKHR = enum(u32) {
-    default_khr = 0x0,
-    transcoding_bit_khr = 0x1,
-    offline_bit_khr = 0x2,
-    streaming_bit_khr = 0x4,
+    default = 0x0,
+    transcoding_bit = 0x1,
+    offline_bit = 0x2,
+    streaming_bit = 0x4,
     _,
 };
 pub const VideoDecodeCapabilityFlagBitsKHR = enum(u32) {
-    dpb_and_output_coincide_bit_khr = 0x1,
-    dpb_and_output_distinct_bit_khr = 0x2,
+    dpb_and_output_coincide_bit = 0x1,
+    dpb_and_output_distinct_bit = 0x2,
     _,
 };
 pub const VideoDecodeH264PictureLayoutFlagBitsKHR = enum(u32) {
-    progressive_khr = 0x0,
-    interlaced_interleaved_lines_bit_khr = 0x1,
-    interlaced_separate_planes_bit_khr = 0x2,
+    progressive = 0x0,
+    interlaced_interleaved_lines_bit = 0x1,
+    interlaced_separate_planes_bit = 0x2,
     _,
 };
 pub const VideoEncodeFlagBitsKHR = enum(u32) {
-    intra_refresh_bit_khr = 0x4,
-    with_quantization_delta_map_bit_khr = 0x1,
-    with_emphasis_map_bit_khr = 0x2,
+    intra_refresh_bit = 0x4,
+    with_quantization_delta_map_bit = 0x1,
+    with_emphasis_map_bit = 0x2,
     _,
 };
 pub const VideoEncodeUsageFlagBitsKHR = enum(u32) {
-    default_khr = 0x0,
-    transcoding_bit_khr = 0x1,
-    streaming_bit_khr = 0x2,
-    recording_bit_khr = 0x4,
-    conferencing_bit_khr = 0x8,
+    default = 0x0,
+    transcoding_bit = 0x1,
+    streaming_bit = 0x2,
+    recording_bit = 0x4,
+    conferencing_bit = 0x8,
     _,
 };
 pub const VideoEncodeContentFlagBitsKHR = enum(u32) {
-    default_khr = 0x0,
-    camera_bit_khr = 0x1,
-    desktop_bit_khr = 0x2,
-    rendered_bit_khr = 0x4,
+    default = 0x0,
+    camera_bit = 0x1,
+    desktop_bit = 0x2,
+    rendered_bit = 0x4,
     _,
 };
-pub const VideoEncodeTuningModeKHR = enum(i32) {
-    default_khr = 0,
-    high_quality_khr = 1,
-    low_latency_khr = 2,
-    ultra_low_latency_khr = 3,
-    lossless_khr = 4,
+pub const VideoEncodeTuningModeKHR = enum(u32) {
+    default = 0,
+    high_quality = 1,
+    low_latency = 2,
+    ultra_low_latency = 3,
+    lossless = 4,
     _,
 };
 pub const VideoEncodeCapabilityFlagBitsKHR = enum(u32) {
-    preceding_externally_encoded_bytes_bit_khr = 0x1,
-    insufficient_bitstream_buffer_range_detection_bit_khr = 0x2,
-    quantization_delta_map_bit_khr = 0x4,
-    emphasis_map_bit_khr = 0x8,
+    preceding_externally_encoded_bytes_bit = 0x1,
+    insufficient_bitstream_buffer_range_detection_bit = 0x2,
+    quantization_delta_map_bit = 0x4,
+    emphasis_map_bit = 0x8,
     _,
 };
 pub const VideoEncodeFeedbackFlagBitsKHR = enum(u32) {
-    bitstream_buffer_offset_bit_khr = 0x1,
-    bitstream_bytes_written_bit_khr = 0x2,
-    bitstream_has_overrides_bit_khr = 0x4,
-    average_quantization_bit_khr = 0x8,
-    min_quantization_bit_khr = 0x10,
-    max_quantization_bit_khr = 0x20,
-    intra_pixels_bit_khr = 0x40,
-    inter_pixels_bit_khr = 0x80,
-    skipped_pixels_bit_khr = 0x100,
-    picture_partition_count_bit_khr = 0x200,
+    bitstream_buffer_offset_bit = 0x1,
+    bitstream_bytes_written_bit = 0x2,
+    bitstream_has_overrides_bit = 0x4,
+    average_quantization_bit = 0x8,
+    min_quantization_bit = 0x10,
+    max_quantization_bit = 0x20,
+    intra_pixels_bit = 0x40,
+    inter_pixels_bit = 0x80,
+    skipped_pixels_bit = 0x100,
+    picture_partition_count_bit = 0x200,
     _,
 };
 pub const VideoEncodePerPartitionFeedbackFlagBitsKHR = enum(u32) {
-    status_bit_khr = 0x1,
-    bitstream_buffer_offset_bit_khr = 0x2,
-    bitstream_bytes_written_bit_khr = 0x4,
+    status_bit = 0x1,
+    bitstream_buffer_offset_bit = 0x2,
+    bitstream_bytes_written_bit = 0x4,
     _,
 };
 pub const VideoEncodeRateControlModeFlagBitsKHR = enum(u32) {
-    default_khr = 0x0,
-    disabled_bit_khr = 0x1,
-    cbr_bit_khr = 0x2,
-    vbr_bit_khr = 0x4,
+    default = 0x0,
+    disabled_bit = 0x1,
+    cbr_bit = 0x2,
+    vbr_bit = 0x4,
     _,
 };
 pub const VideoEncodeIntraRefreshModeFlagBitsKHR = enum(u32) {
-    none_khr = 0x0,
-    per_picture_partition_bit_khr = 0x1,
-    block_based_bit_khr = 0x2,
-    block_row_based_bit_khr = 0x4,
-    block_column_based_bit_khr = 0x8,
+    none = 0x0,
+    per_picture_partition_bit = 0x1,
+    block_based_bit = 0x2,
+    block_row_based_bit = 0x4,
+    block_column_based_bit = 0x8,
     _,
 };
 pub const VideoEncodeH264CapabilityFlagBitsKHR = enum(u32) {
-    hrd_compliance_bit_khr = 0x1,
-    prediction_weight_table_generated_bit_khr = 0x2,
-    row_unaligned_slice_bit_khr = 0x4,
-    different_slice_type_bit_khr = 0x8,
-    b_frame_in_l0_list_bit_khr = 0x10,
-    b_frame_in_l1_list_bit_khr = 0x20,
-    per_picture_type_min_max_qp_bit_khr = 0x40,
-    per_slice_constant_qp_bit_khr = 0x80,
-    generate_prefix_nalu_bit_khr = 0x100,
-    b_picture_intra_refresh_bit_khr = 0x400,
-    mb_qp_diff_wraparound_bit_khr = 0x200,
+    hrd_compliance_bit = 0x1,
+    prediction_weight_table_generated_bit = 0x2,
+    row_unaligned_slice_bit = 0x4,
+    different_slice_type_bit = 0x8,
+    b_frame_in_l0_list_bit = 0x10,
+    b_frame_in_l1_list_bit = 0x20,
+    per_picture_type_min_max_qp_bit = 0x40,
+    per_slice_constant_qp_bit = 0x80,
+    generate_prefix_nalu_bit = 0x100,
+    b_picture_intra_refresh_bit = 0x400,
+    mb_qp_diff_wraparound_bit = 0x200,
     _,
 };
 pub const VideoEncodeH264StdFlagBitsKHR = enum(u32) {
-    separate_color_plane_flag_set_bit_khr = 0x1,
-    qpprime_y_zero_transform_bypass_flag_set_bit_khr = 0x2,
-    scaling_matrix_present_flag_set_bit_khr = 0x4,
-    chroma_qp_index_offset_bit_khr = 0x8,
-    second_chroma_qp_index_offset_bit_khr = 0x10,
-    pic_init_qp_minus26_bit_khr = 0x20,
-    weighted_pred_flag_set_bit_khr = 0x40,
-    weighted_bipred_idc_explicit_bit_khr = 0x80,
-    weighted_bipred_idc_implicit_bit_khr = 0x100,
-    transform_8x8_mode_flag_set_bit_khr = 0x200,
-    direct_spatial_mv_pred_flag_unset_bit_khr = 0x400,
-    entropy_coding_mode_flag_unset_bit_khr = 0x800,
-    entropy_coding_mode_flag_set_bit_khr = 0x1000,
-    direct_8x8_inference_flag_unset_bit_khr = 0x2000,
-    constrained_intra_pred_flag_set_bit_khr = 0x4000,
-    deblocking_filter_disabled_bit_khr = 0x8000,
-    deblocking_filter_enabled_bit_khr = 0x10000,
-    deblocking_filter_partial_bit_khr = 0x20000,
-    slice_qp_delta_bit_khr = 0x80000,
-    different_slice_qp_delta_bit_khr = 0x100000,
+    separate_color_plane_flag_set_bit = 0x1,
+    qpprime_y_zero_transform_bypass_flag_set_bit = 0x2,
+    scaling_matrix_present_flag_set_bit = 0x4,
+    chroma_qp_index_offset_bit = 0x8,
+    second_chroma_qp_index_offset_bit = 0x10,
+    pic_init_qp_minus26_bit = 0x20,
+    weighted_pred_flag_set_bit = 0x40,
+    weighted_bipred_idc_explicit_bit = 0x80,
+    weighted_bipred_idc_implicit_bit = 0x100,
+    transform_8x8_mode_flag_set_bit = 0x200,
+    direct_spatial_mv_pred_flag_unset_bit = 0x400,
+    entropy_coding_mode_flag_unset_bit = 0x800,
+    entropy_coding_mode_flag_set_bit = 0x1000,
+    direct_8x8_inference_flag_unset_bit = 0x2000,
+    constrained_intra_pred_flag_set_bit = 0x4000,
+    deblocking_filter_disabled_bit = 0x8000,
+    deblocking_filter_enabled_bit = 0x10000,
+    deblocking_filter_partial_bit = 0x20000,
+    slice_qp_delta_bit = 0x80000,
+    different_slice_qp_delta_bit = 0x100000,
     _,
 };
 pub const VideoEncodeH264RateControlFlagBitsKHR = enum(u32) {
-    attempt_hrd_compliance_bit_khr = 0x1,
-    regular_gop_bit_khr = 0x2,
-    reference_pattern_flat_bit_khr = 0x4,
-    reference_pattern_dyadic_bit_khr = 0x8,
-    temporal_layer_pattern_dyadic_bit_khr = 0x10,
+    attempt_hrd_compliance_bit = 0x1,
+    regular_gop_bit = 0x2,
+    reference_pattern_flat_bit = 0x4,
+    reference_pattern_dyadic_bit = 0x8,
+    temporal_layer_pattern_dyadic_bit = 0x10,
     _,
 };
 pub const VideoEncodeH265CapabilityFlagBitsKHR = enum(u32) {
-    hrd_compliance_bit_khr = 0x1,
-    prediction_weight_table_generated_bit_khr = 0x2,
-    row_unaligned_slice_segment_bit_khr = 0x4,
-    different_slice_segment_type_bit_khr = 0x8,
-    b_frame_in_l0_list_bit_khr = 0x10,
-    b_frame_in_l1_list_bit_khr = 0x20,
-    per_picture_type_min_max_qp_bit_khr = 0x40,
-    per_slice_segment_constant_qp_bit_khr = 0x80,
-    multiple_tiles_per_slice_segment_bit_khr = 0x100,
-    multiple_slice_segments_per_tile_bit_khr = 0x200,
-    b_picture_intra_refresh_bit_khr = 0x800,
-    cu_qp_diff_wraparound_bit_khr = 0x400,
+    hrd_compliance_bit = 0x1,
+    prediction_weight_table_generated_bit = 0x2,
+    row_unaligned_slice_segment_bit = 0x4,
+    different_slice_segment_type_bit = 0x8,
+    b_frame_in_l0_list_bit = 0x10,
+    b_frame_in_l1_list_bit = 0x20,
+    per_picture_type_min_max_qp_bit = 0x40,
+    per_slice_segment_constant_qp_bit = 0x80,
+    multiple_tiles_per_slice_segment_bit = 0x100,
+    multiple_slice_segments_per_tile_bit = 0x200,
+    b_picture_intra_refresh_bit = 0x800,
+    cu_qp_diff_wraparound_bit = 0x400,
     _,
 };
 pub const VideoEncodeH265StdFlagBitsKHR = enum(u32) {
-    separate_color_plane_flag_set_bit_khr = 0x1,
-    sample_adaptive_offset_enabled_flag_set_bit_khr = 0x2,
-    scaling_list_data_present_flag_set_bit_khr = 0x4,
-    pcm_enabled_flag_set_bit_khr = 0x8,
-    sps_temporal_mvp_enabled_flag_set_bit_khr = 0x10,
-    init_qp_minus26_bit_khr = 0x20,
-    weighted_pred_flag_set_bit_khr = 0x40,
-    weighted_bipred_flag_set_bit_khr = 0x80,
-    log2_parallel_merge_level_minus2_bit_khr = 0x100,
-    sign_data_hiding_enabled_flag_set_bit_khr = 0x200,
-    transform_skip_enabled_flag_set_bit_khr = 0x400,
-    transform_skip_enabled_flag_unset_bit_khr = 0x800,
-    pps_slice_chroma_qp_offsets_present_flag_set_bit_khr = 0x1000,
-    transquant_bypass_enabled_flag_set_bit_khr = 0x2000,
-    constrained_intra_pred_flag_set_bit_khr = 0x4000,
-    entropy_coding_sync_enabled_flag_set_bit_khr = 0x8000,
-    deblocking_filter_override_enabled_flag_set_bit_khr = 0x10000,
-    dependent_slice_segments_enabled_flag_set_bit_khr = 0x20000,
-    dependent_slice_segment_flag_set_bit_khr = 0x40000,
-    slice_qp_delta_bit_khr = 0x80000,
-    different_slice_qp_delta_bit_khr = 0x100000,
+    separate_color_plane_flag_set_bit = 0x1,
+    sample_adaptive_offset_enabled_flag_set_bit = 0x2,
+    scaling_list_data_present_flag_set_bit = 0x4,
+    pcm_enabled_flag_set_bit = 0x8,
+    sps_temporal_mvp_enabled_flag_set_bit = 0x10,
+    init_qp_minus26_bit = 0x20,
+    weighted_pred_flag_set_bit = 0x40,
+    weighted_bipred_flag_set_bit = 0x80,
+    log2_parallel_merge_level_minus2_bit = 0x100,
+    sign_data_hiding_enabled_flag_set_bit = 0x200,
+    transform_skip_enabled_flag_set_bit = 0x400,
+    transform_skip_enabled_flag_unset_bit = 0x800,
+    pps_slice_chroma_qp_offsets_present_flag_set_bit = 0x1000,
+    transquant_bypass_enabled_flag_set_bit = 0x2000,
+    constrained_intra_pred_flag_set_bit = 0x4000,
+    entropy_coding_sync_enabled_flag_set_bit = 0x8000,
+    deblocking_filter_override_enabled_flag_set_bit = 0x10000,
+    dependent_slice_segments_enabled_flag_set_bit = 0x20000,
+    dependent_slice_segment_flag_set_bit = 0x40000,
+    slice_qp_delta_bit = 0x80000,
+    different_slice_qp_delta_bit = 0x100000,
     _,
 };
 pub const VideoEncodeH265RateControlFlagBitsKHR = enum(u32) {
-    attempt_hrd_compliance_bit_khr = 0x1,
-    regular_gop_bit_khr = 0x2,
-    reference_pattern_flat_bit_khr = 0x4,
-    reference_pattern_dyadic_bit_khr = 0x8,
-    temporal_sub_layer_pattern_dyadic_bit_khr = 0x10,
+    attempt_hrd_compliance_bit = 0x1,
+    regular_gop_bit = 0x2,
+    reference_pattern_flat_bit = 0x4,
+    reference_pattern_dyadic_bit = 0x8,
+    temporal_sub_layer_pattern_dyadic_bit = 0x10,
     _,
 };
 pub const VideoEncodeH265CtbSizeFlagBitsKHR = enum(u32) {
-    @"16_bit_khr" = 0x1,
-    @"32_bit_khr" = 0x2,
-    @"64_bit_khr" = 0x4,
+    @"16_bit" = 0x1,
+    @"32_bit" = 0x2,
+    @"64_bit" = 0x4,
     _,
 };
 pub const VideoEncodeH265TransformBlockSizeFlagBitsKHR = enum(u32) {
-    @"4_bit_khr" = 0x1,
-    @"8_bit_khr" = 0x2,
-    @"16_bit_khr" = 0x4,
-    @"32_bit_khr" = 0x8,
+    @"4_bit" = 0x1,
+    @"8_bit" = 0x2,
+    @"16_bit" = 0x4,
+    @"32_bit" = 0x8,
     _,
 };
 pub const VideoEncodeAV1CapabilityFlagBitsKHR = enum(u32) {
-    per_rate_control_group_min_max_q_index_bit_khr = 0x1,
-    generate_obu_extension_header_bit_khr = 0x2,
-    primary_reference_cdf_only_bit_khr = 0x4,
-    frame_size_override_bit_khr = 0x8,
-    motion_vector_scaling_bit_khr = 0x10,
-    compound_prediction_intra_refresh_bit_khr = 0x20,
+    per_rate_control_group_min_max_q_index_bit = 0x1,
+    generate_obu_extension_header_bit = 0x2,
+    primary_reference_cdf_only_bit = 0x4,
+    frame_size_override_bit = 0x8,
+    motion_vector_scaling_bit = 0x10,
+    compound_prediction_intra_refresh_bit = 0x20,
     _,
 };
 pub const VideoEncodeAV1StdFlagBitsKHR = enum(u32) {
-    uniform_tile_spacing_flag_set_bit_khr = 0x1,
-    skip_mode_present_unset_bit_khr = 0x2,
-    primary_ref_frame_bit_khr = 0x4,
-    delta_q_bit_khr = 0x8,
+    uniform_tile_spacing_flag_set_bit = 0x1,
+    skip_mode_present_unset_bit = 0x2,
+    primary_ref_frame_bit = 0x4,
+    delta_q_bit = 0x8,
     _,
 };
 pub const VideoEncodeAV1RateControlFlagBitsKHR = enum(u32) {
-    regular_gop_bit_khr = 0x1,
-    temporal_layer_pattern_dyadic_bit_khr = 0x2,
-    reference_pattern_flat_bit_khr = 0x4,
-    reference_pattern_dyadic_bit_khr = 0x8,
+    regular_gop_bit = 0x1,
+    temporal_layer_pattern_dyadic_bit = 0x2,
+    reference_pattern_flat_bit = 0x4,
+    reference_pattern_dyadic_bit = 0x8,
     _,
 };
 pub const VideoEncodeAV1SuperblockSizeFlagBitsKHR = enum(u32) {
-    @"64_bit_khr" = 0x1,
-    @"128_bit_khr" = 0x2,
+    @"64_bit" = 0x1,
+    @"128_bit" = 0x2,
     _,
 };
-pub const VideoEncodeAV1PredictionModeKHR = enum(i32) {
-    intra_only_khr = 0,
-    single_reference_khr = 1,
-    unidirectional_compound_khr = 2,
-    bidirectional_compound_khr = 3,
+pub const VideoEncodeAV1PredictionModeKHR = enum(u32) {
+    intra_only = 0,
+    single_reference = 1,
+    unidirectional_compound = 2,
+    bidirectional_compound = 3,
     _,
 };
-pub const VideoEncodeAV1RateControlGroupKHR = enum(i32) {
-    intra_khr = 0,
-    predictive_khr = 1,
-    bipredictive_khr = 2,
+pub const VideoEncodeAV1RateControlGroupKHR = enum(u32) {
+    intra = 0,
+    predictive = 1,
+    bipredictive = 2,
     _,
 };
 pub const AccessFlagBits3KHR = enum(u64) {
-    none_khr = 0x0,
+    none = 0x0,
     _,
 };
 pub const DeviceFaultFlagBitsKHR = enum(u32) {
-    flag_device_lost_khr = 0x1,
-    flag_memory_address_khr = 0x2,
-    flag_instruction_address_khr = 0x4,
-    flag_vendor_khr = 0x8,
-    flag_watchdog_timeout_khr = 0x10,
-    flag_overflow_khr = 0x20,
+    flag_device_lost = 0x1,
+    flag_memory_address = 0x2,
+    flag_instruction_address = 0x4,
+    flag_vendor = 0x8,
+    flag_watchdog_timeout = 0x10,
+    flag_overflow = 0x20,
     _,
 };
-pub const DefaultVertexAttributeValueKHR = enum(i32) {
-    zero_zero_zero_zero_khr = 0,
-    zero_zero_zero_one_khr = 1,
+pub const DefaultVertexAttributeValueKHR = enum(u32) {
+    zero_zero_zero_zero = 0,
+    zero_zero_zero_one = 1,
     _,
 };
 pub const PfnInternalAllocationNotification = *const fn (?*anyopaque, usize, InternalAllocationType, SystemAllocationScope) callconv(.c) void;
@@ -8085,10 +8085,10 @@ pub const HostImageCopyDevicePerformanceQueryEXT = HostImageCopyDevicePerformanc
 pub const PhysicalDevicePipelineProtectedAccessFeaturesEXT = PhysicalDevicePipelineProtectedAccessFeatures;
 pub const PhysicalDeviceShaderIntegerDotProductFeaturesKHR = PhysicalDeviceShaderIntegerDotProductFeatures;
 pub const PhysicalDeviceShaderIntegerDotProductPropertiesKHR = PhysicalDeviceShaderIntegerDotProductProperties;
-pub const AccelerationStructureMotionInstanceTypeNV = enum(i32) {
-    static_nv = 0,
-    matrix_motion_nv = 1,
-    srt_motion_nv = 2,
+pub const AccelerationStructureMotionInstanceTypeNV = enum(u32) {
+    static = 0,
+    matrix_motion = 1,
+    srt_motion = 2,
     _,
 };
 pub const RemoteAddressNV = ?*anyopaque;
@@ -19791,15 +19791,15 @@ pub const PfnEnumerateInstanceExtensionProperties = *const fn (?[*:0]const u8, *
 pub const PfnEnumerateDeviceLayerProperties = *const fn (PhysicalDevice, *u32, ?[*]LayerProperties) callconv(.c) Result;
 pub const PfnEnumerateDeviceExtensionProperties = *const fn (PhysicalDevice, ?[*:0]const u8, *u32, ?[*]ExtensionProperties) callconv(.c) Result;
 pub const PfnGetDeviceQueue = *const fn (Device, u32, u32, *Queue) callconv(.c) void;
-pub const PfnQueueSubmit = *const fn (Queue, u32, [*]const SubmitInfo, Fence) callconv(.c) Result;
+pub const PfnQueueSubmit = *const fn (Queue, u32, ?[*]const SubmitInfo, Fence) callconv(.c) Result;
 pub const PfnQueueWaitIdle = *const fn (Queue) callconv(.c) Result;
 pub const PfnDeviceWaitIdle = *const fn (Device) callconv(.c) Result;
 pub const PfnAllocateMemory = *const fn (Device, *const MemoryAllocateInfo, ?*const AllocationCallbacks, *DeviceMemory) callconv(.c) Result;
 pub const PfnFreeMemory = *const fn (Device, DeviceMemory, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnMapMemory = *const fn (Device, DeviceMemory, DeviceSize, DeviceSize, MemoryMapFlags, *?*anyopaque) callconv(.c) Result;
 pub const PfnUnmapMemory = *const fn (Device, DeviceMemory) callconv(.c) void;
-pub const PfnFlushMappedMemoryRanges = *const fn (Device, u32, [*]const MappedMemoryRange) callconv(.c) Result;
-pub const PfnInvalidateMappedMemoryRanges = *const fn (Device, u32, [*]const MappedMemoryRange) callconv(.c) Result;
+pub const PfnFlushMappedMemoryRanges = *const fn (Device, u32, ?[*]const MappedMemoryRange) callconv(.c) Result;
+pub const PfnInvalidateMappedMemoryRanges = *const fn (Device, u32, ?[*]const MappedMemoryRange) callconv(.c) Result;
 pub const PfnGetDeviceMemoryCommitment = *const fn (Device, DeviceMemory, *DeviceSize) callconv(.c) void;
 pub const PfnGetBufferMemoryRequirements = *const fn (Device, Buffer, *MemoryRequirements) callconv(.c) void;
 pub const PfnBindBufferMemory = *const fn (Device, Buffer, DeviceMemory, DeviceSize) callconv(.c) Result;
@@ -19807,12 +19807,12 @@ pub const PfnGetImageMemoryRequirements = *const fn (Device, Image, *MemoryRequi
 pub const PfnBindImageMemory = *const fn (Device, Image, DeviceMemory, DeviceSize) callconv(.c) Result;
 pub const PfnGetImageSparseMemoryRequirements = *const fn (Device, Image, *u32, ?[*]SparseImageMemoryRequirements) callconv(.c) void;
 pub const PfnGetPhysicalDeviceSparseImageFormatProperties = *const fn (PhysicalDevice, Format, ImageType, SampleCountFlagBits, ImageUsageFlags, ImageTiling, *u32, ?[*]SparseImageFormatProperties) callconv(.c) void;
-pub const PfnQueueBindSparse = *const fn (Queue, u32, [*]const BindSparseInfo, Fence) callconv(.c) Result;
+pub const PfnQueueBindSparse = *const fn (Queue, u32, ?[*]const BindSparseInfo, Fence) callconv(.c) Result;
 pub const PfnCreateFence = *const fn (Device, *const FenceCreateInfo, ?*const AllocationCallbacks, *Fence) callconv(.c) Result;
 pub const PfnDestroyFence = *const fn (Device, Fence, ?*const AllocationCallbacks) callconv(.c) void;
-pub const PfnResetFences = *const fn (Device, u32, [*]const Fence) callconv(.c) Result;
+pub const PfnResetFences = *const fn (Device, u32, ?[*]const Fence) callconv(.c) Result;
 pub const PfnGetFenceStatus = *const fn (Device, Fence) callconv(.c) Result;
-pub const PfnWaitForFences = *const fn (Device, u32, [*]const Fence, Bool32, u64) callconv(.c) Result;
+pub const PfnWaitForFences = *const fn (Device, u32, ?[*]const Fence, Bool32, u64) callconv(.c) Result;
 pub const PfnCreateSemaphore = *const fn (Device, *const SemaphoreCreateInfo, ?*const AllocationCallbacks, *Semaphore) callconv(.c) Result;
 pub const PfnDestroySemaphore = *const fn (Device, Semaphore, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCreateEvent = *const fn (Device, *const EventCreateInfo, ?*const AllocationCallbacks, *Event) callconv(.c) Result;
@@ -19839,14 +19839,14 @@ pub const PfnDestroyShaderModule = *const fn (Device, ShaderModule, ?*const Allo
 pub const PfnCreatePipelineCache = *const fn (Device, *const PipelineCacheCreateInfo, ?*const AllocationCallbacks, *PipelineCache) callconv(.c) Result;
 pub const PfnDestroyPipelineCache = *const fn (Device, PipelineCache, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetPipelineCacheData = *const fn (Device, PipelineCache, *usize, ?*anyopaque) callconv(.c) Result;
-pub const PfnMergePipelineCaches = *const fn (Device, PipelineCache, u32, [*]const PipelineCache) callconv(.c) Result;
+pub const PfnMergePipelineCaches = *const fn (Device, PipelineCache, u32, ?[*]const PipelineCache) callconv(.c) Result;
 pub const PfnCreatePipelineBinariesKHR = *const fn (Device, *const PipelineBinaryCreateInfoKHR, ?*const AllocationCallbacks, *PipelineBinaryHandlesInfoKHR) callconv(.c) Result;
 pub const PfnDestroyPipelineBinaryKHR = *const fn (Device, PipelineBinaryKHR, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetPipelineKeyKHR = *const fn (Device, ?*const PipelineCreateInfoKHR, *PipelineBinaryKeyKHR) callconv(.c) Result;
 pub const PfnGetPipelineBinaryDataKHR = *const fn (Device, *const PipelineBinaryDataInfoKHR, *PipelineBinaryKeyKHR, *usize, ?*anyopaque) callconv(.c) Result;
 pub const PfnReleaseCapturedPipelineDataKHR = *const fn (Device, *const ReleaseCapturedPipelineDataInfoKHR, ?*const AllocationCallbacks) callconv(.c) Result;
-pub const PfnCreateGraphicsPipelines = *const fn (Device, PipelineCache, u32, [*]const GraphicsPipelineCreateInfo, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
-pub const PfnCreateComputePipelines = *const fn (Device, PipelineCache, u32, [*]const ComputePipelineCreateInfo, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
+pub const PfnCreateGraphicsPipelines = *const fn (Device, PipelineCache, u32, ?[*]const GraphicsPipelineCreateInfo, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
+pub const PfnCreateComputePipelines = *const fn (Device, PipelineCache, u32, ?[*]const ComputePipelineCreateInfo, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
 pub const PfnGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = *const fn (Device, RenderPass, *Extent2D) callconv(.c) Result;
 pub const PfnDestroyPipeline = *const fn (Device, Pipeline, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCreatePipelineLayout = *const fn (Device, *const PipelineLayoutCreateInfo, ?*const AllocationCallbacks, *PipelineLayout) callconv(.c) Result;
@@ -19858,9 +19858,9 @@ pub const PfnDestroyDescriptorSetLayout = *const fn (Device, DescriptorSetLayout
 pub const PfnCreateDescriptorPool = *const fn (Device, *const DescriptorPoolCreateInfo, ?*const AllocationCallbacks, *DescriptorPool) callconv(.c) Result;
 pub const PfnDestroyDescriptorPool = *const fn (Device, DescriptorPool, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnResetDescriptorPool = *const fn (Device, DescriptorPool, DescriptorPoolResetFlags) callconv(.c) Result;
-pub const PfnAllocateDescriptorSets = *const fn (Device, *const DescriptorSetAllocateInfo, [*]DescriptorSet) callconv(.c) Result;
-pub const PfnFreeDescriptorSets = *const fn (Device, DescriptorPool, u32, [*]const DescriptorSet) callconv(.c) Result;
-pub const PfnUpdateDescriptorSets = *const fn (Device, u32, [*]const WriteDescriptorSet, u32, [*]const CopyDescriptorSet) callconv(.c) void;
+pub const PfnAllocateDescriptorSets = *const fn (Device, *const DescriptorSetAllocateInfo, ?[*]DescriptorSet) callconv(.c) Result;
+pub const PfnFreeDescriptorSets = *const fn (Device, DescriptorPool, u32, ?[*]const DescriptorSet) callconv(.c) Result;
+pub const PfnUpdateDescriptorSets = *const fn (Device, u32, ?[*]const WriteDescriptorSet, u32, ?[*]const CopyDescriptorSet) callconv(.c) void;
 pub const PfnCreateFramebuffer = *const fn (Device, *const FramebufferCreateInfo, ?*const AllocationCallbacks, *Framebuffer) callconv(.c) Result;
 pub const PfnDestroyFramebuffer = *const fn (Device, Framebuffer, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCreateRenderPass = *const fn (Device, *const RenderPassCreateInfo, ?*const AllocationCallbacks, *RenderPass) callconv(.c) Result;
@@ -19871,16 +19871,16 @@ pub const PfnGetRenderingAreaGranularityKHR = PfnGetRenderingAreaGranularity;
 pub const PfnCreateCommandPool = *const fn (Device, *const CommandPoolCreateInfo, ?*const AllocationCallbacks, *CommandPool) callconv(.c) Result;
 pub const PfnDestroyCommandPool = *const fn (Device, CommandPool, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnResetCommandPool = *const fn (Device, CommandPool, CommandPoolResetFlags) callconv(.c) Result;
-pub const PfnAllocateCommandBuffers = *const fn (Device, *const CommandBufferAllocateInfo, [*]CommandBuffer) callconv(.c) Result;
-pub const PfnFreeCommandBuffers = *const fn (Device, CommandPool, u32, [*]const CommandBuffer) callconv(.c) void;
+pub const PfnAllocateCommandBuffers = *const fn (Device, *const CommandBufferAllocateInfo, ?[*]CommandBuffer) callconv(.c) Result;
+pub const PfnFreeCommandBuffers = *const fn (Device, CommandPool, u32, ?[*]const CommandBuffer) callconv(.c) void;
 pub const PfnBeginCommandBuffer = *const fn (CommandBuffer, *const CommandBufferBeginInfo) callconv(.c) Result;
 pub const PfnEndCommandBuffer = *const fn (CommandBuffer) callconv(.c) Result;
 pub const PfnResetCommandBuffer = *const fn (CommandBuffer, CommandBufferResetFlags) callconv(.c) Result;
 pub const PfnCmdBindPipeline = *const fn (CommandBuffer, PipelineBindPoint, Pipeline) callconv(.c) void;
 pub const PfnCmdSetPrimitiveRestartIndexEXT = *const fn (CommandBuffer, u32) callconv(.c) void;
 pub const PfnCmdSetAttachmentFeedbackLoopEnableEXT = *const fn (CommandBuffer, ImageAspectFlags) callconv(.c) void;
-pub const PfnCmdSetViewport = *const fn (CommandBuffer, u32, u32, [*]const Viewport) callconv(.c) void;
-pub const PfnCmdSetScissor = *const fn (CommandBuffer, u32, u32, [*]const Rect2D) callconv(.c) void;
+pub const PfnCmdSetViewport = *const fn (CommandBuffer, u32, u32, ?[*]const Viewport) callconv(.c) void;
+pub const PfnCmdSetScissor = *const fn (CommandBuffer, u32, u32, ?[*]const Rect2D) callconv(.c) void;
 pub const PfnCmdSetLineWidth = *const fn (CommandBuffer, f32) callconv(.c) void;
 pub const PfnCmdSetDepthBias = *const fn (CommandBuffer, f32, f32, f32) callconv(.c) void;
 pub const PfnCmdSetBlendConstants = *const fn (CommandBuffer, *const [4]f32) callconv(.c) void;
@@ -19888,13 +19888,13 @@ pub const PfnCmdSetDepthBounds = *const fn (CommandBuffer, f32, f32) callconv(.c
 pub const PfnCmdSetStencilCompareMask = *const fn (CommandBuffer, StencilFaceFlags, u32) callconv(.c) void;
 pub const PfnCmdSetStencilWriteMask = *const fn (CommandBuffer, StencilFaceFlags, u32) callconv(.c) void;
 pub const PfnCmdSetStencilReference = *const fn (CommandBuffer, StencilFaceFlags, u32) callconv(.c) void;
-pub const PfnCmdBindDescriptorSets = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, [*]const DescriptorSet, u32, [*]const u32) callconv(.c) void;
+pub const PfnCmdBindDescriptorSets = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, ?[*]const DescriptorSet, u32, ?[*]const u32) callconv(.c) void;
 pub const PfnCmdBindIndexBuffer = *const fn (CommandBuffer, Buffer, DeviceSize, IndexType) callconv(.c) void;
-pub const PfnCmdBindVertexBuffers = *const fn (CommandBuffer, u32, u32, [*]const Buffer, [*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdBindVertexBuffers = *const fn (CommandBuffer, u32, u32, ?[*]const Buffer, ?[*]const DeviceSize) callconv(.c) void;
 pub const PfnCmdDraw = *const fn (CommandBuffer, u32, u32, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawIndexed = *const fn (CommandBuffer, u32, u32, u32, i32, u32) callconv(.c) void;
-pub const PfnCmdDrawMultiEXT = *const fn (CommandBuffer, u32, [*]const MultiDrawInfoEXT, u32, u32, u32) callconv(.c) void;
-pub const PfnCmdDrawMultiIndexedEXT = *const fn (CommandBuffer, u32, [*]const MultiDrawIndexedInfoEXT, u32, u32, u32, ?*const i32) callconv(.c) void;
+pub const PfnCmdDrawMultiEXT = *const fn (CommandBuffer, u32, ?[*]const MultiDrawInfoEXT, u32, u32, u32) callconv(.c) void;
+pub const PfnCmdDrawMultiIndexedEXT = *const fn (CommandBuffer, u32, ?[*]const MultiDrawIndexedInfoEXT, u32, u32, u32, ?*const i32) callconv(.c) void;
 pub const PfnCmdDrawIndirect = *const fn (CommandBuffer, Buffer, DeviceSize, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawIndexedIndirect = *const fn (CommandBuffer, Buffer, DeviceSize, u32, u32) callconv(.c) void;
 pub const PfnCmdDispatch = *const fn (CommandBuffer, u32, u32, u32) callconv(.c) void;
@@ -19903,25 +19903,25 @@ pub const PfnCmdSubpassShadingHUAWEI = *const fn (CommandBuffer) callconv(.c) vo
 pub const PfnCmdDrawClusterHUAWEI = *const fn (CommandBuffer, u32, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawClusterIndirectHUAWEI = *const fn (CommandBuffer, Buffer, DeviceSize) callconv(.c) void;
 pub const PfnCmdUpdatePipelineIndirectBufferNV = *const fn (CommandBuffer, PipelineBindPoint, Pipeline) callconv(.c) void;
-pub const PfnCmdCopyBuffer = *const fn (CommandBuffer, Buffer, Buffer, u32, [*]const BufferCopy) callconv(.c) void;
-pub const PfnCmdCopyImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, [*]const ImageCopy) callconv(.c) void;
-pub const PfnCmdBlitImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, [*]const ImageBlit, Filter) callconv(.c) void;
-pub const PfnCmdCopyBufferToImage = *const fn (CommandBuffer, Buffer, Image, ImageLayout, u32, [*]const BufferImageCopy) callconv(.c) void;
-pub const PfnCmdCopyImageToBuffer = *const fn (CommandBuffer, Image, ImageLayout, Buffer, u32, [*]const BufferImageCopy) callconv(.c) void;
+pub const PfnCmdCopyBuffer = *const fn (CommandBuffer, Buffer, Buffer, u32, ?[*]const BufferCopy) callconv(.c) void;
+pub const PfnCmdCopyImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, ?[*]const ImageCopy) callconv(.c) void;
+pub const PfnCmdBlitImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, ?[*]const ImageBlit, Filter) callconv(.c) void;
+pub const PfnCmdCopyBufferToImage = *const fn (CommandBuffer, Buffer, Image, ImageLayout, u32, ?[*]const BufferImageCopy) callconv(.c) void;
+pub const PfnCmdCopyImageToBuffer = *const fn (CommandBuffer, Image, ImageLayout, Buffer, u32, ?[*]const BufferImageCopy) callconv(.c) void;
 pub const PfnCmdCopyMemoryIndirectNV = *const fn (CommandBuffer, DeviceAddress, u32, u32) callconv(.c) void;
 pub const PfnCmdCopyMemoryIndirectKHR = *const fn (CommandBuffer, *const CopyMemoryIndirectInfoKHR) callconv(.c) void;
-pub const PfnCmdCopyMemoryToImageIndirectNV = *const fn (CommandBuffer, DeviceAddress, u32, u32, Image, ImageLayout, [*]const ImageSubresourceLayers) callconv(.c) void;
+pub const PfnCmdCopyMemoryToImageIndirectNV = *const fn (CommandBuffer, DeviceAddress, u32, u32, Image, ImageLayout, ?[*]const ImageSubresourceLayers) callconv(.c) void;
 pub const PfnCmdCopyMemoryToImageIndirectKHR = *const fn (CommandBuffer, *const CopyMemoryToImageIndirectInfoKHR) callconv(.c) void;
 pub const PfnCmdUpdateBuffer = *const fn (CommandBuffer, Buffer, DeviceSize, DeviceSize, ?*const anyopaque) callconv(.c) void;
 pub const PfnCmdFillBuffer = *const fn (CommandBuffer, Buffer, DeviceSize, DeviceSize, u32) callconv(.c) void;
-pub const PfnCmdClearColorImage = *const fn (CommandBuffer, Image, ImageLayout, *const ClearColorValue, u32, [*]const ImageSubresourceRange) callconv(.c) void;
-pub const PfnCmdClearDepthStencilImage = *const fn (CommandBuffer, Image, ImageLayout, *const ClearDepthStencilValue, u32, [*]const ImageSubresourceRange) callconv(.c) void;
-pub const PfnCmdClearAttachments = *const fn (CommandBuffer, u32, [*]const ClearAttachment, u32, [*]const ClearRect) callconv(.c) void;
-pub const PfnCmdResolveImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, [*]const ImageResolve) callconv(.c) void;
+pub const PfnCmdClearColorImage = *const fn (CommandBuffer, Image, ImageLayout, *const ClearColorValue, u32, ?[*]const ImageSubresourceRange) callconv(.c) void;
+pub const PfnCmdClearDepthStencilImage = *const fn (CommandBuffer, Image, ImageLayout, *const ClearDepthStencilValue, u32, ?[*]const ImageSubresourceRange) callconv(.c) void;
+pub const PfnCmdClearAttachments = *const fn (CommandBuffer, u32, ?[*]const ClearAttachment, u32, ?[*]const ClearRect) callconv(.c) void;
+pub const PfnCmdResolveImage = *const fn (CommandBuffer, Image, ImageLayout, Image, ImageLayout, u32, ?[*]const ImageResolve) callconv(.c) void;
 pub const PfnCmdSetEvent = *const fn (CommandBuffer, Event, PipelineStageFlags) callconv(.c) void;
 pub const PfnCmdResetEvent = *const fn (CommandBuffer, Event, PipelineStageFlags) callconv(.c) void;
-pub const PfnCmdWaitEvents = *const fn (CommandBuffer, u32, [*]const Event, PipelineStageFlags, PipelineStageFlags, u32, [*]const MemoryBarrier, u32, [*]const BufferMemoryBarrier, u32, [*]const ImageMemoryBarrier) callconv(.c) void;
-pub const PfnCmdPipelineBarrier = *const fn (CommandBuffer, PipelineStageFlags, PipelineStageFlags, DependencyFlags, u32, [*]const MemoryBarrier, u32, [*]const BufferMemoryBarrier, u32, [*]const ImageMemoryBarrier) callconv(.c) void;
+pub const PfnCmdWaitEvents = *const fn (CommandBuffer, u32, ?[*]const Event, PipelineStageFlags, PipelineStageFlags, u32, ?[*]const MemoryBarrier, u32, ?[*]const BufferMemoryBarrier, u32, ?[*]const ImageMemoryBarrier) callconv(.c) void;
+pub const PfnCmdPipelineBarrier = *const fn (CommandBuffer, PipelineStageFlags, PipelineStageFlags, DependencyFlags, u32, ?[*]const MemoryBarrier, u32, ?[*]const BufferMemoryBarrier, u32, ?[*]const ImageMemoryBarrier) callconv(.c) void;
 pub const PfnCmdBeginQuery = *const fn (CommandBuffer, QueryPool, u32, QueryControlFlags) callconv(.c) void;
 pub const PfnCmdEndQuery = *const fn (CommandBuffer, QueryPool, u32) callconv(.c) void;
 pub const PfnCmdBeginConditionalRenderingEXT = *const fn (CommandBuffer, *const ConditionalRenderingBeginInfoEXT) callconv(.c) void;
@@ -19934,7 +19934,7 @@ pub const PfnCmdPushConstants = *const fn (CommandBuffer, PipelineLayout, Shader
 pub const PfnCmdBeginRenderPass = *const fn (CommandBuffer, *const RenderPassBeginInfo, SubpassContents) callconv(.c) void;
 pub const PfnCmdNextSubpass = *const fn (CommandBuffer, SubpassContents) callconv(.c) void;
 pub const PfnCmdEndRenderPass = *const fn (CommandBuffer) callconv(.c) void;
-pub const PfnCmdExecuteCommands = *const fn (CommandBuffer, u32, [*]const CommandBuffer) callconv(.c) void;
+pub const PfnCmdExecuteCommands = *const fn (CommandBuffer, u32, ?[*]const CommandBuffer) callconv(.c) void;
 pub const PfnCreateAndroidSurfaceKHR = *const fn (Instance, *const AndroidSurfaceCreateInfoKHR, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
 pub const PfnCreateSurfaceOHOS = *const fn (Instance, *const SurfaceCreateInfoOHOS, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceDisplayPropertiesKHR = *const fn (PhysicalDevice, *u32, ?[*]DisplayPropertiesKHR) callconv(.c) Result;
@@ -19944,7 +19944,7 @@ pub const PfnGetDisplayModePropertiesKHR = *const fn (PhysicalDevice, DisplayKHR
 pub const PfnCreateDisplayModeKHR = *const fn (PhysicalDevice, DisplayKHR, *const DisplayModeCreateInfoKHR, ?*const AllocationCallbacks, *DisplayModeKHR) callconv(.c) Result;
 pub const PfnGetDisplayPlaneCapabilitiesKHR = *const fn (PhysicalDevice, DisplayModeKHR, u32, *DisplayPlaneCapabilitiesKHR) callconv(.c) Result;
 pub const PfnCreateDisplayPlaneSurfaceKHR = *const fn (Instance, *const DisplaySurfaceCreateInfoKHR, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
-pub const PfnCreateSharedSwapchainsKHR = *const fn (Device, u32, [*]const SwapchainCreateInfoKHR, ?*const AllocationCallbacks, [*]SwapchainKHR) callconv(.c) Result;
+pub const PfnCreateSharedSwapchainsKHR = *const fn (Device, u32, ?[*]const SwapchainCreateInfoKHR, ?*const AllocationCallbacks, ?[*]SwapchainKHR) callconv(.c) Result;
 pub const PfnDestroySurfaceKHR = *const fn (Instance, SurfaceKHR, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetPhysicalDeviceSurfaceSupportKHR = *const fn (PhysicalDevice, u32, SurfaceKHR, *Bool32) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceSurfaceCapabilitiesKHR = *const fn (PhysicalDevice, SurfaceKHR, *SurfaceCapabilitiesKHR) callconv(.c) Result;
@@ -19995,8 +19995,8 @@ pub const PfnCreateIndirectCommandsLayoutEXT = *const fn (Device, *const Indirec
 pub const PfnDestroyIndirectCommandsLayoutEXT = *const fn (Device, IndirectCommandsLayoutEXT, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCreateIndirectExecutionSetEXT = *const fn (Device, *const IndirectExecutionSetCreateInfoEXT, ?*const AllocationCallbacks, *IndirectExecutionSetEXT) callconv(.c) Result;
 pub const PfnDestroyIndirectExecutionSetEXT = *const fn (Device, IndirectExecutionSetEXT, ?*const AllocationCallbacks) callconv(.c) void;
-pub const PfnUpdateIndirectExecutionSetPipelineEXT = *const fn (Device, IndirectExecutionSetEXT, u32, [*]const WriteIndirectExecutionSetPipelineEXT) callconv(.c) void;
-pub const PfnUpdateIndirectExecutionSetShaderEXT = *const fn (Device, IndirectExecutionSetEXT, u32, [*]const WriteIndirectExecutionSetShaderEXT) callconv(.c) void;
+pub const PfnUpdateIndirectExecutionSetPipelineEXT = *const fn (Device, IndirectExecutionSetEXT, u32, ?[*]const WriteIndirectExecutionSetPipelineEXT) callconv(.c) void;
+pub const PfnUpdateIndirectExecutionSetShaderEXT = *const fn (Device, IndirectExecutionSetEXT, u32, ?[*]const WriteIndirectExecutionSetShaderEXT) callconv(.c) void;
 pub const PfnGetPhysicalDeviceFeatures2 = *const fn (PhysicalDevice, *PhysicalDeviceFeatures2) callconv(.c) void;
 pub const PfnGetPhysicalDeviceFeatures2KHR = PfnGetPhysicalDeviceFeatures2;
 pub const PfnGetPhysicalDeviceProperties2 = *const fn (PhysicalDevice, *PhysicalDeviceProperties2) callconv(.c) void;
@@ -20011,7 +20011,7 @@ pub const PfnGetPhysicalDeviceMemoryProperties2 = *const fn (PhysicalDevice, *Ph
 pub const PfnGetPhysicalDeviceMemoryProperties2KHR = PfnGetPhysicalDeviceMemoryProperties2;
 pub const PfnGetPhysicalDeviceSparseImageFormatProperties2 = *const fn (PhysicalDevice, *const PhysicalDeviceSparseImageFormatInfo2, *u32, ?[*]SparseImageFormatProperties2) callconv(.c) void;
 pub const PfnGetPhysicalDeviceSparseImageFormatProperties2KHR = PfnGetPhysicalDeviceSparseImageFormatProperties2;
-pub const PfnCmdPushDescriptorSet = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, [*]const WriteDescriptorSet) callconv(.c) void;
+pub const PfnCmdPushDescriptorSet = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, ?[*]const WriteDescriptorSet) callconv(.c) void;
 pub const PfnCmdPushDescriptorSetKHR = PfnCmdPushDescriptorSet;
 pub const PfnTrimCommandPool = *const fn (Device, CommandPool, CommandPoolTrimFlags) callconv(.c) void;
 pub const PfnTrimCommandPoolKHR = PfnTrimCommandPool;
@@ -20052,9 +20052,9 @@ pub const PfnEnumeratePhysicalDeviceGroups = *const fn (Instance, *u32, ?[*]Phys
 pub const PfnEnumeratePhysicalDeviceGroupsKHR = PfnEnumeratePhysicalDeviceGroups;
 pub const PfnGetDeviceGroupPeerMemoryFeatures = *const fn (Device, u32, u32, u32, *PeerMemoryFeatureFlags) callconv(.c) void;
 pub const PfnGetDeviceGroupPeerMemoryFeaturesKHR = PfnGetDeviceGroupPeerMemoryFeatures;
-pub const PfnBindBufferMemory2 = *const fn (Device, u32, [*]const BindBufferMemoryInfo) callconv(.c) Result;
+pub const PfnBindBufferMemory2 = *const fn (Device, u32, ?[*]const BindBufferMemoryInfo) callconv(.c) Result;
 pub const PfnBindBufferMemory2KHR = PfnBindBufferMemory2;
-pub const PfnBindImageMemory2 = *const fn (Device, u32, [*]const BindImageMemoryInfo) callconv(.c) Result;
+pub const PfnBindImageMemory2 = *const fn (Device, u32, ?[*]const BindImageMemoryInfo) callconv(.c) Result;
 pub const PfnBindImageMemory2KHR = PfnBindImageMemory2;
 pub const PfnCmdSetDeviceMask = *const fn (CommandBuffer, u32) callconv(.c) void;
 pub const PfnCmdSetDeviceMaskKHR = PfnCmdSetDeviceMask;
@@ -20072,15 +20072,15 @@ pub const PfnUpdateDescriptorSetWithTemplate = *const fn (Device, DescriptorSet,
 pub const PfnUpdateDescriptorSetWithTemplateKHR = PfnUpdateDescriptorSetWithTemplate;
 pub const PfnCmdPushDescriptorSetWithTemplate = *const fn (CommandBuffer, DescriptorUpdateTemplate, PipelineLayout, u32, ?*const anyopaque) callconv(.c) void;
 pub const PfnCmdPushDescriptorSetWithTemplateKHR = PfnCmdPushDescriptorSetWithTemplate;
-pub const PfnSetHdrMetadataEXT = *const fn (Device, u32, [*]const SwapchainKHR, [*]const HdrMetadataEXT) callconv(.c) void;
+pub const PfnSetHdrMetadataEXT = *const fn (Device, u32, ?[*]const SwapchainKHR, ?[*]const HdrMetadataEXT) callconv(.c) void;
 pub const PfnGetSwapchainStatusKHR = *const fn (Device, SwapchainKHR) callconv(.c) Result;
 pub const PfnGetRefreshCycleDurationGOOGLE = *const fn (Device, SwapchainKHR, *RefreshCycleDurationGOOGLE) callconv(.c) Result;
 pub const PfnGetPastPresentationTimingGOOGLE = *const fn (Device, SwapchainKHR, *u32, ?[*]PastPresentationTimingGOOGLE) callconv(.c) Result;
 pub const PfnCreateIOSSurfaceMVK = *const fn (Instance, *const IOSSurfaceCreateInfoMVK, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
 pub const PfnCreateMacOSSurfaceMVK = *const fn (Instance, *const MacOSSurfaceCreateInfoMVK, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
 pub const PfnCreateMetalSurfaceEXT = *const fn (Instance, *const MetalSurfaceCreateInfoEXT, ?*const AllocationCallbacks, *SurfaceKHR) callconv(.c) Result;
-pub const PfnCmdSetViewportWScalingNV = *const fn (CommandBuffer, u32, u32, [*]const ViewportWScalingNV) callconv(.c) void;
-pub const PfnCmdSetDiscardRectangleEXT = *const fn (CommandBuffer, u32, u32, [*]const Rect2D) callconv(.c) void;
+pub const PfnCmdSetViewportWScalingNV = *const fn (CommandBuffer, u32, u32, ?[*]const ViewportWScalingNV) callconv(.c) void;
+pub const PfnCmdSetDiscardRectangleEXT = *const fn (CommandBuffer, u32, u32, ?[*]const Rect2D) callconv(.c) void;
 pub const PfnCmdSetDiscardRectangleEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetDiscardRectangleModeEXT = *const fn (CommandBuffer, DiscardRectangleModeEXT) callconv(.c) void;
 pub const PfnCmdSetSampleLocationsEXT = *const fn (CommandBuffer, *const SampleLocationsInfoEXT) callconv(.c) void;
@@ -20111,14 +20111,14 @@ pub const PfnGetDeviceQueue2 = *const fn (Device, *const DeviceQueueInfo2, *Queu
 pub const PfnCreateValidationCacheEXT = *const fn (Device, *const ValidationCacheCreateInfoEXT, ?*const AllocationCallbacks, *ValidationCacheEXT) callconv(.c) Result;
 pub const PfnDestroyValidationCacheEXT = *const fn (Device, ValidationCacheEXT, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetValidationCacheDataEXT = *const fn (Device, ValidationCacheEXT, *usize, ?*anyopaque) callconv(.c) Result;
-pub const PfnMergeValidationCachesEXT = *const fn (Device, ValidationCacheEXT, u32, [*]const ValidationCacheEXT) callconv(.c) Result;
+pub const PfnMergeValidationCachesEXT = *const fn (Device, ValidationCacheEXT, u32, ?[*]const ValidationCacheEXT) callconv(.c) Result;
 pub const PfnGetDescriptorSetLayoutSupport = *const fn (Device, *const DescriptorSetLayoutCreateInfo, *DescriptorSetLayoutSupport) callconv(.c) void;
 pub const PfnGetDescriptorSetLayoutSupportKHR = PfnGetDescriptorSetLayoutSupport;
 pub const PfnGetShaderInfoAMD = *const fn (Device, Pipeline, ShaderStageFlagBits, ShaderInfoTypeAMD, *usize, ?*anyopaque) callconv(.c) Result;
 pub const PfnSetLocalDimmingAMD = *const fn (Device, SwapchainKHR, Bool32) callconv(.c) void;
 pub const PfnGetPhysicalDeviceCalibrateableTimeDomainsKHR = *const fn (PhysicalDevice, *u32, ?[*]TimeDomainKHR) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceCalibrateableTimeDomainsEXT = PfnGetPhysicalDeviceCalibrateableTimeDomainsKHR;
-pub const PfnGetCalibratedTimestampsKHR = *const fn (Device, u32, [*]const CalibratedTimestampInfoKHR, [*]u64, *u64) callconv(.c) Result;
+pub const PfnGetCalibratedTimestampsKHR = *const fn (Device, u32, ?[*]const CalibratedTimestampInfoKHR, ?[*]u64, *u64) callconv(.c) Result;
 pub const PfnGetCalibratedTimestampsEXT = PfnGetCalibratedTimestampsKHR;
 pub const PfnSetDebugUtilsObjectNameEXT = *const fn (Device, *const DebugUtilsObjectNameInfoEXT) callconv(.c) Result;
 pub const PfnSetDebugUtilsObjectTagEXT = *const fn (Device, *const DebugUtilsObjectTagInfoEXT) callconv(.c) Result;
@@ -20157,17 +20157,17 @@ pub const PfnCmdDrawIndexedIndirectCountKHR = PfnCmdDrawIndexedIndirectCount;
 pub const PfnCmdDrawIndexedIndirectCountAMD = PfnCmdDrawIndexedIndirectCount;
 pub const PfnCmdSetCheckpointNV = *const fn (CommandBuffer, ?*const anyopaque) callconv(.c) void;
 pub const PfnGetQueueCheckpointDataNV = *const fn (Queue, *u32, ?[*]CheckpointDataNV) callconv(.c) void;
-pub const PfnCmdBindTransformFeedbackBuffersEXT = *const fn (CommandBuffer, u32, u32, [*]const Buffer, [*]const DeviceSize, ?[*]const DeviceSize) callconv(.c) void;
-pub const PfnCmdBeginTransformFeedbackEXT = *const fn (CommandBuffer, u32, u32, [*]const Buffer, ?[*]const DeviceSize) callconv(.c) void;
-pub const PfnCmdEndTransformFeedbackEXT = *const fn (CommandBuffer, u32, u32, [*]const Buffer, ?[*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdBindTransformFeedbackBuffersEXT = *const fn (CommandBuffer, u32, u32, ?[*]const Buffer, ?[*]const DeviceSize, ?[*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdBeginTransformFeedbackEXT = *const fn (CommandBuffer, u32, u32, ?[*]const Buffer, ?[*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdEndTransformFeedbackEXT = *const fn (CommandBuffer, u32, u32, ?[*]const Buffer, ?[*]const DeviceSize) callconv(.c) void;
 pub const PfnCmdBeginQueryIndexedEXT = *const fn (CommandBuffer, QueryPool, u32, QueryControlFlags, u32) callconv(.c) void;
 pub const PfnCmdEndQueryIndexedEXT = *const fn (CommandBuffer, QueryPool, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawIndirectByteCountEXT = *const fn (CommandBuffer, u32, u32, Buffer, DeviceSize, u32, u32) callconv(.c) void;
-pub const PfnCmdSetExclusiveScissorNV = *const fn (CommandBuffer, u32, u32, [*]const Rect2D) callconv(.c) void;
-pub const PfnCmdSetExclusiveScissorEnableNV = *const fn (CommandBuffer, u32, u32, [*]const Bool32) callconv(.c) void;
+pub const PfnCmdSetExclusiveScissorNV = *const fn (CommandBuffer, u32, u32, ?[*]const Rect2D) callconv(.c) void;
+pub const PfnCmdSetExclusiveScissorEnableNV = *const fn (CommandBuffer, u32, u32, ?[*]const Bool32) callconv(.c) void;
 pub const PfnCmdBindShadingRateImageNV = *const fn (CommandBuffer, ImageView, ImageLayout) callconv(.c) void;
-pub const PfnCmdSetViewportShadingRatePaletteNV = *const fn (CommandBuffer, u32, u32, [*]const ShadingRatePaletteNV) callconv(.c) void;
-pub const PfnCmdSetCoarseSampleOrderNV = *const fn (CommandBuffer, CoarseSampleOrderTypeNV, u32, [*]const CoarseSampleOrderCustomNV) callconv(.c) void;
+pub const PfnCmdSetViewportShadingRatePaletteNV = *const fn (CommandBuffer, u32, u32, ?[*]const ShadingRatePaletteNV) callconv(.c) void;
+pub const PfnCmdSetCoarseSampleOrderNV = *const fn (CommandBuffer, CoarseSampleOrderTypeNV, u32, ?[*]const CoarseSampleOrderCustomNV) callconv(.c) void;
 pub const PfnCmdDrawMeshTasksNV = *const fn (CommandBuffer, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawMeshTasksIndirectNV = *const fn (CommandBuffer, Buffer, DeviceSize, u32, u32) callconv(.c) void;
 pub const PfnCmdDrawMeshTasksIndirectCountNV = *const fn (CommandBuffer, Buffer, DeviceSize, Buffer, DeviceSize, u32, u32) callconv(.c) void;
@@ -20180,7 +20180,7 @@ pub const PfnCmdBindInvocationMaskHUAWEI = *const fn (CommandBuffer, ImageView, 
 pub const PfnDestroyAccelerationStructureKHR = *const fn (Device, AccelerationStructureKHR, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnDestroyAccelerationStructureNV = *const fn (Device, AccelerationStructureNV, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetAccelerationStructureMemoryRequirementsNV = *const fn (Device, *const AccelerationStructureMemoryRequirementsInfoNV, *MemoryRequirements2) callconv(.c) void;
-pub const PfnBindAccelerationStructureMemoryNV = *const fn (Device, u32, [*]const BindAccelerationStructureMemoryInfoNV) callconv(.c) Result;
+pub const PfnBindAccelerationStructureMemoryNV = *const fn (Device, u32, ?[*]const BindAccelerationStructureMemoryInfoNV) callconv(.c) Result;
 pub const PfnCmdCopyAccelerationStructureNV = *const fn (CommandBuffer, AccelerationStructureNV, AccelerationStructureNV, CopyAccelerationStructureModeKHR) callconv(.c) void;
 pub const PfnCmdCopyAccelerationStructureKHR = *const fn (CommandBuffer, *const CopyAccelerationStructureInfoKHR) callconv(.c) void;
 pub const PfnCopyAccelerationStructureKHR = *const fn (Device, DeferredOperationKHR, *const CopyAccelerationStructureInfoKHR) callconv(.c) Result;
@@ -20188,18 +20188,18 @@ pub const PfnCmdCopyAccelerationStructureToMemoryKHR = *const fn (CommandBuffer,
 pub const PfnCopyAccelerationStructureToMemoryKHR = *const fn (Device, DeferredOperationKHR, *const CopyAccelerationStructureToMemoryInfoKHR) callconv(.c) Result;
 pub const PfnCmdCopyMemoryToAccelerationStructureKHR = *const fn (CommandBuffer, *const CopyMemoryToAccelerationStructureInfoKHR) callconv(.c) void;
 pub const PfnCopyMemoryToAccelerationStructureKHR = *const fn (Device, DeferredOperationKHR, *const CopyMemoryToAccelerationStructureInfoKHR) callconv(.c) Result;
-pub const PfnCmdWriteAccelerationStructuresPropertiesKHR = *const fn (CommandBuffer, u32, [*]const AccelerationStructureKHR, QueryType, QueryPool, u32) callconv(.c) void;
-pub const PfnCmdWriteAccelerationStructuresPropertiesNV = *const fn (CommandBuffer, u32, [*]const AccelerationStructureNV, QueryType, QueryPool, u32) callconv(.c) void;
+pub const PfnCmdWriteAccelerationStructuresPropertiesKHR = *const fn (CommandBuffer, u32, ?[*]const AccelerationStructureKHR, QueryType, QueryPool, u32) callconv(.c) void;
+pub const PfnCmdWriteAccelerationStructuresPropertiesNV = *const fn (CommandBuffer, u32, ?[*]const AccelerationStructureNV, QueryType, QueryPool, u32) callconv(.c) void;
 pub const PfnCmdBuildAccelerationStructureNV = *const fn (CommandBuffer, *const AccelerationStructureInfoNV, Buffer, DeviceSize, Bool32, AccelerationStructureNV, AccelerationStructureNV, Buffer, DeviceSize) callconv(.c) void;
-pub const PfnWriteAccelerationStructuresPropertiesKHR = *const fn (Device, u32, [*]const AccelerationStructureKHR, QueryType, usize, ?*anyopaque, usize) callconv(.c) Result;
+pub const PfnWriteAccelerationStructuresPropertiesKHR = *const fn (Device, u32, ?[*]const AccelerationStructureKHR, QueryType, usize, ?*anyopaque, usize) callconv(.c) Result;
 pub const PfnCmdTraceRaysKHR = *const fn (CommandBuffer, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, u32, u32, u32) callconv(.c) void;
 pub const PfnCmdTraceRaysNV = *const fn (CommandBuffer, Buffer, DeviceSize, Buffer, DeviceSize, DeviceSize, Buffer, DeviceSize, DeviceSize, Buffer, DeviceSize, DeviceSize, u32, u32, u32) callconv(.c) void;
 pub const PfnGetRayTracingShaderGroupHandlesKHR = *const fn (Device, Pipeline, u32, u32, usize, ?*anyopaque) callconv(.c) Result;
 pub const PfnGetRayTracingShaderGroupHandlesNV = PfnGetRayTracingShaderGroupHandlesKHR;
 pub const PfnGetRayTracingCaptureReplayShaderGroupHandlesKHR = *const fn (Device, Pipeline, u32, u32, usize, ?*anyopaque) callconv(.c) Result;
 pub const PfnGetAccelerationStructureHandleNV = *const fn (Device, AccelerationStructureNV, usize, ?*anyopaque) callconv(.c) Result;
-pub const PfnCreateRayTracingPipelinesNV = *const fn (Device, PipelineCache, u32, [*]const RayTracingPipelineCreateInfoNV, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
-pub const PfnCreateRayTracingPipelinesKHR = *const fn (Device, DeferredOperationKHR, PipelineCache, u32, [*]const RayTracingPipelineCreateInfoKHR, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
+pub const PfnCreateRayTracingPipelinesNV = *const fn (Device, PipelineCache, u32, ?[*]const RayTracingPipelineCreateInfoNV, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
+pub const PfnCreateRayTracingPipelinesKHR = *const fn (Device, DeferredOperationKHR, PipelineCache, u32, ?[*]const RayTracingPipelineCreateInfoKHR, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceCooperativeMatrixPropertiesNV = *const fn (PhysicalDevice, *u32, ?[*]CooperativeMatrixPropertiesNV) callconv(.c) Result;
 pub const PfnCmdTraceRaysIndirectKHR = *const fn (CommandBuffer, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, *const StridedDeviceAddressRegionKHR, DeviceAddress) callconv(.c) void;
 pub const PfnCmdTraceRaysIndirect2KHR = *const fn (CommandBuffer, DeviceAddress) callconv(.c) void;
@@ -20248,9 +20248,9 @@ pub const PfnCmdSetLineStippleEXT = PfnCmdSetLineStipple;
 pub const PfnGetPhysicalDeviceToolProperties = *const fn (PhysicalDevice, *u32, ?[*]PhysicalDeviceToolProperties) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceToolPropertiesEXT = PfnGetPhysicalDeviceToolProperties;
 pub const PfnCreateAccelerationStructureKHR = *const fn (Device, *const AccelerationStructureCreateInfoKHR, ?*const AllocationCallbacks, *AccelerationStructureKHR) callconv(.c) Result;
-pub const PfnCmdBuildAccelerationStructuresKHR = *const fn (CommandBuffer, u32, [*]const AccelerationStructureBuildGeometryInfoKHR, [*]const *const AccelerationStructureBuildRangeInfoKHR) callconv(.c) void;
-pub const PfnCmdBuildAccelerationStructuresIndirectKHR = *const fn (CommandBuffer, u32, [*]const AccelerationStructureBuildGeometryInfoKHR, [*]const DeviceAddress, [*]const u32, [*]const *const u32) callconv(.c) void;
-pub const PfnBuildAccelerationStructuresKHR = *const fn (Device, DeferredOperationKHR, u32, [*]const AccelerationStructureBuildGeometryInfoKHR, [*]const *const AccelerationStructureBuildRangeInfoKHR) callconv(.c) Result;
+pub const PfnCmdBuildAccelerationStructuresKHR = *const fn (CommandBuffer, u32, ?[*]const AccelerationStructureBuildGeometryInfoKHR, ?[*]const *const AccelerationStructureBuildRangeInfoKHR) callconv(.c) void;
+pub const PfnCmdBuildAccelerationStructuresIndirectKHR = *const fn (CommandBuffer, u32, ?[*]const AccelerationStructureBuildGeometryInfoKHR, ?[*]const DeviceAddress, ?[*]const u32, ?[*]const *const u32) callconv(.c) void;
+pub const PfnBuildAccelerationStructuresKHR = *const fn (Device, DeferredOperationKHR, u32, ?[*]const AccelerationStructureBuildGeometryInfoKHR, ?[*]const *const AccelerationStructureBuildRangeInfoKHR) callconv(.c) Result;
 pub const PfnGetAccelerationStructureDeviceAddressKHR = *const fn (Device, *const AccelerationStructureDeviceAddressInfoKHR) callconv(.c) DeviceAddress;
 pub const PfnCreateDeferredOperationKHR = *const fn (Device, ?*const AllocationCallbacks, *DeferredOperationKHR) callconv(.c) Result;
 pub const PfnDestroyDeferredOperationKHR = *const fn (Device, DeferredOperationKHR, ?*const AllocationCallbacks) callconv(.c) void;
@@ -20266,13 +20266,13 @@ pub const PfnCmdSetFrontFace = *const fn (CommandBuffer, FrontFace) callconv(.c)
 pub const PfnCmdSetFrontFaceEXT = PfnCmdSetFrontFace;
 pub const PfnCmdSetPrimitiveTopology = *const fn (CommandBuffer, PrimitiveTopology) callconv(.c) void;
 pub const PfnCmdSetPrimitiveTopologyEXT = PfnCmdSetPrimitiveTopology;
-pub const PfnCmdSetViewportWithCount = *const fn (CommandBuffer, u32, [*]const Viewport) callconv(.c) void;
+pub const PfnCmdSetViewportWithCount = *const fn (CommandBuffer, u32, ?[*]const Viewport) callconv(.c) void;
 pub const PfnCmdSetViewportWithCountEXT = PfnCmdSetViewportWithCount;
-pub const PfnCmdSetScissorWithCount = *const fn (CommandBuffer, u32, [*]const Rect2D) callconv(.c) void;
+pub const PfnCmdSetScissorWithCount = *const fn (CommandBuffer, u32, ?[*]const Rect2D) callconv(.c) void;
 pub const PfnCmdSetScissorWithCountEXT = PfnCmdSetScissorWithCount;
 pub const PfnCmdBindIndexBuffer2 = *const fn (CommandBuffer, Buffer, DeviceSize, DeviceSize, IndexType) callconv(.c) void;
 pub const PfnCmdBindIndexBuffer2KHR = PfnCmdBindIndexBuffer2;
-pub const PfnCmdBindVertexBuffers2 = *const fn (CommandBuffer, u32, u32, [*]const Buffer, [*]const DeviceSize, ?[*]const DeviceSize, ?[*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdBindVertexBuffers2 = *const fn (CommandBuffer, u32, u32, ?[*]const Buffer, ?[*]const DeviceSize, ?[*]const DeviceSize, ?[*]const DeviceSize) callconv(.c) void;
 pub const PfnCmdBindVertexBuffers2EXT = PfnCmdBindVertexBuffers2;
 pub const PfnCmdSetDepthTestEnable = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetDepthTestEnableEXT = PfnCmdSetDepthTestEnable;
@@ -20302,26 +20302,26 @@ pub const PfnCmdSetSampleMaskEXT = *const fn (CommandBuffer, SampleCountFlagBits
 pub const PfnCmdSetAlphaToCoverageEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetAlphaToOneEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetLogicOpEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
-pub const PfnCmdSetColorBlendEnableEXT = *const fn (CommandBuffer, u32, u32, [*]const Bool32) callconv(.c) void;
-pub const PfnCmdSetColorBlendEquationEXT = *const fn (CommandBuffer, u32, u32, [*]const ColorBlendEquationEXT) callconv(.c) void;
-pub const PfnCmdSetColorWriteMaskEXT = *const fn (CommandBuffer, u32, u32, [*]const ColorComponentFlags) callconv(.c) void;
+pub const PfnCmdSetColorBlendEnableEXT = *const fn (CommandBuffer, u32, u32, ?[*]const Bool32) callconv(.c) void;
+pub const PfnCmdSetColorBlendEquationEXT = *const fn (CommandBuffer, u32, u32, ?[*]const ColorBlendEquationEXT) callconv(.c) void;
+pub const PfnCmdSetColorWriteMaskEXT = *const fn (CommandBuffer, u32, u32, ?[*]const ColorComponentFlags) callconv(.c) void;
 pub const PfnCmdSetRasterizationStreamEXT = *const fn (CommandBuffer, u32) callconv(.c) void;
 pub const PfnCmdSetConservativeRasterizationModeEXT = *const fn (CommandBuffer, ConservativeRasterizationModeEXT) callconv(.c) void;
 pub const PfnCmdSetExtraPrimitiveOverestimationSizeEXT = *const fn (CommandBuffer, f32) callconv(.c) void;
 pub const PfnCmdSetDepthClipEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetSampleLocationsEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
-pub const PfnCmdSetColorBlendAdvancedEXT = *const fn (CommandBuffer, u32, u32, [*]const ColorBlendAdvancedEXT) callconv(.c) void;
+pub const PfnCmdSetColorBlendAdvancedEXT = *const fn (CommandBuffer, u32, u32, ?[*]const ColorBlendAdvancedEXT) callconv(.c) void;
 pub const PfnCmdSetProvokingVertexModeEXT = *const fn (CommandBuffer, ProvokingVertexModeEXT) callconv(.c) void;
 pub const PfnCmdSetLineRasterizationModeEXT = *const fn (CommandBuffer, LineRasterizationModeEXT) callconv(.c) void;
 pub const PfnCmdSetLineStippleEnableEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetDepthClipNegativeOneToOneEXT = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetViewportWScalingEnableNV = *const fn (CommandBuffer, Bool32) callconv(.c) void;
-pub const PfnCmdSetViewportSwizzleNV = *const fn (CommandBuffer, u32, u32, [*]const ViewportSwizzleNV) callconv(.c) void;
+pub const PfnCmdSetViewportSwizzleNV = *const fn (CommandBuffer, u32, u32, ?[*]const ViewportSwizzleNV) callconv(.c) void;
 pub const PfnCmdSetCoverageToColorEnableNV = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetCoverageToColorLocationNV = *const fn (CommandBuffer, u32) callconv(.c) void;
 pub const PfnCmdSetCoverageModulationModeNV = *const fn (CommandBuffer, CoverageModulationModeNV) callconv(.c) void;
 pub const PfnCmdSetCoverageModulationTableEnableNV = *const fn (CommandBuffer, Bool32) callconv(.c) void;
-pub const PfnCmdSetCoverageModulationTableNV = *const fn (CommandBuffer, u32, [*]const f32) callconv(.c) void;
+pub const PfnCmdSetCoverageModulationTableNV = *const fn (CommandBuffer, u32, ?[*]const f32) callconv(.c) void;
 pub const PfnCmdSetShadingRateImageEnableNV = *const fn (CommandBuffer, Bool32) callconv(.c) void;
 pub const PfnCmdSetCoverageReductionModeNV = *const fn (CommandBuffer, CoverageReductionModeNV) callconv(.c) void;
 pub const PfnCmdSetRepresentativeFragmentTestEnableNV = *const fn (CommandBuffer, Bool32) callconv(.c) void;
@@ -20349,17 +20349,17 @@ pub const PfnCmdSetFragmentShadingRateKHR = *const fn (CommandBuffer, *const Ext
 pub const PfnGetPhysicalDeviceFragmentShadingRatesKHR = *const fn (PhysicalDevice, *u32, ?[*]PhysicalDeviceFragmentShadingRateKHR) callconv(.c) Result;
 pub const PfnCmdSetFragmentShadingRateEnumNV = *const fn (CommandBuffer, FragmentShadingRateNV, *const [2]FragmentShadingRateCombinerOpKHR) callconv(.c) void;
 pub const PfnGetAccelerationStructureBuildSizesKHR = *const fn (Device, AccelerationStructureBuildTypeKHR, *const AccelerationStructureBuildGeometryInfoKHR, ?[*]const u32, *AccelerationStructureBuildSizesInfoKHR) callconv(.c) void;
-pub const PfnCmdSetVertexInputEXT = *const fn (CommandBuffer, u32, [*]const VertexInputBindingDescription2EXT, u32, [*]const VertexInputAttributeDescription2EXT) callconv(.c) void;
-pub const PfnCmdSetColorWriteEnableEXT = *const fn (CommandBuffer, u32, [*]const Bool32) callconv(.c) void;
+pub const PfnCmdSetVertexInputEXT = *const fn (CommandBuffer, u32, ?[*]const VertexInputBindingDescription2EXT, u32, ?[*]const VertexInputAttributeDescription2EXT) callconv(.c) void;
+pub const PfnCmdSetColorWriteEnableEXT = *const fn (CommandBuffer, u32, ?[*]const Bool32) callconv(.c) void;
 pub const PfnCmdSetEvent2 = *const fn (CommandBuffer, Event, *const DependencyInfo) callconv(.c) void;
 pub const PfnCmdSetEvent2KHR = PfnCmdSetEvent2;
 pub const PfnCmdResetEvent2 = *const fn (CommandBuffer, Event, PipelineStageFlags2) callconv(.c) void;
 pub const PfnCmdResetEvent2KHR = PfnCmdResetEvent2;
-pub const PfnCmdWaitEvents2 = *const fn (CommandBuffer, u32, [*]const Event, [*]const DependencyInfo) callconv(.c) void;
+pub const PfnCmdWaitEvents2 = *const fn (CommandBuffer, u32, ?[*]const Event, ?[*]const DependencyInfo) callconv(.c) void;
 pub const PfnCmdWaitEvents2KHR = PfnCmdWaitEvents2;
 pub const PfnCmdPipelineBarrier2 = *const fn (CommandBuffer, *const DependencyInfo) callconv(.c) void;
 pub const PfnCmdPipelineBarrier2KHR = PfnCmdPipelineBarrier2;
-pub const PfnQueueSubmit2 = *const fn (Queue, u32, [*]const SubmitInfo2, Fence) callconv(.c) Result;
+pub const PfnQueueSubmit2 = *const fn (Queue, u32, ?[*]const SubmitInfo2, Fence) callconv(.c) Result;
 pub const PfnQueueSubmit2KHR = PfnQueueSubmit2;
 pub const PfnCmdWriteTimestamp2 = *const fn (CommandBuffer, PipelineStageFlags2, QueryPool, u32) callconv(.c) void;
 pub const PfnCmdWriteTimestamp2KHR = PfnCmdWriteTimestamp2;
@@ -20371,7 +20371,7 @@ pub const PfnCopyImageToMemory = *const fn (Device, *const CopyImageToMemoryInfo
 pub const PfnCopyImageToMemoryEXT = PfnCopyImageToMemory;
 pub const PfnCopyImageToImage = *const fn (Device, *const CopyImageToImageInfo) callconv(.c) Result;
 pub const PfnCopyImageToImageEXT = PfnCopyImageToImage;
-pub const PfnTransitionImageLayout = *const fn (Device, u32, [*]const HostImageLayoutTransitionInfo) callconv(.c) Result;
+pub const PfnTransitionImageLayout = *const fn (Device, u32, ?[*]const HostImageLayoutTransitionInfo) callconv(.c) Result;
 pub const PfnTransitionImageLayoutEXT = PfnTransitionImageLayout;
 pub const PfnGetPhysicalDeviceVideoCapabilitiesKHR = *const fn (PhysicalDevice, *const VideoProfileInfoKHR, *VideoCapabilitiesKHR) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceVideoFormatPropertiesKHR = *const fn (PhysicalDevice, *const PhysicalDeviceVideoFormatInfoKHR, *u32, ?[*]VideoFormatPropertiesKHR) callconv(.c) Result;
@@ -20383,13 +20383,13 @@ pub const PfnUpdateVideoSessionParametersKHR = *const fn (Device, VideoSessionPa
 pub const PfnGetEncodedVideoSessionParametersKHR = *const fn (Device, *const VideoEncodeSessionParametersGetInfoKHR, ?*VideoEncodeSessionParametersFeedbackInfoKHR, *usize, ?*anyopaque) callconv(.c) Result;
 pub const PfnDestroyVideoSessionParametersKHR = *const fn (Device, VideoSessionParametersKHR, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetVideoSessionMemoryRequirementsKHR = *const fn (Device, VideoSessionKHR, *u32, ?[*]VideoSessionMemoryRequirementsKHR) callconv(.c) Result;
-pub const PfnBindVideoSessionMemoryKHR = *const fn (Device, VideoSessionKHR, u32, [*]const BindVideoSessionMemoryInfoKHR) callconv(.c) Result;
+pub const PfnBindVideoSessionMemoryKHR = *const fn (Device, VideoSessionKHR, u32, ?[*]const BindVideoSessionMemoryInfoKHR) callconv(.c) Result;
 pub const PfnCmdDecodeVideoKHR = *const fn (CommandBuffer, *const VideoDecodeInfoKHR) callconv(.c) void;
 pub const PfnCmdBeginVideoCodingKHR = *const fn (CommandBuffer, *const VideoBeginCodingInfoKHR) callconv(.c) void;
 pub const PfnCmdControlVideoCodingKHR = *const fn (CommandBuffer, *const VideoCodingControlInfoKHR) callconv(.c) void;
 pub const PfnCmdEndVideoCodingKHR = *const fn (CommandBuffer, *const VideoEndCodingInfoKHR) callconv(.c) void;
 pub const PfnCmdEncodeVideoKHR = *const fn (CommandBuffer, *const VideoEncodeInfoKHR) callconv(.c) void;
-pub const PfnCmdDecompressMemoryNV = *const fn (CommandBuffer, u32, [*]const DecompressMemoryRegionNV) callconv(.c) void;
+pub const PfnCmdDecompressMemoryNV = *const fn (CommandBuffer, u32, ?[*]const DecompressMemoryRegionNV) callconv(.c) void;
 pub const PfnCmdDecompressMemoryIndirectCountNV = *const fn (CommandBuffer, DeviceAddress, DeviceAddress, u32) callconv(.c) void;
 pub const PfnGetPartitionedAccelerationStructuresBuildSizesNV = *const fn (Device, *const PartitionedAccelerationStructureInstancesInputNV, *AccelerationStructureBuildSizesInfoKHR) callconv(.c) void;
 pub const PfnCmdBuildPartitionedAccelerationStructuresNV = *const fn (CommandBuffer, *const BuildPartitionedAccelerationStructureInfoNV) callconv(.c) void;
@@ -20403,8 +20403,8 @@ pub const PfnCmdCuLaunchKernelNVX = *const fn (CommandBuffer, *const CuLaunchInf
 pub const PfnGetDescriptorSetLayoutSizeEXT = *const fn (Device, DescriptorSetLayout, *DeviceSize) callconv(.c) void;
 pub const PfnGetDescriptorSetLayoutBindingOffsetEXT = *const fn (Device, DescriptorSetLayout, u32, *DeviceSize) callconv(.c) void;
 pub const PfnGetDescriptorEXT = *const fn (Device, *const DescriptorGetInfoEXT, usize, ?*anyopaque) callconv(.c) void;
-pub const PfnCmdBindDescriptorBuffersEXT = *const fn (CommandBuffer, u32, [*]const DescriptorBufferBindingInfoEXT) callconv(.c) void;
-pub const PfnCmdSetDescriptorBufferOffsetsEXT = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, [*]const u32, [*]const DeviceSize) callconv(.c) void;
+pub const PfnCmdBindDescriptorBuffersEXT = *const fn (CommandBuffer, u32, ?[*]const DescriptorBufferBindingInfoEXT) callconv(.c) void;
+pub const PfnCmdSetDescriptorBufferOffsetsEXT = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32, u32, ?[*]const u32, ?[*]const DeviceSize) callconv(.c) void;
 pub const PfnCmdBindDescriptorBufferEmbeddedSamplersEXT = *const fn (CommandBuffer, PipelineBindPoint, PipelineLayout, u32) callconv(.c) void;
 pub const PfnGetBufferOpaqueCaptureDescriptorDataEXT = *const fn (Device, *const BufferCaptureDescriptorDataInfoEXT, ?*anyopaque) callconv(.c) Result;
 pub const PfnGetImageOpaqueCaptureDescriptorDataEXT = *const fn (Device, *const ImageCaptureDescriptorDataInfoEXT, ?*anyopaque) callconv(.c) Result;
@@ -20436,8 +20436,8 @@ pub const PfnCmdEndRendering2EXT = PfnCmdEndRendering2KHR;
 pub const PfnGetDescriptorSetLayoutHostMappingInfoVALVE = *const fn (Device, *const DescriptorSetBindingReferenceVALVE, *DescriptorSetLayoutHostMappingInfoVALVE) callconv(.c) void;
 pub const PfnGetDescriptorSetHostMappingVALVE = *const fn (Device, DescriptorSet, *?*anyopaque) callconv(.c) void;
 pub const PfnCreateMicromapEXT = *const fn (Device, *const MicromapCreateInfoEXT, ?*const AllocationCallbacks, *MicromapEXT) callconv(.c) Result;
-pub const PfnCmdBuildMicromapsEXT = *const fn (CommandBuffer, u32, [*]const MicromapBuildInfoEXT) callconv(.c) void;
-pub const PfnBuildMicromapsEXT = *const fn (Device, DeferredOperationKHR, u32, [*]const MicromapBuildInfoEXT) callconv(.c) Result;
+pub const PfnCmdBuildMicromapsEXT = *const fn (CommandBuffer, u32, ?[*]const MicromapBuildInfoEXT) callconv(.c) void;
+pub const PfnBuildMicromapsEXT = *const fn (Device, DeferredOperationKHR, u32, ?[*]const MicromapBuildInfoEXT) callconv(.c) Result;
 pub const PfnDestroyMicromapEXT = *const fn (Device, MicromapEXT, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCmdCopyMicromapEXT = *const fn (CommandBuffer, *const CopyMicromapInfoEXT) callconv(.c) void;
 pub const PfnCopyMicromapEXT = *const fn (Device, DeferredOperationKHR, *const CopyMicromapInfoEXT) callconv(.c) Result;
@@ -20445,8 +20445,8 @@ pub const PfnCmdCopyMicromapToMemoryEXT = *const fn (CommandBuffer, *const CopyM
 pub const PfnCopyMicromapToMemoryEXT = *const fn (Device, DeferredOperationKHR, *const CopyMicromapToMemoryInfoEXT) callconv(.c) Result;
 pub const PfnCmdCopyMemoryToMicromapEXT = *const fn (CommandBuffer, *const CopyMemoryToMicromapInfoEXT) callconv(.c) void;
 pub const PfnCopyMemoryToMicromapEXT = *const fn (Device, DeferredOperationKHR, *const CopyMemoryToMicromapInfoEXT) callconv(.c) Result;
-pub const PfnCmdWriteMicromapsPropertiesEXT = *const fn (CommandBuffer, u32, [*]const MicromapEXT, QueryType, QueryPool, u32) callconv(.c) void;
-pub const PfnWriteMicromapsPropertiesEXT = *const fn (Device, u32, [*]const MicromapEXT, QueryType, usize, ?*anyopaque, usize) callconv(.c) Result;
+pub const PfnCmdWriteMicromapsPropertiesEXT = *const fn (CommandBuffer, u32, ?[*]const MicromapEXT, QueryType, QueryPool, u32) callconv(.c) void;
+pub const PfnWriteMicromapsPropertiesEXT = *const fn (Device, u32, ?[*]const MicromapEXT, QueryType, usize, ?*anyopaque, usize) callconv(.c) Result;
 pub const PfnGetDeviceMicromapCompatibilityEXT = *const fn (Device, *const MicromapVersionInfoEXT, *AccelerationStructureCompatibilityKHR) callconv(.c) void;
 pub const PfnGetMicromapBuildSizesEXT = *const fn (Device, AccelerationStructureBuildTypeKHR, *const MicromapBuildInfoEXT, *MicromapBuildSizesInfoEXT) callconv(.c) void;
 pub const PfnGetShaderModuleIdentifierEXT = *const fn (Device, ShaderModule, *ShaderModuleIdentifierEXT) callconv(.c) void;
@@ -20476,10 +20476,10 @@ pub const PfnMapMemory2 = *const fn (Device, *const MemoryMapInfo, *?*anyopaque)
 pub const PfnMapMemory2KHR = PfnMapMemory2;
 pub const PfnUnmapMemory2 = *const fn (Device, *const MemoryUnmapInfo) callconv(.c) Result;
 pub const PfnUnmapMemory2KHR = PfnUnmapMemory2;
-pub const PfnCreateShadersEXT = *const fn (Device, u32, [*]const ShaderCreateInfoEXT, ?*const AllocationCallbacks, [*]ShaderEXT) callconv(.c) Result;
+pub const PfnCreateShadersEXT = *const fn (Device, u32, ?[*]const ShaderCreateInfoEXT, ?*const AllocationCallbacks, ?[*]ShaderEXT) callconv(.c) Result;
 pub const PfnDestroyShaderEXT = *const fn (Device, ShaderEXT, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetShaderBinaryDataEXT = *const fn (Device, ShaderEXT, *usize, ?*anyopaque) callconv(.c) Result;
-pub const PfnCmdBindShadersEXT = *const fn (CommandBuffer, u32, [*]const ShaderStageFlagBits, ?[*]const ShaderEXT) callconv(.c) void;
+pub const PfnCmdBindShadersEXT = *const fn (CommandBuffer, u32, ?[*]const ShaderStageFlagBits, ?[*]const ShaderEXT) callconv(.c) void;
 pub const PfnSetSwapchainPresentTimingQueueSizeEXT = *const fn (Device, SwapchainKHR, u32) callconv(.c) Result;
 pub const PfnGetSwapchainTimingPropertiesEXT = *const fn (Device, SwapchainKHR, *SwapchainTimingPropertiesEXT, ?*u64) callconv(.c) Result;
 pub const PfnGetSwapchainTimeDomainPropertiesEXT = *const fn (Device, SwapchainKHR, *SwapchainTimeDomainPropertiesEXT, ?*u64) callconv(.c) Result;
@@ -20489,7 +20489,7 @@ pub const PfnGetPhysicalDeviceCooperativeMatrixPropertiesKHR = *const fn (Physic
 pub const PfnGetPhysicalDeviceCooperativeMatrixProperties2EXT = *const fn (PhysicalDevice, *const PhysicalDeviceCooperativeMatrixInfo2EXT, *u32, ?[*]CooperativeMatrixProperties2EXT) callconv(.c) Result;
 pub const PfnGetExecutionGraphPipelineScratchSizeAMDX = *const fn (Device, Pipeline, *ExecutionGraphPipelineScratchSizeAMDX) callconv(.c) Result;
 pub const PfnGetExecutionGraphPipelineNodeIndexAMDX = *const fn (Device, Pipeline, *const PipelineShaderStageNodeCreateInfoAMDX, *u32) callconv(.c) Result;
-pub const PfnCreateExecutionGraphPipelinesAMDX = *const fn (Device, PipelineCache, u32, [*]const ExecutionGraphPipelineCreateInfoAMDX, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
+pub const PfnCreateExecutionGraphPipelinesAMDX = *const fn (Device, PipelineCache, u32, ?[*]const ExecutionGraphPipelineCreateInfoAMDX, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
 pub const PfnCmdInitializeGraphScratchMemoryAMDX = *const fn (CommandBuffer, Pipeline, DeviceAddress, DeviceSize) callconv(.c) void;
 pub const PfnCmdDispatchGraphAMDX = *const fn (CommandBuffer, DeviceAddress, DeviceSize, *const DispatchGraphCountInfoAMDX) callconv(.c) void;
 pub const PfnCmdDispatchGraphIndirectAMDX = *const fn (CommandBuffer, DeviceAddress, DeviceSize, *const DispatchGraphCountInfoAMDX) callconv(.c) void;
@@ -20538,7 +20538,7 @@ pub const PfnGetMemoryMetalHandleEXT = *const fn (Device, *const MemoryGetMetalH
 pub const PfnGetMemoryMetalHandlePropertiesEXT = *const fn (Device, ExternalMemoryHandleTypeFlagBits, ?*const anyopaque, *MemoryMetalHandlePropertiesEXT) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceCooperativeVectorPropertiesNV = *const fn (PhysicalDevice, *u32, ?[*]CooperativeVectorPropertiesNV) callconv(.c) Result;
 pub const PfnConvertCooperativeVectorMatrixNV = *const fn (Device, *const ConvertCooperativeVectorMatrixInfoNV) callconv(.c) Result;
-pub const PfnCmdConvertCooperativeVectorMatrixNV = *const fn (CommandBuffer, u32, [*]const ConvertCooperativeVectorMatrixInfoNV) callconv(.c) void;
+pub const PfnCmdConvertCooperativeVectorMatrixNV = *const fn (CommandBuffer, u32, ?[*]const ConvertCooperativeVectorMatrixInfoNV) callconv(.c) void;
 pub const PfnCmdDispatchTileQCOM = *const fn (CommandBuffer, *const DispatchTileInfoQCOM) callconv(.c) void;
 pub const PfnCmdBeginPerTileExecutionQCOM = *const fn (CommandBuffer, *const PerTileBeginInfoQCOM) callconv(.c) void;
 pub const PfnCmdEndPerTileExecutionQCOM = *const fn (CommandBuffer, *const PerTileEndInfoQCOM) callconv(.c) void;
@@ -20557,21 +20557,21 @@ pub const PfnDestroyTensorARM = *const fn (Device, TensorARM, ?*const Allocation
 pub const PfnCreateTensorViewARM = *const fn (Device, *const TensorViewCreateInfoARM, ?*const AllocationCallbacks, *TensorViewARM) callconv(.c) Result;
 pub const PfnDestroyTensorViewARM = *const fn (Device, TensorViewARM, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnGetTensorMemoryRequirementsARM = *const fn (Device, *const TensorMemoryRequirementsInfoARM, *MemoryRequirements2) callconv(.c) void;
-pub const PfnBindTensorMemoryARM = *const fn (Device, u32, [*]const BindTensorMemoryInfoARM) callconv(.c) Result;
+pub const PfnBindTensorMemoryARM = *const fn (Device, u32, ?[*]const BindTensorMemoryInfoARM) callconv(.c) Result;
 pub const PfnGetDeviceTensorMemoryRequirementsARM = *const fn (Device, *const DeviceTensorMemoryRequirementsARM, *MemoryRequirements2) callconv(.c) void;
 pub const PfnCmdCopyTensorARM = *const fn (CommandBuffer, *const CopyTensorInfoARM) callconv(.c) void;
 pub const PfnGetTensorOpaqueCaptureDescriptorDataARM = *const fn (Device, *const TensorCaptureDescriptorDataInfoARM, ?*anyopaque) callconv(.c) Result;
 pub const PfnGetTensorViewOpaqueCaptureDescriptorDataARM = *const fn (Device, *const TensorViewCaptureDescriptorDataInfoARM, ?*anyopaque) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceExternalTensorPropertiesARM = *const fn (PhysicalDevice, *const PhysicalDeviceExternalTensorInfoARM, *ExternalTensorPropertiesARM) callconv(.c) void;
-pub const PfnCreateDataGraphPipelinesARM = *const fn (Device, DeferredOperationKHR, PipelineCache, u32, [*]const DataGraphPipelineCreateInfoARM, ?*const AllocationCallbacks, [*]Pipeline) callconv(.c) Result;
+pub const PfnCreateDataGraphPipelinesARM = *const fn (Device, DeferredOperationKHR, PipelineCache, u32, ?[*]const DataGraphPipelineCreateInfoARM, ?*const AllocationCallbacks, ?[*]Pipeline) callconv(.c) Result;
 pub const PfnCreateDataGraphPipelineSessionARM = *const fn (Device, *const DataGraphPipelineSessionCreateInfoARM, ?*const AllocationCallbacks, *DataGraphPipelineSessionARM) callconv(.c) Result;
 pub const PfnGetDataGraphPipelineSessionBindPointRequirementsARM = *const fn (Device, *const DataGraphPipelineSessionBindPointRequirementsInfoARM, *u32, ?[*]DataGraphPipelineSessionBindPointRequirementARM) callconv(.c) Result;
 pub const PfnGetDataGraphPipelineSessionMemoryRequirementsARM = *const fn (Device, *const DataGraphPipelineSessionMemoryRequirementsInfoARM, *MemoryRequirements2) callconv(.c) void;
-pub const PfnBindDataGraphPipelineSessionMemoryARM = *const fn (Device, u32, [*]const BindDataGraphPipelineSessionMemoryInfoARM) callconv(.c) Result;
+pub const PfnBindDataGraphPipelineSessionMemoryARM = *const fn (Device, u32, ?[*]const BindDataGraphPipelineSessionMemoryInfoARM) callconv(.c) Result;
 pub const PfnDestroyDataGraphPipelineSessionARM = *const fn (Device, DataGraphPipelineSessionARM, ?*const AllocationCallbacks) callconv(.c) void;
 pub const PfnCmdDispatchDataGraphARM = *const fn (CommandBuffer, DataGraphPipelineSessionARM, ?*const DataGraphPipelineDispatchInfoARM) callconv(.c) void;
 pub const PfnGetDataGraphPipelineAvailablePropertiesARM = *const fn (Device, *const DataGraphPipelineInfoARM, *u32, ?[*]DataGraphPipelinePropertyARM) callconv(.c) Result;
-pub const PfnGetDataGraphPipelinePropertiesARM = *const fn (Device, *const DataGraphPipelineInfoARM, u32, [*]DataGraphPipelinePropertyQueryResultARM) callconv(.c) Result;
+pub const PfnGetDataGraphPipelinePropertiesARM = *const fn (Device, *const DataGraphPipelineInfoARM, u32, ?[*]DataGraphPipelinePropertyQueryResultARM) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM = *const fn (PhysicalDevice, u32, *u32, ?[*]QueueFamilyDataGraphPropertiesARM) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM = *const fn (PhysicalDevice, *const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM, *QueueFamilyDataGraphProcessingEnginePropertiesARM) callconv(.c) void;
 pub const PfnGetNativeBufferPropertiesOHOS = *const fn (Device, *const OH_NativeBuffer, *NativeBufferPropertiesOHOS) callconv(.c) Result;
@@ -20579,16 +20579,16 @@ pub const PfnGetMemoryNativeBufferOHOS = *const fn (Device, *const MemoryGetNati
 pub const PfnQueueSetPerfHintQCOM = *const fn (Queue, *const PerfHintInfoQCOM) callconv(.c) Result;
 pub const PfnEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM = *const fn (PhysicalDevice, u32, *u32, ?[*]PerformanceCounterARM, ?[*]PerformanceCounterDescriptionARM) callconv(.c) Result;
 pub const PfnCmdSetComputeOccupancyPriorityNV = *const fn (CommandBuffer, *const ComputeOccupancyPriorityParametersNV) callconv(.c) void;
-pub const PfnWriteSamplerDescriptorsEXT = *const fn (Device, u32, [*]const SamplerCreateInfo, [*]const HostAddressRangeEXT) callconv(.c) Result;
-pub const PfnWriteResourceDescriptorsEXT = *const fn (Device, u32, [*]const ResourceDescriptorInfoEXT, [*]const HostAddressRangeEXT) callconv(.c) Result;
+pub const PfnWriteSamplerDescriptorsEXT = *const fn (Device, u32, ?[*]const SamplerCreateInfo, ?[*]const HostAddressRangeEXT) callconv(.c) Result;
+pub const PfnWriteResourceDescriptorsEXT = *const fn (Device, u32, ?[*]const ResourceDescriptorInfoEXT, ?[*]const HostAddressRangeEXT) callconv(.c) Result;
 pub const PfnCmdBindSamplerHeapEXT = *const fn (CommandBuffer, *const BindHeapInfoEXT) callconv(.c) void;
 pub const PfnCmdBindResourceHeapEXT = *const fn (CommandBuffer, *const BindHeapInfoEXT) callconv(.c) void;
 pub const PfnCmdPushDataEXT = *const fn (CommandBuffer, *const PushDataInfoEXT) callconv(.c) void;
 pub const PfnRegisterCustomBorderColorEXT = *const fn (Device, *const SamplerCustomBorderColorCreateInfoEXT, Bool32, *u32) callconv(.c) Result;
 pub const PfnUnregisterCustomBorderColorEXT = *const fn (Device, u32) callconv(.c) void;
-pub const PfnGetImageOpaqueCaptureDataEXT = *const fn (Device, u32, [*]const Image, [*]HostAddressRangeEXT) callconv(.c) Result;
+pub const PfnGetImageOpaqueCaptureDataEXT = *const fn (Device, u32, ?[*]const Image, ?[*]HostAddressRangeEXT) callconv(.c) Result;
 pub const PfnGetPhysicalDeviceDescriptorSizeEXT = *const fn (PhysicalDevice, DescriptorType) callconv(.c) DeviceSize;
-pub const PfnGetTensorOpaqueCaptureDataARM = *const fn (Device, u32, [*]const TensorARM, [*]HostAddressRangeEXT) callconv(.c) Result;
+pub const PfnGetTensorOpaqueCaptureDataARM = *const fn (Device, u32, ?[*]const TensorARM, ?[*]HostAddressRangeEXT) callconv(.c) Result;
 pub const PfnCmdCopyMemoryKHR = *const fn (CommandBuffer, ?*const CopyDeviceMemoryInfoKHR) callconv(.c) void;
 pub const PfnCmdCopyMemoryToImageKHR = *const fn (CommandBuffer, ?*const CopyDeviceMemoryImageInfoKHR) callconv(.c) void;
 pub const PfnCmdCopyImageToMemoryKHR = *const fn (CommandBuffer, ?*const CopyDeviceMemoryImageInfoKHR) callconv(.c) void;
@@ -20602,7 +20602,7 @@ pub const PfnCmdEndTransformFeedback2EXT = *const fn (CommandBuffer, u32, u32, ?
 pub const PfnCmdDrawIndirectByteCount2EXT = *const fn (CommandBuffer, u32, u32, *const BindTransformFeedbackBuffer2InfoEXT, u32, u32) callconv(.c) void;
 pub const PfnCmdWriteMarkerToMemoryAMD = *const fn (CommandBuffer, *const MemoryMarkerInfoAMD) callconv(.c) void;
 pub const PfnCmdBindIndexBuffer3KHR = *const fn (CommandBuffer, *const BindIndexBuffer3InfoKHR) callconv(.c) void;
-pub const PfnCmdBindVertexBuffers3KHR = *const fn (CommandBuffer, u32, u32, [*]const BindVertexBuffer3InfoKHR) callconv(.c) void;
+pub const PfnCmdBindVertexBuffers3KHR = *const fn (CommandBuffer, u32, u32, ?[*]const BindVertexBuffer3InfoKHR) callconv(.c) void;
 pub const PfnCmdDrawIndirect2KHR = *const fn (CommandBuffer, *const DrawIndirect2InfoKHR) callconv(.c) void;
 pub const PfnCmdDrawIndexedIndirect2KHR = *const fn (CommandBuffer, *const DrawIndirect2InfoKHR) callconv(.c) void;
 pub const PfnCmdDrawIndirectCount2KHR = *const fn (CommandBuffer, *const DrawIndirectCount2InfoKHR) callconv(.c) void;
@@ -22171,7 +22171,7 @@ pub fn enumerateDeviceExtensionProperties(physical_device: PhysicalDevice, p_lay
 pub fn getDeviceQueue(device: Device, queue_family_index: u32, queue_index: u32, p_queue: *Queue) void {
     return (dispatch.vkGetDeviceQueue orelse unloaded("vkGetDeviceQueue"))(device, queue_family_index, queue_index, p_queue);
 }
-pub fn queueSubmit(queue: Queue, submit_count: u32, p_submits: [*]const SubmitInfo, fence: Fence) Error!void {
+pub fn queueSubmit(queue: Queue, submit_count: u32, p_submits: ?[*]const SubmitInfo, fence: Fence) Error!void {
     return checkSuccess((dispatch.vkQueueSubmit orelse unloaded("vkQueueSubmit"))(queue, submit_count, p_submits, fence));
 }
 pub fn queueWaitIdle(queue: Queue) Error!void {
@@ -22192,10 +22192,10 @@ pub fn mapMemory(device: Device, memory: DeviceMemory, offset: DeviceSize, size:
 pub fn unmapMemory(device: Device, memory: DeviceMemory) void {
     return (dispatch.vkUnmapMemory orelse unloaded("vkUnmapMemory"))(device, memory);
 }
-pub fn flushMappedMemoryRanges(device: Device, memory_range_count: u32, p_memory_ranges: [*]const MappedMemoryRange) Error!void {
+pub fn flushMappedMemoryRanges(device: Device, memory_range_count: u32, p_memory_ranges: ?[*]const MappedMemoryRange) Error!void {
     return checkSuccess((dispatch.vkFlushMappedMemoryRanges orelse unloaded("vkFlushMappedMemoryRanges"))(device, memory_range_count, p_memory_ranges));
 }
-pub fn invalidateMappedMemoryRanges(device: Device, memory_range_count: u32, p_memory_ranges: [*]const MappedMemoryRange) Error!void {
+pub fn invalidateMappedMemoryRanges(device: Device, memory_range_count: u32, p_memory_ranges: ?[*]const MappedMemoryRange) Error!void {
     return checkSuccess((dispatch.vkInvalidateMappedMemoryRanges orelse unloaded("vkInvalidateMappedMemoryRanges"))(device, memory_range_count, p_memory_ranges));
 }
 pub fn getDeviceMemoryCommitment(device: Device, memory: DeviceMemory, p_committed_memory_in_bytes: *DeviceSize) void {
@@ -22219,7 +22219,7 @@ pub fn getImageSparseMemoryRequirements(device: Device, image: Image, p_sparse_m
 pub fn getPhysicalDeviceSparseImageFormatProperties(physical_device: PhysicalDevice, format: Format, @"type": ImageType, samples: SampleCountFlagBits, usage: ImageUsageFlags, tiling: ImageTiling, p_property_count: *u32, p_properties: ?[*]SparseImageFormatProperties) void {
     return (dispatch.vkGetPhysicalDeviceSparseImageFormatProperties orelse unloaded("vkGetPhysicalDeviceSparseImageFormatProperties"))(physical_device, format, @"type", samples, usage, tiling, p_property_count, p_properties);
 }
-pub fn queueBindSparse(queue: Queue, bind_info_count: u32, p_bind_info: [*]const BindSparseInfo, fence: Fence) Error!void {
+pub fn queueBindSparse(queue: Queue, bind_info_count: u32, p_bind_info: ?[*]const BindSparseInfo, fence: Fence) Error!void {
     return checkSuccess((dispatch.vkQueueBindSparse orelse unloaded("vkQueueBindSparse"))(queue, bind_info_count, p_bind_info, fence));
 }
 pub fn createFence(device: Device, p_create_info: *const FenceCreateInfo, p_allocator: ?*const AllocationCallbacks, p_fence: *Fence) Error!void {
@@ -22228,13 +22228,13 @@ pub fn createFence(device: Device, p_create_info: *const FenceCreateInfo, p_allo
 pub fn destroyFence(device: Device, fence: Fence, p_allocator: ?*const AllocationCallbacks) void {
     return (dispatch.vkDestroyFence orelse unloaded("vkDestroyFence"))(device, fence, p_allocator);
 }
-pub fn resetFences(device: Device, fence_count: u32, p_fences: [*]const Fence) Error!void {
+pub fn resetFences(device: Device, fence_count: u32, p_fences: ?[*]const Fence) Error!void {
     return checkSuccess((dispatch.vkResetFences orelse unloaded("vkResetFences"))(device, fence_count, p_fences));
 }
 pub fn getFenceStatus(device: Device, fence: Fence) Error!Result {
     return (dispatch.vkGetFenceStatus orelse unloaded("vkGetFenceStatus"))(device, fence).check();
 }
-pub fn waitForFences(device: Device, fence_count: u32, p_fences: [*]const Fence, wait_all: Bool32, timeout: u64) Error!Result {
+pub fn waitForFences(device: Device, fence_count: u32, p_fences: ?[*]const Fence, wait_all: Bool32, timeout: u64) Error!Result {
     return (dispatch.vkWaitForFences orelse unloaded("vkWaitForFences"))(device, fence_count, p_fences, wait_all, timeout).check();
 }
 pub fn createSemaphore(device: Device, p_create_info: *const SemaphoreCreateInfo, p_allocator: ?*const AllocationCallbacks, p_semaphore: *Semaphore) Error!void {
@@ -22313,7 +22313,7 @@ pub fn destroyPipelineCache(device: Device, pipeline_cache: PipelineCache, p_all
 pub fn getPipelineCacheData(device: Device, pipeline_cache: PipelineCache, p_data_size: *usize, p_data: ?*anyopaque) Error!Result {
     return (dispatch.vkGetPipelineCacheData orelse unloaded("vkGetPipelineCacheData"))(device, pipeline_cache, p_data_size, p_data).check();
 }
-pub fn mergePipelineCaches(device: Device, dst_cache: PipelineCache, src_cache_count: u32, p_src_caches: [*]const PipelineCache) Error!void {
+pub fn mergePipelineCaches(device: Device, dst_cache: PipelineCache, src_cache_count: u32, p_src_caches: ?[*]const PipelineCache) Error!void {
     return checkSuccess((dispatch.vkMergePipelineCaches orelse unloaded("vkMergePipelineCaches"))(device, dst_cache, src_cache_count, p_src_caches));
 }
 pub fn createPipelineBinariesKHR(device: Device, p_create_info: *const PipelineBinaryCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_binaries: *PipelineBinaryHandlesInfoKHR) Error!Result {
@@ -22331,10 +22331,10 @@ pub fn getPipelineBinaryDataKHR(device: Device, p_info: *const PipelineBinaryDat
 pub fn releaseCapturedPipelineDataKHR(device: Device, p_info: *const ReleaseCapturedPipelineDataInfoKHR, p_allocator: ?*const AllocationCallbacks) Error!void {
     return checkSuccess((dispatch.vkReleaseCapturedPipelineDataKHR orelse unloaded("vkReleaseCapturedPipelineDataKHR"))(device, p_info, p_allocator));
 }
-pub fn createGraphicsPipelines(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const GraphicsPipelineCreateInfo, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createGraphicsPipelines(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const GraphicsPipelineCreateInfo, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateGraphicsPipelines orelse unloaded("vkCreateGraphicsPipelines"))(device, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
-pub fn createComputePipelines(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const ComputePipelineCreateInfo, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createComputePipelines(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const ComputePipelineCreateInfo, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateComputePipelines orelse unloaded("vkCreateComputePipelines"))(device, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
 pub fn getDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(device: Device, renderpass: RenderPass, p_max_workgroup_size: *Extent2D) Error!void {
@@ -22370,13 +22370,13 @@ pub fn destroyDescriptorPool(device: Device, descriptor_pool: DescriptorPool, p_
 pub fn resetDescriptorPool(device: Device, descriptor_pool: DescriptorPool, flags: DescriptorPoolResetFlags) Error!void {
     return checkSuccess((dispatch.vkResetDescriptorPool orelse unloaded("vkResetDescriptorPool"))(device, descriptor_pool, flags));
 }
-pub fn allocateDescriptorSets(device: Device, p_allocate_info: *const DescriptorSetAllocateInfo, p_descriptor_sets: [*]DescriptorSet) Error!void {
+pub fn allocateDescriptorSets(device: Device, p_allocate_info: *const DescriptorSetAllocateInfo, p_descriptor_sets: ?[*]DescriptorSet) Error!void {
     return checkSuccess((dispatch.vkAllocateDescriptorSets orelse unloaded("vkAllocateDescriptorSets"))(device, p_allocate_info, p_descriptor_sets));
 }
-pub fn freeDescriptorSets(device: Device, descriptor_pool: DescriptorPool, descriptor_set_count: u32, p_descriptor_sets: [*]const DescriptorSet) Error!void {
+pub fn freeDescriptorSets(device: Device, descriptor_pool: DescriptorPool, descriptor_set_count: u32, p_descriptor_sets: ?[*]const DescriptorSet) Error!void {
     return checkSuccess((dispatch.vkFreeDescriptorSets orelse unloaded("vkFreeDescriptorSets"))(device, descriptor_pool, descriptor_set_count, p_descriptor_sets));
 }
-pub fn updateDescriptorSets(device: Device, descriptor_write_count: u32, p_descriptor_writes: [*]const WriteDescriptorSet, descriptor_copy_count: u32, p_descriptor_copies: [*]const CopyDescriptorSet) void {
+pub fn updateDescriptorSets(device: Device, descriptor_write_count: u32, p_descriptor_writes: ?[*]const WriteDescriptorSet, descriptor_copy_count: u32, p_descriptor_copies: ?[*]const CopyDescriptorSet) void {
     return (dispatch.vkUpdateDescriptorSets orelse unloaded("vkUpdateDescriptorSets"))(device, descriptor_write_count, p_descriptor_writes, descriptor_copy_count, p_descriptor_copies);
 }
 pub fn createFramebuffer(device: Device, p_create_info: *const FramebufferCreateInfo, p_allocator: ?*const AllocationCallbacks, p_framebuffer: *Framebuffer) Error!void {
@@ -22407,10 +22407,10 @@ pub fn destroyCommandPool(device: Device, command_pool: CommandPool, p_allocator
 pub fn resetCommandPool(device: Device, command_pool: CommandPool, flags: CommandPoolResetFlags) Error!void {
     return checkSuccess((dispatch.vkResetCommandPool orelse unloaded("vkResetCommandPool"))(device, command_pool, flags));
 }
-pub fn allocateCommandBuffers(device: Device, p_allocate_info: *const CommandBufferAllocateInfo, p_command_buffers: [*]CommandBuffer) Error!void {
+pub fn allocateCommandBuffers(device: Device, p_allocate_info: *const CommandBufferAllocateInfo, p_command_buffers: ?[*]CommandBuffer) Error!void {
     return checkSuccess((dispatch.vkAllocateCommandBuffers orelse unloaded("vkAllocateCommandBuffers"))(device, p_allocate_info, p_command_buffers));
 }
-pub fn freeCommandBuffers(device: Device, command_pool: CommandPool, command_buffer_count: u32, p_command_buffers: [*]const CommandBuffer) void {
+pub fn freeCommandBuffers(device: Device, command_pool: CommandPool, command_buffer_count: u32, p_command_buffers: ?[*]const CommandBuffer) void {
     return (dispatch.vkFreeCommandBuffers orelse unloaded("vkFreeCommandBuffers"))(device, command_pool, command_buffer_count, p_command_buffers);
 }
 pub fn beginCommandBuffer(command_buffer: CommandBuffer, p_begin_info: *const CommandBufferBeginInfo) Error!void {
@@ -22431,10 +22431,10 @@ pub fn cmdSetPrimitiveRestartIndexEXT(command_buffer: CommandBuffer, primitive_r
 pub fn cmdSetAttachmentFeedbackLoopEnableEXT(command_buffer: CommandBuffer, aspect_mask: ImageAspectFlags) void {
     return (dispatch.vkCmdSetAttachmentFeedbackLoopEnableEXT orelse unloaded("vkCmdSetAttachmentFeedbackLoopEnableEXT"))(command_buffer, aspect_mask);
 }
-pub fn cmdSetViewport(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewports: [*]const Viewport) void {
+pub fn cmdSetViewport(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewports: ?[*]const Viewport) void {
     return (dispatch.vkCmdSetViewport orelse unloaded("vkCmdSetViewport"))(command_buffer, first_viewport, viewport_count, p_viewports);
 }
-pub fn cmdSetScissor(command_buffer: CommandBuffer, first_scissor: u32, scissor_count: u32, p_scissors: [*]const Rect2D) void {
+pub fn cmdSetScissor(command_buffer: CommandBuffer, first_scissor: u32, scissor_count: u32, p_scissors: ?[*]const Rect2D) void {
     return (dispatch.vkCmdSetScissor orelse unloaded("vkCmdSetScissor"))(command_buffer, first_scissor, scissor_count, p_scissors);
 }
 pub fn cmdSetLineWidth(command_buffer: CommandBuffer, line_width: f32) void {
@@ -22458,13 +22458,13 @@ pub fn cmdSetStencilWriteMask(command_buffer: CommandBuffer, face_mask: StencilF
 pub fn cmdSetStencilReference(command_buffer: CommandBuffer, face_mask: StencilFaceFlags, reference: u32) void {
     return (dispatch.vkCmdSetStencilReference orelse unloaded("vkCmdSetStencilReference"))(command_buffer, face_mask, reference);
 }
-pub fn cmdBindDescriptorSets(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, first_set: u32, descriptor_set_count: u32, p_descriptor_sets: [*]const DescriptorSet, dynamic_offset_count: u32, p_dynamic_offsets: [*]const u32) void {
+pub fn cmdBindDescriptorSets(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, first_set: u32, descriptor_set_count: u32, p_descriptor_sets: ?[*]const DescriptorSet, dynamic_offset_count: u32, p_dynamic_offsets: ?[*]const u32) void {
     return (dispatch.vkCmdBindDescriptorSets orelse unloaded("vkCmdBindDescriptorSets"))(command_buffer, pipeline_bind_point, layout, first_set, descriptor_set_count, p_descriptor_sets, dynamic_offset_count, p_dynamic_offsets);
 }
 pub fn cmdBindIndexBuffer(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize, index_type: IndexType) void {
     return (dispatch.vkCmdBindIndexBuffer orelse unloaded("vkCmdBindIndexBuffer"))(command_buffer, buffer, offset, index_type);
 }
-pub fn cmdBindVertexBuffers(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: [*]const Buffer, p_offsets: [*]const DeviceSize) void {
+pub fn cmdBindVertexBuffers(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: ?[*]const Buffer, p_offsets: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdBindVertexBuffers orelse unloaded("vkCmdBindVertexBuffers"))(command_buffer, first_binding, binding_count, p_buffers, p_offsets);
 }
 pub fn cmdDraw(command_buffer: CommandBuffer, vertex_count: u32, instance_count: u32, first_vertex: u32, first_instance: u32) void {
@@ -22473,10 +22473,10 @@ pub fn cmdDraw(command_buffer: CommandBuffer, vertex_count: u32, instance_count:
 pub fn cmdDrawIndexed(command_buffer: CommandBuffer, index_count: u32, instance_count: u32, first_index: u32, vertex_offset: i32, first_instance: u32) void {
     return (dispatch.vkCmdDrawIndexed orelse unloaded("vkCmdDrawIndexed"))(command_buffer, index_count, instance_count, first_index, vertex_offset, first_instance);
 }
-pub fn cmdDrawMultiEXT(command_buffer: CommandBuffer, draw_count: u32, p_vertex_info: [*]const MultiDrawInfoEXT, instance_count: u32, first_instance: u32, stride: u32) void {
+pub fn cmdDrawMultiEXT(command_buffer: CommandBuffer, draw_count: u32, p_vertex_info: ?[*]const MultiDrawInfoEXT, instance_count: u32, first_instance: u32, stride: u32) void {
     return (dispatch.vkCmdDrawMultiEXT orelse unloaded("vkCmdDrawMultiEXT"))(command_buffer, draw_count, p_vertex_info, instance_count, first_instance, stride);
 }
-pub fn cmdDrawMultiIndexedEXT(command_buffer: CommandBuffer, draw_count: u32, p_index_info: [*]const MultiDrawIndexedInfoEXT, instance_count: u32, first_instance: u32, stride: u32, p_vertex_offset: ?*const i32) void {
+pub fn cmdDrawMultiIndexedEXT(command_buffer: CommandBuffer, draw_count: u32, p_index_info: ?[*]const MultiDrawIndexedInfoEXT, instance_count: u32, first_instance: u32, stride: u32, p_vertex_offset: ?*const i32) void {
     return (dispatch.vkCmdDrawMultiIndexedEXT orelse unloaded("vkCmdDrawMultiIndexedEXT"))(command_buffer, draw_count, p_index_info, instance_count, first_instance, stride, p_vertex_offset);
 }
 pub fn cmdDrawIndirect(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize, draw_count: u32, stride: u32) void {
@@ -22503,19 +22503,19 @@ pub fn cmdDrawClusterIndirectHUAWEI(command_buffer: CommandBuffer, buffer: Buffe
 pub fn cmdUpdatePipelineIndirectBufferNV(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, pipeline: Pipeline) void {
     return (dispatch.vkCmdUpdatePipelineIndirectBufferNV orelse unloaded("vkCmdUpdatePipelineIndirectBufferNV"))(command_buffer, pipeline_bind_point, pipeline);
 }
-pub fn cmdCopyBuffer(command_buffer: CommandBuffer, src_buffer: Buffer, dst_buffer: Buffer, region_count: u32, p_regions: [*]const BufferCopy) void {
+pub fn cmdCopyBuffer(command_buffer: CommandBuffer, src_buffer: Buffer, dst_buffer: Buffer, region_count: u32, p_regions: ?[*]const BufferCopy) void {
     return (dispatch.vkCmdCopyBuffer orelse unloaded("vkCmdCopyBuffer"))(command_buffer, src_buffer, dst_buffer, region_count, p_regions);
 }
-pub fn cmdCopyImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: [*]const ImageCopy) void {
+pub fn cmdCopyImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: ?[*]const ImageCopy) void {
     return (dispatch.vkCmdCopyImage orelse unloaded("vkCmdCopyImage"))(command_buffer, src_image, src_image_layout, dst_image, dst_image_layout, region_count, p_regions);
 }
-pub fn cmdBlitImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: [*]const ImageBlit, filter: Filter) void {
+pub fn cmdBlitImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: ?[*]const ImageBlit, filter: Filter) void {
     return (dispatch.vkCmdBlitImage orelse unloaded("vkCmdBlitImage"))(command_buffer, src_image, src_image_layout, dst_image, dst_image_layout, region_count, p_regions, filter);
 }
-pub fn cmdCopyBufferToImage(command_buffer: CommandBuffer, src_buffer: Buffer, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: [*]const BufferImageCopy) void {
+pub fn cmdCopyBufferToImage(command_buffer: CommandBuffer, src_buffer: Buffer, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: ?[*]const BufferImageCopy) void {
     return (dispatch.vkCmdCopyBufferToImage orelse unloaded("vkCmdCopyBufferToImage"))(command_buffer, src_buffer, dst_image, dst_image_layout, region_count, p_regions);
 }
-pub fn cmdCopyImageToBuffer(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_buffer: Buffer, region_count: u32, p_regions: [*]const BufferImageCopy) void {
+pub fn cmdCopyImageToBuffer(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_buffer: Buffer, region_count: u32, p_regions: ?[*]const BufferImageCopy) void {
     return (dispatch.vkCmdCopyImageToBuffer orelse unloaded("vkCmdCopyImageToBuffer"))(command_buffer, src_image, src_image_layout, dst_buffer, region_count, p_regions);
 }
 pub fn cmdCopyMemoryIndirectNV(command_buffer: CommandBuffer, copy_buffer_address: DeviceAddress, copy_count: u32, stride: u32) void {
@@ -22524,7 +22524,7 @@ pub fn cmdCopyMemoryIndirectNV(command_buffer: CommandBuffer, copy_buffer_addres
 pub fn cmdCopyMemoryIndirectKHR(command_buffer: CommandBuffer, p_copy_memory_indirect_info: *const CopyMemoryIndirectInfoKHR) void {
     return (dispatch.vkCmdCopyMemoryIndirectKHR orelse unloaded("vkCmdCopyMemoryIndirectKHR"))(command_buffer, p_copy_memory_indirect_info);
 }
-pub fn cmdCopyMemoryToImageIndirectNV(command_buffer: CommandBuffer, copy_buffer_address: DeviceAddress, copy_count: u32, stride: u32, dst_image: Image, dst_image_layout: ImageLayout, p_image_subresources: [*]const ImageSubresourceLayers) void {
+pub fn cmdCopyMemoryToImageIndirectNV(command_buffer: CommandBuffer, copy_buffer_address: DeviceAddress, copy_count: u32, stride: u32, dst_image: Image, dst_image_layout: ImageLayout, p_image_subresources: ?[*]const ImageSubresourceLayers) void {
     return (dispatch.vkCmdCopyMemoryToImageIndirectNV orelse unloaded("vkCmdCopyMemoryToImageIndirectNV"))(command_buffer, copy_buffer_address, copy_count, stride, dst_image, dst_image_layout, p_image_subresources);
 }
 pub fn cmdCopyMemoryToImageIndirectKHR(command_buffer: CommandBuffer, p_copy_memory_to_image_indirect_info: *const CopyMemoryToImageIndirectInfoKHR) void {
@@ -22536,16 +22536,16 @@ pub fn cmdUpdateBuffer(command_buffer: CommandBuffer, dst_buffer: Buffer, dst_of
 pub fn cmdFillBuffer(command_buffer: CommandBuffer, dst_buffer: Buffer, dst_offset: DeviceSize, size: DeviceSize, data: u32) void {
     return (dispatch.vkCmdFillBuffer orelse unloaded("vkCmdFillBuffer"))(command_buffer, dst_buffer, dst_offset, size, data);
 }
-pub fn cmdClearColorImage(command_buffer: CommandBuffer, image: Image, image_layout: ImageLayout, p_color: *const ClearColorValue, range_count: u32, p_ranges: [*]const ImageSubresourceRange) void {
+pub fn cmdClearColorImage(command_buffer: CommandBuffer, image: Image, image_layout: ImageLayout, p_color: *const ClearColorValue, range_count: u32, p_ranges: ?[*]const ImageSubresourceRange) void {
     return (dispatch.vkCmdClearColorImage orelse unloaded("vkCmdClearColorImage"))(command_buffer, image, image_layout, p_color, range_count, p_ranges);
 }
-pub fn cmdClearDepthStencilImage(command_buffer: CommandBuffer, image: Image, image_layout: ImageLayout, p_depth_stencil: *const ClearDepthStencilValue, range_count: u32, p_ranges: [*]const ImageSubresourceRange) void {
+pub fn cmdClearDepthStencilImage(command_buffer: CommandBuffer, image: Image, image_layout: ImageLayout, p_depth_stencil: *const ClearDepthStencilValue, range_count: u32, p_ranges: ?[*]const ImageSubresourceRange) void {
     return (dispatch.vkCmdClearDepthStencilImage orelse unloaded("vkCmdClearDepthStencilImage"))(command_buffer, image, image_layout, p_depth_stencil, range_count, p_ranges);
 }
-pub fn cmdClearAttachments(command_buffer: CommandBuffer, attachment_count: u32, p_attachments: [*]const ClearAttachment, rect_count: u32, p_rects: [*]const ClearRect) void {
+pub fn cmdClearAttachments(command_buffer: CommandBuffer, attachment_count: u32, p_attachments: ?[*]const ClearAttachment, rect_count: u32, p_rects: ?[*]const ClearRect) void {
     return (dispatch.vkCmdClearAttachments orelse unloaded("vkCmdClearAttachments"))(command_buffer, attachment_count, p_attachments, rect_count, p_rects);
 }
-pub fn cmdResolveImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: [*]const ImageResolve) void {
+pub fn cmdResolveImage(command_buffer: CommandBuffer, src_image: Image, src_image_layout: ImageLayout, dst_image: Image, dst_image_layout: ImageLayout, region_count: u32, p_regions: ?[*]const ImageResolve) void {
     return (dispatch.vkCmdResolveImage orelse unloaded("vkCmdResolveImage"))(command_buffer, src_image, src_image_layout, dst_image, dst_image_layout, region_count, p_regions);
 }
 pub fn cmdSetEvent(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags) void {
@@ -22554,10 +22554,10 @@ pub fn cmdSetEvent(command_buffer: CommandBuffer, event: Event, stage_mask: Pipe
 pub fn cmdResetEvent(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags) void {
     return (dispatch.vkCmdResetEvent orelse unloaded("vkCmdResetEvent"))(command_buffer, event, stage_mask);
 }
-pub fn cmdWaitEvents(command_buffer: CommandBuffer, event_count: u32, p_events: [*]const Event, src_stage_mask: PipelineStageFlags, dst_stage_mask: PipelineStageFlags, memory_barrier_count: u32, p_memory_barriers: [*]const MemoryBarrier, buffer_memory_barrier_count: u32, p_buffer_memory_barriers: [*]const BufferMemoryBarrier, image_memory_barrier_count: u32, p_image_memory_barriers: [*]const ImageMemoryBarrier) void {
+pub fn cmdWaitEvents(command_buffer: CommandBuffer, event_count: u32, p_events: ?[*]const Event, src_stage_mask: PipelineStageFlags, dst_stage_mask: PipelineStageFlags, memory_barrier_count: u32, p_memory_barriers: ?[*]const MemoryBarrier, buffer_memory_barrier_count: u32, p_buffer_memory_barriers: ?[*]const BufferMemoryBarrier, image_memory_barrier_count: u32, p_image_memory_barriers: ?[*]const ImageMemoryBarrier) void {
     return (dispatch.vkCmdWaitEvents orelse unloaded("vkCmdWaitEvents"))(command_buffer, event_count, p_events, src_stage_mask, dst_stage_mask, memory_barrier_count, p_memory_barriers, buffer_memory_barrier_count, p_buffer_memory_barriers, image_memory_barrier_count, p_image_memory_barriers);
 }
-pub fn cmdPipelineBarrier(command_buffer: CommandBuffer, src_stage_mask: PipelineStageFlags, dst_stage_mask: PipelineStageFlags, dependency_flags: DependencyFlags, memory_barrier_count: u32, p_memory_barriers: [*]const MemoryBarrier, buffer_memory_barrier_count: u32, p_buffer_memory_barriers: [*]const BufferMemoryBarrier, image_memory_barrier_count: u32, p_image_memory_barriers: [*]const ImageMemoryBarrier) void {
+pub fn cmdPipelineBarrier(command_buffer: CommandBuffer, src_stage_mask: PipelineStageFlags, dst_stage_mask: PipelineStageFlags, dependency_flags: DependencyFlags, memory_barrier_count: u32, p_memory_barriers: ?[*]const MemoryBarrier, buffer_memory_barrier_count: u32, p_buffer_memory_barriers: ?[*]const BufferMemoryBarrier, image_memory_barrier_count: u32, p_image_memory_barriers: ?[*]const ImageMemoryBarrier) void {
     return (dispatch.vkCmdPipelineBarrier orelse unloaded("vkCmdPipelineBarrier"))(command_buffer, src_stage_mask, dst_stage_mask, dependency_flags, memory_barrier_count, p_memory_barriers, buffer_memory_barrier_count, p_buffer_memory_barriers, image_memory_barrier_count, p_image_memory_barriers);
 }
 pub fn cmdBeginQuery(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32, flags: QueryControlFlags) void {
@@ -22596,7 +22596,7 @@ pub fn cmdNextSubpass(command_buffer: CommandBuffer, contents: SubpassContents) 
 pub fn cmdEndRenderPass(command_buffer: CommandBuffer) void {
     return (dispatch.vkCmdEndRenderPass orelse unloaded("vkCmdEndRenderPass"))(command_buffer);
 }
-pub fn cmdExecuteCommands(command_buffer: CommandBuffer, command_buffer_count: u32, p_command_buffers: [*]const CommandBuffer) void {
+pub fn cmdExecuteCommands(command_buffer: CommandBuffer, command_buffer_count: u32, p_command_buffers: ?[*]const CommandBuffer) void {
     return (dispatch.vkCmdExecuteCommands orelse unloaded("vkCmdExecuteCommands"))(command_buffer, command_buffer_count, p_command_buffers);
 }
 pub fn createAndroidSurfaceKHR(instance: Instance, p_create_info: *const AndroidSurfaceCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_surface: *SurfaceKHR) Error!void {
@@ -22626,7 +22626,7 @@ pub fn getDisplayPlaneCapabilitiesKHR(physical_device: PhysicalDevice, mode: Dis
 pub fn createDisplayPlaneSurfaceKHR(instance: Instance, p_create_info: *const DisplaySurfaceCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_surface: *SurfaceKHR) Error!void {
     return checkSuccess((dispatch.vkCreateDisplayPlaneSurfaceKHR orelse unloaded("vkCreateDisplayPlaneSurfaceKHR"))(instance, p_create_info, p_allocator, p_surface));
 }
-pub fn createSharedSwapchainsKHR(device: Device, swapchain_count: u32, p_create_infos: [*]const SwapchainCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_swapchains: [*]SwapchainKHR) Error!void {
+pub fn createSharedSwapchainsKHR(device: Device, swapchain_count: u32, p_create_infos: ?[*]const SwapchainCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_swapchains: ?[*]SwapchainKHR) Error!void {
     return checkSuccess((dispatch.vkCreateSharedSwapchainsKHR orelse unloaded("vkCreateSharedSwapchainsKHR"))(device, swapchain_count, p_create_infos, p_allocator, p_swapchains));
 }
 pub fn destroySurfaceKHR(instance: Instance, surface: SurfaceKHR, p_allocator: ?*const AllocationCallbacks) void {
@@ -22779,10 +22779,10 @@ pub fn createIndirectExecutionSetEXT(device: Device, p_create_info: *const Indir
 pub fn destroyIndirectExecutionSetEXT(device: Device, indirect_execution_set: IndirectExecutionSetEXT, p_allocator: ?*const AllocationCallbacks) void {
     return (dispatch.vkDestroyIndirectExecutionSetEXT orelse unloaded("vkDestroyIndirectExecutionSetEXT"))(device, indirect_execution_set, p_allocator);
 }
-pub fn updateIndirectExecutionSetPipelineEXT(device: Device, indirect_execution_set: IndirectExecutionSetEXT, execution_set_write_count: u32, p_execution_set_writes: [*]const WriteIndirectExecutionSetPipelineEXT) void {
+pub fn updateIndirectExecutionSetPipelineEXT(device: Device, indirect_execution_set: IndirectExecutionSetEXT, execution_set_write_count: u32, p_execution_set_writes: ?[*]const WriteIndirectExecutionSetPipelineEXT) void {
     return (dispatch.vkUpdateIndirectExecutionSetPipelineEXT orelse unloaded("vkUpdateIndirectExecutionSetPipelineEXT"))(device, indirect_execution_set, execution_set_write_count, p_execution_set_writes);
 }
-pub fn updateIndirectExecutionSetShaderEXT(device: Device, indirect_execution_set: IndirectExecutionSetEXT, execution_set_write_count: u32, p_execution_set_writes: [*]const WriteIndirectExecutionSetShaderEXT) void {
+pub fn updateIndirectExecutionSetShaderEXT(device: Device, indirect_execution_set: IndirectExecutionSetEXT, execution_set_write_count: u32, p_execution_set_writes: ?[*]const WriteIndirectExecutionSetShaderEXT) void {
     return (dispatch.vkUpdateIndirectExecutionSetShaderEXT orelse unloaded("vkUpdateIndirectExecutionSetShaderEXT"))(device, indirect_execution_set, execution_set_write_count, p_execution_set_writes);
 }
 pub fn getPhysicalDeviceFeatures2(physical_device: PhysicalDevice, p_features: *PhysicalDeviceFeatures2) void {
@@ -22813,7 +22813,7 @@ pub fn getPhysicalDeviceSparseImageFormatProperties2(physical_device: PhysicalDe
     return (dispatch.vkGetPhysicalDeviceSparseImageFormatProperties2 orelse unloaded("vkGetPhysicalDeviceSparseImageFormatProperties2"))(physical_device, p_format_info, p_property_count, p_properties);
 }
 pub const getPhysicalDeviceSparseImageFormatProperties2KHR = getPhysicalDeviceSparseImageFormatProperties2;
-pub fn cmdPushDescriptorSet(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, set: u32, descriptor_write_count: u32, p_descriptor_writes: [*]const WriteDescriptorSet) void {
+pub fn cmdPushDescriptorSet(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, set: u32, descriptor_write_count: u32, p_descriptor_writes: ?[*]const WriteDescriptorSet) void {
     return (dispatch.vkCmdPushDescriptorSet orelse unloaded("vkCmdPushDescriptorSet"))(command_buffer, pipeline_bind_point, layout, set, descriptor_write_count, p_descriptor_writes);
 }
 pub const cmdPushDescriptorSetKHR = cmdPushDescriptorSet;
@@ -22922,11 +22922,11 @@ pub fn getDeviceGroupPeerMemoryFeatures(device: Device, heap_index: u32, local_d
     return (dispatch.vkGetDeviceGroupPeerMemoryFeatures orelse unloaded("vkGetDeviceGroupPeerMemoryFeatures"))(device, heap_index, local_device_index, remote_device_index, p_peer_memory_features);
 }
 pub const getDeviceGroupPeerMemoryFeaturesKHR = getDeviceGroupPeerMemoryFeatures;
-pub fn bindBufferMemory2(device: Device, bind_info_count: u32, p_bind_infos: [*]const BindBufferMemoryInfo) Error!void {
+pub fn bindBufferMemory2(device: Device, bind_info_count: u32, p_bind_infos: ?[*]const BindBufferMemoryInfo) Error!void {
     return checkSuccess((dispatch.vkBindBufferMemory2 orelse unloaded("vkBindBufferMemory2"))(device, bind_info_count, p_bind_infos));
 }
 pub const bindBufferMemory2KHR = bindBufferMemory2;
-pub fn bindImageMemory2(device: Device, bind_info_count: u32, p_bind_infos: [*]const BindImageMemoryInfo) Error!void {
+pub fn bindImageMemory2(device: Device, bind_info_count: u32, p_bind_infos: ?[*]const BindImageMemoryInfo) Error!void {
     return checkSuccess((dispatch.vkBindImageMemory2 orelse unloaded("vkBindImageMemory2"))(device, bind_info_count, p_bind_infos));
 }
 pub const bindImageMemory2KHR = bindImageMemory2;
@@ -22966,7 +22966,7 @@ pub fn cmdPushDescriptorSetWithTemplate(command_buffer: CommandBuffer, descripto
     return (dispatch.vkCmdPushDescriptorSetWithTemplate orelse unloaded("vkCmdPushDescriptorSetWithTemplate"))(command_buffer, descriptor_update_template, layout, set, p_data);
 }
 pub const cmdPushDescriptorSetWithTemplateKHR = cmdPushDescriptorSetWithTemplate;
-pub fn setHdrMetadataEXT(device: Device, swapchain_count: u32, p_swapchains: [*]const SwapchainKHR, p_metadata: [*]const HdrMetadataEXT) void {
+pub fn setHdrMetadataEXT(device: Device, swapchain_count: u32, p_swapchains: ?[*]const SwapchainKHR, p_metadata: ?[*]const HdrMetadataEXT) void {
     return (dispatch.vkSetHdrMetadataEXT orelse unloaded("vkSetHdrMetadataEXT"))(device, swapchain_count, p_swapchains, p_metadata);
 }
 pub fn getSwapchainStatusKHR(device: Device, swapchain: SwapchainKHR) Error!Result {
@@ -22987,10 +22987,10 @@ pub fn createMacOSSurfaceMVK(instance: Instance, p_create_info: *const MacOSSurf
 pub fn createMetalSurfaceEXT(instance: Instance, p_create_info: *const MetalSurfaceCreateInfoEXT, p_allocator: ?*const AllocationCallbacks, p_surface: *SurfaceKHR) Error!void {
     return checkSuccess((dispatch.vkCreateMetalSurfaceEXT orelse unloaded("vkCreateMetalSurfaceEXT"))(instance, p_create_info, p_allocator, p_surface));
 }
-pub fn cmdSetViewportWScalingNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewport_w_scalings: [*]const ViewportWScalingNV) void {
+pub fn cmdSetViewportWScalingNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewport_w_scalings: ?[*]const ViewportWScalingNV) void {
     return (dispatch.vkCmdSetViewportWScalingNV orelse unloaded("vkCmdSetViewportWScalingNV"))(command_buffer, first_viewport, viewport_count, p_viewport_w_scalings);
 }
-pub fn cmdSetDiscardRectangleEXT(command_buffer: CommandBuffer, first_discard_rectangle: u32, discard_rectangle_count: u32, p_discard_rectangles: [*]const Rect2D) void {
+pub fn cmdSetDiscardRectangleEXT(command_buffer: CommandBuffer, first_discard_rectangle: u32, discard_rectangle_count: u32, p_discard_rectangles: ?[*]const Rect2D) void {
     return (dispatch.vkCmdSetDiscardRectangleEXT orelse unloaded("vkCmdSetDiscardRectangleEXT"))(command_buffer, first_discard_rectangle, discard_rectangle_count, p_discard_rectangles);
 }
 pub fn cmdSetDiscardRectangleEnableEXT(command_buffer: CommandBuffer, discard_rectangle_enable: Bool32) void {
@@ -23067,7 +23067,7 @@ pub fn destroyValidationCacheEXT(device: Device, validation_cache: ValidationCac
 pub fn getValidationCacheDataEXT(device: Device, validation_cache: ValidationCacheEXT, p_data_size: *usize, p_data: ?*anyopaque) Error!Result {
     return (dispatch.vkGetValidationCacheDataEXT orelse unloaded("vkGetValidationCacheDataEXT"))(device, validation_cache, p_data_size, p_data).check();
 }
-pub fn mergeValidationCachesEXT(device: Device, dst_cache: ValidationCacheEXT, src_cache_count: u32, p_src_caches: [*]const ValidationCacheEXT) Error!void {
+pub fn mergeValidationCachesEXT(device: Device, dst_cache: ValidationCacheEXT, src_cache_count: u32, p_src_caches: ?[*]const ValidationCacheEXT) Error!void {
     return checkSuccess((dispatch.vkMergeValidationCachesEXT orelse unloaded("vkMergeValidationCachesEXT"))(device, dst_cache, src_cache_count, p_src_caches));
 }
 pub fn getDescriptorSetLayoutSupport(device: Device, p_create_info: *const DescriptorSetLayoutCreateInfo, p_support: *DescriptorSetLayoutSupport) void {
@@ -23084,7 +23084,7 @@ pub fn getPhysicalDeviceCalibrateableTimeDomainsKHR(physical_device: PhysicalDev
     return (dispatch.vkGetPhysicalDeviceCalibrateableTimeDomainsKHR orelse unloaded("vkGetPhysicalDeviceCalibrateableTimeDomainsKHR"))(physical_device, p_time_domain_count, p_time_domains).check();
 }
 pub const getPhysicalDeviceCalibrateableTimeDomainsEXT = getPhysicalDeviceCalibrateableTimeDomainsKHR;
-pub fn getCalibratedTimestampsKHR(device: Device, timestamp_count: u32, p_timestamp_infos: [*]const CalibratedTimestampInfoKHR, p_timestamps: [*]u64, p_max_deviation: *u64) Error!void {
+pub fn getCalibratedTimestampsKHR(device: Device, timestamp_count: u32, p_timestamp_infos: ?[*]const CalibratedTimestampInfoKHR, p_timestamps: ?[*]u64, p_max_deviation: *u64) Error!void {
     return checkSuccess((dispatch.vkGetCalibratedTimestampsKHR orelse unloaded("vkGetCalibratedTimestampsKHR"))(device, timestamp_count, p_timestamp_infos, p_timestamps, p_max_deviation));
 }
 pub const getCalibratedTimestampsEXT = getCalibratedTimestampsKHR;
@@ -23177,13 +23177,13 @@ pub fn cmdSetCheckpointNV(command_buffer: CommandBuffer, p_checkpoint_marker: ?*
 pub fn getQueueCheckpointDataNV(queue: Queue, p_checkpoint_data_count: *u32, p_checkpoint_data: ?[*]CheckpointDataNV) void {
     return (dispatch.vkGetQueueCheckpointDataNV orelse unloaded("vkGetQueueCheckpointDataNV"))(queue, p_checkpoint_data_count, p_checkpoint_data);
 }
-pub fn cmdBindTransformFeedbackBuffersEXT(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: [*]const Buffer, p_offsets: [*]const DeviceSize, p_sizes: ?[*]const DeviceSize) void {
+pub fn cmdBindTransformFeedbackBuffersEXT(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: ?[*]const Buffer, p_offsets: ?[*]const DeviceSize, p_sizes: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdBindTransformFeedbackBuffersEXT orelse unloaded("vkCmdBindTransformFeedbackBuffersEXT"))(command_buffer, first_binding, binding_count, p_buffers, p_offsets, p_sizes);
 }
-pub fn cmdBeginTransformFeedbackEXT(command_buffer: CommandBuffer, first_counter_buffer: u32, counter_buffer_count: u32, p_counter_buffers: [*]const Buffer, p_counter_buffer_offsets: ?[*]const DeviceSize) void {
+pub fn cmdBeginTransformFeedbackEXT(command_buffer: CommandBuffer, first_counter_buffer: u32, counter_buffer_count: u32, p_counter_buffers: ?[*]const Buffer, p_counter_buffer_offsets: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdBeginTransformFeedbackEXT orelse unloaded("vkCmdBeginTransformFeedbackEXT"))(command_buffer, first_counter_buffer, counter_buffer_count, p_counter_buffers, p_counter_buffer_offsets);
 }
-pub fn cmdEndTransformFeedbackEXT(command_buffer: CommandBuffer, first_counter_buffer: u32, counter_buffer_count: u32, p_counter_buffers: [*]const Buffer, p_counter_buffer_offsets: ?[*]const DeviceSize) void {
+pub fn cmdEndTransformFeedbackEXT(command_buffer: CommandBuffer, first_counter_buffer: u32, counter_buffer_count: u32, p_counter_buffers: ?[*]const Buffer, p_counter_buffer_offsets: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdEndTransformFeedbackEXT orelse unloaded("vkCmdEndTransformFeedbackEXT"))(command_buffer, first_counter_buffer, counter_buffer_count, p_counter_buffers, p_counter_buffer_offsets);
 }
 pub fn cmdBeginQueryIndexedEXT(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32, flags: QueryControlFlags, index: u32) void {
@@ -23195,19 +23195,19 @@ pub fn cmdEndQueryIndexedEXT(command_buffer: CommandBuffer, query_pool: QueryPoo
 pub fn cmdDrawIndirectByteCountEXT(command_buffer: CommandBuffer, instance_count: u32, first_instance: u32, counter_buffer: Buffer, counter_buffer_offset: DeviceSize, counter_offset: u32, vertex_stride: u32) void {
     return (dispatch.vkCmdDrawIndirectByteCountEXT orelse unloaded("vkCmdDrawIndirectByteCountEXT"))(command_buffer, instance_count, first_instance, counter_buffer, counter_buffer_offset, counter_offset, vertex_stride);
 }
-pub fn cmdSetExclusiveScissorNV(command_buffer: CommandBuffer, first_exclusive_scissor: u32, exclusive_scissor_count: u32, p_exclusive_scissors: [*]const Rect2D) void {
+pub fn cmdSetExclusiveScissorNV(command_buffer: CommandBuffer, first_exclusive_scissor: u32, exclusive_scissor_count: u32, p_exclusive_scissors: ?[*]const Rect2D) void {
     return (dispatch.vkCmdSetExclusiveScissorNV orelse unloaded("vkCmdSetExclusiveScissorNV"))(command_buffer, first_exclusive_scissor, exclusive_scissor_count, p_exclusive_scissors);
 }
-pub fn cmdSetExclusiveScissorEnableNV(command_buffer: CommandBuffer, first_exclusive_scissor: u32, exclusive_scissor_count: u32, p_exclusive_scissor_enables: [*]const Bool32) void {
+pub fn cmdSetExclusiveScissorEnableNV(command_buffer: CommandBuffer, first_exclusive_scissor: u32, exclusive_scissor_count: u32, p_exclusive_scissor_enables: ?[*]const Bool32) void {
     return (dispatch.vkCmdSetExclusiveScissorEnableNV orelse unloaded("vkCmdSetExclusiveScissorEnableNV"))(command_buffer, first_exclusive_scissor, exclusive_scissor_count, p_exclusive_scissor_enables);
 }
 pub fn cmdBindShadingRateImageNV(command_buffer: CommandBuffer, image_view: ImageView, image_layout: ImageLayout) void {
     return (dispatch.vkCmdBindShadingRateImageNV orelse unloaded("vkCmdBindShadingRateImageNV"))(command_buffer, image_view, image_layout);
 }
-pub fn cmdSetViewportShadingRatePaletteNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_shading_rate_palettes: [*]const ShadingRatePaletteNV) void {
+pub fn cmdSetViewportShadingRatePaletteNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_shading_rate_palettes: ?[*]const ShadingRatePaletteNV) void {
     return (dispatch.vkCmdSetViewportShadingRatePaletteNV orelse unloaded("vkCmdSetViewportShadingRatePaletteNV"))(command_buffer, first_viewport, viewport_count, p_shading_rate_palettes);
 }
-pub fn cmdSetCoarseSampleOrderNV(command_buffer: CommandBuffer, sample_order_type: CoarseSampleOrderTypeNV, custom_sample_order_count: u32, p_custom_sample_orders: [*]const CoarseSampleOrderCustomNV) void {
+pub fn cmdSetCoarseSampleOrderNV(command_buffer: CommandBuffer, sample_order_type: CoarseSampleOrderTypeNV, custom_sample_order_count: u32, p_custom_sample_orders: ?[*]const CoarseSampleOrderCustomNV) void {
     return (dispatch.vkCmdSetCoarseSampleOrderNV orelse unloaded("vkCmdSetCoarseSampleOrderNV"))(command_buffer, sample_order_type, custom_sample_order_count, p_custom_sample_orders);
 }
 pub fn cmdDrawMeshTasksNV(command_buffer: CommandBuffer, task_count: u32, first_task: u32) void {
@@ -23246,7 +23246,7 @@ pub fn destroyAccelerationStructureNV(device: Device, acceleration_structure: Ac
 pub fn getAccelerationStructureMemoryRequirementsNV(device: Device, p_info: *const AccelerationStructureMemoryRequirementsInfoNV, p_memory_requirements: *MemoryRequirements2) void {
     return (dispatch.vkGetAccelerationStructureMemoryRequirementsNV orelse unloaded("vkGetAccelerationStructureMemoryRequirementsNV"))(device, p_info, p_memory_requirements);
 }
-pub fn bindAccelerationStructureMemoryNV(device: Device, bind_info_count: u32, p_bind_infos: [*]const BindAccelerationStructureMemoryInfoNV) Error!void {
+pub fn bindAccelerationStructureMemoryNV(device: Device, bind_info_count: u32, p_bind_infos: ?[*]const BindAccelerationStructureMemoryInfoNV) Error!void {
     return checkSuccess((dispatch.vkBindAccelerationStructureMemoryNV orelse unloaded("vkBindAccelerationStructureMemoryNV"))(device, bind_info_count, p_bind_infos));
 }
 pub fn cmdCopyAccelerationStructureNV(command_buffer: CommandBuffer, dst: AccelerationStructureNV, src: AccelerationStructureNV, mode: CopyAccelerationStructureModeKHR) void {
@@ -23270,16 +23270,16 @@ pub fn cmdCopyMemoryToAccelerationStructureKHR(command_buffer: CommandBuffer, p_
 pub fn copyMemoryToAccelerationStructureKHR(device: Device, deferred_operation: DeferredOperationKHR, p_info: *const CopyMemoryToAccelerationStructureInfoKHR) Error!Result {
     return (dispatch.vkCopyMemoryToAccelerationStructureKHR orelse unloaded("vkCopyMemoryToAccelerationStructureKHR"))(device, deferred_operation, p_info).check();
 }
-pub fn cmdWriteAccelerationStructuresPropertiesKHR(command_buffer: CommandBuffer, acceleration_structure_count: u32, p_acceleration_structures: [*]const AccelerationStructureKHR, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
+pub fn cmdWriteAccelerationStructuresPropertiesKHR(command_buffer: CommandBuffer, acceleration_structure_count: u32, p_acceleration_structures: ?[*]const AccelerationStructureKHR, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
     return (dispatch.vkCmdWriteAccelerationStructuresPropertiesKHR orelse unloaded("vkCmdWriteAccelerationStructuresPropertiesKHR"))(command_buffer, acceleration_structure_count, p_acceleration_structures, query_type, query_pool, first_query);
 }
-pub fn cmdWriteAccelerationStructuresPropertiesNV(command_buffer: CommandBuffer, acceleration_structure_count: u32, p_acceleration_structures: [*]const AccelerationStructureNV, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
+pub fn cmdWriteAccelerationStructuresPropertiesNV(command_buffer: CommandBuffer, acceleration_structure_count: u32, p_acceleration_structures: ?[*]const AccelerationStructureNV, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
     return (dispatch.vkCmdWriteAccelerationStructuresPropertiesNV orelse unloaded("vkCmdWriteAccelerationStructuresPropertiesNV"))(command_buffer, acceleration_structure_count, p_acceleration_structures, query_type, query_pool, first_query);
 }
 pub fn cmdBuildAccelerationStructureNV(command_buffer: CommandBuffer, p_info: *const AccelerationStructureInfoNV, instance_data: Buffer, instance_offset: DeviceSize, update: Bool32, dst: AccelerationStructureNV, src: AccelerationStructureNV, scratch: Buffer, scratch_offset: DeviceSize) void {
     return (dispatch.vkCmdBuildAccelerationStructureNV orelse unloaded("vkCmdBuildAccelerationStructureNV"))(command_buffer, p_info, instance_data, instance_offset, update, dst, src, scratch, scratch_offset);
 }
-pub fn writeAccelerationStructuresPropertiesKHR(device: Device, acceleration_structure_count: u32, p_acceleration_structures: [*]const AccelerationStructureKHR, query_type: QueryType, data_size: usize, p_data: ?*anyopaque, stride: usize) Error!void {
+pub fn writeAccelerationStructuresPropertiesKHR(device: Device, acceleration_structure_count: u32, p_acceleration_structures: ?[*]const AccelerationStructureKHR, query_type: QueryType, data_size: usize, p_data: ?*anyopaque, stride: usize) Error!void {
     return checkSuccess((dispatch.vkWriteAccelerationStructuresPropertiesKHR orelse unloaded("vkWriteAccelerationStructuresPropertiesKHR"))(device, acceleration_structure_count, p_acceleration_structures, query_type, data_size, p_data, stride));
 }
 pub fn cmdTraceRaysKHR(command_buffer: CommandBuffer, p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR, p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR, p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR, p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR, width: u32, height: u32, depth: u32) void {
@@ -23298,10 +23298,10 @@ pub fn getRayTracingCaptureReplayShaderGroupHandlesKHR(device: Device, pipeline:
 pub fn getAccelerationStructureHandleNV(device: Device, acceleration_structure: AccelerationStructureNV, data_size: usize, p_data: ?*anyopaque) Error!void {
     return checkSuccess((dispatch.vkGetAccelerationStructureHandleNV orelse unloaded("vkGetAccelerationStructureHandleNV"))(device, acceleration_structure, data_size, p_data));
 }
-pub fn createRayTracingPipelinesNV(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const RayTracingPipelineCreateInfoNV, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createRayTracingPipelinesNV(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const RayTracingPipelineCreateInfoNV, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateRayTracingPipelinesNV orelse unloaded("vkCreateRayTracingPipelinesNV"))(device, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
-pub fn createRayTracingPipelinesKHR(device: Device, deferred_operation: DeferredOperationKHR, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const RayTracingPipelineCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createRayTracingPipelinesKHR(device: Device, deferred_operation: DeferredOperationKHR, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const RayTracingPipelineCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateRayTracingPipelinesKHR orelse unloaded("vkCreateRayTracingPipelinesKHR"))(device, deferred_operation, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
 pub fn getPhysicalDeviceCooperativeMatrixPropertiesNV(physical_device: PhysicalDevice, p_property_count: *u32, p_properties: ?[*]CooperativeMatrixPropertiesNV) Error!Result {
@@ -23434,13 +23434,13 @@ pub const getPhysicalDeviceToolPropertiesEXT = getPhysicalDeviceToolProperties;
 pub fn createAccelerationStructureKHR(device: Device, p_create_info: *const AccelerationStructureCreateInfoKHR, p_allocator: ?*const AllocationCallbacks, p_acceleration_structure: *AccelerationStructureKHR) Error!void {
     return checkSuccess((dispatch.vkCreateAccelerationStructureKHR orelse unloaded("vkCreateAccelerationStructureKHR"))(device, p_create_info, p_allocator, p_acceleration_structure));
 }
-pub fn cmdBuildAccelerationStructuresKHR(command_buffer: CommandBuffer, info_count: u32, p_infos: [*]const AccelerationStructureBuildGeometryInfoKHR, pp_build_range_infos: [*]const *const AccelerationStructureBuildRangeInfoKHR) void {
+pub fn cmdBuildAccelerationStructuresKHR(command_buffer: CommandBuffer, info_count: u32, p_infos: ?[*]const AccelerationStructureBuildGeometryInfoKHR, pp_build_range_infos: ?[*]const *const AccelerationStructureBuildRangeInfoKHR) void {
     return (dispatch.vkCmdBuildAccelerationStructuresKHR orelse unloaded("vkCmdBuildAccelerationStructuresKHR"))(command_buffer, info_count, p_infos, pp_build_range_infos);
 }
-pub fn cmdBuildAccelerationStructuresIndirectKHR(command_buffer: CommandBuffer, info_count: u32, p_infos: [*]const AccelerationStructureBuildGeometryInfoKHR, p_indirect_device_addresses: [*]const DeviceAddress, p_indirect_strides: [*]const u32, pp_max_primitive_counts: [*]const *const u32) void {
+pub fn cmdBuildAccelerationStructuresIndirectKHR(command_buffer: CommandBuffer, info_count: u32, p_infos: ?[*]const AccelerationStructureBuildGeometryInfoKHR, p_indirect_device_addresses: ?[*]const DeviceAddress, p_indirect_strides: ?[*]const u32, pp_max_primitive_counts: ?[*]const *const u32) void {
     return (dispatch.vkCmdBuildAccelerationStructuresIndirectKHR orelse unloaded("vkCmdBuildAccelerationStructuresIndirectKHR"))(command_buffer, info_count, p_infos, p_indirect_device_addresses, p_indirect_strides, pp_max_primitive_counts);
 }
-pub fn buildAccelerationStructuresKHR(device: Device, deferred_operation: DeferredOperationKHR, info_count: u32, p_infos: [*]const AccelerationStructureBuildGeometryInfoKHR, pp_build_range_infos: [*]const *const AccelerationStructureBuildRangeInfoKHR) Error!Result {
+pub fn buildAccelerationStructuresKHR(device: Device, deferred_operation: DeferredOperationKHR, info_count: u32, p_infos: ?[*]const AccelerationStructureBuildGeometryInfoKHR, pp_build_range_infos: ?[*]const *const AccelerationStructureBuildRangeInfoKHR) Error!Result {
     return (dispatch.vkBuildAccelerationStructuresKHR orelse unloaded("vkBuildAccelerationStructuresKHR"))(device, deferred_operation, info_count, p_infos, pp_build_range_infos).check();
 }
 pub fn getAccelerationStructureDeviceAddressKHR(device: Device, p_info: *const AccelerationStructureDeviceAddressInfoKHR) DeviceAddress {
@@ -23482,11 +23482,11 @@ pub fn cmdSetPrimitiveTopology(command_buffer: CommandBuffer, primitive_topology
     return (dispatch.vkCmdSetPrimitiveTopology orelse unloaded("vkCmdSetPrimitiveTopology"))(command_buffer, primitive_topology);
 }
 pub const cmdSetPrimitiveTopologyEXT = cmdSetPrimitiveTopology;
-pub fn cmdSetViewportWithCount(command_buffer: CommandBuffer, viewport_count: u32, p_viewports: [*]const Viewport) void {
+pub fn cmdSetViewportWithCount(command_buffer: CommandBuffer, viewport_count: u32, p_viewports: ?[*]const Viewport) void {
     return (dispatch.vkCmdSetViewportWithCount orelse unloaded("vkCmdSetViewportWithCount"))(command_buffer, viewport_count, p_viewports);
 }
 pub const cmdSetViewportWithCountEXT = cmdSetViewportWithCount;
-pub fn cmdSetScissorWithCount(command_buffer: CommandBuffer, scissor_count: u32, p_scissors: [*]const Rect2D) void {
+pub fn cmdSetScissorWithCount(command_buffer: CommandBuffer, scissor_count: u32, p_scissors: ?[*]const Rect2D) void {
     return (dispatch.vkCmdSetScissorWithCount orelse unloaded("vkCmdSetScissorWithCount"))(command_buffer, scissor_count, p_scissors);
 }
 pub const cmdSetScissorWithCountEXT = cmdSetScissorWithCount;
@@ -23494,7 +23494,7 @@ pub fn cmdBindIndexBuffer2(command_buffer: CommandBuffer, buffer: Buffer, offset
     return (dispatch.vkCmdBindIndexBuffer2 orelse unloaded("vkCmdBindIndexBuffer2"))(command_buffer, buffer, offset, size, index_type);
 }
 pub const cmdBindIndexBuffer2KHR = cmdBindIndexBuffer2;
-pub fn cmdBindVertexBuffers2(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: [*]const Buffer, p_offsets: [*]const DeviceSize, p_sizes: ?[*]const DeviceSize, p_strides: ?[*]const DeviceSize) void {
+pub fn cmdBindVertexBuffers2(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_buffers: ?[*]const Buffer, p_offsets: ?[*]const DeviceSize, p_sizes: ?[*]const DeviceSize, p_strides: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdBindVertexBuffers2 orelse unloaded("vkCmdBindVertexBuffers2"))(command_buffer, first_binding, binding_count, p_buffers, p_offsets, p_sizes, p_strides);
 }
 pub const cmdBindVertexBuffers2EXT = cmdBindVertexBuffers2;
@@ -23564,13 +23564,13 @@ pub fn cmdSetAlphaToOneEnableEXT(command_buffer: CommandBuffer, alpha_to_one_ena
 pub fn cmdSetLogicOpEnableEXT(command_buffer: CommandBuffer, logic_op_enable: Bool32) void {
     return (dispatch.vkCmdSetLogicOpEnableEXT orelse unloaded("vkCmdSetLogicOpEnableEXT"))(command_buffer, logic_op_enable);
 }
-pub fn cmdSetColorBlendEnableEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_enables: [*]const Bool32) void {
+pub fn cmdSetColorBlendEnableEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_enables: ?[*]const Bool32) void {
     return (dispatch.vkCmdSetColorBlendEnableEXT orelse unloaded("vkCmdSetColorBlendEnableEXT"))(command_buffer, first_attachment, attachment_count, p_color_blend_enables);
 }
-pub fn cmdSetColorBlendEquationEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_equations: [*]const ColorBlendEquationEXT) void {
+pub fn cmdSetColorBlendEquationEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_equations: ?[*]const ColorBlendEquationEXT) void {
     return (dispatch.vkCmdSetColorBlendEquationEXT orelse unloaded("vkCmdSetColorBlendEquationEXT"))(command_buffer, first_attachment, attachment_count, p_color_blend_equations);
 }
-pub fn cmdSetColorWriteMaskEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_write_masks: [*]const ColorComponentFlags) void {
+pub fn cmdSetColorWriteMaskEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_write_masks: ?[*]const ColorComponentFlags) void {
     return (dispatch.vkCmdSetColorWriteMaskEXT orelse unloaded("vkCmdSetColorWriteMaskEXT"))(command_buffer, first_attachment, attachment_count, p_color_write_masks);
 }
 pub fn cmdSetRasterizationStreamEXT(command_buffer: CommandBuffer, rasterization_stream: u32) void {
@@ -23588,7 +23588,7 @@ pub fn cmdSetDepthClipEnableEXT(command_buffer: CommandBuffer, depth_clip_enable
 pub fn cmdSetSampleLocationsEnableEXT(command_buffer: CommandBuffer, sample_locations_enable: Bool32) void {
     return (dispatch.vkCmdSetSampleLocationsEnableEXT orelse unloaded("vkCmdSetSampleLocationsEnableEXT"))(command_buffer, sample_locations_enable);
 }
-pub fn cmdSetColorBlendAdvancedEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_advanced: [*]const ColorBlendAdvancedEXT) void {
+pub fn cmdSetColorBlendAdvancedEXT(command_buffer: CommandBuffer, first_attachment: u32, attachment_count: u32, p_color_blend_advanced: ?[*]const ColorBlendAdvancedEXT) void {
     return (dispatch.vkCmdSetColorBlendAdvancedEXT orelse unloaded("vkCmdSetColorBlendAdvancedEXT"))(command_buffer, first_attachment, attachment_count, p_color_blend_advanced);
 }
 pub fn cmdSetProvokingVertexModeEXT(command_buffer: CommandBuffer, provoking_vertex_mode: ProvokingVertexModeEXT) void {
@@ -23606,7 +23606,7 @@ pub fn cmdSetDepthClipNegativeOneToOneEXT(command_buffer: CommandBuffer, negativ
 pub fn cmdSetViewportWScalingEnableNV(command_buffer: CommandBuffer, viewport_w_scaling_enable: Bool32) void {
     return (dispatch.vkCmdSetViewportWScalingEnableNV orelse unloaded("vkCmdSetViewportWScalingEnableNV"))(command_buffer, viewport_w_scaling_enable);
 }
-pub fn cmdSetViewportSwizzleNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewport_swizzles: [*]const ViewportSwizzleNV) void {
+pub fn cmdSetViewportSwizzleNV(command_buffer: CommandBuffer, first_viewport: u32, viewport_count: u32, p_viewport_swizzles: ?[*]const ViewportSwizzleNV) void {
     return (dispatch.vkCmdSetViewportSwizzleNV orelse unloaded("vkCmdSetViewportSwizzleNV"))(command_buffer, first_viewport, viewport_count, p_viewport_swizzles);
 }
 pub fn cmdSetCoverageToColorEnableNV(command_buffer: CommandBuffer, coverage_to_color_enable: Bool32) void {
@@ -23621,7 +23621,7 @@ pub fn cmdSetCoverageModulationModeNV(command_buffer: CommandBuffer, coverage_mo
 pub fn cmdSetCoverageModulationTableEnableNV(command_buffer: CommandBuffer, coverage_modulation_table_enable: Bool32) void {
     return (dispatch.vkCmdSetCoverageModulationTableEnableNV orelse unloaded("vkCmdSetCoverageModulationTableEnableNV"))(command_buffer, coverage_modulation_table_enable);
 }
-pub fn cmdSetCoverageModulationTableNV(command_buffer: CommandBuffer, coverage_modulation_table_count: u32, p_coverage_modulation_table: [*]const f32) void {
+pub fn cmdSetCoverageModulationTableNV(command_buffer: CommandBuffer, coverage_modulation_table_count: u32, p_coverage_modulation_table: ?[*]const f32) void {
     return (dispatch.vkCmdSetCoverageModulationTableNV orelse unloaded("vkCmdSetCoverageModulationTableNV"))(command_buffer, coverage_modulation_table_count, p_coverage_modulation_table);
 }
 pub fn cmdSetShadingRateImageEnableNV(command_buffer: CommandBuffer, shading_rate_image_enable: Bool32) void {
@@ -23685,10 +23685,10 @@ pub fn cmdSetFragmentShadingRateEnumNV(command_buffer: CommandBuffer, shading_ra
 pub fn getAccelerationStructureBuildSizesKHR(device: Device, build_type: AccelerationStructureBuildTypeKHR, p_build_info: *const AccelerationStructureBuildGeometryInfoKHR, p_max_primitive_counts: ?[*]const u32, p_size_info: *AccelerationStructureBuildSizesInfoKHR) void {
     return (dispatch.vkGetAccelerationStructureBuildSizesKHR orelse unloaded("vkGetAccelerationStructureBuildSizesKHR"))(device, build_type, p_build_info, p_max_primitive_counts, p_size_info);
 }
-pub fn cmdSetVertexInputEXT(command_buffer: CommandBuffer, vertex_binding_description_count: u32, p_vertex_binding_descriptions: [*]const VertexInputBindingDescription2EXT, vertex_attribute_description_count: u32, p_vertex_attribute_descriptions: [*]const VertexInputAttributeDescription2EXT) void {
+pub fn cmdSetVertexInputEXT(command_buffer: CommandBuffer, vertex_binding_description_count: u32, p_vertex_binding_descriptions: ?[*]const VertexInputBindingDescription2EXT, vertex_attribute_description_count: u32, p_vertex_attribute_descriptions: ?[*]const VertexInputAttributeDescription2EXT) void {
     return (dispatch.vkCmdSetVertexInputEXT orelse unloaded("vkCmdSetVertexInputEXT"))(command_buffer, vertex_binding_description_count, p_vertex_binding_descriptions, vertex_attribute_description_count, p_vertex_attribute_descriptions);
 }
-pub fn cmdSetColorWriteEnableEXT(command_buffer: CommandBuffer, attachment_count: u32, p_color_write_enables: [*]const Bool32) void {
+pub fn cmdSetColorWriteEnableEXT(command_buffer: CommandBuffer, attachment_count: u32, p_color_write_enables: ?[*]const Bool32) void {
     return (dispatch.vkCmdSetColorWriteEnableEXT orelse unloaded("vkCmdSetColorWriteEnableEXT"))(command_buffer, attachment_count, p_color_write_enables);
 }
 pub fn cmdSetEvent2(command_buffer: CommandBuffer, event: Event, p_dependency_info: *const DependencyInfo) void {
@@ -23699,7 +23699,7 @@ pub fn cmdResetEvent2(command_buffer: CommandBuffer, event: Event, stage_mask: P
     return (dispatch.vkCmdResetEvent2 orelse unloaded("vkCmdResetEvent2"))(command_buffer, event, stage_mask);
 }
 pub const cmdResetEvent2KHR = cmdResetEvent2;
-pub fn cmdWaitEvents2(command_buffer: CommandBuffer, event_count: u32, p_events: [*]const Event, p_dependency_infos: [*]const DependencyInfo) void {
+pub fn cmdWaitEvents2(command_buffer: CommandBuffer, event_count: u32, p_events: ?[*]const Event, p_dependency_infos: ?[*]const DependencyInfo) void {
     return (dispatch.vkCmdWaitEvents2 orelse unloaded("vkCmdWaitEvents2"))(command_buffer, event_count, p_events, p_dependency_infos);
 }
 pub const cmdWaitEvents2KHR = cmdWaitEvents2;
@@ -23707,7 +23707,7 @@ pub fn cmdPipelineBarrier2(command_buffer: CommandBuffer, p_dependency_info: *co
     return (dispatch.vkCmdPipelineBarrier2 orelse unloaded("vkCmdPipelineBarrier2"))(command_buffer, p_dependency_info);
 }
 pub const cmdPipelineBarrier2KHR = cmdPipelineBarrier2;
-pub fn queueSubmit2(queue: Queue, submit_count: u32, p_submits: [*]const SubmitInfo2, fence: Fence) Error!void {
+pub fn queueSubmit2(queue: Queue, submit_count: u32, p_submits: ?[*]const SubmitInfo2, fence: Fence) Error!void {
     return checkSuccess((dispatch.vkQueueSubmit2 orelse unloaded("vkQueueSubmit2"))(queue, submit_count, p_submits, fence));
 }
 pub const queueSubmit2KHR = queueSubmit2;
@@ -23733,7 +23733,7 @@ pub fn copyImageToImage(device: Device, p_copy_image_to_image_info: *const CopyI
     return checkSuccess((dispatch.vkCopyImageToImage orelse unloaded("vkCopyImageToImage"))(device, p_copy_image_to_image_info));
 }
 pub const copyImageToImageEXT = copyImageToImage;
-pub fn transitionImageLayout(device: Device, transition_count: u32, p_transitions: [*]const HostImageLayoutTransitionInfo) Error!void {
+pub fn transitionImageLayout(device: Device, transition_count: u32, p_transitions: ?[*]const HostImageLayoutTransitionInfo) Error!void {
     return checkSuccess((dispatch.vkTransitionImageLayout orelse unloaded("vkTransitionImageLayout"))(device, transition_count, p_transitions));
 }
 pub const transitionImageLayoutEXT = transitionImageLayout;
@@ -23767,7 +23767,7 @@ pub fn destroyVideoSessionParametersKHR(device: Device, video_session_parameters
 pub fn getVideoSessionMemoryRequirementsKHR(device: Device, video_session: VideoSessionKHR, p_memory_requirements_count: *u32, p_memory_requirements: ?[*]VideoSessionMemoryRequirementsKHR) Error!Result {
     return (dispatch.vkGetVideoSessionMemoryRequirementsKHR orelse unloaded("vkGetVideoSessionMemoryRequirementsKHR"))(device, video_session, p_memory_requirements_count, p_memory_requirements).check();
 }
-pub fn bindVideoSessionMemoryKHR(device: Device, video_session: VideoSessionKHR, bind_session_memory_info_count: u32, p_bind_session_memory_infos: [*]const BindVideoSessionMemoryInfoKHR) Error!void {
+pub fn bindVideoSessionMemoryKHR(device: Device, video_session: VideoSessionKHR, bind_session_memory_info_count: u32, p_bind_session_memory_infos: ?[*]const BindVideoSessionMemoryInfoKHR) Error!void {
     return checkSuccess((dispatch.vkBindVideoSessionMemoryKHR orelse unloaded("vkBindVideoSessionMemoryKHR"))(device, video_session, bind_session_memory_info_count, p_bind_session_memory_infos));
 }
 pub fn cmdDecodeVideoKHR(command_buffer: CommandBuffer, p_decode_info: *const VideoDecodeInfoKHR) void {
@@ -23785,7 +23785,7 @@ pub fn cmdEndVideoCodingKHR(command_buffer: CommandBuffer, p_end_coding_info: *c
 pub fn cmdEncodeVideoKHR(command_buffer: CommandBuffer, p_encode_info: *const VideoEncodeInfoKHR) void {
     return (dispatch.vkCmdEncodeVideoKHR orelse unloaded("vkCmdEncodeVideoKHR"))(command_buffer, p_encode_info);
 }
-pub fn cmdDecompressMemoryNV(command_buffer: CommandBuffer, decompress_region_count: u32, p_decompress_memory_regions: [*]const DecompressMemoryRegionNV) void {
+pub fn cmdDecompressMemoryNV(command_buffer: CommandBuffer, decompress_region_count: u32, p_decompress_memory_regions: ?[*]const DecompressMemoryRegionNV) void {
     return (dispatch.vkCmdDecompressMemoryNV orelse unloaded("vkCmdDecompressMemoryNV"))(command_buffer, decompress_region_count, p_decompress_memory_regions);
 }
 pub fn cmdDecompressMemoryIndirectCountNV(command_buffer: CommandBuffer, indirect_commands_address: DeviceAddress, indirect_commands_count_address: DeviceAddress, stride: u32) void {
@@ -23827,10 +23827,10 @@ pub fn getDescriptorSetLayoutBindingOffsetEXT(device: Device, layout: Descriptor
 pub fn getDescriptorEXT(device: Device, p_descriptor_info: *const DescriptorGetInfoEXT, data_size: usize, p_descriptor: ?*anyopaque) void {
     return (dispatch.vkGetDescriptorEXT orelse unloaded("vkGetDescriptorEXT"))(device, p_descriptor_info, data_size, p_descriptor);
 }
-pub fn cmdBindDescriptorBuffersEXT(command_buffer: CommandBuffer, buffer_count: u32, p_binding_infos: [*]const DescriptorBufferBindingInfoEXT) void {
+pub fn cmdBindDescriptorBuffersEXT(command_buffer: CommandBuffer, buffer_count: u32, p_binding_infos: ?[*]const DescriptorBufferBindingInfoEXT) void {
     return (dispatch.vkCmdBindDescriptorBuffersEXT orelse unloaded("vkCmdBindDescriptorBuffersEXT"))(command_buffer, buffer_count, p_binding_infos);
 }
-pub fn cmdSetDescriptorBufferOffsetsEXT(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, first_set: u32, set_count: u32, p_buffer_indices: [*]const u32, p_offsets: [*]const DeviceSize) void {
+pub fn cmdSetDescriptorBufferOffsetsEXT(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, first_set: u32, set_count: u32, p_buffer_indices: ?[*]const u32, p_offsets: ?[*]const DeviceSize) void {
     return (dispatch.vkCmdSetDescriptorBufferOffsetsEXT orelse unloaded("vkCmdSetDescriptorBufferOffsetsEXT"))(command_buffer, pipeline_bind_point, layout, first_set, set_count, p_buffer_indices, p_offsets);
 }
 pub fn cmdBindDescriptorBufferEmbeddedSamplersEXT(command_buffer: CommandBuffer, pipeline_bind_point: PipelineBindPoint, layout: PipelineLayout, set: u32) void {
@@ -23920,10 +23920,10 @@ pub fn getDescriptorSetHostMappingVALVE(device: Device, descriptor_set: Descript
 pub fn createMicromapEXT(device: Device, p_create_info: *const MicromapCreateInfoEXT, p_allocator: ?*const AllocationCallbacks, p_micromap: *MicromapEXT) Error!void {
     return checkSuccess((dispatch.vkCreateMicromapEXT orelse unloaded("vkCreateMicromapEXT"))(device, p_create_info, p_allocator, p_micromap));
 }
-pub fn cmdBuildMicromapsEXT(command_buffer: CommandBuffer, info_count: u32, p_infos: [*]const MicromapBuildInfoEXT) void {
+pub fn cmdBuildMicromapsEXT(command_buffer: CommandBuffer, info_count: u32, p_infos: ?[*]const MicromapBuildInfoEXT) void {
     return (dispatch.vkCmdBuildMicromapsEXT orelse unloaded("vkCmdBuildMicromapsEXT"))(command_buffer, info_count, p_infos);
 }
-pub fn buildMicromapsEXT(device: Device, deferred_operation: DeferredOperationKHR, info_count: u32, p_infos: [*]const MicromapBuildInfoEXT) Error!Result {
+pub fn buildMicromapsEXT(device: Device, deferred_operation: DeferredOperationKHR, info_count: u32, p_infos: ?[*]const MicromapBuildInfoEXT) Error!Result {
     return (dispatch.vkBuildMicromapsEXT orelse unloaded("vkBuildMicromapsEXT"))(device, deferred_operation, info_count, p_infos).check();
 }
 pub fn destroyMicromapEXT(device: Device, micromap: MicromapEXT, p_allocator: ?*const AllocationCallbacks) void {
@@ -23947,10 +23947,10 @@ pub fn cmdCopyMemoryToMicromapEXT(command_buffer: CommandBuffer, p_info: *const 
 pub fn copyMemoryToMicromapEXT(device: Device, deferred_operation: DeferredOperationKHR, p_info: *const CopyMemoryToMicromapInfoEXT) Error!Result {
     return (dispatch.vkCopyMemoryToMicromapEXT orelse unloaded("vkCopyMemoryToMicromapEXT"))(device, deferred_operation, p_info).check();
 }
-pub fn cmdWriteMicromapsPropertiesEXT(command_buffer: CommandBuffer, micromap_count: u32, p_micromaps: [*]const MicromapEXT, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
+pub fn cmdWriteMicromapsPropertiesEXT(command_buffer: CommandBuffer, micromap_count: u32, p_micromaps: ?[*]const MicromapEXT, query_type: QueryType, query_pool: QueryPool, first_query: u32) void {
     return (dispatch.vkCmdWriteMicromapsPropertiesEXT orelse unloaded("vkCmdWriteMicromapsPropertiesEXT"))(command_buffer, micromap_count, p_micromaps, query_type, query_pool, first_query);
 }
-pub fn writeMicromapsPropertiesEXT(device: Device, micromap_count: u32, p_micromaps: [*]const MicromapEXT, query_type: QueryType, data_size: usize, p_data: ?*anyopaque, stride: usize) Error!void {
+pub fn writeMicromapsPropertiesEXT(device: Device, micromap_count: u32, p_micromaps: ?[*]const MicromapEXT, query_type: QueryType, data_size: usize, p_data: ?*anyopaque, stride: usize) Error!void {
     return checkSuccess((dispatch.vkWriteMicromapsPropertiesEXT orelse unloaded("vkWriteMicromapsPropertiesEXT"))(device, micromap_count, p_micromaps, query_type, data_size, p_data, stride));
 }
 pub fn getDeviceMicromapCompatibilityEXT(device: Device, p_version_info: *const MicromapVersionInfoEXT, p_compatibility: *AccelerationStructureCompatibilityKHR) void {
@@ -24028,7 +24028,7 @@ pub fn unmapMemory2(device: Device, p_memory_unmap_info: *const MemoryUnmapInfo)
     return checkSuccess((dispatch.vkUnmapMemory2 orelse unloaded("vkUnmapMemory2"))(device, p_memory_unmap_info));
 }
 pub const unmapMemory2KHR = unmapMemory2;
-pub fn createShadersEXT(device: Device, create_info_count: u32, p_create_infos: [*]const ShaderCreateInfoEXT, p_allocator: ?*const AllocationCallbacks, p_shaders: [*]ShaderEXT) Error!Result {
+pub fn createShadersEXT(device: Device, create_info_count: u32, p_create_infos: ?[*]const ShaderCreateInfoEXT, p_allocator: ?*const AllocationCallbacks, p_shaders: ?[*]ShaderEXT) Error!Result {
     return (dispatch.vkCreateShadersEXT orelse unloaded("vkCreateShadersEXT"))(device, create_info_count, p_create_infos, p_allocator, p_shaders).check();
 }
 pub fn destroyShaderEXT(device: Device, shader: ShaderEXT, p_allocator: ?*const AllocationCallbacks) void {
@@ -24037,7 +24037,7 @@ pub fn destroyShaderEXT(device: Device, shader: ShaderEXT, p_allocator: ?*const 
 pub fn getShaderBinaryDataEXT(device: Device, shader: ShaderEXT, p_data_size: *usize, p_data: ?*anyopaque) Error!Result {
     return (dispatch.vkGetShaderBinaryDataEXT orelse unloaded("vkGetShaderBinaryDataEXT"))(device, shader, p_data_size, p_data).check();
 }
-pub fn cmdBindShadersEXT(command_buffer: CommandBuffer, stage_count: u32, p_stages: [*]const ShaderStageFlagBits, p_shaders: ?[*]const ShaderEXT) void {
+pub fn cmdBindShadersEXT(command_buffer: CommandBuffer, stage_count: u32, p_stages: ?[*]const ShaderStageFlagBits, p_shaders: ?[*]const ShaderEXT) void {
     return (dispatch.vkCmdBindShadersEXT orelse unloaded("vkCmdBindShadersEXT"))(command_buffer, stage_count, p_stages, p_shaders);
 }
 pub fn setSwapchainPresentTimingQueueSizeEXT(device: Device, swapchain: SwapchainKHR, size: u32) Error!Result {
@@ -24067,7 +24067,7 @@ pub fn getExecutionGraphPipelineScratchSizeAMDX(device: Device, execution_graph:
 pub fn getExecutionGraphPipelineNodeIndexAMDX(device: Device, execution_graph: Pipeline, p_node_info: *const PipelineShaderStageNodeCreateInfoAMDX, p_node_index: *u32) Error!void {
     return checkSuccess((dispatch.vkGetExecutionGraphPipelineNodeIndexAMDX orelse unloaded("vkGetExecutionGraphPipelineNodeIndexAMDX"))(device, execution_graph, p_node_info, p_node_index));
 }
-pub fn createExecutionGraphPipelinesAMDX(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const ExecutionGraphPipelineCreateInfoAMDX, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createExecutionGraphPipelinesAMDX(device: Device, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const ExecutionGraphPipelineCreateInfoAMDX, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateExecutionGraphPipelinesAMDX orelse unloaded("vkCreateExecutionGraphPipelinesAMDX"))(device, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
 pub fn cmdInitializeGraphScratchMemoryAMDX(command_buffer: CommandBuffer, execution_graph: Pipeline, scratch: DeviceAddress, scratch_size: DeviceSize) void {
@@ -24202,7 +24202,7 @@ pub fn getPhysicalDeviceCooperativeVectorPropertiesNV(physical_device: PhysicalD
 pub fn convertCooperativeVectorMatrixNV(device: Device, p_info: *const ConvertCooperativeVectorMatrixInfoNV) Error!Result {
     return (dispatch.vkConvertCooperativeVectorMatrixNV orelse unloaded("vkConvertCooperativeVectorMatrixNV"))(device, p_info).check();
 }
-pub fn cmdConvertCooperativeVectorMatrixNV(command_buffer: CommandBuffer, info_count: u32, p_infos: [*]const ConvertCooperativeVectorMatrixInfoNV) void {
+pub fn cmdConvertCooperativeVectorMatrixNV(command_buffer: CommandBuffer, info_count: u32, p_infos: ?[*]const ConvertCooperativeVectorMatrixInfoNV) void {
     return (dispatch.vkCmdConvertCooperativeVectorMatrixNV orelse unloaded("vkCmdConvertCooperativeVectorMatrixNV"))(command_buffer, info_count, p_infos);
 }
 pub fn cmdDispatchTileQCOM(command_buffer: CommandBuffer, p_dispatch_tile_info: *const DispatchTileInfoQCOM) void {
@@ -24259,7 +24259,7 @@ pub fn destroyTensorViewARM(device: Device, tensor_view: TensorViewARM, p_alloca
 pub fn getTensorMemoryRequirementsARM(device: Device, p_info: *const TensorMemoryRequirementsInfoARM, p_memory_requirements: *MemoryRequirements2) void {
     return (dispatch.vkGetTensorMemoryRequirementsARM orelse unloaded("vkGetTensorMemoryRequirementsARM"))(device, p_info, p_memory_requirements);
 }
-pub fn bindTensorMemoryARM(device: Device, bind_info_count: u32, p_bind_infos: [*]const BindTensorMemoryInfoARM) Error!void {
+pub fn bindTensorMemoryARM(device: Device, bind_info_count: u32, p_bind_infos: ?[*]const BindTensorMemoryInfoARM) Error!void {
     return checkSuccess((dispatch.vkBindTensorMemoryARM orelse unloaded("vkBindTensorMemoryARM"))(device, bind_info_count, p_bind_infos));
 }
 pub fn getDeviceTensorMemoryRequirementsARM(device: Device, p_info: *const DeviceTensorMemoryRequirementsARM, p_memory_requirements: *MemoryRequirements2) void {
@@ -24277,7 +24277,7 @@ pub fn getTensorViewOpaqueCaptureDescriptorDataARM(device: Device, p_info: *cons
 pub fn getPhysicalDeviceExternalTensorPropertiesARM(physical_device: PhysicalDevice, p_external_tensor_info: *const PhysicalDeviceExternalTensorInfoARM, p_external_tensor_properties: *ExternalTensorPropertiesARM) void {
     return (dispatch.vkGetPhysicalDeviceExternalTensorPropertiesARM orelse unloaded("vkGetPhysicalDeviceExternalTensorPropertiesARM"))(physical_device, p_external_tensor_info, p_external_tensor_properties);
 }
-pub fn createDataGraphPipelinesARM(device: Device, deferred_operation: DeferredOperationKHR, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: [*]const DataGraphPipelineCreateInfoARM, p_allocator: ?*const AllocationCallbacks, p_pipelines: [*]Pipeline) Error!Result {
+pub fn createDataGraphPipelinesARM(device: Device, deferred_operation: DeferredOperationKHR, pipeline_cache: PipelineCache, create_info_count: u32, p_create_infos: ?[*]const DataGraphPipelineCreateInfoARM, p_allocator: ?*const AllocationCallbacks, p_pipelines: ?[*]Pipeline) Error!Result {
     return (dispatch.vkCreateDataGraphPipelinesARM orelse unloaded("vkCreateDataGraphPipelinesARM"))(device, deferred_operation, pipeline_cache, create_info_count, p_create_infos, p_allocator, p_pipelines).check();
 }
 pub fn createDataGraphPipelineSessionARM(device: Device, p_create_info: *const DataGraphPipelineSessionCreateInfoARM, p_allocator: ?*const AllocationCallbacks, p_session: *DataGraphPipelineSessionARM) Error!void {
@@ -24289,7 +24289,7 @@ pub fn getDataGraphPipelineSessionBindPointRequirementsARM(device: Device, p_inf
 pub fn getDataGraphPipelineSessionMemoryRequirementsARM(device: Device, p_info: *const DataGraphPipelineSessionMemoryRequirementsInfoARM, p_memory_requirements: *MemoryRequirements2) void {
     return (dispatch.vkGetDataGraphPipelineSessionMemoryRequirementsARM orelse unloaded("vkGetDataGraphPipelineSessionMemoryRequirementsARM"))(device, p_info, p_memory_requirements);
 }
-pub fn bindDataGraphPipelineSessionMemoryARM(device: Device, bind_info_count: u32, p_bind_infos: [*]const BindDataGraphPipelineSessionMemoryInfoARM) Error!void {
+pub fn bindDataGraphPipelineSessionMemoryARM(device: Device, bind_info_count: u32, p_bind_infos: ?[*]const BindDataGraphPipelineSessionMemoryInfoARM) Error!void {
     return checkSuccess((dispatch.vkBindDataGraphPipelineSessionMemoryARM orelse unloaded("vkBindDataGraphPipelineSessionMemoryARM"))(device, bind_info_count, p_bind_infos));
 }
 pub fn destroyDataGraphPipelineSessionARM(device: Device, session: DataGraphPipelineSessionARM, p_allocator: ?*const AllocationCallbacks) void {
@@ -24301,7 +24301,7 @@ pub fn cmdDispatchDataGraphARM(command_buffer: CommandBuffer, session: DataGraph
 pub fn getDataGraphPipelineAvailablePropertiesARM(device: Device, p_pipeline_info: *const DataGraphPipelineInfoARM, p_properties_count: *u32, p_properties: ?[*]DataGraphPipelinePropertyARM) Error!Result {
     return (dispatch.vkGetDataGraphPipelineAvailablePropertiesARM orelse unloaded("vkGetDataGraphPipelineAvailablePropertiesARM"))(device, p_pipeline_info, p_properties_count, p_properties).check();
 }
-pub fn getDataGraphPipelinePropertiesARM(device: Device, p_pipeline_info: *const DataGraphPipelineInfoARM, properties_count: u32, p_properties: [*]DataGraphPipelinePropertyQueryResultARM) Error!Result {
+pub fn getDataGraphPipelinePropertiesARM(device: Device, p_pipeline_info: *const DataGraphPipelineInfoARM, properties_count: u32, p_properties: ?[*]DataGraphPipelinePropertyQueryResultARM) Error!Result {
     return (dispatch.vkGetDataGraphPipelinePropertiesARM orelse unloaded("vkGetDataGraphPipelinePropertiesARM"))(device, p_pipeline_info, properties_count, p_properties).check();
 }
 pub fn getPhysicalDeviceQueueFamilyDataGraphPropertiesARM(physical_device: PhysicalDevice, queue_family_index: u32, p_queue_family_data_graph_property_count: *u32, p_queue_family_data_graph_properties: ?[*]QueueFamilyDataGraphPropertiesARM) Error!Result {
@@ -24325,10 +24325,10 @@ pub fn enumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM(physical
 pub fn cmdSetComputeOccupancyPriorityNV(command_buffer: CommandBuffer, p_parameters: *const ComputeOccupancyPriorityParametersNV) void {
     return (dispatch.vkCmdSetComputeOccupancyPriorityNV orelse unloaded("vkCmdSetComputeOccupancyPriorityNV"))(command_buffer, p_parameters);
 }
-pub fn writeSamplerDescriptorsEXT(device: Device, sampler_count: u32, p_samplers: [*]const SamplerCreateInfo, p_descriptors: [*]const HostAddressRangeEXT) Error!void {
+pub fn writeSamplerDescriptorsEXT(device: Device, sampler_count: u32, p_samplers: ?[*]const SamplerCreateInfo, p_descriptors: ?[*]const HostAddressRangeEXT) Error!void {
     return checkSuccess((dispatch.vkWriteSamplerDescriptorsEXT orelse unloaded("vkWriteSamplerDescriptorsEXT"))(device, sampler_count, p_samplers, p_descriptors));
 }
-pub fn writeResourceDescriptorsEXT(device: Device, resource_count: u32, p_resources: [*]const ResourceDescriptorInfoEXT, p_descriptors: [*]const HostAddressRangeEXT) Error!void {
+pub fn writeResourceDescriptorsEXT(device: Device, resource_count: u32, p_resources: ?[*]const ResourceDescriptorInfoEXT, p_descriptors: ?[*]const HostAddressRangeEXT) Error!void {
     return checkSuccess((dispatch.vkWriteResourceDescriptorsEXT orelse unloaded("vkWriteResourceDescriptorsEXT"))(device, resource_count, p_resources, p_descriptors));
 }
 pub fn cmdBindSamplerHeapEXT(command_buffer: CommandBuffer, p_bind_info: *const BindHeapInfoEXT) void {
@@ -24346,13 +24346,13 @@ pub fn registerCustomBorderColorEXT(device: Device, p_border_color: *const Sampl
 pub fn unregisterCustomBorderColorEXT(device: Device, index: u32) void {
     return (dispatch.vkUnregisterCustomBorderColorEXT orelse unloaded("vkUnregisterCustomBorderColorEXT"))(device, index);
 }
-pub fn getImageOpaqueCaptureDataEXT(device: Device, image_count: u32, p_images: [*]const Image, p_datas: [*]HostAddressRangeEXT) Error!void {
+pub fn getImageOpaqueCaptureDataEXT(device: Device, image_count: u32, p_images: ?[*]const Image, p_datas: ?[*]HostAddressRangeEXT) Error!void {
     return checkSuccess((dispatch.vkGetImageOpaqueCaptureDataEXT orelse unloaded("vkGetImageOpaqueCaptureDataEXT"))(device, image_count, p_images, p_datas));
 }
 pub fn getPhysicalDeviceDescriptorSizeEXT(physical_device: PhysicalDevice, descriptor_type: DescriptorType) DeviceSize {
     return (dispatch.vkGetPhysicalDeviceDescriptorSizeEXT orelse unloaded("vkGetPhysicalDeviceDescriptorSizeEXT"))(physical_device, descriptor_type);
 }
-pub fn getTensorOpaqueCaptureDataARM(device: Device, tensor_count: u32, p_tensors: [*]const TensorARM, p_datas: [*]HostAddressRangeEXT) Error!void {
+pub fn getTensorOpaqueCaptureDataARM(device: Device, tensor_count: u32, p_tensors: ?[*]const TensorARM, p_datas: ?[*]HostAddressRangeEXT) Error!void {
     return checkSuccess((dispatch.vkGetTensorOpaqueCaptureDataARM orelse unloaded("vkGetTensorOpaqueCaptureDataARM"))(device, tensor_count, p_tensors, p_datas));
 }
 pub fn cmdCopyMemoryKHR(command_buffer: CommandBuffer, p_copy_memory_info: ?*const CopyDeviceMemoryInfoKHR) void {
@@ -24394,7 +24394,7 @@ pub fn cmdWriteMarkerToMemoryAMD(command_buffer: CommandBuffer, p_info: *const M
 pub fn cmdBindIndexBuffer3KHR(command_buffer: CommandBuffer, p_info: *const BindIndexBuffer3InfoKHR) void {
     return (dispatch.vkCmdBindIndexBuffer3KHR orelse unloaded("vkCmdBindIndexBuffer3KHR"))(command_buffer, p_info);
 }
-pub fn cmdBindVertexBuffers3KHR(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_binding_infos: [*]const BindVertexBuffer3InfoKHR) void {
+pub fn cmdBindVertexBuffers3KHR(command_buffer: CommandBuffer, first_binding: u32, binding_count: u32, p_binding_infos: ?[*]const BindVertexBuffer3InfoKHR) void {
     return (dispatch.vkCmdBindVertexBuffers3KHR orelse unloaded("vkCmdBindVertexBuffers3KHR"))(command_buffer, first_binding, binding_count, p_binding_infos);
 }
 pub fn cmdDrawIndirect2KHR(command_buffer: CommandBuffer, p_info: *const DrawIndirect2InfoKHR) void {

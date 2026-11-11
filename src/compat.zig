@@ -21,7 +21,7 @@ const Consumer = struct {
     /// Where the consumer keeps its copy of vk.zig, relative to its root.
     vk_file: []const u8 = "src/vk.zig",
     /// Alternatively: the build.zig.zon dependency that provides Vulkan
-    /// (e.g. "Vulkan" for `.Vulkan = .{ .path = "../Vulkan2" }`). It is replaced
+    /// (e.g. "Vulkan" for `.Vulkan = .{ .path = "../Vulkan" }`). It is replaced
     /// by a package exposing the new vk.zig as module `vk_module`.
     vk_dependency: ?[]const u8 = null,
     vk_module: []const u8 = "vulkan",

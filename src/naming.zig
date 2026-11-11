@@ -148,22 +148,40 @@ pub fn enumValuePrefix(gpa: Allocator, type_name: []const u8, tags: []const []co
 ///   (VK_FORMAT_, VK_FORMAT_R8G8B8A8_UNORM) -> r8g8b8a8_unorm
 ///   (VK_RESULT_, VK_SUCCESS)               -> success       (falls back to the
 ///                                             longest shared `_`-separated prefix)
-pub fn enumFieldName(gpa: Allocator, prefix: []const u8, value_name: []const u8) Allocator.Error![]const u8 {
+pub fn enumFieldName(gpa: Allocator, n: EnumNaming, value_name: []const u8) Allocator.Error![]const u8 {
     var rest: []const u8 = undefined;
-    if (std.mem.startsWith(u8, value_name, prefix) and value_name.len > prefix.len) {
-        rest = value_name[prefix.len..];
+    if (std.mem.startsWith(u8, value_name, n.prefix) and value_name.len > n.prefix.len) {
+        rest = value_name[n.prefix.len..];
     } else {
         // Longest word-aligned common prefix, keeping at least one word.
         var cut: usize = 0;
         var i: usize = 0;
-        while (i < value_name.len and i < prefix.len and value_name[i] == prefix[i]) : (i += 1) {
+        while (i < value_name.len and i < n.prefix.len and value_name[i] == n.prefix[i]) : (i += 1) {
             if (value_name[i] == '_' and i + 1 < value_name.len) cut = i + 1;
         }
         rest = value_name[cut..];
     }
+    // `VkPresentModeKHR`'s VK_PRESENT_MODE_MAILBOX_KHR is just `.mailbox`; a tag
+    // that differs from the type's (VK_PRESENT_MODE_FIFO_LATEST_READY_EXT) stays.
+    if (n.tag) |tag| {
+        if (rest.len > tag.len + 1 and std.mem.endsWith(u8, rest, tag) and rest[rest.len - tag.len - 1] == '_') {
+            rest = rest[0 .. rest.len - tag.len - 1];
+        }
+    }
     const out = try gpa.dupe(u8, rest);
     for (out) |*c| c.* = std.ascii.toLower(c.*);
     return out;
+}
+
+/// How one enum type names its values: the shared prefix to strip and the
+/// type's own vendor tag (also stripped from its values).
+pub const EnumNaming = struct {
+    prefix: []const u8,
+    tag: ?[]const u8,
+};
+
+pub fn enumNaming(gpa: Allocator, type_name: []const u8, tags: []const []const u8) Allocator.Error!EnumNaming {
+    return .{ .prefix = try enumValuePrefix(gpa, type_name, tags), .tag = vendorTag(type_name, tags) };
 }
 
 /// `VK_ERROR_OUT_OF_DATE_KHR` -> `OutOfDateKHR`.
@@ -278,20 +296,24 @@ test "enum value prefixes and names" {
         .{ "VkStructureType", "VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO", "instance_create_info" },
         .{ "VkShaderStageFlagBits", "VK_SHADER_STAGE_VERTEX_BIT", "vertex_bit" },
         .{ "VkPipelineStageFlagBits2", "VK_PIPELINE_STAGE_2_TOP_OF_PIPE_BIT", "top_of_pipe_bit" },
-        .{ "VkPresentModeKHR", "VK_PRESENT_MODE_FIFO_KHR", "fifo_khr" },
+        // The type's own vendor tag is dropped; a different tag is kept.
+        .{ "VkPresentModeKHR", "VK_PRESENT_MODE_MAILBOX_KHR", "mailbox" },
+        .{ "VkPresentModeKHR", "VK_PRESENT_MODE_FIFO_LATEST_READY_EXT", "fifo_latest_ready_ext" },
+        .{ "VkCompositeAlphaFlagBitsKHR", "VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR", "opaque_bit" },
+        .{ "VkResult", "VK_SUBOPTIMAL_KHR", "suboptimal_khr" },
         .{ "VkImageType", "VK_IMAGE_TYPE_2D", "2d" },
         .{ "VkSampleCountFlagBits", "VK_SAMPLE_COUNT_1_BIT", "1_bit" },
         .{ "VkResult", "VK_SUCCESS", "success" },
         .{ "VkResult", "VK_ERROR_OUT_OF_DATE_KHR", "error_out_of_date_khr" },
-        .{ "VkColorSpaceKHR", "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR", "srgb_nonlinear_khr" },
-        .{ "VkVideoEncodeH264CapabilityFlagBitsKHR", "VK_VIDEO_ENCODE_H264_CAPABILITY_HRD_COMPLIANCE_BIT_KHR", "hrd_compliance_bit_khr" },
+        .{ "VkColorSpaceKHR", "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR", "srgb_nonlinear" },
+        .{ "VkVideoEncodeH264CapabilityFlagBitsKHR", "VK_VIDEO_ENCODE_H264_CAPABILITY_HRD_COMPLIANCE_BIT_KHR", "hrd_compliance_bit" },
         .{ "StdVideoH264ChromaFormatIdc", "STD_VIDEO_H264_CHROMA_FORMAT_IDC_MONOCHROME", "monochrome" },
         .{ "StdVideoAV1Profile", "STD_VIDEO_AV1_PROFILE_MAIN", "main" },
     };
     for (cases) |c| {
-        const prefix = try enumValuePrefix(a, c[0], tags);
-        defer a.free(prefix);
-        const got = try enumFieldName(a, prefix, c[1]);
+        const n = try enumNaming(a, c[0], tags);
+        defer a.free(n.prefix);
+        const got = try enumFieldName(a, n, c[1]);
         defer a.free(got);
         try testing.expectEqualStrings(c[2], got);
     }
