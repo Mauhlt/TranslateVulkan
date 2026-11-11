@@ -40,6 +40,8 @@ defer vk.destroyInstance(instance, null);
 | `pApplicationInfo`, `deviceLUIDValid` | `.p_application_info`, `.device_luid_valid` |
 | `VK_FORMAT_R8G8B8A8_UNORM`            | `vk.Format.r8g8b8a8_unorm`              |
 | `VK_SHADER_STAGE_VERTEX_BIT`          | `vk.ShaderStageFlagBits.vertex_bit`     |
+| `VK_PRESENT_MODE_MAILBOX_KHR`         | `vk.PresentModeKHR.mailbox` (the type's own tag is dropped) |
+| `VK_PRESENT_MODE_FIFO_LATEST_READY_EXT` | `vk.PresentModeKHR.fifo_latest_ready_ext` (other tags stay) |
 | `VkShaderStageFlags`                  | `vk.ShaderStageFlags` = `FlagSet(ShaderStageFlagBits)` |
 | `VK_MAX_EXTENSION_NAME_SIZE`          | `vk.max_extension_name_size`            |
 | `VK_KHR_SWAPCHAIN_EXTENSION_NAME`     | `vk.khr_swapchain_extension_name`       |

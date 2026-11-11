@@ -18,13 +18,19 @@
             .path = "examples/hello",
             .vk_file = "src/vk.zig",
         },
-        // Example for one of your repos that gets Vulkan from a path dependency
-        // (`.Vulkan = .{ .path = "../Vulkan2" }`). Uncomment to check it:
-        // .{
-        //     .name = "Renderer",
-        //     .path = "../Renderer",
-        //     .vk_dependency = "Vulkan",
-        //     .vk_module = "Vulkan",
-        // },
+        .{
+            // `.Vulkan = .{ .url = "git+https://github.com/Mauhlt/Vulkan.git#..." }`
+            .name = "Image",
+            .path = "../Image",
+            .vk_dependency = "Vulkan",
+            .vk_module = "Vulkan",
+        },
+        .{
+            // `.Vulkan = .{ .path = "../Vulkan" }`, plus ../Image
+            .name = "Renderer",
+            .path = "../Renderer",
+            .vk_dependency = "Vulkan",
+            .vk_module = "Vulkan",
+        },
     },
 }
