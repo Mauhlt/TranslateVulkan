@@ -2,7 +2,7 @@
     .name = .translate_vulkan,
     .version = "0.2.0",
     .fingerprint = 0x74c0010ad5e0c16b,
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.18.0-dev.4+5a23bf4b2",
     .dependencies = .{
         .vulkan_headers = .{
             .url = "git+https://github.com/KhronosGroup/Vulkan-Headers?ref=main#88487f687f3100ebe1d3559a8a34d971ee85b977",
