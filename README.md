@@ -31,6 +31,14 @@ vk.loadInstance(instance);
 defer vk.destroyInstance(instance, null);
 ```
 
+The loader (src/preamble.zig) tries `vk.libraryCandidates(os)` in order: the
+Khronos loader on Windows, Linux and macOS (macOS falls back to MoltenVK
+itself), and on iOS MoltenVK embedded in the app bundle
+(`@executable_path/Frameworks/libMoltenVK.dylib` or `MoltenVK.framework`).
+`vk.loadLibraryFrom(list)` takes an app-chosen list, `vk.libraryKind()` says
+what was opened, and `vk.portability` names the extensions and flag a
+portability implementation (MoltenVK) needs.
+
 ## Naming schema
 
 | C                                     | Zig                                     |

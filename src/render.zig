@@ -210,7 +210,7 @@ const Renderer = struct {
             \\//! change the generator (or src/preamble.zig) and regenerate instead.
             \\//!
             \\//! Quick start:
-            \\//!     try vk.loadLibrary();                 // opens vulkan-1.dll / libvulkan.so.1
+            \\//!     try vk.loadLibrary();                 // vulkan-1.dll / libvulkan.so.1 / MoltenVK
             \\//!     try vk.createInstance(&info, null, &instance);
             \\//!     vk.loadInstance(instance);            // instance + device commands
             \\//!     ...

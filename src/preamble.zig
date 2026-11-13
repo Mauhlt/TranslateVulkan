@@ -130,7 +130,7 @@ const Library = if (builtin.os.tag == .windows) struct {
         return .{ .handle = LoadLibraryA(name) orelse return null };
     }
     fn lookup(self: @This(), comptime T: type, name: [:0]const u8) ?T {
-        return @ptrCast(GetProcAddress(self.handle, name) orelse return null);
+        return @ptrCast(@alignCast(GetProcAddress(self.handle, name) orelse return null));
     }
     fn close(self: @This()) void {
         _ = FreeLibrary(self.handle);
@@ -150,31 +150,122 @@ const Library = if (builtin.os.tag == .windows) struct {
 };
 
 var library: ?Library = null;
+var library_kind: LibraryKind = .none;
 
-/// Opens the system Vulkan loader (vulkan-1.dll / libvulkan.so.1 /
-/// libvulkan.1.dylib) and loads the global commands. No link step needed.
-pub fn loadLibrary() LoadLibraryError!void {
-    const names: []const [:0]const u8 = switch (builtin.os.tag) {
-        .windows => &.{"vulkan-1.dll"},
-        .macos, .ios, .tvos, .visionos => &.{ "libvulkan.1.dylib", "libvulkan.dylib", "libMoltenVK.dylib" },
-        else => &.{ "libvulkan.so.1", "libvulkan.so" },
+/// What `loadLibrary` opened.
+pub const LibraryKind = enum {
+    none,
+    /// The Khronos loader (vulkan-1.dll, libvulkan.so.1, libvulkan.1.dylib).
+    loader,
+    /// MoltenVK itself, without a loader (iOS always; macOS when no loader
+    /// is installed). It is a "portability" implementation: instances
+    /// should enable VK_KHR_portability_enumeration with
+    /// `InstanceCreateFlags.enumerate_portability_bit_khr` when it is
+    /// offered, and devices VK_KHR_portability_subset when offered (see
+    /// `portability`).
+    moltenvk,
+};
+
+/// One candidate shared library for `loadLibrary`.
+pub const LibraryCandidate = struct { path: [:0]const u8, kind: LibraryKind };
+
+/// The libraries `loadLibrary` tries on `os`, in order.
+///
+///   Windows  vulkan-1.dll
+///   Linux    libvulkan.so.1, libvulkan.so
+///   macOS    the Khronos loader first (system / Vulkan SDK / Homebrew, or
+///            bundled in the .app's Contents/Frameworks), then MoltenVK
+///            directly (same places)
+///   iOS      MoltenVK embedded in the app bundle, as Apple requires for
+///            third-party code: <App>.app/Frameworks/libMoltenVK.dylib or
+///            <App>.app/Frameworks/MoltenVK.framework/MoltenVK (dlopen
+///            resolves @executable_path to the .app directory on iOS);
+///            a bundled loader (libvulkan.1.dylib) is tried after it
+pub fn libraryCandidates(os: std.Target.Os.Tag) []const LibraryCandidate {
+    return switch (os) {
+        .windows => &.{.{ .path = "vulkan-1.dll", .kind = .loader }},
+        .macos => &.{
+            .{ .path = "libvulkan.1.dylib", .kind = .loader },
+            .{ .path = "@executable_path/../Frameworks/libvulkan.1.dylib", .kind = .loader },
+            .{ .path = "/usr/local/lib/libvulkan.1.dylib", .kind = .loader },
+            .{ .path = "/opt/homebrew/lib/libvulkan.1.dylib", .kind = .loader },
+            .{ .path = "libvulkan.dylib", .kind = .loader },
+            .{ .path = "libMoltenVK.dylib", .kind = .moltenvk },
+            .{ .path = "@executable_path/../Frameworks/libMoltenVK.dylib", .kind = .moltenvk },
+            .{ .path = "@executable_path/../Frameworks/MoltenVK.framework/MoltenVK", .kind = .moltenvk },
+            .{ .path = "/usr/local/lib/libMoltenVK.dylib", .kind = .moltenvk },
+            .{ .path = "/opt/homebrew/lib/libMoltenVK.dylib", .kind = .moltenvk },
+        },
+        .ios, .tvos, .visionos => &.{
+            .{ .path = "@executable_path/Frameworks/libMoltenVK.dylib", .kind = .moltenvk },
+            .{ .path = "@executable_path/Frameworks/MoltenVK.framework/MoltenVK", .kind = .moltenvk },
+            .{ .path = "@rpath/libMoltenVK.dylib", .kind = .moltenvk },
+            .{ .path = "@rpath/MoltenVK.framework/MoltenVK", .kind = .moltenvk },
+            .{ .path = "@executable_path/Frameworks/libvulkan.1.dylib", .kind = .loader },
+        },
+        else => &.{
+            .{ .path = "libvulkan.so.1", .kind = .loader },
+            .{ .path = "libvulkan.so", .kind = .loader },
+        },
     };
-    for (names) |name| {
-        var lib = Library.open(name) orelse continue;
+}
+
+/// Opens the platform's Vulkan library (see `libraryCandidates`: the system
+/// loader, or MoltenVK on Apple platforms) and loads the global commands.
+/// No link step needed.
+pub fn loadLibrary() LoadLibraryError!void {
+    return loadLibraryFrom(libraryCandidates(builtin.os.tag));
+}
+
+/// Like `loadLibrary`, trying `candidates` in order (e.g. an app-chosen
+/// MoltenVK path first).
+pub fn loadLibraryFrom(candidates: []const LibraryCandidate) LoadLibraryError!void {
+    for (candidates) |c| {
+        var lib = Library.open(c.path) orelse continue;
         const gipa = lib.lookup(PfnGetInstanceProcAddr, "vkGetInstanceProcAddr") orelse {
             lib.close();
             return error.MissingGetInstanceProcAddr;
         };
         library = lib;
+        library_kind = c.kind;
         loadBase(gipa);
         return;
     }
     return error.VulkanLibraryNotFound;
 }
 
+/// What the last successful `loadLibrary` opened.
+pub fn libraryKind() LibraryKind {
+    return library_kind;
+}
+
+/// Portability (MoltenVK) support: what instance and device creation need
+/// on macOS / iOS. Both extensions are optional in the spec sense: enable
+/// each one only when the implementation offers it.
+pub const portability = struct {
+    /// True on targets where the Vulkan implementation is (or may be) a
+    /// portability one (MoltenVK on Metal).
+    pub const target_may_need = switch (builtin.os.tag) {
+        .macos, .ios, .tvos, .visionos => true,
+        else => false,
+    };
+    /// Instance extension: lists portability drivers (with the flag below).
+    pub const instance_extension = khr_portability_enumeration_extension_name;
+    /// Instance create flag that goes with `instance_extension`.
+    pub const instance_flag: InstanceCreateFlagBits = .enumerate_portability_bit_khr;
+    /// Device extension a portability device offers; it must then be
+    /// enabled (VUID-VkDeviceCreateInfo-pProperties-04451).
+    pub const device_extension = khr_portability_subset_extension_name;
+    /// Instance extension VK_KHR_portability_subset depends on (core in 1.1).
+    pub const instance_dependency = khr_get_physical_device_properties_2_extension_name;
+    /// Surface extension for a CAMetalLayer.
+    pub const metal_surface_extension = ext_metal_surface_extension_name;
+};
+
 pub fn unloadLibrary() void {
     if (library) |*lib| lib.close();
     library = null;
+    library_kind = .none;
     dispatch = .{};
 }
 
