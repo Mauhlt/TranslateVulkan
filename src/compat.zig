@@ -11,6 +11,7 @@
 //! still tested (so you know when the pin can be lifted) but is reported as
 //! held at its pinned version.
 const std = @import("std");
+const builtin = @import("builtin");
 const Io = std.Io;
 const Allocator = std.mem.Allocator;
 
@@ -89,14 +90,18 @@ pub fn main(init: std.process.Init) !void {
         std.process.exit(1);
     };
 
+    // The log is committed: show the user's home folder as ~.
+    const home = init.environ_map.get(if (builtin.os.tag == .windows) "USERPROFILE" else "HOME") orelse "";
+
     var outcomes: std.ArrayList(Outcome) = .empty;
     for (config.consumers) |consumer| {
         std.debug.print("compat: {s} ... ", .{consumer.name});
-        const outcome = check(arena, io, consumer, vk_zig, scratch_dir, zig_exe) catch |err| Outcome{
+        var outcome = check(arena, io, consumer, vk_zig, scratch_dir, zig_exe) catch |err| Outcome{
             .consumer = consumer,
             .status = .compat_error,
             .output = try std.fmt.allocPrint(arena, "compat could not run this consumer: {t}", .{err}),
         };
+        outcome.output = try redactHome(arena, outcome.output, home);
         std.debug.print("{s}\n", .{outcome.status.label()});
         try outcomes.append(arena, outcome);
     }
@@ -275,6 +280,15 @@ fn formatLog(arena: Allocator, io: Io, version: []const u8, outcomes: []const Ou
     return out.written();
 }
 
+/// `text` with `home` (as written, and with backslashes doubled as in a Zig
+/// string) replaced by `~`.
+fn redactHome(arena: Allocator, text: []const u8, home: []const u8) ![]const u8 {
+    if (home.len == 0) return text;
+    const escaped = try std.mem.replaceOwned(u8, arena, home, "\\", "\\\\");
+    const once = try std.mem.replaceOwned(u8, arena, text, escaped, "~");
+    return std.mem.replaceOwned(u8, arena, once, home, "~");
+}
+
 fn lastLines(text: []const u8, n: usize) []const u8 {
     const trimmed = std.mem.trimEnd(u8, text, "\r\n");
     var count: usize = 0;
@@ -306,4 +320,18 @@ test lastLines {
 
 test versionOf {
     try std.testing.expectEqualStrings("1.4.368", versionOf("x\npub const version_string = \"1.4.368\";\n").?);
+}
+
+test redactHome {
+    var arena: std.heap.ArenaAllocator = .init(std.testing.allocator);
+    defer arena.deinit();
+    const a = arena.allocator();
+    const bs = "\x5c"; // one backslash
+    const home = "C:" ++ bs ++ "u";
+    try std.testing.expectEqualStrings(
+        "~" ++ bs ++ "lib \"~" ++ bs ++ bs ++ "zig.exe\" ~/o",
+        try redactHome(a, home ++ bs ++ "lib \"C:" ++ bs ++ bs ++ "u" ++ bs ++ bs ++ "zig.exe\" " ++ home ++ "/o", home),
+    );
+    try std.testing.expectEqualStrings("~/x", try redactHome(a, "/home/u/x", "/home/u"));
+    try std.testing.expectEqualStrings("/home/u/x", try redactHome(a, "/home/u/x", ""));
 }
