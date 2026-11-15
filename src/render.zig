@@ -455,7 +455,7 @@ const Renderer = struct {
                 i += 1;
                 continue;
             }
-            // Consecutive C bitfields share one storage unit: `packed struct(uN)`.
+            // Consecutive C bitfields share one storage unit: `bitpack struct(uN)`.
             const unit = bitWidthOf(m.type_name);
             var used: u16 = 0;
             var body: Writer.Allocating = .init(r.a);
@@ -471,7 +471,7 @@ const Renderer = struct {
             if (used < unit) try body.writer.print("    _reserved_bits: u{d} = 0,\n", .{unit - used});
             if (bitfield_groups == 0 and fields.items.len == 0 and i == s.members.len) {
                 // The whole struct is a single unit (most video `*Flags` structs).
-                try r.print("pub const {f} = packed struct(u{d}) {{\n{s}}};\n", .{ fmtId(name), unit, body.written() });
+                try r.print("pub const {f} = bitpack struct(u{d}) {{\n{s}}};\n", .{ fmtId(name), unit, body.written() });
                 try r.layoutCheck(t, name, &.{});
                 return;
             }
@@ -482,7 +482,7 @@ const Renderer = struct {
             bitfield_groups += 1;
             try fields.append(r.a, .{
                 .name = group_name,
-                .ty = try r.fmt("packed struct(u{d}) {{\n{s}    }}", .{ unit, try indent(r.a, body.written()) }),
+                .ty = try r.fmt("bitpack struct(u{d}) {{\n{s}    }}", .{ unit, try indent(r.a, body.written()) }),
                 .default = ".{}",
                 .c_name = null,
             });

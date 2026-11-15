@@ -149,7 +149,7 @@ fn runZig(arena: Allocator, io: Io, zig_exe: []const u8, args: []const []const u
         .stdout_limit = .limited(1 << 20),
     });
     return .{
-        .passed = result.term.success(),
+        .passed = result.term.eql(.success),
         .output = if (result.stderr.len > 0) result.stderr else result.stdout,
     };
 }

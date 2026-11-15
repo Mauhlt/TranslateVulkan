@@ -8234,7 +8234,7 @@ pub const RenderingInputAttachmentIndexInfoKHR = RenderingInputAttachmentIndexIn
 pub const PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT = PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR;
 pub const ExternalComputeQueueNV = enum(usize) { null = 0, _ };
 pub const DeviceAddressRangeEXT = DeviceAddressRangeKHR;
-pub const StdVideoH264SpsVuiFlags = packed struct(u32) {
+pub const StdVideoH264SpsVuiFlags = bitpack struct(u32) {
     aspect_ratio_info_present_flag: u1 = 0,
     overscan_info_present_flag: u1 = 0,
     overscan_appropriate_flag: u1 = 0,
@@ -8280,7 +8280,7 @@ pub const StdVideoH264SequenceParameterSetVui = extern struct {
     reserved1: u32 = 0,
     p_hrd_parameters: ?*const StdVideoH264HrdParameters = null,
 };
-pub const StdVideoH264SpsFlags = packed struct(u32) {
+pub const StdVideoH264SpsFlags = bitpack struct(u32) {
     constraint_set0_flag: u1 = 0,
     constraint_set1_flag: u1 = 0,
     constraint_set2_flag: u1 = 0,
@@ -8332,7 +8332,7 @@ pub const StdVideoH264SequenceParameterSet = extern struct {
     p_scaling_lists: ?*const StdVideoH264ScalingLists = null,
     p_sequence_parameter_set_vui: ?*const StdVideoH264SequenceParameterSetVui = null,
 };
-pub const StdVideoH264PpsFlags = packed struct(u32) {
+pub const StdVideoH264PpsFlags = bitpack struct(u32) {
     transform_8x8_mode_flag: u1 = 0,
     redundant_pic_cnt_present_flag: u1 = 0,
     constrained_intra_pred_flag: u1 = 0,
@@ -8356,7 +8356,7 @@ pub const StdVideoH264PictureParameterSet = extern struct {
     second_chroma_qp_index_offset: i8 = 0,
     p_scaling_lists: ?*const StdVideoH264ScalingLists = null,
 };
-pub const StdVideoDecodeH264PictureInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeH264PictureInfoFlags = bitpack struct(u32) {
     field_pic_flag: u1 = 0,
     is_intra: u1 = 0,
     idr_pic_flag: u1 = 0,
@@ -8375,7 +8375,7 @@ pub const StdVideoDecodeH264PictureInfo = extern struct {
     idr_pic_id: u16 = 0,
     pic_order_cnt: [std_video_decode_h264_field_order_count_list_size]i32 = std.mem.zeroes([std_video_decode_h264_field_order_count_list_size]i32),
 };
-pub const StdVideoDecodeH264ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeH264ReferenceInfoFlags = bitpack struct(u32) {
     top_field_flag: u1 = 0,
     bottom_field_flag: u1 = 0,
     used_for_long_term_reference: u1 = 0,
@@ -8407,12 +8407,12 @@ pub const StdVideoEncodeH264WeightTable = extern struct {
     chroma_weight_l1: [std_video_h264_max_num_list_ref][std_video_h264_max_chroma_planes]i8 = std.mem.zeroes([std_video_h264_max_num_list_ref][std_video_h264_max_chroma_planes]i8),
     chroma_offset_l1: [std_video_h264_max_num_list_ref][std_video_h264_max_chroma_planes]i8 = std.mem.zeroes([std_video_h264_max_num_list_ref][std_video_h264_max_chroma_planes]i8),
 };
-pub const StdVideoEncodeH264SliceHeaderFlags = packed struct(u32) {
+pub const StdVideoEncodeH264SliceHeaderFlags = bitpack struct(u32) {
     direct_spatial_mv_pred_flag: u1 = 0,
     num_ref_idx_active_override_flag: u1 = 0,
     reserved: u30 = 0,
 };
-pub const StdVideoEncodeH264PictureInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH264PictureInfoFlags = bitpack struct(u32) {
     idr_pic_flag: u1 = 0,
     is_reference: u1 = 0,
     no_output_of_prior_pics_flag: u1 = 0,
@@ -8420,11 +8420,11 @@ pub const StdVideoEncodeH264PictureInfoFlags = packed struct(u32) {
     adaptive_ref_pic_marking_mode_flag: u1 = 0,
     reserved: u27 = 0,
 };
-pub const StdVideoEncodeH264ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH264ReferenceInfoFlags = bitpack struct(u32) {
     used_for_long_term_reference: u1 = 0,
     reserved: u31 = 0,
 };
-pub const StdVideoEncodeH264ReferenceListsInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH264ReferenceListsInfoFlags = bitpack struct(u32) {
     ref_pic_list_modification_flag_l0: u1 = 0,
     ref_pic_list_modification_flag_l1: u1 = 0,
     reserved: u30 = 0,
@@ -8488,7 +8488,7 @@ pub const StdVideoEncodeH264SliceHeader = extern struct {
     disable_deblocking_filter_idc: StdVideoH264DisableDeblockingFilterIdc = @fromBackingInt(@intCast(0)),
     p_weight_table: ?*const StdVideoEncodeH264WeightTable = null,
 };
-pub const StdVideoH265ProfileTierLevelFlags = packed struct(u32) {
+pub const StdVideoH265ProfileTierLevelFlags = bitpack struct(u32) {
     general_tier_flag: u1 = 0,
     general_progressive_source_flag: u1 = 0,
     general_interlaced_source_flag: u1 = 0,
@@ -8513,7 +8513,7 @@ pub const StdVideoH265SubLayerHrdParameters = extern struct {
     bit_rate_du_value_minus1: [std_video_h265_cpb_cnt_list_size]u32 = std.mem.zeroes([std_video_h265_cpb_cnt_list_size]u32),
     cbr_flag: u32 = 0,
 };
-pub const StdVideoH265HrdFlags = packed struct(u32) {
+pub const StdVideoH265HrdFlags = bitpack struct(u32) {
     nal_hrd_parameters_present_flag: u1 = 0,
     vcl_hrd_parameters_present_flag: u1 = 0,
     sub_pic_hrd_params_present_flag: u1 = 0,
@@ -8540,7 +8540,7 @@ pub const StdVideoH265HrdParameters = extern struct {
     p_sub_layer_hrd_parameters_nal: ?[*]const StdVideoH265SubLayerHrdParameters = null,
     p_sub_layer_hrd_parameters_vcl: ?[*]const StdVideoH265SubLayerHrdParameters = null,
 };
-pub const StdVideoH265VpsFlags = packed struct(u32) {
+pub const StdVideoH265VpsFlags = bitpack struct(u32) {
     vps_temporal_id_nesting_flag: u1 = 0,
     vps_sub_layer_ordering_info_present_flag: u1 = 0,
     vps_timing_info_present_flag: u1 = 0,
@@ -8569,7 +8569,7 @@ pub const StdVideoH265ScalingLists = extern struct {
     scaling_list_dc_coef16x16: [std_video_h265_scaling_list_16x16_num_lists]u8 = std.mem.zeroes([std_video_h265_scaling_list_16x16_num_lists]u8),
     scaling_list_dc_coef32x32: [std_video_h265_scaling_list_32x32_num_lists]u8 = std.mem.zeroes([std_video_h265_scaling_list_32x32_num_lists]u8),
 };
-pub const StdVideoH265ShortTermRefPicSetFlags = packed struct(u32) {
+pub const StdVideoH265ShortTermRefPicSetFlags = bitpack struct(u32) {
     inter_ref_pic_set_prediction_flag: u1 = 0,
     delta_rps_sign: u1 = 0,
     _reserved_bits: u30 = 0,
@@ -8594,7 +8594,7 @@ pub const StdVideoH265LongTermRefPicsSps = extern struct {
     used_by_curr_pic_lt_sps_flag: u32 = 0,
     lt_ref_pic_poc_lsb_sps: [std_video_h265_max_long_term_ref_pics_sps]u32 = std.mem.zeroes([std_video_h265_max_long_term_ref_pics_sps]u32),
 };
-pub const StdVideoH265SpsVuiFlags = packed struct(u32) {
+pub const StdVideoH265SpsVuiFlags = bitpack struct(u32) {
     aspect_ratio_info_present_flag: u1 = 0,
     overscan_info_present_flag: u1 = 0,
     overscan_appropriate_flag: u1 = 0,
@@ -8646,7 +8646,7 @@ pub const StdVideoH265SequenceParameterSetVui = extern struct {
 pub const StdVideoH265PredictorPaletteEntries = extern struct {
     predictor_palette_entries: [std_video_h265_predictor_palette_components_list_size][std_video_h265_predictor_palette_comp_entries_list_size]u16 = std.mem.zeroes([std_video_h265_predictor_palette_components_list_size][std_video_h265_predictor_palette_comp_entries_list_size]u16),
 };
-pub const StdVideoH265SpsFlags = packed struct(u32) {
+pub const StdVideoH265SpsFlags = bitpack struct(u32) {
     sps_temporal_id_nesting_flag: u1 = 0,
     separate_colour_plane_flag: u1 = 0,
     conformance_window_flag: u1 = 0,
@@ -8720,7 +8720,7 @@ pub const StdVideoH265SequenceParameterSet = extern struct {
     p_sequence_parameter_set_vui: ?*const StdVideoH265SequenceParameterSetVui = null,
     p_predictor_palette_entries: ?*const StdVideoH265PredictorPaletteEntries = null,
 };
-pub const StdVideoH265PpsFlags = packed struct(u32) {
+pub const StdVideoH265PpsFlags = bitpack struct(u32) {
     dependent_slice_segments_enabled_flag: u1 = 0,
     output_flag_present_flag: u1 = 0,
     sign_data_hiding_enabled_flag: u1 = 0,
@@ -8792,7 +8792,7 @@ pub const StdVideoH265PictureParameterSet = extern struct {
     p_scaling_lists: ?*const StdVideoH265ScalingLists = null,
     p_predictor_palette_entries: ?*const StdVideoH265PredictorPaletteEntries = null,
 };
-pub const StdVideoDecodeH265PictureInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeH265PictureInfoFlags = bitpack struct(u32) {
     irap_pic_flag: u1 = 0,
     idr_pic_flag: u1 = 0,
     is_reference: u1 = 0,
@@ -8812,7 +8812,7 @@ pub const StdVideoDecodeH265PictureInfo = extern struct {
     ref_pic_set_st_curr_after: [std_video_decode_h265_ref_pic_set_list_size]u8 = std.mem.zeroes([std_video_decode_h265_ref_pic_set_list_size]u8),
     ref_pic_set_lt_curr: [std_video_decode_h265_ref_pic_set_list_size]u8 = std.mem.zeroes([std_video_decode_h265_ref_pic_set_list_size]u8),
 };
-pub const StdVideoDecodeH265ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeH265ReferenceInfoFlags = bitpack struct(u32) {
     used_for_long_term_reference: u1 = 0,
     unused_for_reference: u1 = 0,
     _reserved_bits: u30 = 0,
@@ -8849,7 +8849,7 @@ pub const StdVideoEncodeH265LongTermRefPics = extern struct {
     delta_poc_msb_present_flag: [std_video_h265_max_delta_poc]u8 = std.mem.zeroes([std_video_h265_max_delta_poc]u8),
     delta_poc_msb_cycle_lt: [std_video_h265_max_delta_poc]u8 = std.mem.zeroes([std_video_h265_max_delta_poc]u8),
 };
-pub const StdVideoEncodeH265SliceSegmentHeaderFlags = packed struct(u32) {
+pub const StdVideoEncodeH265SliceSegmentHeaderFlags = bitpack struct(u32) {
     first_slice_segment_in_pic_flag: u1 = 0,
     dependent_slice_segment_flag: u1 = 0,
     slice_sao_luma_flag: u1 = 0,
@@ -8881,7 +8881,7 @@ pub const StdVideoEncodeH265SliceSegmentHeader = extern struct {
     reserved1: u16 = 0,
     p_weight_table: ?*const StdVideoEncodeH265WeightTable = null,
 };
-pub const StdVideoEncodeH265ReferenceListsInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH265ReferenceListsInfoFlags = bitpack struct(u32) {
     ref_pic_list_modification_flag_l0: u1 = 0,
     ref_pic_list_modification_flag_l1: u1 = 0,
     reserved: u30 = 0,
@@ -8895,7 +8895,7 @@ pub const StdVideoEncodeH265ReferenceListsInfo = extern struct {
     list_entry_l0: [std_video_h265_max_num_list_ref]u8 = std.mem.zeroes([std_video_h265_max_num_list_ref]u8),
     list_entry_l1: [std_video_h265_max_num_list_ref]u8 = std.mem.zeroes([std_video_h265_max_num_list_ref]u8),
 };
-pub const StdVideoEncodeH265PictureInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH265PictureInfoFlags = bitpack struct(u32) {
     is_reference: u1 = 0,
     irap_pic_flag: u1 = 0,
     used_for_long_term_reference: u1 = 0,
@@ -8921,7 +8921,7 @@ pub const StdVideoEncodeH265PictureInfo = extern struct {
     p_short_term_ref_pic_set: ?*const StdVideoH265ShortTermRefPicSet = null,
     p_long_term_ref_pics: ?*const StdVideoEncodeH265LongTermRefPics = null,
 };
-pub const StdVideoEncodeH265ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeH265ReferenceInfoFlags = bitpack struct(u32) {
     used_for_long_term_reference: u1 = 0,
     unused_for_reference: u1 = 0,
     reserved: u30 = 0,
@@ -8932,7 +8932,7 @@ pub const StdVideoEncodeH265ReferenceInfo = extern struct {
     pic_order_cnt_val: i32 = 0,
     temporal_id: u8 = 0,
 };
-pub const StdVideoVP9ColorConfigFlags = packed struct(u32) {
+pub const StdVideoVP9ColorConfigFlags = bitpack struct(u32) {
     color_range: u1 = 0,
     reserved: u31 = 0,
 };
@@ -8944,7 +8944,7 @@ pub const StdVideoVP9ColorConfig = extern struct {
     reserved1: u8 = 0,
     color_space: StdVideoVP9ColorSpace = @fromBackingInt(@intCast(0)),
 };
-pub const StdVideoVP9LoopFilterFlags = packed struct(u32) {
+pub const StdVideoVP9LoopFilterFlags = bitpack struct(u32) {
     loop_filter_delta_enabled: u1 = 0,
     loop_filter_delta_update: u1 = 0,
     reserved: u30 = 0,
@@ -8958,7 +8958,7 @@ pub const StdVideoVP9LoopFilter = extern struct {
     update_mode_delta: u8 = 0,
     loop_filter_mode_deltas: [std_video_vp9_loop_filter_adjustments]i8 = std.mem.zeroes([std_video_vp9_loop_filter_adjustments]i8),
 };
-pub const StdVideoVP9SegmentationFlags = packed struct(u32) {
+pub const StdVideoVP9SegmentationFlags = bitpack struct(u32) {
     segmentation_update_map: u1 = 0,
     segmentation_temporal_update: u1 = 0,
     segmentation_update_data: u1 = 0,
@@ -8972,7 +8972,7 @@ pub const StdVideoVP9Segmentation = extern struct {
     feature_enabled: [std_video_vp9_max_segments]u8 = std.mem.zeroes([std_video_vp9_max_segments]u8),
     feature_data: [std_video_vp9_max_segments][std_video_vp9_seg_lvl_max]i16 = std.mem.zeroes([std_video_vp9_max_segments][std_video_vp9_seg_lvl_max]i16),
 };
-pub const StdVideoDecodeVP9PictureInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeVP9PictureInfoFlags = bitpack struct(u32) {
     error_resilient_mode: u1 = 0,
     intra_only: u1 = 0,
     allow_high_precision_mv: u1 = 0,
@@ -9003,7 +9003,7 @@ pub const StdVideoDecodeVP9PictureInfo = extern struct {
     p_loop_filter: ?*const StdVideoVP9LoopFilter = null,
     p_segmentation: ?*const StdVideoVP9Segmentation = null,
 };
-pub const StdVideoAV1ColorConfigFlags = packed struct(u32) {
+pub const StdVideoAV1ColorConfigFlags = bitpack struct(u32) {
     mono_chrome: u1 = 0,
     color_range: u1 = 0,
     separate_uv_delta_q: u1 = 0,
@@ -9021,7 +9021,7 @@ pub const StdVideoAV1ColorConfig = extern struct {
     matrix_coefficients: StdVideoAV1MatrixCoefficients = @fromBackingInt(@intCast(0)),
     chroma_sample_position: StdVideoAV1ChromaSamplePosition = @fromBackingInt(@intCast(0)),
 };
-pub const StdVideoAV1TimingInfoFlags = packed struct(u32) {
+pub const StdVideoAV1TimingInfoFlags = bitpack struct(u32) {
     equal_picture_interval: u1 = 0,
     reserved: u31 = 0,
 };
@@ -9031,7 +9031,7 @@ pub const StdVideoAV1TimingInfo = extern struct {
     time_scale: u32 = 0,
     num_ticks_per_picture_minus_1: u32 = 0,
 };
-pub const StdVideoAV1SequenceHeaderFlags = packed struct(u32) {
+pub const StdVideoAV1SequenceHeaderFlags = bitpack struct(u32) {
     still_picture: u1 = 0,
     reduced_still_picture_header: u1 = 0,
     use_128x128_superblock: u1 = 0,
@@ -9069,7 +9069,7 @@ pub const StdVideoAV1SequenceHeader = extern struct {
     p_color_config: ?*const StdVideoAV1ColorConfig = null,
     p_timing_info: ?*const StdVideoAV1TimingInfo = null,
 };
-pub const StdVideoAV1LoopFilterFlags = packed struct(u32) {
+pub const StdVideoAV1LoopFilterFlags = bitpack struct(u32) {
     loop_filter_delta_enabled: u1 = 0,
     loop_filter_delta_update: u1 = 0,
     reserved: u30 = 0,
@@ -9083,7 +9083,7 @@ pub const StdVideoAV1LoopFilter = extern struct {
     update_mode_delta: u8 = 0,
     loop_filter_mode_deltas: [std_video_av1_loop_filter_adjustments]i8 = std.mem.zeroes([std_video_av1_loop_filter_adjustments]i8),
 };
-pub const StdVideoAV1QuantizationFlags = packed struct(u32) {
+pub const StdVideoAV1QuantizationFlags = bitpack struct(u32) {
     using_qmatrix: u1 = 0,
     diff_uv_delta: u1 = 0,
     reserved: u30 = 0,
@@ -9104,7 +9104,7 @@ pub const StdVideoAV1Segmentation = extern struct {
     feature_enabled: [std_video_av1_max_segments]u8 = std.mem.zeroes([std_video_av1_max_segments]u8),
     feature_data: [std_video_av1_max_segments][std_video_av1_seg_lvl_max]i16 = std.mem.zeroes([std_video_av1_max_segments][std_video_av1_seg_lvl_max]i16),
 };
-pub const StdVideoAV1TileInfoFlags = packed struct(u32) {
+pub const StdVideoAV1TileInfoFlags = bitpack struct(u32) {
     uniform_tile_spacing_flag: u1 = 0,
     reserved: u31 = 0,
 };
@@ -9136,7 +9136,7 @@ pub const StdVideoAV1GlobalMotion = extern struct {
     gm_type: [std_video_av1_num_ref_frames]u8 = std.mem.zeroes([std_video_av1_num_ref_frames]u8),
     gm_params: [std_video_av1_num_ref_frames][std_video_av1_global_motion_params]i32 = std.mem.zeroes([std_video_av1_num_ref_frames][std_video_av1_global_motion_params]i32),
 };
-pub const StdVideoAV1FilmGrainFlags = packed struct(u32) {
+pub const StdVideoAV1FilmGrainFlags = bitpack struct(u32) {
     chroma_scaling_from_luma: u1 = 0,
     overlap_flag: u1 = 0,
     clip_to_restricted_range: u1 = 0,
@@ -9170,7 +9170,7 @@ pub const StdVideoAV1FilmGrain = extern struct {
     cr_luma_mult: u8 = 0,
     cr_offset: u16 = 0,
 };
-pub const StdVideoDecodeAV1PictureInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeAV1PictureInfoFlags = bitpack struct(u32) {
     error_resilient_mode: u1 = 0,
     disable_cdf_update: u1 = 0,
     use_superres: u1 = 0,
@@ -9228,7 +9228,7 @@ pub const StdVideoDecodeAV1PictureInfo = extern struct {
     p_global_motion: ?*const StdVideoAV1GlobalMotion = null,
     p_film_grain: ?*const StdVideoAV1FilmGrain = null,
 };
-pub const StdVideoDecodeAV1ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoDecodeAV1ReferenceInfoFlags = bitpack struct(u32) {
     disable_frame_end_update_cdf: u1 = 0,
     segmentation_enabled: u1 = 0,
     reserved: u30 = 0,
@@ -9251,7 +9251,7 @@ pub const StdVideoEncodeAV1DecoderModelInfo = extern struct {
     reserved1: u8 = 0,
     num_units_in_decoding_tick: u32 = 0,
 };
-pub const StdVideoEncodeAV1OperatingPointInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeAV1OperatingPointInfoFlags = bitpack struct(u32) {
     decoder_model_present_for_this_op: u1 = 0,
     low_delay_mode_flag: u1 = 0,
     initial_display_delay_present_for_this_op: u1 = 0,
@@ -9266,7 +9266,7 @@ pub const StdVideoEncodeAV1OperatingPointInfo = extern struct {
     encoder_buffer_delay: u32 = 0,
     initial_display_delay_minus_1: u8 = 0,
 };
-pub const StdVideoEncodeAV1PictureInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeAV1PictureInfoFlags = bitpack struct(u32) {
     error_resilient_mode: u1 = 0,
     disable_cdf_update: u1 = 0,
     use_superres: u1 = 0,
@@ -9327,7 +9327,7 @@ pub const StdVideoEncodeAV1PictureInfo = extern struct {
     p_extension_header: ?*const StdVideoEncodeAV1ExtensionHeader = null,
     p_buffer_removal_times: ?*const u32 = null,
 };
-pub const StdVideoEncodeAV1ReferenceInfoFlags = packed struct(u32) {
+pub const StdVideoEncodeAV1ReferenceInfoFlags = bitpack struct(u32) {
     disable_frame_end_update_cdf: u1 = 0,
     segmentation_enabled: u1 = 0,
     reserved: u30 = 0,
@@ -10836,7 +10836,7 @@ pub const RayTracingPipelineClusterAccelerationStructureCreateInfoNV = extern st
     p_next: ?*anyopaque = null,
     allow_cluster_acceleration_structure: Bool32 = .false,
 };
-pub const ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV = packed struct(u32) {
+pub const ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV = bitpack struct(u32) {
     geometry_index: u24 = 0,
     reserved: u5 = 0,
     geometry_flags: u3 = 0,
@@ -10855,7 +10855,7 @@ pub const ClusterAccelerationStructureGetTemplateIndicesInfoNV = extern struct {
 pub const ClusterAccelerationStructureBuildTriangleClusterInfoNV = extern struct {
     cluster_id: u32 = 0,
     cluster_flags: ClusterAccelerationStructureClusterFlagsNV = .empty,
-    bitfields0: packed struct(u32) {
+    bitfields0: bitpack struct(u32) {
         triangle_count: u9 = 0,
         vertex_count: u9 = 0,
         position_truncate_bit_count: u6 = 0,
@@ -10876,7 +10876,7 @@ pub const ClusterAccelerationStructureBuildTriangleClusterInfoNV = extern struct
 pub const ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV = extern struct {
     cluster_id: u32 = 0,
     cluster_flags: ClusterAccelerationStructureClusterFlagsNV = .empty,
-    bitfields0: packed struct(u32) {
+    bitfields0: bitpack struct(u32) {
         triangle_count: u9 = 0,
         vertex_count: u9 = 0,
         position_truncate_bit_count: u6 = 0,
@@ -10897,7 +10897,7 @@ pub const ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV = exter
 };
 pub const ClusterAccelerationStructureInstantiateClusterInfoNV = extern struct {
     cluster_id_offset: u32 = 0,
-    geometry_index_offset_and_reserved: packed struct(u32) {
+    geometry_index_offset_and_reserved: bitpack struct(u32) {
         geometry_index_offset: u24 = 0,
         reserved: u8 = 0,
     } = .{},
@@ -14494,11 +14494,11 @@ pub const TransformMatrixKHR = extern struct {
 };
 pub const AccelerationStructureInstanceKHR = extern struct {
     transform: TransformMatrixKHR = .{},
-    instance_custom_index_and_mask: packed struct(u32) {
+    instance_custom_index_and_mask: bitpack struct(u32) {
         instance_custom_index: u24 = 0,
         mask: u8 = 0,
     } = .{},
-    instance_shader_binding_table_record_offset_and_flags: packed struct(u32) {
+    instance_shader_binding_table_record_offset_and_flags: bitpack struct(u32) {
         instance_shader_binding_table_record_offset: u24 = 0,
         flags: u8 = 0,
     } = .{},
@@ -16661,11 +16661,11 @@ pub const SRTDataNV = extern struct {
 pub const AccelerationStructureSRTMotionInstanceNV = extern struct {
     transform_t0: SRTDataNV = .{},
     transform_t1: SRTDataNV = .{},
-    instance_custom_index_and_mask: packed struct(u32) {
+    instance_custom_index_and_mask: bitpack struct(u32) {
         instance_custom_index: u24 = 0,
         mask: u8 = 0,
     } = .{},
-    instance_shader_binding_table_record_offset_and_flags: packed struct(u32) {
+    instance_shader_binding_table_record_offset_and_flags: bitpack struct(u32) {
         instance_shader_binding_table_record_offset: u24 = 0,
         flags: u8 = 0,
     } = .{},
@@ -16674,11 +16674,11 @@ pub const AccelerationStructureSRTMotionInstanceNV = extern struct {
 pub const AccelerationStructureMatrixMotionInstanceNV = extern struct {
     transform_t0: TransformMatrixKHR = .{},
     transform_t1: TransformMatrixKHR = .{},
-    instance_custom_index_and_mask: packed struct(u32) {
+    instance_custom_index_and_mask: bitpack struct(u32) {
         instance_custom_index: u24 = 0,
         mask: u8 = 0,
     } = .{},
-    instance_shader_binding_table_record_offset_and_flags: packed struct(u32) {
+    instance_shader_binding_table_record_offset_and_flags: bitpack struct(u32) {
         instance_shader_binding_table_record_offset: u24 = 0,
         flags: u8 = 0,
     } = .{},

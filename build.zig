@@ -29,19 +29,24 @@ pub fn build(b: *std.Build) void {
         .video = headers.path("registry/video.xml"),
     };
 
-    // The generator runs on the host, optimized (it parses ~3.5 MB of XML).
+    // The generator runs on the host. Debug: it compiles in ~3 s and generates
+    // in ~0.5 s, where ReleaseSafe takes ~14 s to compile for a ~0.1 s run;
+    // packages that depend on this one build it once per zig cache.
     const vkgen = b.addExecutable(.{
         .name = "vkgen",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = b.graph.host,
-            .optimize = .ReleaseSafe,
+            .optimize = .Debug,
         }),
     });
 
     // zig build: zig-out/vk.zig + module "vulkan" for downstream build.zig files.
     const generated = generate(b, vkgen, xml);
     const vk_zig = generated.path(b, "vk.zig");
+    // Named path "vk.zig": a package can make its own module from it (the
+    // Vulkan package exports it as module "Vulkan").
+    b.addNamedLazyPath("vk.zig", vk_zig);
     const vk_module = b.addModule("vulkan", .{ .root_source_file = vk_zig, .target = target, .optimize = optimize });
     b.getInstallStep().dependOn(&b.addInstallFile(vk_zig, "vk.zig").step);
 
