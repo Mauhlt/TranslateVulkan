@@ -17,7 +17,10 @@ Upgrading Vulkan is: `zig build update && zig build test snapshot compat`.
 ## Using vk.zig
 
 Copy `generated/vk.zig` into your project, or depend on this package and import
-the `vulkan` module. No `vulkan-1.lib`, no C headers: `vk.loadLibrary()` opens the
+the `vulkan` module, or build your own module from the named path `vk.zig`
+(`dep.namedLazyPath("vk.zig")`, as the Vulkan package does). As a dependency, vk.zig
+is generated at build time: the generator compiles once per zig cache (~3 s) and
+runs in ~0.5 s. No `vulkan-1.lib`, no C headers: `vk.loadLibrary()` opens the
 system loader at runtime.
 
 ```zig
@@ -96,4 +99,3 @@ Your repos are never modified.
 | `src/test_preamble.zig`  | hand-written part of the generated C-comparison test   |
 | `src/compat.zig`         | consumer compatibility checker                         |
 | `src/main.zig`           | `vkgen` CLI                                            |
-| `legacy/`                | the previous translate-c based translator (history kept) |
